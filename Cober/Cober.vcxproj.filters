@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Cober">
+      <UniqueIdentifier>{50F6F90C-BC0A-22BE-858C-C51DF15F1EEF}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Cober\Application.h">
+      <Filter>Cober</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Core.h">
+      <Filter>Cober</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\EntryPoint.h">
+      <Filter>Cober</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine.h" />
+    <ClInclude Include="src\pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Cober\Application.cpp">
+      <Filter>Cober</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pch.cpp" />
+  </ItemGroup>
+</Project>

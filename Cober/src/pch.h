@@ -3,8 +3,8 @@
 #include <iostream>
 #include <memory>
 #include <SDL/SDL.h>
-#include <GL/Glew.h>
+#include <Glew/Glew.h>
 	
 #ifdef CB_PLATFORM_WINDOWS
-#include <Windows.h>
+	#include <Windows.h>
 #endif

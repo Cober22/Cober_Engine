@@ -2,6 +2,7 @@
 #include <Engine.h>
 
 class Sandbox : public Cober::Application {
+
 public:
 	Sandbox() {
 
@@ -10,7 +11,6 @@ public:
 	~Sandbox() {
 
 	}
-
 };
 
 Cober::Application* Cober::CreateApplication()

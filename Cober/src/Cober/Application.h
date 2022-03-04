@@ -2,6 +2,7 @@
 
 #include "pch.h"
 #include "Core.h"
+#include "LayerStack.h"
 
 namespace Cober {
 
@@ -15,17 +16,21 @@ namespace Cober {
 
 		void Run();
 
+		void PushLayer(Layer* layer);
+		void PushOverlay(Layer* layer);
+
 	private:
-		SDL_Window* _window;
 		void Init();
 		void GameLoop();
 		void ProcessInputs();
 		void DrawGame();
 
+		SDL_Window* _window;
 		SDL_Renderer* _renderer;
 		GameState _gameState;
 		int _screenWidth;
 		int _screenHeight;
+		LayerStack m_LayerStack;
 	};
 
 	// To be defined in a client

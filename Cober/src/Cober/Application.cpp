@@ -26,6 +26,16 @@ namespace Cober {
 
 	}
 
+	void Application::PushLayer(Layer* layer) {
+
+		m_LayerStack.PushLayer(layer);
+	}
+
+	void Application::PushOverlay(Layer* layer) {
+		
+		m_LayerStack.PushOverlay(layer);
+	}
+
 	void Application::Run() {
 
 		Init();
@@ -57,15 +67,19 @@ namespace Cober {
 		if (error != GLEW_OK)
 			fatalError("Could not initialice glew!");
 
-		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-		
-		glClearColor(1.0f, 0.5f, 0.2f, 1.0f);
+		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);	
 	}
 
 	void Application::GameLoop() {
 
 		while (_gameState != GameState::EXIT) 
 		{
+			glClearColor(1.0f, 0.5f, 0.2f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT);
+
+			for (Layer* layer : m_LayerStack)
+				layer->OnUpdate();
+
 			ProcessInputs();
 			DrawGame();
 		}
@@ -95,8 +109,7 @@ namespace Cober {
 
 	void Application::DrawGame() {
 
-		glClear(GL_COLOR_BUFFER_BIT);
-
+	
 
 		SDL_GL_SwapWindow(_window);
 	}

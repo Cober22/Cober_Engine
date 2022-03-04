@@ -17,11 +17,23 @@
     </ClInclude>
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\Cober\Layer.h">
+      <Filter>Cober</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\LayerStack.h">
+      <Filter>Cober</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cober\Application.cpp">
       <Filter>Cober</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Cober\Layer.cpp">
+      <Filter>Cober</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\LayerStack.cpp">
+      <Filter>Cober</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

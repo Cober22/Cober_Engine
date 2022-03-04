@@ -161,11 +161,15 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
     <ClInclude Include="src\Cober\Application.h" />
     <ClInclude Include="src\Cober\Core.h" />
     <ClInclude Include="src\Cober\EntryPoint.h" />
+    <ClInclude Include="src\Cober\Layer.h" />
+    <ClInclude Include="src\Cober\LayerStack.h" />
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cober\Application.cpp" />
+    <ClCompile Include="src\Cober\Layer.cpp" />
+    <ClCompile Include="src\Cober\LayerStack.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

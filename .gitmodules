@@ -1,3 +1,9 @@
 [submodule "Cober/libraries"]
 	path = Cober/libraries
 	url = https://github.com/gabime/spdlog
+[submodule "Cober/libraries/imgui"]
+	path = Cober/libraries/imgui
+	url = https://github.com/TheCherno/imgui
+[submodule "libraries/imgui"]
+	path = libraries/imgui
+	url = https://github.com/ocornut/imgui

@@ -2,7 +2,9 @@
 
 // For use by Cober applications
 #include "Cober/Application.h"
-#include "Cober/Layer.h"
+#include "Cober/Layers/Layer.h"
+
+#include "Cober/ImGui/ImGuiLayer.h"
 
 
 //[---- Entry Point ----]

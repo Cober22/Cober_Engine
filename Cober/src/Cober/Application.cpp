@@ -1,11 +1,17 @@
 #include "pch.h"
 #include "Application.h"
 
+#include "ImGui/imgui_impl_sdl.h"
+#include "ImGui/imgui_impl_opengl3.h"
+
 namespace Cober {
-	const int W_WIDTH = 1024;
-	const int W_HEIGHT = 768;
-			
+	const static int W_WIDTH = 1024;
+	const static int W_HEIGHT = 768;
+
+	Application* Application::s_Instance = nullptr;
+
 	void fatalError(std::string errorString) {
+
 		std::cout << "errorString" << std::endl;
 		std::cout << "Enter any key to quit...";
 		int tmp;
@@ -15,6 +21,8 @@ namespace Cober {
 
 	Application::Application() {
 
+		s_Instance = this;
+		_context = nullptr;
 		_window = nullptr;
 		_renderer = nullptr;
 		_screenWidth = W_WIDTH;
@@ -29,11 +37,13 @@ namespace Cober {
 	void Application::PushLayer(Layer* layer) {
 
 		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* layer) {
-		
+
 		m_LayerStack.PushOverlay(layer);
+		layer->OnAttach();
 	}
 
 	void Application::Run() {
@@ -44,7 +54,7 @@ namespace Cober {
 
 	void Application::Init() {
 
-		// Initialize SDL
+		//// Initialize SDL
 		SDL_Init(SDL_INIT_EVERYTHING);
 
 		// Open an SDL window
@@ -58,8 +68,8 @@ namespace Cober {
 			fatalError("SDL Window could not be created!");
 				
 		// OpenGL context
-		SDL_GLContext glContext = SDL_GL_CreateContext(_window);
-		if (glContext == nullptr)
+		_context = SDL_GL_CreateContext(_window);
+		if (_context == nullptr)
 			fatalError("SDL_GL context could not be created");
 
 		// Set up Glew
@@ -67,6 +77,12 @@ namespace Cober {
 		if (error != GLEW_OK)
 			fatalError("Could not initialice glew!");
 
+
+		ImGui_ImplSDL2_InitForOpenGL(_window, _context);
+		ImGui_ImplOpenGL3_Init("#version 460");
+
+		//SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+		//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);	
 	}
 
@@ -75,7 +91,7 @@ namespace Cober {
 		while (_gameState != GameState::EXIT) 
 		{
 			glClearColor(1.0f, 0.5f, 0.2f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
@@ -91,17 +107,15 @@ namespace Cober {
 
 		// Dispatcher events
 		while (SDL_PollEvent(&event)) {
+
+			ImGui_ImplSDL2_ProcessEvent(&event);
+
 			switch (event.type) {
 				case SDL_QUIT:
 					_gameState = GameState::EXIT;
-					break;
+				break;
 				case SDL_MOUSEMOTION:
 					std::cout << event.motion.x << " " << event.motion.y << std::endl;
-					break;
-				case SDL_WINDOWEVENT_SIZE_CHANGED:
-					_screenWidth = event.window.data1;
-					_screenHeight = event.window.data2;
-					SDL_RenderPresent(_renderer);
 					break;
 			}
 		}
@@ -109,7 +123,7 @@ namespace Cober {
 
 	void Application::DrawGame() {
 
-	
+
 
 		SDL_GL_SwapWindow(_window);
 	}

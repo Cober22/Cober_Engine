@@ -11,6 +11,8 @@ workspace "Cober"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+include "libraries/ImGui"
+
 project "Cober"
 	location "Cober"
 	kind "SharedLib"
@@ -31,12 +33,14 @@ project "Cober"
 	includedirs
 	{
 		"%{prj.name}/src",
-		"%{prj.name}/include"
+		"%{prj.name}/include",
+		"libraries/ImGui"
 	}
 
 	libdirs 
 	{
-		"%{prj.name}/lib"
+		"%{prj.name}/lib",
+		"libraries/ImGui"
 	}
 
 	links 
@@ -44,7 +48,8 @@ project "Cober"
 		"SDL2",
 		"SDL2main",
 		"opengl32",
-		"glew32"
+		"glew32",
+		"ImGui"
 	}
 
 	filter "system:windows"
@@ -55,7 +60,9 @@ project "Cober"
 		defines 
 		{
 			"CB_PLATFORM_WINDOWS",
-			"CB_BUILD_DLL"
+			"CB_BUILD_DLL",
+			"IMGUI_IMPL_OPENGL_LOADER_CUSTOM=<SDL_opengl.h>",
+			"GL_GLEXT_PROTOTYPES=1"
 		}
 
 		postbuildcommands

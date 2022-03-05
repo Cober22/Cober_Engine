@@ -4,6 +4,12 @@
     <Filter Include="Cober">
       <UniqueIdentifier>{50F6F90C-BC0A-22BE-858C-C51DF15F1EEF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Cober\ImGui">
+      <UniqueIdentifier>{7AE7551B-E69C-CE10-6F91-C8E7DB45C514}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cober\Layers">
+      <UniqueIdentifier>{0F53548C-FBB5-E330-A43B-1CE7907DAFB3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Cober\Application.h">
@@ -15,25 +21,49 @@
     <ClInclude Include="src\Cober\EntryPoint.h">
       <Filter>Cober</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\ImGui\ImGuiLayer.h">
+      <Filter>Cober\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Layers\Layer.h">
+      <Filter>Cober\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Layers\LayerStack.h">
+      <Filter>Cober\Layers</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\pch.h" />
-    <ClInclude Include="src\Cober\Layer.h">
-      <Filter>Cober</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cober\LayerStack.h">
-      <Filter>Cober</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cober\Application.cpp">
       <Filter>Cober</Filter>
     </ClCompile>
-    <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\Cober\Layer.cpp">
-      <Filter>Cober</Filter>
+    <ClCompile Include="src\Cober\ImGui\ImGuiLayer.cpp">
+      <Filter>Cober\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cober\LayerStack.cpp">
-      <Filter>Cober</Filter>
+    <ClCompile Include="src\Cober\ImGui\imgui_impl_opengl3.cpp">
+      <Filter>Cober\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\ImGui\imgui_impl_sdl.cpp">
+      <Filter>Cober\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\ImGui\imgui_tables.cpp">
+      <Filter>Cober\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Layers\Layer.cpp">
+      <Filter>Cober\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Layers\LayerStack.cpp">
+      <Filter>Cober\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Cober\ImGui\imgui.cpp">
+      <Filter>Cober\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\ImGui\imgui_draw.cpp">
+      <Filter>Cober\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\ImGui\imgui_widgets.cpp">
+      <Filter>Cober\ImGui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

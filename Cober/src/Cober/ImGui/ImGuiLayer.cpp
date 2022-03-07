@@ -58,8 +58,9 @@ namespace Cober {
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
 
-	void ImGuiLayer::OnEvent(SDL_Event& event)
+	void ImGuiLayer::OnEvent(SDL_Event* event)
 	{
-
+		// Process ImGui Events
+		ImGui_ImplSDL2_ProcessEvent(event);
 	}
 }

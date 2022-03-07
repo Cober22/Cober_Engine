@@ -13,6 +13,9 @@
     <Filter Include="Cober\Input">
       <UniqueIdentifier>{3aba3a53-5076-4236-bd83-237976cd28de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Cober\ImGui\dep">
+      <UniqueIdentifier>{d42570af-147a-4506-874c-3e4c7a5ca948}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Cober\Application.h">
@@ -43,24 +46,6 @@
     <ClCompile Include="src\Cober\ImGui\ImGuiLayer.cpp">
       <Filter>Cober\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cober\ImGui\imgui.cpp">
-      <Filter>Cober\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\ImGui\imgui_draw.cpp">
-      <Filter>Cober\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\ImGui\imgui_impl_opengl3.cpp">
-      <Filter>Cober\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\ImGui\imgui_impl_sdl.cpp">
-      <Filter>Cober\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\ImGui\imgui_tables.cpp">
-      <Filter>Cober\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\ImGui\imgui_widgets.cpp">
-      <Filter>Cober\ImGui</Filter>
-    </ClCompile>
     <ClCompile Include="src\Cober\Layers\Layer.cpp">
       <Filter>Cober\Layers</Filter>
     </ClCompile>
@@ -68,5 +53,23 @@
       <Filter>Cober\Layers</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Cober\ImGui\imgui.cpp">
+      <Filter>Cober\ImGui\dep</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\ImGui\imgui_draw.cpp">
+      <Filter>Cober\ImGui\dep</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\ImGui\imgui_impl_opengl3.cpp">
+      <Filter>Cober\ImGui\dep</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\ImGui\imgui_impl_sdl.cpp">
+      <Filter>Cober\ImGui\dep</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\ImGui\imgui_tables.cpp">
+      <Filter>Cober\ImGui\dep</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\ImGui\imgui_widgets.cpp">
+      <Filter>Cober\ImGui\dep</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

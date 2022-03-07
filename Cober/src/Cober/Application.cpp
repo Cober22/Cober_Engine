@@ -106,7 +106,11 @@ namespace Cober {
 		// Dispatcher events
 		while (SDL_PollEvent(&event)) {
 
+			// Process ImGui Events
 			ImGui_ImplSDL2_ProcessEvent(&event);
+			// Process Layer Events
+			for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
+				(*--it)->OnEvent(event);
 
 			switch (event.type) {
 				case SDL_QUIT:

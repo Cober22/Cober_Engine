@@ -10,6 +10,9 @@
     <Filter Include="Cober\Layers">
       <UniqueIdentifier>{0F53548C-FBB5-E330-A43B-1CE7907DAFB3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Cober\Input">
+      <UniqueIdentifier>{3aba3a53-5076-4236-bd83-237976cd28de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Cober\Application.h">

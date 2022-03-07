@@ -16,9 +16,8 @@ public:
 
 	void OnEvent(SDL_Event& event) override
 	{
-		//SDL_LogInfo(0, (char*)event.type);
-		SDL_LogInfo(0, (char*)event.key.keysym.scancode);
-		//SDL_LogInfo(0, "{0}", event);
+		if (&event != NULL)
+			SDL_LogInfo(0, (char*)event.text.text);
 	}
 };
 

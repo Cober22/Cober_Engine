@@ -40,6 +40,12 @@
     <ClCompile Include="src\Cober\ImGui\ImGuiLayer.cpp">
       <Filter>Cober\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\Cober\ImGui\imgui.cpp">
+      <Filter>Cober\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\ImGui\imgui_draw.cpp">
+      <Filter>Cober\ImGui</Filter>
+    </ClCompile>
     <ClCompile Include="src\Cober\ImGui\imgui_impl_opengl3.cpp">
       <Filter>Cober\ImGui</Filter>
     </ClCompile>
@@ -49,6 +55,9 @@
     <ClCompile Include="src\Cober\ImGui\imgui_tables.cpp">
       <Filter>Cober\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\Cober\ImGui\imgui_widgets.cpp">
+      <Filter>Cober\ImGui</Filter>
+    </ClCompile>
     <ClCompile Include="src\Cober\Layers\Layer.cpp">
       <Filter>Cober\Layers</Filter>
     </ClCompile>
@@ -56,14 +65,5 @@
       <Filter>Cober\Layers</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
-    <ClCompile Include="src\Cober\ImGui\imgui.cpp">
-      <Filter>Cober\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\ImGui\imgui_draw.cpp">
-      <Filter>Cober\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\ImGui\imgui_widgets.cpp">
-      <Filter>Cober\ImGui</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

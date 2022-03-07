@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CB_PLATFORM_WINDOWS;CB_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_CUSTOM=&lt;SDL_opengl.h&gt;;GL_GLEXT_PROTOTYPES=1;CB_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;include;..\libraries\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;include;..\libraries\ImGui;include\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -106,7 +106,7 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CB_PLATFORM_WINDOWS;CB_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_CUSTOM=&lt;SDL_opengl.h&gt;;GL_GLEXT_PROTOTYPES=1;CB_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;include;..\libraries\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;include;..\libraries\ImGui;include\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -136,7 +136,7 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CB_PLATFORM_WINDOWS;CB_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_CUSTOM=&lt;SDL_opengl.h&gt;;GL_GLEXT_PROTOTYPES=1;CB_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;include;..\libraries\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;include;..\libraries\ImGui;include\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -172,8 +172,8 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cober\Application.cpp" />
-    <ClCompile Include="src\Cober\ImGui\imgui.cpp" />
     <ClCompile Include="src\Cober\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Cober\ImGui\imgui.cpp" />
     <ClCompile Include="src\Cober\ImGui\imgui_draw.cpp" />
     <ClCompile Include="src\Cober\ImGui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="src\Cober\ImGui\imgui_impl_sdl.cpp" />

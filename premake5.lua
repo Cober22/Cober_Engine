@@ -11,6 +11,9 @@ workspace "Cober"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+IncludeDir = {}
+IncludeDir["glm"] = "Cober/include/glm"
+
 include "libraries/ImGui"
 
 project "Cober"
@@ -27,14 +30,17 @@ project "Cober"
 	files 
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"include/glm/glm/**.hpp",
+		"include/glm/glm/**.inl"
 	}
 
 	includedirs
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/include",
-		"libraries/ImGui"
+		"libraries/ImGui",
+		"%{IncludeDir.glm}"
 	}
 
 	libdirs 
@@ -105,7 +111,9 @@ project "Sandbox"
 	includedirs
 	{
 		"Cober/include",
-		"Cober/src"
+		"Cober/src",
+		"Cober/include/glm",
+		"%{IncludeDir.glm}"
 	}
 
 	libdirs 

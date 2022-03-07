@@ -5,8 +5,6 @@
 #include "ImGui/imgui_impl_opengl3.h"
 
 namespace Cober {
-	const static int W_WIDTH = 1024;
-	const static int W_HEIGHT = 768;
 
 	Application* Application::s_Instance = nullptr;
 
@@ -25,8 +23,8 @@ namespace Cober {
 		_context = nullptr;
 		_window = nullptr;
 		_renderer = nullptr;
-		_screenWidth = W_WIDTH;
-		_screenHeight = W_HEIGHT;
+		_screenWidth = 1024;
+		_screenHeight = 768;
 		_gameState = GameState::PLAY;
 	}
 
@@ -77,7 +75,7 @@ namespace Cober {
 		if (error != GLEW_OK)
 			fatalError("Could not initialice glew!");
 
-
+		// Init ImGui OpenGl and ImGui SDL2
 		ImGui_ImplSDL2_InitForOpenGL(_window, _context);
 		ImGui_ImplOpenGL3_Init("#version 460");
 
@@ -115,7 +113,7 @@ namespace Cober {
 					_gameState = GameState::EXIT;
 				break;
 				case SDL_MOUSEMOTION:
-					std::cout << event.motion.x << " " << event.motion.y << std::endl;
+					//std::cout << event.motion.x << " " << event.motion.y << std::endl;
 					break;
 			}
 		}

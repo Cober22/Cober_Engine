@@ -1,5 +1,6 @@
-
 #include <Engine.h>
+
+#include "ImGui/imgui.h"
 
 class ExampleLayer : public Cober::Layer
 {
@@ -14,10 +15,16 @@ public:
 		//SDL_LogInfo(0, "ExampleLayer::Update");
 	}
 
+	virtual void OnImGuiRender() override 
+	{
+		ImGui::Begin("Test");
+		ImGui::Text("Hello World");
+		ImGui::End();
+	}
+
 	void OnEvent(SDL_Event& event) override
 	{
-		if (&event != NULL)
-			SDL_LogInfo(0, (char*)event.text.text);
+		SDL_LogInfo(0, (char*)event.text.text);
 	}
 };
 
@@ -27,7 +34,6 @@ public:
 	Sandbox() 
 	{
 		PushLayer(new ExampleLayer());
-		PushOverlay(new Cober::ImGuiLayer());
 	}
 
 	~Sandbox() {

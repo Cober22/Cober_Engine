@@ -1,9 +1,11 @@
 #include "pch.h"
 #include "ImGuiLayer.h"
 
-#include "ImGui/imgui.h"
-#include "ImGui/imgui_impl_opengl3.h"
-#include "ImGui/imgui_impl_sdl.h"
+#include "imgui.h"
+#include "backends/imgui_impl_opengl3.h"
+#include "backends/imgui_impl_sdl.h"
+
+#include "Cober/Application.h"
 
 namespace Cober {
 
@@ -14,9 +16,6 @@ namespace Cober {
 
 	ImGuiLayer::~ImGuiLayer()
 	{
-		ImGui_ImplOpenGL3_Shutdown();
-		ImGui_ImplSDL2_Shutdown();
-		ImGui::DestroyContext();
 	}
 
 	void ImGuiLayer::OnAttach() 
@@ -25,42 +24,58 @@ namespace Cober {
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 
-		ImGui::StyleColorsDark();
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
 		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
+
+		ImGui::StyleColorsDark();
+
+		ImGuiStyle& style = ImGui::GetStyle();
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+
+			style.WindowRounding = 0.0f;
+			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+		}
 	}
 
-	void ImGuiLayer::OnDetach() 
-	{
+	void ImGuiLayer::OnDetach()  {
 
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplSDL2_Shutdown();
+		ImGui::DestroyContext();
 	}
 
-	void ImGuiLayer::OnUpdate() 
-	{
-
-		ImGuiIO& io = ImGui::GetIO();
-		io.DisplaySize = ImVec2(app.GetWindowWidth(), app.GetWindowHeight());
-
-		float time = (float)SDL_GetTicks();
-		io.DeltaTime = m_Time > 0.0 ? (time - m_Time) : (1.0f / 60.0f);
-		m_Time = time;
+	void ImGuiLayer::Begin() {
 
 		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplSDL2_NewFrame(app.GetWindow());
+		ImGui_ImplSDL2_NewFrame();
 		ImGui::NewFrame();
+	}
+
+	void ImGuiLayer::End() {
+
+		ImGuiIO& io = ImGui::GetIO();
+		Application& app = Application::Get();
+		io.DisplaySize = ImVec2((float)app.GetWindowWidth(), (float)app.GetWindowHeight());
+	
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+			SDL_GL_MakeCurrent(app.GetWindow(), app.GetContext());
+		}
+	}
+
+	void ImGuiLayer::OnImGuiRender() {
 
 		static bool show = true;
 		ImGui::ShowDemoWindow(&show);
-
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	}
-
-	void ImGuiLayer::OnEvent(SDL_Event* event)
-	{
-		// Process ImGui Events
-		ImGui_ImplSDL2_ProcessEvent(event);
 	}
 }

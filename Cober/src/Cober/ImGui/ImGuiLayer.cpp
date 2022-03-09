@@ -40,12 +40,6 @@ namespace Cober {
 			style.WindowRounding = 0.0f;
 			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 		}
-
-		Application& app = Application::Get();
-		SDL_Window* window = app.GetWindow().GetNativeWindow();
-
-		ImGui_ImplSDL2_InitForOpenGL(window, app.GetContext());
-		ImGui_ImplOpenGL3_Init("#version 460");
 	}
 
 	void ImGuiLayer::OnDetach()  {
@@ -66,7 +60,7 @@ namespace Cober {
 
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::Get();
-		io.DisplaySize = ImVec2((float)app.GetWindow().GetWidth(), (float)app.GetWindow().GetHeight());
+		io.DisplaySize = ImVec2((float)app.GetWindowWidth(), (float)app.GetWindowHeight());
 	
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -75,7 +69,7 @@ namespace Cober {
 
 			ImGui::UpdatePlatformWindows();
 			ImGui::RenderPlatformWindowsDefault();
-			SDL_GL_MakeCurrent(app.GetWindow().GetNativeWindow(), SDL_GL_GetCurrentContext());
+			SDL_GL_MakeCurrent(app.GetWindow(), app.GetContext());
 		}
 	}
 

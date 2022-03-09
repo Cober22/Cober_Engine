@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "ImGui/ImGuiLayer.h"
 
-#include "backends/imgui_impl_opengl3.h"
 #include "backends/imgui_impl_sdl.h"
+#include "backends/imgui_impl_opengl3.h"
 
 #include "Application.h"
 
@@ -10,11 +10,24 @@ namespace Cober {
 
 	Application* Application::s_Instance = nullptr;
 
+	void fatalError(std::string errorString) {
+
+		std::cout << "errorString" << std::endl;
+		std::cout << "Enter any key to quit...";
+		int tmp;
+		std::cin >> tmp;
+		SDL_Quit();
+	}
+
 	Application::Application() {
 
 		s_Instance = this;
-		_window = Window::Create();
+		_context = nullptr;
+		_window = nullptr;
+		_renderer = nullptr;
 
+		_screenWidth = 1024;
+		_screenHeight = 768;
 		_gameState = GameState::PLAY;
 
 		m_ImGuiLayer = new ImGuiLayer();
@@ -39,7 +52,47 @@ namespace Cober {
 
 	void Application::Run() {
 
-		while (_gameState != GameState::EXIT)
+		Init();
+		GameLoop();
+	}
+
+	void Application::Init() {
+
+		// Initialize SDL
+		SDL_Init(SDL_INIT_EVERYTHING);
+
+		// Open an SDL window
+		_window = SDL_CreateWindow("Graphics Engine",		// Window title
+									SDL_WINDOWPOS_CENTERED,	// posX on screen
+									SDL_WINDOWPOS_CENTERED,	// posY on screen
+									_screenWidth,			// width of the window
+									_screenHeight,			// height of the window
+									SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);		// flags
+		if (_window == nullptr)
+			fatalError("SDL Window could not be created!");
+				
+		// OpenGL context
+		_context = SDL_GL_CreateContext(_window);
+		if (_context == nullptr)
+			fatalError("SDL_GL context could not be created");
+
+		// Set up Glew
+		GLenum error = glewInit();
+		if (error != GLEW_OK)
+			fatalError("Could not initialice glew!");
+
+		// Init ImGui OpenGl and ImGui SDL2
+		ImGui_ImplSDL2_InitForOpenGL(_window, _context);
+		ImGui_ImplOpenGL3_Init("#version 460");
+
+		/*SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);*/
+		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);	
+	}
+
+	void Application::GameLoop() {
+
+		while (_gameState != GameState::EXIT) 
 		{
 			glClearColor(1.0f, 0.5f, 0.2f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -52,9 +105,8 @@ namespace Cober {
 				layer->OnImGuiRender();
 			m_ImGuiLayer->End();
 
-			_window->OnUpdate();
-
 			ProcessInputs();
+			DrawGame();
 		}
 	}
 
@@ -79,5 +131,12 @@ namespace Cober {
 					break;
 			}
 		}
+	}
+
+	void Application::DrawGame() {
+
+
+
+		SDL_GL_SwapWindow(_window);
 	}
 }

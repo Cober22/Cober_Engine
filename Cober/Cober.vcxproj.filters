@@ -10,18 +10,6 @@
     <Filter Include="Cober\Layers">
       <UniqueIdentifier>{0F53548C-FBB5-E330-A43B-1CE7907DAFB3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Cober\Platforms">
-      <UniqueIdentifier>{97E1D32C-036D-41F1-0C7E-C4E578889DF1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Cober\Platforms\OpenGL">
-      <UniqueIdentifier>{EBFABD3A-D7F4-E68C-C061-7D9DACFA4CF9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Cober\Platforms\Windows">
-      <UniqueIdentifier>{D13299EA-3D6A-E181-4674-45A5B22A087B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Cober\Renderer">
-      <UniqueIdentifier>{F6536796-E221-5B9C-CBB5-CBC2B7223701}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Cober\Application.h">
@@ -42,18 +30,6 @@
     <ClInclude Include="src\Cober\Layers\LayerStack.h">
       <Filter>Cober\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Platforms\OpenGL\OpenGLContext.h">
-      <Filter>Cober\Platforms\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cober\Platforms\Windows\WindowsWindow.h">
-      <Filter>Cober\Platforms\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cober\Renderer\GraphicsContext.h">
-      <Filter>Cober\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cober\Window.h">
-      <Filter>Cober</Filter>
-    </ClInclude>
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
@@ -72,12 +48,6 @@
     </ClCompile>
     <ClCompile Include="src\Cober\Layers\LayerStack.cpp">
       <Filter>Cober\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\Platforms\OpenGL\OpenGLContext.cpp">
-      <Filter>Cober\Platforms\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\Platforms\Windows\WindowsWindow.cpp">
-      <Filter>Cober\Platforms\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
   </ItemGroup>

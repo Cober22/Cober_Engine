@@ -50,7 +50,7 @@ namespace Cober {
 									SDL_WINDOWPOS_CENTERED,			// posY on screen
 									(int)m_Data.Width,				// width of the window
 									(int)m_Data.Height,				// height of the window
-									SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI);		// flags
+									SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);		// flags
 
 		m_Context = new OpenGLContext(m_Window);
 		m_Context->Init();

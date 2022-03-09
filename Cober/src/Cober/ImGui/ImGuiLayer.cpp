@@ -29,8 +29,8 @@ namespace Cober {
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
-		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
-		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
+		/*io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
+		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;*/
 
 		ImGui::StyleColorsDark();
 
@@ -75,7 +75,7 @@ namespace Cober {
 
 			ImGui::UpdatePlatformWindows();
 			ImGui::RenderPlatformWindowsDefault();
-			SDL_GL_MakeCurrent(app.GetWindow().GetNativeWindow(), SDL_GL_GetCurrentContext());
+			SDL_GL_MakeCurrent(app.GetWindow().GetNativeWindow(), app.GetContext());
 		}
 	}
 

@@ -4,11 +4,13 @@
 #include "Core.h"
 #include "Layers/LayerStack.h"
 
+#include "ImGui/ImGuiLayer.h"
+
 namespace Cober {
 
 	enum class GameState { PLAY, EXIT };
 
-	class CB_API Application
+	class Application
 	{
 	public:
 		Application();
@@ -30,14 +32,17 @@ namespace Cober {
 		void GameLoop();
 		void ProcessInputs();
 		void DrawGame();
-
+		
 		SDL_Window* _window;
 		SDL_Renderer* _renderer;
 		SDL_GLContext _context;
 		GameState _gameState;
-		int _screenWidth;
-		int _screenHeight;
+
+		ImGuiLayer* m_ImGuiLayer;
 		LayerStack m_LayerStack;
+
+		unsigned int _screenHeight;
+		unsigned int _screenWidth;
 	private:
 		static Application* s_Instance;
 	};

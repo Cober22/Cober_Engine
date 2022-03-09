@@ -13,13 +13,16 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
 IncludeDir["glm"] = "Cober/include/glm"
+IncludeDir["ImGui"] = "Cober/include/ImGui"
 
-include "libraries/ImGui"
+include "Cober/include/ImGui"
 
 project "Cober"
 	location "Cober"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -34,19 +37,25 @@ project "Cober"
 		"include/glm/glm/**.hpp",
 		"include/glm/glm/**.inl"
 	}
+	
+	defines 
+	{
+		"_CRT_SECURE_NO_WARNINGS"
+	}
 
 	includedirs
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/include",
-		"libraries/ImGui",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.glm}",
+		"%{prj.name}/include/SDL"
 	}
 
 	libdirs 
 	{
 		"%{prj.name}/lib",
-		"libraries/ImGui"
+		"%{IncludeDir.ImGui}"
 	}
 
 	links 
@@ -59,7 +68,6 @@ project "Cober"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		staticruntime "On"
 		systemversion "latest"
 
@@ -81,23 +89,25 @@ project "Cober"
 
 	filter "configurations:Debug"
 		defines "CB_DEBUG"
-		buildoptions "/MDd"
-		symbols "On"
+		-- buildoptions "/MDd"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "CB_RELEASE"
-		buildoptions "/MD"
-		optimize "On"
+		-- buildoptions "/MD"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "CB_DIST"
-		buildoptions "/MD"
-		optimize "On"
+		-- buildoptions "/MD"
+		optimize "on"
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -112,27 +122,15 @@ project "Sandbox"
 	{
 		"Cober/include",
 		"Cober/src",
-		"Cober/include/glm",
 		"%{IncludeDir.glm}"
-	}
-
-	libdirs 
-	{
-		"Cober/lib"
 	}
 
 	links 
 	{
-		"Cober",
-		"SDL2",
-		"SDL2main",
-		"opengl32",
-		"glew32"
+		"Cober"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines 
@@ -142,12 +140,12 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "CB_DEBUG"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "CB_RELEASE"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "CB_DIST"
-		optimize "On"
+		optimize "on"

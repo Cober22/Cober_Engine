@@ -1,8 +1,10 @@
 #include "pch.h"
-#include "Application.h"
+#include "ImGui/ImGuiLayer.h"
 
-#include "ImGui/imgui_impl_sdl.h"
-#include "ImGui/imgui_impl_opengl3.h"
+#include "backends/imgui_impl_sdl.h"
+#include "backends/imgui_impl_opengl3.h"
+
+#include "Application.h"
 
 namespace Cober {
 
@@ -23,9 +25,13 @@ namespace Cober {
 		_context = nullptr;
 		_window = nullptr;
 		_renderer = nullptr;
+
 		_screenWidth = 1024;
 		_screenHeight = 768;
 		_gameState = GameState::PLAY;
+
+		m_ImGuiLayer = new ImGuiLayer();
+		PushOverlay(m_ImGuiLayer);
 	}
 
 	Application::~Application() {
@@ -52,7 +58,7 @@ namespace Cober {
 
 	void Application::Init() {
 
-		//// Initialize SDL
+		// Initialize SDL
 		SDL_Init(SDL_INIT_EVERYTHING);
 
 		// Open an SDL window
@@ -79,8 +85,8 @@ namespace Cober {
 		ImGui_ImplSDL2_InitForOpenGL(_window, _context);
 		ImGui_ImplOpenGL3_Init("#version 460");
 
-		//SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-		//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+		/*SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);*/
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);	
 	}
 
@@ -94,6 +100,11 @@ namespace Cober {
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
 
+			m_ImGuiLayer->Begin();
+			for (Layer* layer : m_LayerStack)
+				layer->OnImGuiRender();
+			m_ImGuiLayer->End();
+
 			ProcessInputs();
 			DrawGame();
 		}
@@ -105,9 +116,10 @@ namespace Cober {
 
 		// Dispatcher events
 		while (SDL_PollEvent(&event)) {
+			
+			ImGui_ImplSDL2_ProcessEvent(&event);
 
-			// Process Layer Events
-			for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
+			for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 				(*--it)->OnEvent(event);
 
 			switch (event.type) {

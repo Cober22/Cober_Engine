@@ -16,8 +16,12 @@ public:
 
 	void OnEvent(SDL_Event& event) override
 	{
+<<<<<<< Updated upstream
 		if (&event != NULL)
 			SDL_LogInfo(0, (char*)event.text.text);
+=======
+		//SDL_LogInfo(0, (char*)event.text.text);
+>>>>>>> Stashed changes
 	}
 };
 

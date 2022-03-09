@@ -10,11 +10,25 @@
     <Filter Include="Cober\Layers">
       <UniqueIdentifier>{0F53548C-FBB5-E330-A43B-1CE7907DAFB3}</UniqueIdentifier>
     </Filter>
+<<<<<<< Updated upstream
     <Filter Include="Cober\Input">
       <UniqueIdentifier>{3aba3a53-5076-4236-bd83-237976cd28de}</UniqueIdentifier>
     </Filter>
     <Filter Include="Cober\ImGui\dep">
       <UniqueIdentifier>{d42570af-147a-4506-874c-3e4c7a5ca948}</UniqueIdentifier>
+=======
+    <Filter Include="Cober\Renderer">
+      <UniqueIdentifier>{7bb61f5c-1bbf-4d98-bae9-cfcfb6458dff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cober\Platforms">
+      <UniqueIdentifier>{7989bacd-a515-48a9-b3fc-46ed2486b161}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cober\Platforms\Windows">
+      <UniqueIdentifier>{cce8e782-5ba8-4c05-bfb5-694a4504b778}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cober\Platforms\OpenGL">
+      <UniqueIdentifier>{7328a70f-89a6-4d67-9cb3-8477768ae9f4}</UniqueIdentifier>
+>>>>>>> Stashed changes
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -38,6 +52,18 @@
     </ClInclude>
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\Cober\Platforms\OpenGL\OpenGLContext.h">
+      <Filter>Cober\Platforms\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Platforms\Windows\WindowsWindow.h">
+      <Filter>Cober\Platforms\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\GraphicsContext.h">
+      <Filter>Cober\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Window.h">
+      <Filter>Cober</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cober\Application.cpp">
@@ -53,6 +79,7 @@
       <Filter>Cober\Layers</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+<<<<<<< Updated upstream
     <ClCompile Include="src\Cober\ImGui\imgui.cpp">
       <Filter>Cober\ImGui\dep</Filter>
     </ClCompile>
@@ -70,6 +97,13 @@
     </ClCompile>
     <ClCompile Include="src\Cober\ImGui\imgui_widgets.cpp">
       <Filter>Cober\ImGui\dep</Filter>
+=======
+    <ClCompile Include="src\Cober\Platforms\OpenGL\OpenGLContext.cpp">
+      <Filter>Cober\Platforms\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Platforms\Windows\WindowsWindow.cpp">
+      <Filter>Cober\Platforms\Windows</Filter>
+>>>>>>> Stashed changes
     </ClCompile>
   </ItemGroup>
 </Project>

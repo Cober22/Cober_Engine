@@ -3,6 +3,7 @@
 #include "pch.h"
 #include "Core.h"
 #include "Layers/LayerStack.h"
+#include "Window.h"
 
 namespace Cober {
 
@@ -19,25 +20,31 @@ namespace Cober {
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
 
+		inline Window& GetWindow() { return *_window; }
+
 		inline static Application& Get() { return *s_Instance; }
-		inline SDL_Window* GetWindow() { return _window; }
-		inline SDL_Renderer* GetRenderer() { return _renderer; }
-		inline SDL_GLContext GetContext() { return _context; }
-		inline int GetWindowWidth() { return _screenHeight; }
-		inline int GetWindowHeight() { return _screenWidth; }
 	private:
 		void Init();
 		void GameLoop();
 		void ProcessInputs();
+<<<<<<< Updated upstream
 		void DrawGame();
 
 		SDL_Window* _window;
 		SDL_Renderer* _renderer;
 		SDL_GLContext _context;
+=======
+
+		std::unique_ptr<Window> _window;
+>>>>>>> Stashed changes
 		GameState _gameState;
 		int _screenWidth;
 		int _screenHeight;
 		LayerStack m_LayerStack;
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 	private:
 		static Application* s_Instance;
 	};

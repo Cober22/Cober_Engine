@@ -13,13 +13,13 @@
     <Filter Include="Cober\Renderer">
       <UniqueIdentifier>{F6536796-E221-5B9C-CBB5-CBC2B7223701}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Cober\Platforms">
+    <Filter Include="Platforms">
       <UniqueIdentifier>{97E1D32C-036D-41F1-0C7E-C4E578889DF1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Cober\Platforms\OpenGL">
+    <Filter Include="Platforms\OpenGL">
       <UniqueIdentifier>{EBFABD3A-D7F4-E68C-C061-7D9DACFA4CF9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Cober\Platforms\Windows">
+    <Filter Include="Platforms\Windows">
       <UniqueIdentifier>{D13299EA-3D6A-E181-4674-45A5B22A087B}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -42,12 +42,6 @@
     <ClInclude Include="src\Cober\Layers\LayerStack.h">
       <Filter>Cober\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Platforms\OpenGL\OpenGLContext.h">
-      <Filter>Cober\Platforms\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cober\Platforms\Windows\WindowsWindow.h">
-      <Filter>Cober\Platforms\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h">
       <Filter>Cober\Renderer</Filter>
     </ClInclude>
@@ -56,6 +50,21 @@
     </ClInclude>
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\Cober\Renderer\Buffer.h">
+      <Filter>Cober\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\Renderer.h">
+      <Filter>Cober\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Windows\WindowsWindow.h">
+      <Filter>Platforms\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLContext.h">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cober\Application.cpp">
@@ -73,12 +82,21 @@
     <ClCompile Include="src\Cober\Layers\LayerStack.cpp">
       <Filter>Cober\Layers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cober\Platforms\OpenGL\OpenGLContext.cpp">
-      <Filter>Cober\Platforms\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\Platforms\Windows\WindowsWindow.cpp">
-      <Filter>Cober\Platforms\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Cober\Renderer\Buffer.cpp">
+      <Filter>Cober\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\Renderer.cpp">
+      <Filter>Cober\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platforms\Windows\WindowsWindow.cpp">
+      <Filter>Platforms\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

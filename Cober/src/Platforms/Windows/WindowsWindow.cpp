@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "WindowsWindow.h"
 
-#include "Cober/Platforms/OpenGL/OpenGLContext.h"
+#include "Platforms/OpenGL/OpenGLContext.h"
 
 namespace Cober {
 

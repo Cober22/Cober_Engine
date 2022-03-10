@@ -164,12 +164,15 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
     <ClInclude Include="src\Cober\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Cober\Layers\Layer.h" />
     <ClInclude Include="src\Cober\Layers\LayerStack.h" />
-    <ClInclude Include="src\Cober\Platforms\OpenGL\OpenGLContext.h" />
-    <ClInclude Include="src\Cober\Platforms\Windows\WindowsWindow.h" />
+    <ClInclude Include="src\Cober\Renderer\Buffer.h" />
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Cober\Renderer\Renderer.h" />
     <ClInclude Include="src\Cober\Window.h" />
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h" />
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Platforms\Windows\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cober\Application.cpp" />
@@ -177,11 +180,14 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
     <ClCompile Include="src\Cober\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Cober\Layers\Layer.cpp" />
     <ClCompile Include="src\Cober\Layers\LayerStack.cpp" />
-    <ClCompile Include="src\Cober\Platforms\OpenGL\OpenGLContext.cpp" />
-    <ClCompile Include="src\Cober\Platforms\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\Cober\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Cober\Renderer\Renderer.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Platforms\Windows\WindowsWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="include\ImGui\ImGui.vcxproj">

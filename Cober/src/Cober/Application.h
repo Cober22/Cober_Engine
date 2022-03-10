@@ -39,10 +39,10 @@ namespace Cober {
 		ImGuiLayer* m_ImGuiLayer;
 		LayerStack m_LayerStack;
 
-		//std::unique_ptr<VertexBuffer> m_VertexBuffer;
-		//std::unique_ptr<IndexBuffer> m_IndexBuffer;
+		unsigned int m_VertexArray;//, m_VertexBuffer, m_IndexBuffer;
+		std::unique_ptr<VertexBuffer> m_VertexBuffer;
+		std::unique_ptr<IndexBuffer> m_IndexBuffer;
 
-		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
 
 	private:
 		static Application* s_Instance;

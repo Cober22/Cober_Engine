@@ -84,4 +84,9 @@ namespace Cober {
 		static bool show = true;
 		ImGui::ShowDemoWindow(&show);
 	}
+
+	void ImGuiLayer::OnEvent(SDL_Event& event) {
+
+		ImGui_ImplSDL2_ProcessEvent(&event);
+	}
 }

@@ -8,6 +8,7 @@
 
 #include "ImGui/ImGuiLayer.h"
 #include "Cober/Renderer/Buffer.h"
+#include "Cober/Renderer/Shader.h"
 
 namespace Cober {
 
@@ -42,8 +43,7 @@ namespace Cober {
 		unsigned int m_VertexArray;//, m_VertexBuffer, m_IndexBuffer;
 		std::unique_ptr<VertexBuffer> m_VertexBuffer;
 		std::unique_ptr<IndexBuffer> m_IndexBuffer;
-
-
+		std::unique_ptr<Shader> m_Shader;
 	private:
 		static Application* s_Instance;
 	};

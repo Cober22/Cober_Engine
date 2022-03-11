@@ -21,8 +21,8 @@ namespace Cober {
 		glBindVertexArray(m_VertexArray);
 
 		float vertices[3 * 3] = {
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
+			-0.33f, -0.5f, 1.0f,
+			 0.33f, -0.5f, 0.0f,
 			 0.0f,  0.5f, 0.0f
 		};
 
@@ -33,6 +33,35 @@ namespace Cober {
 
 		uint32_t indices[3] = { 0, 1, 2 };
 		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+
+		// SHADER (PROVISIONAL)
+		// Vertex 
+		std::string vertexSrc = R"(
+			#version 330 core
+
+			layout(location = 0) in vec3 a_Position;
+			out vec3 v_Position;
+
+			void main() 
+			{
+				v_Position = a_Position;
+				gl_Position = vec4(a_Position, 1.0);	
+			}
+		)";
+
+		std::string fragmentSrc = R"(
+			#version 330 core
+
+			layout(location = 0) out vec4 color;
+			in vec3 v_Position;
+
+			void main() 
+			{
+				color = vec4(v_Position * 0.5 + 0.5, 1.0);	
+			}
+		)";
+
+		m_Shader.reset(new Shader(vertexSrc, fragmentSrc));
 	}
 
 	Application::~Application() {
@@ -58,6 +87,7 @@ namespace Cober {
 			glClearColor(1.0f, 0.5f, 0.2f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+			m_Shader->Bind();
 			// DRAW TRIANGLE!
 			glBindVertexArray(m_VertexArray);
 			glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount() , GL_UNSIGNED_INT, nullptr);

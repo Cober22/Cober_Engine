@@ -65,6 +65,9 @@
     <ClInclude Include="src\Platforms\OpenGL\OpenGLContext.h">
       <Filter>Platforms\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\Shader.h">
+      <Filter>Cober\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cober\Application.cpp">
@@ -97,6 +100,9 @@
     </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp">
       <Filter>Platforms\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\Shader.cpp">
+      <Filter>Cober\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

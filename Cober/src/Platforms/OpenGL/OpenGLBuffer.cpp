@@ -3,7 +3,7 @@
 
 namespace Cober {
 
-	// [--------------------------------------------]
+	// [---------------------------------------------]
 	// [--------------- VERTEX BUFFER ---------------]
 	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size)
 	{

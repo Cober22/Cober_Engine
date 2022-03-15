@@ -86,6 +86,9 @@
     <ClInclude Include="src\Cober\Log.h">
       <Filter>Cober</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLShader.h">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cober\Application.cpp">
@@ -136,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="src\Cober\Renderer\RendererAPI.cpp">
       <Filter>Cober\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLShader.cpp">
+      <Filter>Platforms\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -63,7 +63,7 @@ public:
 			}
 		)";
 
-		m_Shader.reset(new Cober::Shader(vertexSrc, fragmentSrc));
+		m_Shader.reset(Cober::Shader::Create(vertexSrc, fragmentSrc));
 	}
 
 	void OnUpdate() override

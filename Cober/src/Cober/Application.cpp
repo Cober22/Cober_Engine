@@ -6,27 +6,6 @@ namespace Cober {
 
 	Application* Application::s_Instance = nullptr;
 
-	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type) 
-	{
-		switch (type)
-		{
-			case Cober::ShaderDataType::Float:		return GL_FLOAT;
-			case Cober::ShaderDataType::Float2:		return GL_FLOAT;
-			case Cober::ShaderDataType::Float3:		return GL_FLOAT;
-			case Cober::ShaderDataType::Float4:		return GL_FLOAT;
-			case Cober::ShaderDataType::Mat3:		return GL_FLOAT;
-			case Cober::ShaderDataType::Mat4:		return GL_FLOAT;
-			case Cober::ShaderDataType::Int:		return GL_INT;
-			case Cober::ShaderDataType::Int2:		return GL_INT;
-			case Cober::ShaderDataType::Int3:		return GL_INT;
-			case Cober::ShaderDataType::Int4:		return GL_INT;
-			case Cober::ShaderDataType::Bool:		return GL_BOOL;
-		}
-
-		SDL_LogInfo(0, "Uknown Shader Data Type!");
-		return 0;
-	}
-
 	Application::Application() {
 
 		s_Instance = this;
@@ -38,8 +17,7 @@ namespace Cober {
 		PushOverlay(m_ImGuiLayer);
 
 		// FIRST TRIANGLE!
-		glGenVertexArrays(1, &m_VertexArray);
-		glBindVertexArray(m_VertexArray);
+		m_VertexArray.reset(VertexArray::Create());
 
 		float vertices[3 * 7] = {
 			-0.33f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
@@ -47,31 +25,20 @@ namespace Cober {
 			 0.0f,   0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
 
-		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+		std::shared_ptr<VertexBuffer> vertexBuffer;
+		vertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+		BufferLayout layout = {
+			{ ShaderDataType::Float3, "a_Position" },
+			{ ShaderDataType::Float4, "a_Color"  }
+		};
+		vertexBuffer->SetLayout(layout);
+		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
-		{
-			BufferLayout layout = {
-				{ ShaderDataType::Float3, "a_Position" },
-				{ ShaderDataType::Float4, "a_Color" }
-			};
-			m_VertexBuffer->SetLayout(layout);
-		}
-
-		uint32_t index = 0;
-		const auto& layout = m_VertexBuffer->GetLayout();
-		for (const auto& element : layout) {
-			glEnableVertexAttribArray(index);
-			glVertexAttribPointer(index, 
-				element.GetComponentCount(),
-				ShaderDataTypeToOpenGLBaseType(element.Type),
-				element.Normalized ? GL_TRUE : GL_FALSE, 
-				layout.GetStride(),
-				(const void*)element.Offset);
-			index++;
-		}
-
+		
 		uint32_t indices[3] = { 0, 1, 2 };
-		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		std::shared_ptr<IndexBuffer> indexBuffer;
+		indexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 		// SHADER (PROVISIONAL)
 		// Vertex 
@@ -134,9 +101,9 @@ namespace Cober {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			m_Shader->Bind();
+			m_VertexArray->Bind();
 			// DRAW TRIANGLE!
-			glBindVertexArray(m_VertexArray);
-			glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount() , GL_UNSIGNED_INT, nullptr);
+			glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount() , GL_UNSIGNED_INT, nullptr);
 
 			ProcessInputs();
 

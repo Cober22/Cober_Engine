@@ -68,6 +68,12 @@
     <ClInclude Include="src\Cober\Renderer\Shader.h">
       <Filter>Cober\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\VertexArray.h">
+      <Filter>Cober\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLVertexArray.h">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cober\Application.cpp">
@@ -103,6 +109,12 @@
     </ClCompile>
     <ClCompile Include="src\Cober\Renderer\Shader.cpp">
       <Filter>Cober\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\VertexArray.cpp">
+      <Filter>Cober\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLVertexArray.cpp">
+      <Filter>Platforms\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

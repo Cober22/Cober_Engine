@@ -4,8 +4,20 @@
 #include "Cober/Application.h"
 #include "Cober/Layers/Layer.h"
 
+
+// [---- UI ----]
 #include "Cober/ImGui/ImGuiLayer.h"
 
+// [---- Renderer ----]
+#include "Cober/Renderer/Renderer.h"
+#include "Cober/Renderer/RenderCommand.h"
 
-//[---- Entry Point ----]
+#include "Cober/Renderer/Buffer.h"
+#include "Cober/Renderer/Shader.h"
+#include "Cober/Renderer/VertexArray.h"
+
+//#include "Cober/Renderer/OrtographicCamera.h"
+
+
+// [---- Entry Point ----]
 #include "Cober/EntryPoint.h"

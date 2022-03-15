@@ -3,6 +3,7 @@
 #include "pch.h"
 
 #include "Cober/Core.h"
+#include <SDL/SDL.h>
 
 namespace Cober {
 

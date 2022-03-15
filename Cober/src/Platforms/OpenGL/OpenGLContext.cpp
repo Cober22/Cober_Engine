@@ -2,7 +2,10 @@
 #include "OpenGLContext.h"
 
 #include "Cober/Application.h"
+
+#include <Glew/Glew.h>
 #include <GL/GL.h>
+#include <SDL/SDL.h>
 
 namespace Cober {
 

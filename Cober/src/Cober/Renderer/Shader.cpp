@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "Shader.h"
 
+#include <Glew/Glew.h>
+#include <SDL/SDL.h>
+
 namespace Cober {
 
 	Shader::Shader(const std::string& vertexSrc, const std::string& fragmentSrc) {

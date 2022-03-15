@@ -12,9 +12,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include <SDL/SDL.h>
-#include <Glew/Glew.h>
-
+//#include <SDL/SDL.h>
 	
 #ifdef CB_PLATFORM_WINDOWS
 	#include <Windows.h>

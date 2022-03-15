@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include <SDL/SDL.h>
 namespace Cober {
 
 	enum class ShaderDataType

@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "OpenGLBuffer.h"
 
+#include <Glew/Glew.h>
+
 namespace Cober {
 
 	// [---------------------------------------------]

@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "Platforms/OpenGL/OpenGLVertexArray.h"
 
+#include <SDL/SDL.h>
 
 namespace Cober {
 
@@ -11,8 +12,8 @@ namespace Cober {
 
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::None:    SDL_LogInfo(0, "RendererAPI::None is currently not supported!");	//CB_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-		case RendererAPI::OpenGL:  return new OpenGLVertexArray();
+		case RendererAPI::API::None:    SDL_LogInfo(0, "RendererAPI::None is currently not supported!");	//CB_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
+		case RendererAPI::API::OpenGL:  return new OpenGLVertexArray();
 		}
 
 		SDL_LogInfo(0, "Unknown RendererAPI!");	//CB_CORE_ASSERT(false, "Unknown RendererAPI!");

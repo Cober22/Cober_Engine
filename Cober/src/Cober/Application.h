@@ -11,6 +11,8 @@
 #include "Cober/Renderer/Buffer.h"
 #include "Cober/Renderer/VertexArray.h"
 
+#include <SDL/SDL.h>
+
 namespace Cober {
 
 	enum class GameState { PLAY, EXIT };

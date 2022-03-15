@@ -1,6 +1,10 @@
 #include "pch.h"
 
 #include "Application.h"
+#include "Cober/Renderer/Renderer.h"
+
+//Quitar cuando sea abstraido
+#include <SDL/SDL.h>
 
 namespace Cober {
 
@@ -97,13 +101,19 @@ namespace Cober {
 
 		while (_gameState != GameState::EXIT)
 		{
-			glClearColor(1.0f, 0.5f, 0.2f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			RenderCommand::SetClearColor({ 1.0f, 0.5f, 0.2f, 1.0f });
+			//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			RenderCommand::Clear();
+
+			Renderer::BeginScene();
 
 			m_Shader->Bind();
-			m_VertexArray->Bind();
-			// DRAW TRIANGLE!
-			glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount() , GL_UNSIGNED_INT, nullptr);
+			Renderer::Submit(m_VertexArray);
+
+			Renderer::EndScene();
+			
+			//m_VertexArray->Bind();
+			//glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount() , GL_UNSIGNED_INT, nullptr);
 
 			ProcessInputs();
 

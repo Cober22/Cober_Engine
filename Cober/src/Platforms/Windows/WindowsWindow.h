@@ -3,6 +3,8 @@
 #include "Cober/Window.h"
 #include "Cober/Renderer/GraphicsContext.h"
 
+#include <SDL/SDL.h>
+
 namespace Cober {
 
 	class WindowsWindow : public Window

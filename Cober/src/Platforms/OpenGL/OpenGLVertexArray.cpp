@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "OpenGLVertexArray.h"
 
+#include <Glew/Glew.h>
+#include <SDL/SDL.h>
 
 namespace Cober {
 

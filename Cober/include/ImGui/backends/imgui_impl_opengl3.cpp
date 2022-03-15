@@ -91,6 +91,8 @@
 
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
+#include <Glew/Glew.h>
+//#include <SDL/SDL.h>
 #include <stdio.h>
 #if defined(_MSC_VER) && _MSC_VER <= 1500 // MSVC 2008 or earlier
 #include <stddef.h>     // intptr_t

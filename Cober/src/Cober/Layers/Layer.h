@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Cober/Core.h"
+#include <SDL/SDL.h>
 
 namespace Cober {
 	

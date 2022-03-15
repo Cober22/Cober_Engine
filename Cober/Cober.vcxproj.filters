@@ -74,6 +74,15 @@
     <ClInclude Include="src\Platforms\OpenGL\OpenGLVertexArray.h">
       <Filter>Platforms\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\RenderCommand.h">
+      <Filter>Cober\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLRendererAPI.h">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\RendererAPI.h">
+      <Filter>Cober\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cober\Application.cpp">
@@ -115,6 +124,15 @@
     </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\OpenGLVertexArray.cpp">
       <Filter>Platforms\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\RenderCommand.cpp">
+      <Filter>Cober\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\RendererAPI.cpp">
+      <Filter>Cober\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

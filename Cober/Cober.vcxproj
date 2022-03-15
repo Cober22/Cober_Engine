@@ -166,7 +166,9 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
     <ClInclude Include="src\Cober\Layers\LayerStack.h" />
     <ClInclude Include="src\Cober\Renderer\Buffer.h" />
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Cober\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Cober\Renderer\Renderer.h" />
+    <ClInclude Include="src\Cober\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Cober\Renderer\Shader.h" />
     <ClInclude Include="src\Cober\Renderer\VertexArray.h" />
     <ClInclude Include="src\Cober\Window.h" />
@@ -174,6 +176,7 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Platforms\Windows\WindowsWindow.h" />
   </ItemGroup>
@@ -184,7 +187,9 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
     <ClCompile Include="src\Cober\Layers\Layer.cpp" />
     <ClCompile Include="src\Cober\Layers\LayerStack.cpp" />
     <ClCompile Include="src\Cober\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Cober\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Cober\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Cober\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Cober\Renderer\Shader.cpp" />
     <ClCompile Include="src\Cober\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\pch.cpp">
@@ -192,6 +197,7 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
     </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platforms\Windows\WindowsWindow.cpp" />
   </ItemGroup>

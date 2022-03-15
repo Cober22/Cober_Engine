@@ -164,6 +164,7 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
     <ClInclude Include="src\Cober\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Cober\Layers\Layer.h" />
     <ClInclude Include="src\Cober\Layers\LayerStack.h" />
+    <ClInclude Include="src\Cober\Log.h" />
     <ClInclude Include="src\Cober\Renderer\Buffer.h" />
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Cober\Renderer\RenderCommand.h" />

@@ -6,20 +6,16 @@
 	#error CoberEngine only supports Windows!
 #endif
 
-
 #ifdef CB_DEBUG
 	#define CB_ENABLE_ASSERTS
 #endif
 
-// TODO: Log Abtraction
-//#ifdef CB_ENABLE_ASSERTS
-//	#define CB_ASSERT(x, ...) { if(!(x)) { CB_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-//	#define CB_CORE_ASSERT(x, ...) { if(!(x)) { CB_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-//#else
-//	#define CB_ASSERT(x, ...)
-//	#define CB_CORE_ASSERT(x, ...)
-//#endif
-//
+#ifdef CB_ENABLE_ASSERTS
+	#define CB_ASSERT(x, ...) { if(!(x)) { CB_LogError(1, __VA_ARGS__); __debugbreak(); } }
+#else
+	#define CB_ASSERT(x, ...)
+#endif
+
 //#define BIT(x) (1 << x)
 
 

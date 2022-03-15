@@ -7,6 +7,8 @@
 
 #include "Cober/Application.h"
 
+#include <SDL/SDL.h>
+
 namespace Cober {
 
 	ImGuiLayer::ImGuiLayer()
@@ -42,9 +44,7 @@ namespace Cober {
 		}
 
 		Application& app = Application::Get();
-		SDL_Window* window = app.GetWindow().GetNativeWindow();
-
-		ImGui_ImplSDL2_InitForOpenGL(window, app.GetContext());
+		ImGui_ImplSDL2_InitForOpenGL(app.GetWindow().GetNativeWindow(), app.GetContext());
 		ImGui_ImplOpenGL3_Init("#version 460");
 	}
 

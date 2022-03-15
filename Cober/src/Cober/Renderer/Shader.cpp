@@ -2,7 +2,6 @@
 #include "Shader.h"
 
 #include <Glew/Glew.h>
-#include <SDL/SDL.h>
 
 namespace Cober {
 
@@ -36,8 +35,8 @@ namespace Cober {
 			// We don't need the shader anymore.
 			glDeleteShader(vertexShader);
 
-			SDL_LogError(0, ("{0}", infoLog.data()));
-			SDL_LogError(0, "Vertex shader compilation failure!");
+			CB_LogError(LOG_RENDER, ("{0}", (const char*)infoLog.data()));
+			CB_LogError(LOG_RENDER, "Vertex shader compilation failure!");
 		}
 
 		// [--------------------------------------------]
@@ -69,8 +68,8 @@ namespace Cober {
 			glDeleteShader(vertexShader);
 
 			// Use the infoLog as you see fit.
-			SDL_LogError(0, ("{0}", infoLog.data()));
-			SDL_LogError(0, "Fragment shader compilation failure!");
+			CB_LogError(LOG_RENDER, "Fragment shader compilation failure!");
+			CB_LogError(LOG_RENDER, ("{0}", (const char*)infoLog.data()));
 
 			// In this simple program, we'll just leave
 			return;
@@ -108,8 +107,8 @@ namespace Cober {
 			glDeleteShader(fragmentShader);
 
 			// Use the infoLog as you see fit.
-			SDL_LogError(0, ("{0}", infoLog.data()));
-			SDL_LogError(0, "Shader link failure!");
+			CB_LogError(LOG_RENDER, ("{0}", (const char*)infoLog.data()));
+			CB_LogError(LOG_RENDER, "Shader link failure!");
 
 			// In this simple program, we'll just leave
 			return;

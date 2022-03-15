@@ -12,7 +12,7 @@ namespace Cober {
 	OpenGLContext::OpenGLContext(SDL_Window* windowHandle)
 		: m_WindowHandle(windowHandle)
 	{
-		//CB_CORE_ASSERT(windowHandle, "Window handle is null")
+		CB_ASSERT(windowHandle, "Window handle is null");
 	}
 
 	void OpenGLContext::Init()
@@ -22,8 +22,8 @@ namespace Cober {
 		SDL_GL_MakeCurrent(m_WindowHandle, m_ContextHandle);
 
 		GLenum error = glewInit();
-		//if (error != GLEW_OK)
-		//	//CB_CORE_ASSERT(error, "Failed to initialize Glad!");
+		if (error != GLEW_OK)
+			CB_ASSERT(false, ("{0}, Failed to initialize Glad!", (const char*)error));
 
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	}

@@ -3,6 +3,7 @@
 // For use by Cober applications
 #include "Cober/Application.h"
 #include "Cober/Layers/Layer.h"
+#include "Cober/Log.h"
 
 
 // [---- UI ----]

@@ -11,11 +11,11 @@ namespace Cober {
 
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::API::None:    SDL_LogInfo(0, "RendererAPI::None is currently not supported!");	//CB_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
+		case RendererAPI::API::None:    CB_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
 		case RendererAPI::API::OpenGL:  return new OpenGLVertexBuffer(vertices, size);
 		}
 
-		SDL_LogInfo(0, "Unknown RendererAPI!");	//CB_CORE_ASSERT(false, "Unknown RendererAPI!");
+		CB_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
 	}
 
@@ -23,11 +23,11 @@ namespace Cober {
 
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::API::None:    SDL_LogInfo(0, "RendererAPI::None is currently not supported!");	//CB_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
+		case RendererAPI::API::None:    CB_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
 		case RendererAPI::API::OpenGL:  return new OpenGLIndexBuffer(indices, size);
 		}
 
-		SDL_LogInfo(0, "Unknown RendererAPI!");	//CB_CORE_ASSERT(false, "Unknown RendererAPI!");
+		CB_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
 	}
 }

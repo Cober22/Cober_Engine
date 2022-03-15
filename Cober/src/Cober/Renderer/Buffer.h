@@ -1,6 +1,5 @@
 #pragma once
 
-#include <SDL/SDL.h>
 namespace Cober {
 
 	enum class ShaderDataType
@@ -25,7 +24,7 @@ namespace Cober {
 			case ShaderDataType::Bool:		return 1;
 		}
 
-		SDL_LogInfo(0, "Unknown Shader Data Type!");
+		CB_LogInfo(LOG_RENDER, "Unknown Shader Data Type!");
 		return 0;
 	}
 
@@ -59,7 +58,7 @@ namespace Cober {
 				case ShaderDataType::Bool:		return 1;
 			}
 
-			SDL_LogInfo(0, "Unwknown Shader Type!");
+			CB_LogInfo(LOG_RENDER, "Unwknown Shader Type!");
 			return 0;
 		}
 	};
@@ -126,6 +125,4 @@ namespace Cober {
 
 		static IndexBuffer* Create(uint32_t* indices, uint32_t size);
 	};
-
-
 }

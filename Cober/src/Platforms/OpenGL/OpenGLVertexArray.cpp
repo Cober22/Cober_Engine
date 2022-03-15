@@ -2,7 +2,6 @@
 #include "OpenGLVertexArray.h"
 
 #include <Glew/Glew.h>
-#include <SDL/SDL.h>
 
 namespace Cober {
 
@@ -23,7 +22,7 @@ namespace Cober {
 			case Cober::ShaderDataType::Bool:		return GL_BOOL;
 		}
 
-		SDL_LogInfo(0, "Uknown Shader Data Type!");
+		CB_LogInfo(LOG_RENDER, "Uknown Shader Data Type!");
 		return 0;
 	}
 
@@ -49,7 +48,7 @@ namespace Cober {
 
 	void OpenGLVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer)
 	{
-		SDL_LogInfo(0, "Size: {0} - VertexBuffer has no layout!", vertexBuffer->GetLayout().GetElements().size());
+		CB_LogInfo(LOG_RENDER, ("Size: {0} - VertexBuffer has no layout!", (const char*)vertexBuffer->GetLayout().GetElements().size()));
 		
 		glBindVertexArray(m_RendererID);
 		vertexBuffer->Bind();

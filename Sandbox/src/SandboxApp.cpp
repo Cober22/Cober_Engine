@@ -1,19 +1,20 @@
 #include <Engine.h>
 
 #include "ImGui/imgui.h"
+#include "Cober/Renderer/OrthographicCamera.h"
 
 class ExampleLayer : public Cober::Layer
 {
 public:
 	ExampleLayer() 
-		: Layer("Example")//, m_Camera(-1.6f, 1.6f, -0.9f, 0.9f)
+		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f)
 	{
 		m_VertexArray.reset(Cober::VertexArray::Create());
 
 		float vertices[3 * 7] = {
-			-0.33f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-			 0.33f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-			 0.0f,   0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
+			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
+			 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
+			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
 
 		std::shared_ptr<Cober::VertexBuffer> vertexBuffer;
@@ -37,6 +38,8 @@ public:
 			layout(location = 0) in vec3 a_Position;
 			layout(location = 1) in vec4 a_Color;
 
+			uniform mat4 u_ViewProjection;
+
 			out vec3 v_Position;
 			out vec4 v_Color;
 
@@ -44,7 +47,7 @@ public:
 			{
 				v_Position = a_Position;
 				v_Color = a_Color;
-				gl_Position = vec4(a_Position, 1.0);	
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);	
 			}
 		)";
 
@@ -53,12 +56,10 @@ public:
 
 			layout(location = 0) out vec4 color;
 
-			in vec3 v_Position;
 			in vec4 v_Color;
 
 			void main() 
 			{
-				color = vec4(v_Position * 0.5 + 0.5, 1.0);	
 				color = v_Color;
 			}
 		)";
@@ -71,15 +72,42 @@ public:
 		Cober::RenderCommand::SetClearColor({ 1.0f, 0.5f, 0.2f, 1.0f });
 		Cober::RenderCommand::Clear();
 
-		//m_Camera.SetPosition({ 0.5f, 0.5f, 0.0f });
+		m_Camera.SetPosition(m_CameraPosition);
 		//m_Camera.SetRotation(45.0f);
 
-		Cober::Renderer::BeginScene();
-
-		m_Shader->Bind();
-		Cober::Renderer::Submit(m_VertexArray);
+		Cober::Renderer::BeginScene(m_Camera);
+		
+		Cober::Renderer::Submit(m_Shader, m_VertexArray);
 
 		Cober::Renderer::EndScene();
+
+
+		SDL_Event event;
+
+		// Dispatcher events
+		while (SDL_PollEvent(&event)) {
+			if (event.type == SDL_KEYDOWN) {
+				switch (event.key.keysym.sym) {
+					std::cout << "SDIJAOISDJIOAJSIDIO" << std::endl;
+					case SDLK_LEFT:
+						std::cout << "LEFT" << std::endl;
+						m_CameraPosition.x += m_CameraSpeed;
+						break;
+					case SDLK_RIGHT:
+						std::cout << "RIGHT" << std::endl;
+						m_CameraPosition.x -= m_CameraSpeed;
+						break;
+					case SDLK_DOWN:
+						std::cout << "DOWN" << std::endl;
+						m_CameraPosition.y += m_CameraSpeed;
+						break;
+					case SDLK_UP:
+						std::cout << "UP" << std::endl;
+						m_CameraPosition.y -= m_CameraSpeed;
+						break;
+				}
+			}
+		}
 	}
 
 	virtual void OnImGuiRender() override 
@@ -94,7 +122,9 @@ private:
 	std::shared_ptr<Cober::Shader> m_Shader;
 	std::shared_ptr<Cober::VertexArray> m_VertexArray;
 
-	//Cober::OrtographicCamera m_Camera;
+	Cober::OrthographicCamera m_Camera;
+	glm::vec3 m_CameraPosition;
+	float m_CameraSpeed = 0.1f;
 };
 
 class Sandbox : public Cober::Application {

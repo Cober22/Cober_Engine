@@ -89,6 +89,9 @@
     <ClInclude Include="src\Platforms\OpenGL\OpenGLShader.h">
       <Filter>Platforms\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\OrthographicCamera.h">
+      <Filter>Cober\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cober\Application.cpp">
@@ -142,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\OpenGLShader.cpp">
       <Filter>Platforms\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\OrthographicCamera.cpp">
+      <Filter>Cober\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

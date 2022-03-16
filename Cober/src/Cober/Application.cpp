@@ -57,22 +57,19 @@ namespace Cober {
 
 	void Application::ProcessInputs() {
 
-		SDL_Event event;
-		
-		// Dispatcher events
-		while (SDL_PollEvent(&event)) {
-			
-			for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
-				(*--it)->OnEvent(event);
+		//SDL_Event event;
+		//
+		//// Dispatcher events
+		//while (SDL_PollEvent(&event)) {
+		//	
+		//	for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
+		//		(*--it)->OnEvent(event);
 
-			switch (event.type) {
-				case SDL_QUIT:
-					_gameState = GameState::EXIT;
-				break;
-				case SDL_MOUSEMOTION:
-					//std::cout << event.motion.x << " " << event.motion.y << std::endl;
-					break;
-			}
-		}
+		//	switch (event.type) {
+		//		case SDL_QUIT:
+		//			_gameState = GameState::EXIT;
+		//		break;
+		//	}
+		//}
 	}
 }

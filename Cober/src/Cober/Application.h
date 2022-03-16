@@ -42,7 +42,6 @@ namespace Cober {
 
 		ImGuiLayer* m_ImGuiLayer;
 		LayerStack m_LayerStack;
-
 	private:
 		static Application* s_Instance;
 	};

@@ -1,4 +1,3 @@
-
 #include "pch.h"
 #include "OpenGLShader.h"
 
@@ -8,15 +7,44 @@
 
 namespace Cober {
 
-	OpenGLShader::OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc)
+	OpenGLShader::OpenGLShader(const char* vertexPath, const char* fragmentPath)
 	{
+		// 1. retrieve the vertex/fragment source code from filePath
+		std::string vertexCode;
+		std::string fragmentCode;
+		std::ifstream vShaderFile;
+		std::ifstream fShaderFile;
+		// ensure ifstream objects can throw exceptions;
+		vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+		fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+		try{
+			// open files
+			vShaderFile.open(vertexPath);
+			fShaderFile.open(fragmentPath);
+			std::stringstream vShaderStream, fShaderStream;
+			// read file's buffer contents into streams
+			vShaderStream << vShaderFile.rdbuf();
+			fShaderStream << fShaderFile.rdbuf();
+			// close file handlers
+			vShaderFile.close();
+			fShaderFile.close();
+			// convert stream into string;
+			vertexCode = vShaderStream.str();
+			fragmentCode = fShaderStream.str();
+		}
+		catch(std::ifstream::failure e) {
+			CB_LogError(LOG_APP, "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ");
+		}
+		const char* vShaderCode = vertexCode.c_str();
+		const char* fShaderCode = fragmentCode.c_str();
+
+		// 2. compile shaders
 		// Create an empty vertex shader handle
 		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
 		// Send the vertex shader source code to GL
 		// Note that std::string's .c_str is NULL character terminated.
-		const GLchar* source = vertexSrc.c_str();
-		glShaderSource(vertexShader, 1, &source, 0);
+		glShaderSource(vertexShader, 1, &vShaderCode, 0);
 
 		// Compile the vertex shader
 		glCompileShader(vertexShader);
@@ -43,8 +71,7 @@ namespace Cober {
 
 		// Send the fragment shader source code to GL
 		// Note that std::string's .c_str is NULL character terminated.
-		source = (const GLchar*)fragmentSrc.c_str();
-		glShaderSource(fragmentShader, 1, &source, 0);
+		glShaderSource(fragmentShader, 1, &fShaderCode, 0);
 
 		// Compile the fragment shader
 		glCompileShader(fragmentShader);
@@ -129,6 +156,21 @@ namespace Cober {
 	void OpenGLShader::Unbind() const
 	{
 		glUseProgram(0);
+	}
+
+	void OpenGLShader::SetBool(const std::string& name, bool value) const
+	{
+		glUniform1i(glGetUniformLocation(m_RendererID, name.c_str()), (int)value);
+	}
+
+	void OpenGLShader::SetInt(const std::string& name, bool value) const
+	{
+		glUniform1i(glGetUniformLocation(m_RendererID, name.c_str()), (int)value);
+	}
+
+	void OpenGLShader::SetFloat(const std::string& name, bool value) const
+	{
+		glUniform1i(glGetUniformLocation(m_RendererID, name.c_str()), (int)value);
 	}
 
 	void OpenGLShader::UploadUniformMat4(const std::string& name, const glm::mat4& matrix) const

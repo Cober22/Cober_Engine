@@ -3,9 +3,6 @@
 #include "Application.h"
 #include "Cober/Renderer/Renderer.h"
 
-//Quitar cuando sea abstraido
-#include <SDL/SDL.h>
-
 namespace Cober {
 
 	Application* Application::s_Instance = nullptr;

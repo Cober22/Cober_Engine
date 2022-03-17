@@ -26,45 +26,12 @@ public:
 		vertexBuffer->SetLayout(layout);
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
-
 		uint32_t indices[3] = { 0, 1, 2 };
 		std::shared_ptr<Cober::IndexBuffer> indexBuffer;
 		indexBuffer.reset(Cober::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
-		std::string vertexSrc = R"(
-			#version 330 core
-
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec4 a_Color;
-
-			uniform mat4 u_ViewProjection;
-
-			out vec3 v_Position;
-			out vec4 v_Color;
-
-			void main() 
-			{
-				v_Position = a_Position;
-				v_Color = a_Color;
-				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);	
-			}
-		)";
-
-		std::string fragmentSrc = R"(
-			#version 330 core
-
-			layout(location = 0) out vec4 color;
-
-			in vec4 v_Color;
-
-			void main() 
-			{
-				color = v_Color;
-			}
-		)";
-
-		m_Shader.reset(Cober::Shader::Create(vertexSrc, fragmentSrc));
+		m_Shader.reset(Cober::Shader::Create("Shaders/shader.vs", "Shaders/shader.fs"));
 	}
 
 	void OnUpdate() override

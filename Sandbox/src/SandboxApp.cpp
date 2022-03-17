@@ -1,7 +1,6 @@
 #include <Engine.h>
 
 #include "ImGui/imgui.h"
-#include "Cober/Renderer/OrthographicCamera.h"
 
 class ExampleLayer : public Cober::Layer
 {
@@ -34,7 +33,7 @@ public:
 		m_Shader.reset(Cober::Shader::Create("Shaders/shader.vs", "Shaders/shader.fs"));
 	}
 
-	void OnUpdate() override
+	void OnUpdate(Cober::Timestep ts) override
 	{
 		Cober::RenderCommand::SetClearColor({ 1.0f, 0.5f, 0.2f, 1.0f });
 		Cober::RenderCommand::Clear();
@@ -58,19 +57,19 @@ public:
 					std::cout << "SDIJAOISDJIOAJSIDIO" << std::endl;
 					case SDLK_LEFT:
 						std::cout << "LEFT" << std::endl;
-						m_CameraPosition.x += m_CameraSpeed;
+						m_CameraPosition.x += m_CameraSpeed * ts;
 						break;
 					case SDLK_RIGHT:
 						std::cout << "RIGHT" << std::endl;
-						m_CameraPosition.x -= m_CameraSpeed;
+						m_CameraPosition.x -= m_CameraSpeed * ts;
 						break;
 					case SDLK_DOWN:
 						std::cout << "DOWN" << std::endl;
-						m_CameraPosition.y += m_CameraSpeed;
+						m_CameraPosition.y += m_CameraSpeed * ts;
 						break;
 					case SDLK_UP:
 						std::cout << "UP" << std::endl;
-						m_CameraPosition.y -= m_CameraSpeed;
+						m_CameraPosition.y -= m_CameraSpeed * ts;
 						break;
 				}
 			}
@@ -91,7 +90,7 @@ private:
 
 	Cober::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
-	float m_CameraSpeed = 0.1f;
+	float m_CameraSpeed = 1.0f;
 };
 
 class Sandbox : public Cober::Application {

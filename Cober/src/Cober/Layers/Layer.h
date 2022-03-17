@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Cober/Core.h"
+
+#include "Cober/Timestep.h"
+
 #include <SDL/SDL.h>
 
 namespace Cober {
@@ -13,7 +16,7 @@ namespace Cober {
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(Timestep ts) {}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(SDL_Event& event) {}
 

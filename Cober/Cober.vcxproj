@@ -161,6 +161,14 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
     <ClInclude Include="src\Cober\Application.h" />
     <ClInclude Include="src\Cober\Core.h" />
     <ClInclude Include="src\Cober\EntryPoint.h" />
+    <ClInclude Include="src\Cober\Events\Codes\ControllerCodes.h" />
+    <ClInclude Include="src\Cober\Events\Codes\KeyCodes.h" />
+    <ClInclude Include="src\Cober\Events\Codes\MouseCodes.h" />
+    <ClInclude Include="src\Cober\Events\Event.h" />
+    <ClInclude Include="src\Cober\Events\Input.h" />
+    <ClInclude Include="src\Cober\Events\KeyEvent.h" />
+    <ClInclude Include="src\Cober\Events\MouseEvent.h" />
+    <ClInclude Include="src\Cober\Events\WindowEvent.h" />
     <ClInclude Include="src\Cober\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Cober\Layers\Layer.h" />
     <ClInclude Include="src\Cober\Layers\LayerStack.h" />
@@ -173,15 +181,16 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
     <ClInclude Include="src\Cober\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Cober\Renderer\Shader.h" />
     <ClInclude Include="src\Cober\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Cober\Timestep.h" />
     <ClInclude Include="src\Cober\Window.h" />
     <ClInclude Include="src\Engine.h" />
-    <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Platforms\Windows\WindowsWindow.h" />
+    <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cober\Application.cpp" />
@@ -196,15 +205,15 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
     <ClCompile Include="src\Cober\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Cober\Renderer\Shader.cpp" />
     <ClCompile Include="src\Cober\Renderer\VertexArray.cpp" />
-    <ClCompile Include="src\pch.cpp">
-      <PrecompiledHeader>Create</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platforms\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="include\ImGui\ImGui.vcxproj">

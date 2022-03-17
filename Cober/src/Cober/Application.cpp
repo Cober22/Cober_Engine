@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include "Application.h"
+#include "Cober/Timestep.h"
 #include "Cober/Renderer/Renderer.h"
 
 namespace Cober {
@@ -40,8 +41,12 @@ namespace Cober {
 		{
 			ProcessInputs();
 
+			float time = (float)(SDL_GetTicks() / 1000.0f);
+			Timestep timestep = time - m_LastFrameTime;
+			m_LastFrameTime = time;
+
 			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate();
+				layer->OnUpdate(timestep);
 
 			m_ImGuiLayer->Begin();
 			for (Layer* layer : m_LayerStack)

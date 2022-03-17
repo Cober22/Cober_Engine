@@ -4,6 +4,12 @@
     <Filter Include="Cober">
       <UniqueIdentifier>{50F6F90C-BC0A-22BE-858C-C51DF15F1EEF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Cober\Events">
+      <UniqueIdentifier>{3468717D-20CB-0022-C950-39D8B592CCA4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cober\Events\Codes">
+      <UniqueIdentifier>{713351CC-5D17-1222-C677-0C75B27AFCA3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Cober\ImGui">
       <UniqueIdentifier>{7AE7551B-E69C-CE10-6F91-C8E7DB45C514}</UniqueIdentifier>
     </Filter>
@@ -14,13 +20,13 @@
       <UniqueIdentifier>{F6536796-E221-5B9C-CBB5-CBC2B7223701}</UniqueIdentifier>
     </Filter>
     <Filter Include="Platforms">
-      <UniqueIdentifier>{97E1D32C-036D-41F1-0C7E-C4E578889DF1}</UniqueIdentifier>
+      <UniqueIdentifier>{DDACA145-4917-56BC-9255-0762FEFE3311}</UniqueIdentifier>
     </Filter>
     <Filter Include="Platforms\OpenGL">
-      <UniqueIdentifier>{EBFABD3A-D7F4-E68C-C061-7D9DACFA4CF9}</UniqueIdentifier>
+      <UniqueIdentifier>{719BB998-5D94-D8EA-86C6-BD6F721EB8F6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Platforms\Windows">
-      <UniqueIdentifier>{D13299EA-3D6A-E181-4674-45A5B22A087B}</UniqueIdentifier>
+      <UniqueIdentifier>{17E40808-83FA-069E-CC71-92BF38C7D725}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -33,6 +39,30 @@
     <ClInclude Include="src\Cober\EntryPoint.h">
       <Filter>Cober</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\Events\Codes\ControllerCodes.h">
+      <Filter>Cober\Events\Codes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Events\Codes\KeyCodes.h">
+      <Filter>Cober\Events\Codes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Events\Codes\MouseCodes.h">
+      <Filter>Cober\Events\Codes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Events\Event.h">
+      <Filter>Cober\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Events\Input.h">
+      <Filter>Cober\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Events\KeyEvent.h">
+      <Filter>Cober\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Events\MouseEvent.h">
+      <Filter>Cober\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Events\WindowEvent.h">
+      <Filter>Cober\Events</Filter>
+    </ClInclude>
     <ClInclude Include="src\Cober\ImGui\ImGuiLayer.h">
       <Filter>Cober\ImGui</Filter>
     </ClInclude>
@@ -42,28 +72,26 @@
     <ClInclude Include="src\Cober\Layers\LayerStack.h">
       <Filter>Cober\Layers</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\Log.h">
+      <Filter>Cober</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\Buffer.h">
+      <Filter>Cober\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h">
       <Filter>Cober\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Window.h">
-      <Filter>Cober</Filter>
+    <ClInclude Include="src\Cober\Renderer\OrthographicCamera.h">
+      <Filter>Cober\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine.h" />
-    <ClInclude Include="src\pch.h" />
-    <ClInclude Include="src\Cober\Renderer\Buffer.h">
+    <ClInclude Include="src\Cober\Renderer\RenderCommand.h">
       <Filter>Cober\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Renderer.h">
       <Filter>Cober\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platforms\Windows\WindowsWindow.h">
-      <Filter>Platforms\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h">
-      <Filter>Platforms\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLContext.h">
-      <Filter>Platforms\OpenGL</Filter>
+    <ClInclude Include="src\Cober\Renderer\RendererAPI.h">
+      <Filter>Cober\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Shader.h">
       <Filter>Cober\Renderer</Filter>
@@ -71,26 +99,31 @@
     <ClInclude Include="src\Cober\Renderer\VertexArray.h">
       <Filter>Cober\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLVertexArray.h">
+    <ClInclude Include="src\Cober\Window.h">
+      <Filter>Cober</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine.h" />
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h">
       <Filter>Platforms\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Renderer\RenderCommand.h">
-      <Filter>Cober\Renderer</Filter>
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLContext.h">
+      <Filter>Platforms\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platforms\OpenGL\OpenGLRendererAPI.h">
       <Filter>Platforms\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Renderer\RendererAPI.h">
-      <Filter>Cober\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cober\Log.h">
-      <Filter>Cober</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platforms\OpenGL\OpenGLShader.h">
       <Filter>Platforms\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Renderer\OrthographicCamera.h">
-      <Filter>Cober\Renderer</Filter>
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLVertexArray.h">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platforms\Windows\WindowsWindow.h">
+      <Filter>Platforms\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\Cober\Timestep.h">
+      <Filter>Cober</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -109,21 +142,20 @@
     <ClCompile Include="src\Cober\Layers\LayerStack.cpp">
       <Filter>Cober\Layers</Filter>
     </ClCompile>
-    <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="src\Cober\Renderer\Buffer.cpp">
+      <Filter>Cober\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\OrthographicCamera.cpp">
+      <Filter>Cober\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\RenderCommand.cpp">
       <Filter>Cober\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\Renderer\Renderer.cpp">
       <Filter>Cober\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platforms\Windows\WindowsWindow.cpp">
-      <Filter>Platforms\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp">
-      <Filter>Platforms\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp">
-      <Filter>Platforms\OpenGL</Filter>
+    <ClCompile Include="src\Cober\Renderer\RendererAPI.cpp">
+      <Filter>Cober\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\Renderer\Shader.cpp">
       <Filter>Cober\Renderer</Filter>
@@ -131,23 +163,24 @@
     <ClCompile Include="src\Cober\Renderer\VertexArray.cpp">
       <Filter>Cober\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLVertexArray.cpp">
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp">
       <Filter>Platforms\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\RenderCommand.cpp">
-      <Filter>Cober\Renderer</Filter>
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp">
+      <Filter>Platforms\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\OpenGLRendererAPI.cpp">
       <Filter>Platforms\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\RendererAPI.cpp">
-      <Filter>Cober\Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\OpenGLShader.cpp">
       <Filter>Platforms\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\OrthographicCamera.cpp">
-      <Filter>Cober\Renderer</Filter>
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLVertexArray.cpp">
+      <Filter>Platforms\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platforms\Windows\WindowsWindow.cpp">
+      <Filter>Platforms\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pch.cpp" />
   </ItemGroup>
 </Project>

@@ -28,6 +28,12 @@
     <Filter Include="Platforms\Windows">
       <UniqueIdentifier>{17E40808-83FA-069E-CC71-92BF38C7D725}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Cober\Renderer\API">
+      <UniqueIdentifier>{4ed0d8e6-8dec-4755-a0a2-0144e345415c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cober\Renderer\Camera">
+      <UniqueIdentifier>{ecc856be-169d-4026-8d47-440d35cdbc4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Cober\Application.h">
@@ -81,16 +87,7 @@
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h">
       <Filter>Cober\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Renderer\OrthographicCamera.h">
-      <Filter>Cober\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cober\Renderer\RenderCommand.h">
-      <Filter>Cober\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Renderer.h">
-      <Filter>Cober\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cober\Renderer\RendererAPI.h">
       <Filter>Cober\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Shader.h">
@@ -125,6 +122,15 @@
     <ClInclude Include="src\Cober\Timestep.h">
       <Filter>Cober</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\Camera\OrthographicCamera.h">
+      <Filter>Cober\Renderer\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\API\RenderCommand.h">
+      <Filter>Cober\Renderer\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\API\RendererAPI.h">
+      <Filter>Cober\Renderer\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cober\Application.cpp">
@@ -145,16 +151,7 @@
     <ClCompile Include="src\Cober\Renderer\Buffer.cpp">
       <Filter>Cober\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\OrthographicCamera.cpp">
-      <Filter>Cober\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\RenderCommand.cpp">
-      <Filter>Cober\Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="src\Cober\Renderer\Renderer.cpp">
-      <Filter>Cober\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\RendererAPI.cpp">
       <Filter>Cober\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\Renderer\Shader.cpp">
@@ -182,5 +179,14 @@
       <Filter>Platforms\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Cober\Renderer\Camera\OrthographicCamera.cpp">
+      <Filter>Cober\Renderer\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\API\RenderCommand.cpp">
+      <Filter>Cober\Renderer\API</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\API\RendererAPI.cpp">
+      <Filter>Cober\Renderer\API</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

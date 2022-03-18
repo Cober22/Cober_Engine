@@ -18,14 +18,14 @@
 
 // [---- Renderer ----]
 #include "Cober/Renderer/Renderer.h"
-#include "Cober/Renderer/RenderCommand.h"
+#include "Cober/Renderer/API/RenderCommand.h"
 
 #include "Cober/Renderer/Buffer.h"
 #include "Cober/Renderer/Shader.h"
 #include "Cober/Renderer/VertexArray.h"
 
 // [---- CAMERA ----]
-#include "Cober/Renderer/OrthographicCamera.h"
+#include "Cober/Renderer/Camera/OrthographicCamera.h"
 
 
 // [---- Entry Point ----]

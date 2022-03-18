@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RendererAPI.h"
+#include "Cober/Renderer/API/RendererAPI.h"
 
 namespace Cober {
 
@@ -18,7 +18,7 @@ namespace Cober {
 			s_RendererAPI->Clear();
 		}
 
-		inline static void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray) 
+		inline static void DrawIndexed(const Ref<VertexArray>& vertexArray) 
 		{
 			s_RendererAPI->DrawIndexed(vertexArray);
 		}

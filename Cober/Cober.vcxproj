@@ -158,6 +158,7 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\stb_image\stb_image.h" />
     <ClInclude Include="src\Cober\Application.h" />
     <ClInclude Include="src\Cober\Core.h" />
     <ClInclude Include="src\Cober\EntryPoint.h" />
@@ -180,6 +181,7 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Cober\Renderer\Renderer.h" />
     <ClInclude Include="src\Cober\Renderer\Shader.h" />
+    <ClInclude Include="src\Cober\Renderer\Texture.h" />
     <ClInclude Include="src\Cober\Renderer\VertexArray.h" />
     <ClInclude Include="src\Cober\Timestep.h" />
     <ClInclude Include="src\Cober\Window.h" />
@@ -188,11 +190,13 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
     <ClInclude Include="src\Platforms\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLTexture2D.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Platforms\Windows\WindowsWindow.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\stb_image\stb_image.cpp" />
     <ClCompile Include="src\Cober\Application.cpp" />
     <ClCompile Include="src\Cober\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Cober\ImGui\ImGuiLayer.cpp" />
@@ -204,11 +208,13 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
     <ClCompile Include="src\Cober\Renderer\Camera\OrthographicCamera.cpp" />
     <ClCompile Include="src\Cober\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Cober\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Cober\Renderer\Texture.cpp" />
     <ClCompile Include="src\Cober\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLTexture2D.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platforms\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\pch.cpp">

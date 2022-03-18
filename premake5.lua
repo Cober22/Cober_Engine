@@ -12,10 +12,15 @@ workspace "Cober"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
+IncludeDir["Glew"] = "Cober/include/Glew"
 IncludeDir["glm"] = "Cober/include/glm"
 IncludeDir["ImGui"] = "Cober/include/ImGui"
+IncludeDir["SDL"] = "Cober/include/SDL"
+IncludeDir["stb_image"] = "Cober/include/stb_image"
 
-include "Cober/include/ImGui"
+group "Dependencies"
+	include "Cober/include/ImGui"
+group ""
 
 project "Cober"
 	location "Cober"
@@ -34,6 +39,8 @@ project "Cober"
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/include/**.cpp",
+		"%{prj.name}/include/**.h",
 		"include/glm/glm/**.hpp",
 		"include/glm/glm/**.inl"
 	}
@@ -47,9 +54,11 @@ project "Cober"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/include",
-		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.Glew}",
 		"%{IncludeDir.glm}",
-		"%{prj.name}/include/SDL"
+		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.SDL}",
+		"%{IncludeDir.stb_image}"
 	}
 
 	libdirs 

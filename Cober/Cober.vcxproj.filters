@@ -131,6 +131,13 @@
     <ClInclude Include="src\Cober\Renderer\API\RendererAPI.h">
       <Filter>Cober\Renderer\API</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLTexture2D.h">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\stb_image\stb_image.h" />
+    <ClInclude Include="src\Cober\Renderer\Texture.h">
+      <Filter>Cober\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cober\Application.cpp">
@@ -187,6 +194,13 @@
     </ClCompile>
     <ClCompile Include="src\Cober\Renderer\API\RendererAPI.cpp">
       <Filter>Cober\Renderer\API</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLTexture2D.cpp">
+      <Filter>Platforms\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="include\stb_image\stb_image.cpp" />
+    <ClCompile Include="src\Cober\Renderer\Texture.cpp">
+      <Filter>Cober\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

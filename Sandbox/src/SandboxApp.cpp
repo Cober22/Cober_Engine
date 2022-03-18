@@ -16,17 +16,17 @@ public:
 		// [---------- TRIANGLE ----------]
 		m_TriangleVAO.reset(Cober::VertexArray::Create());
 
-		float vertices[3 * 7] = {
-			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-			 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
+		float vertices[3 * 5] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 
+			 0.0f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
 		Cober::Ref<Cober::VertexBuffer> vertexBuffer;
 		vertexBuffer.reset(Cober::VertexBuffer::Create(vertices, sizeof(vertices)));
 		Cober::BufferLayout layout = {
 			{ Cober::ShaderDataType::Float3, "a_Position" },
-			{ Cober::ShaderDataType::Float4, "a_Color"  }
+			{ Cober::ShaderDataType::Float2, "a_TextCoord" },
 		};
 		vertexBuffer->SetLayout(layout);
 		m_TriangleVAO->AddVertexBuffer(vertexBuffer);
@@ -35,7 +35,6 @@ public:
 		Cober::Ref<Cober::IndexBuffer> indexBuffer;
 		indexBuffer.reset(Cober::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_TriangleVAO->SetIndexBuffer(indexBuffer);
-
 
 		// [---------- SQUARE ----------]
 		m_SquareVAO.reset(Cober::VertexArray::Create());
@@ -62,14 +61,34 @@ public:
 
 		m_ShaderTriangle.reset(Cober::Shader::Create("Shaders/triangle.vs", "Shaders/triangle.fs"));
 		m_ShaderSquare.reset(Cober::Shader::Create("Shaders/square.vs", "Shaders/square.fs"));
+		m_ShaderTexture.reset(Cober::Shader::Create("Shaders/texture.vs", "Shaders/texture.fs"));
+
+		m_Texture = Cober::Texture2D::Create("Assets/Textures/Checkerboard.png");
+
+		std::dynamic_pointer_cast<Cober::OpenGLShader>(m_ShaderTexture)->Bind();
+		std::dynamic_pointer_cast<Cober::OpenGLShader>(m_ShaderTexture)->UploadUniformInt("u_Texture", 0);
 	}
 
 	void OnUpdate(Cober::Timestep ts) override
 	{
 		Cober::RenderCommand::SetClearColor({ 1.0f, 0.5f, 0.2f, 1.0f });
-		Cober::RenderCommand::Clear();
-		this->ts = ts;
+		Cober::RenderCommand::Clear(); 
 
+
+		// [---------- INPUTS ----------]
+		const Uint8* keystate = SDL_GetKeyboardState(NULL);
+		// --- Arrow keys
+		if (keystate[SDL_SCANCODE_LEFT])	{ m_CameraPosition.x += m_CameraSpeed * ts; }
+		if (keystate[SDL_SCANCODE_RIGHT])	{ m_CameraPosition.x -= m_CameraSpeed * ts; }
+		if (keystate[SDL_SCANCODE_DOWN])	{ m_CameraPosition.y += m_CameraSpeed * ts; }
+		if (keystate[SDL_SCANCODE_UP])		{ m_CameraPosition.y -= m_CameraSpeed * ts; }
+		// --- Keyboard keys
+		if (keystate[SDL_SCANCODE_A])		{ m_TrianglePosition.x -= m_CameraSpeed * ts; }
+		if (keystate[SDL_SCANCODE_D])		{ m_TrianglePosition.x += m_CameraSpeed * ts; }
+		if (keystate[SDL_SCANCODE_S])		{ m_TrianglePosition.y -= m_CameraSpeed * ts; }
+		if (keystate[SDL_SCANCODE_W])		{ m_TrianglePosition.y += m_CameraSpeed * ts; }
+		
+		
 		m_Camera.SetPosition(m_CameraPosition);
 		
 		Cober::Renderer::BeginScene(m_Camera);
@@ -83,17 +102,13 @@ public:
 			for (int x = 0; x < 20; x++) {
 				glm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
 				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos + m_TrianglePosition) * scale;
-
-				/*if (x % 2 == 0)
-					m_FlatColorShader->UploadUniformFloat4("u_Color", redColor);
-				else
-					m_FlatColorShader->UploadUniformFloat4("u_Color", blueColor);*/
-
 				Cober::Renderer::Submit(m_ShaderSquare, m_SquareVAO, transform);
 			}
 
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_TrianglePosition);
-		Cober::Renderer::Submit(m_ShaderTriangle, m_TriangleVAO);
+		m_Texture->Bind();
+		Cober::Renderer::Submit(m_ShaderTexture, m_TriangleVAO, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+		//Cober::Renderer::Submit(m_ShaderTriangle, m_TriangleVAO);
 
 		Cober::Renderer::EndScene();
 	}
@@ -107,32 +122,25 @@ public:
 
 	void OnEvent(SDL_Event& event) override
 	{
-		// --- Arrow keys
-		if (event.key.keysym.sym == SDLK_LEFT) { m_CameraPosition.x += m_CameraSpeed * ts; }
-		if (event.key.keysym.sym == SDLK_RIGHT) { m_CameraPosition.x -= m_CameraSpeed * ts; }
-		if (event.key.keysym.sym == SDLK_DOWN) { m_CameraPosition.y += m_CameraSpeed * ts; }
-		if (event.key.keysym.sym == SDLK_UP) { m_CameraPosition.y -= m_CameraSpeed * ts; }
-		// --- Keyboard keys
-		if (event.key.keysym.sym == SDLK_a) { m_TrianglePosition.x -= m_CameraSpeed * ts; }
-		if (event.key.keysym.sym == SDLK_d) { m_TrianglePosition.x += m_CameraSpeed * ts; }
-		if (event.key.keysym.sym == SDLK_s) { m_TrianglePosition.y -= m_CameraSpeed * ts; }
-		if (event.key.keysym.sym == SDLK_w) { m_TrianglePosition.y += m_CameraSpeed * ts; }
 	}
 
 private:
-	Cober::Ref<Cober::Shader> m_ShaderTriangle;
-	Cober::Ref<Cober::VertexArray> m_TriangleVAO;
 	
-	Cober::Ref<Cober::Shader> m_ShaderSquare;
-	Cober::Ref<Cober::VertexArray> m_SquareVAO;
+	// Render
+	Cober::Ref<Cober::Shader> m_ShaderTriangle, m_ShaderSquare, m_ShaderTexture;
+	Cober::Ref<Cober::VertexArray> m_TriangleVAO, m_SquareVAO;
+	Cober::Ref<Cober::Texture2D> m_Texture;
 
+	// Render - Attributes
+	glm::vec3 m_TrianglePosition;
+	glm::vec3 m_SquareColor = { 0.2f, 0.3f, 0.8f };
+	
+	// Camera
 	Cober::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
 	float m_CameraSpeed = 1.0f;
-
-	glm::vec3 m_TrianglePosition;
-	glm::vec3 m_SquareColor = { 0.2f, 0.3f, 0.8f };
-
+	
+	// Timer
 	Cober::Timestep ts;
 };
 

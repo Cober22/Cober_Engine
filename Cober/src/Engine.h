@@ -23,6 +23,8 @@
 #include "Cober/Renderer/Buffer.h"
 #include "Cober/Renderer/Shader.h"
 #include "Cober/Renderer/VertexArray.h"
+#include "Cober/Renderer/Texture.h"
+
 
 // [---- CAMERA ----]
 #include "Cober/Renderer/Camera/OrthographicCamera.h"

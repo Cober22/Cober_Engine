@@ -2,7 +2,7 @@
 
 #include "ImGui/imgui.h"
 #include "Platforms/OpenGL/OpenGLShader.h"
-#include "Cober/Layers/LayerStack.h"
+//#include "Cober/Layers/LayerStack.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -59,9 +59,9 @@ public:
 		m_SquareVAO->SetIndexBuffer(squareIB);
 
 
-		m_ShaderTriangle.reset(Cober::Shader::Create("Shaders/triangle.vs", "Shaders/triangle.fs"));
-		m_ShaderSquare.reset(Cober::Shader::Create("Shaders/square.vs", "Shaders/square.fs"));
-		m_ShaderTexture.reset(Cober::Shader::Create("Shaders/texture.vs", "Shaders/texture.fs"));
+		m_ShaderTriangle.reset(Cober::Shader::Create("Assets/Shaders/Triangle.glsl"));
+		m_ShaderSquare.reset(Cober::Shader::Create("Assets/Shaders/Square.glsl"));
+		m_ShaderTexture.reset(Cober::Shader::Create("Assets/Shaders/Texture.glsl"));
 
 		m_Texture = Cober::Texture2D::Create("Assets/Textures/Checkerboard.png");
 

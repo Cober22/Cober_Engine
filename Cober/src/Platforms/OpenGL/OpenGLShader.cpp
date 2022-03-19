@@ -25,6 +25,13 @@ namespace Cober {
 		std::string source = ReadFile(filePath);
 		auto shaderSources = PreProcess(source);
 		Compile(shaderSources);
+
+		// Extract name from filePath
+		auto lastSlash = filePath.find_last_of("/\\");
+		lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+		auto lastDot = filePath.rfind('.');
+		auto count = lastDot == std::string::npos ? filePath.size() - lastSlash : lastDot - lastSlash;
+		m_Name = filePath.substr(lastSlash, count);
 	}
 
 	OpenGLShader::~OpenGLShader()
@@ -32,10 +39,14 @@ namespace Cober {
 		glDeleteProgram(m_RendererID);
 	}
 
+	const std::string& OpenGLShader::GetName() const {
+		return m_Name;
+	}
+
 	std::string OpenGLShader::ReadFile(const std::string& filePath) 
 	{
 		std::string result;
-		std::ifstream in(filePath, std::ios::in, std::ios::binary);
+		std::ifstream in(filePath, std::ios::in | std::ios::binary);
 		if (in)
 		{
 			in.seekg(0, std::ios::end);
@@ -80,7 +91,9 @@ namespace Cober {
 	void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources) 
 	{
 		GLuint program = glCreateProgram();
-		std::vector<GLenum> glShaderIDs(shaderSources.size());
+		CB_ASSERT(shaderSources.size() <= 2, "We only support 2 shaders for now");
+		std::array<GLenum, 2> glShaderIDs;
+		int glShaderIDIndex = 0;
 		for (auto& kv : shaderSources)
 		{
 			GLenum type = kv.first;
@@ -116,7 +129,7 @@ namespace Cober {
 			}
 			glAttachShader(program, shader);
 			// Keep track of the shader id's
-			glShaderIDs.push_back(shader);
+			glShaderIDs[glShaderIDIndex++] = shader;
 		}
 
 		m_RendererID = program;

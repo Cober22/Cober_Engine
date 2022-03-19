@@ -59,14 +59,14 @@ public:
 		m_SquareVAO->SetIndexBuffer(squareIB);
 
 
-		m_ShaderTriangle.reset(Cober::Shader::Create("Assets/Shaders/Triangle.glsl"));
-		m_ShaderSquare.reset(Cober::Shader::Create("Assets/Shaders/Square.glsl"));
-		m_ShaderTexture.reset(Cober::Shader::Create("Assets/Shaders/Texture.glsl"));
+		m_ShaderTriangle = Cober::Shader::Create("Assets/Shaders/Triangle.glsl");
+		m_ShaderSquare = Cober::Shader::Create("Assets/Shaders/Square.glsl");
+		auto textureShader = m_ShaderLibrary.Load("Assets/Shaders/Texture.glsl");
 
 		m_Texture = Cober::Texture2D::Create("Assets/Textures/Checkerboard.png");
 
-		std::dynamic_pointer_cast<Cober::OpenGLShader>(m_ShaderTexture)->Bind();
-		std::dynamic_pointer_cast<Cober::OpenGLShader>(m_ShaderTexture)->UploadUniformInt("u_Texture", 0);
+		std::dynamic_pointer_cast<Cober::OpenGLShader>(textureShader)->Bind();
+		std::dynamic_pointer_cast<Cober::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
 	void OnUpdate(Cober::Timestep ts) override
@@ -105,8 +105,10 @@ public:
 				Cober::Renderer::Submit(m_ShaderSquare, m_SquareVAO, transform);
 			}
 
+		auto textureShader = m_ShaderLibrary.Get("Texture");
+
 		m_Texture->Bind();
-		Cober::Renderer::Submit(m_ShaderTexture, m_TriangleVAO, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		Cober::Renderer::Submit(textureShader, m_TriangleVAO, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		//Cober::Renderer::Submit(m_ShaderTriangle, m_TriangleVAO);
 
@@ -125,15 +127,15 @@ public:
 	}
 
 private:
-	
 	// Render
-	Cober::Ref<Cober::Shader> m_ShaderTriangle, m_ShaderSquare, m_ShaderTexture;
+	Cober::Ref<Cober::Shader> m_ShaderTriangle, m_ShaderSquare;
 	Cober::Ref<Cober::VertexArray> m_TriangleVAO, m_SquareVAO;
 	Cober::Ref<Cober::Texture2D> m_Texture;
-
 	// Render - Attributes
 	glm::vec3 m_TrianglePosition;
 	glm::vec3 m_SquareColor = { 0.2f, 0.3f, 0.8f };
+	// Render - Shader
+	Cober::ShaderLibrary m_ShaderLibrary;
 	
 	// Camera
 	Cober::OrthographicCamera m_Camera;

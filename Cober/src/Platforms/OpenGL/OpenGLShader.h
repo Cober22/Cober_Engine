@@ -18,6 +18,8 @@ namespace Cober {
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
 
+		virtual const std::string& GetName() const override;
+
 		void UploadUniformBool(const std::string& name, bool value);
 
 		void UploadUniformInt(const std::string& name, int value);
@@ -35,5 +37,6 @@ namespace Cober {
 		void Compile(const std::unordered_map<GLenum, std::string>& shaderSources);
 	private:
 		uint32_t m_RendererID = 0;
+		std::string m_Name;
 	};
 }

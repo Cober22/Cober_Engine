@@ -63,7 +63,7 @@ public:
 		m_ShaderSquare = Cober::Shader::Create("Assets/Shaders/Square.glsl");
 		auto textureShader = m_ShaderLibrary.Load("Assets/Shaders/Texture.glsl");
 
-		m_Texture = Cober::Texture2D::Create("Assets/Textures/Checkerboard.png");
+		m_Texture = Cober::Texture2D::Create("Assets/Textures/agua.png");
 
 		std::dynamic_pointer_cast<Cober::OpenGLShader>(textureShader)->Bind();
 		std::dynamic_pointer_cast<Cober::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
@@ -74,21 +74,19 @@ public:
 		Cober::RenderCommand::SetClearColor({ 1.0f, 0.5f, 0.2f, 1.0f });
 		Cober::RenderCommand::Clear(); 
 
-
 		// [---------- INPUTS ----------]
 		const Uint8* keystate = SDL_GetKeyboardState(NULL);
 		// --- Arrow keys
-		if (keystate[SDL_SCANCODE_LEFT])	{ m_CameraPosition.x += m_CameraSpeed * ts; }
-		if (keystate[SDL_SCANCODE_RIGHT])	{ m_CameraPosition.x -= m_CameraSpeed * ts; }
-		if (keystate[SDL_SCANCODE_DOWN])	{ m_CameraPosition.y += m_CameraSpeed * ts; }
-		if (keystate[SDL_SCANCODE_UP])		{ m_CameraPosition.y -= m_CameraSpeed * ts; }
+		if (keystate[SDL_SCANCODE_LEFT]) { m_CameraPosition.x += m_CameraSpeed * ts; }
+		if (keystate[SDL_SCANCODE_RIGHT]) { m_CameraPosition.x -= m_CameraSpeed * ts; }
+		if (keystate[SDL_SCANCODE_DOWN]) { m_CameraPosition.y += m_CameraSpeed * ts; }
+		if (keystate[SDL_SCANCODE_UP]) { m_CameraPosition.y -= m_CameraSpeed * ts; }
 		// --- Keyboard keys
-		if (keystate[SDL_SCANCODE_A])		{ m_TrianglePosition.x -= m_CameraSpeed * ts; }
-		if (keystate[SDL_SCANCODE_D])		{ m_TrianglePosition.x += m_CameraSpeed * ts; }
-		if (keystate[SDL_SCANCODE_S])		{ m_TrianglePosition.y -= m_CameraSpeed * ts; }
-		if (keystate[SDL_SCANCODE_W])		{ m_TrianglePosition.y += m_CameraSpeed * ts; }
-		
-		
+		if (keystate[SDL_SCANCODE_A]) { m_TrianglePosition.x -= m_CameraSpeed * ts; }
+		if (keystate[SDL_SCANCODE_D]) { m_TrianglePosition.x += m_CameraSpeed * ts; }
+		if (keystate[SDL_SCANCODE_S]) { m_TrianglePosition.y -= m_CameraSpeed * ts; }
+		if (keystate[SDL_SCANCODE_W]) { m_TrianglePosition.y += m_CameraSpeed * ts; }
+
 		m_Camera.SetPosition(m_CameraPosition);
 		
 		Cober::Renderer::BeginScene(m_Camera);
@@ -124,6 +122,7 @@ public:
 
 	void OnEvent(SDL_Event& event) override
 	{
+
 	}
 
 private:

@@ -13,6 +13,8 @@ namespace Cober {
 		s_Instance = this;
 		_window = Window::Create();
 
+		Renderer::Init();
+
 		_gameState = GameState::PLAY;
 
 		m_ImGuiLayer = new ImGuiLayer();

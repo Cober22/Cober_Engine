@@ -178,6 +178,7 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
     <ClInclude Include="src\Cober\Renderer\API\RendererAPI.h" />
     <ClInclude Include="src\Cober\Renderer\Buffer.h" />
     <ClInclude Include="src\Cober\Renderer\Camera\OrthographicCamera.h" />
+    <ClInclude Include="src\Cober\Renderer\Camera\OrthographicCameraController.h" />
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Cober\Renderer\Renderer.h" />
     <ClInclude Include="src\Cober\Renderer\Shader.h" />
@@ -206,6 +207,7 @@ IF EXIST ..\libraries\Glew\bin\Release\x64\glew32.dll\ (xcopy /Q /E /Y /I ..\lib
     <ClCompile Include="src\Cober\Renderer\API\RendererAPI.cpp" />
     <ClCompile Include="src\Cober\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Cober\Renderer\Camera\OrthographicCamera.cpp" />
+    <ClCompile Include="src\Cober\Renderer\Camera\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Cober\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Cober\Renderer\Shader.cpp" />
     <ClCompile Include="src\Cober\Renderer\Texture.cpp" />

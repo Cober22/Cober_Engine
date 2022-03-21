@@ -138,6 +138,9 @@
     <ClInclude Include="src\Cober\Renderer\Texture.h">
       <Filter>Cober\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\Camera\OrthographicCameraController.h">
+      <Filter>Cober\Renderer\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Cober\Application.cpp">
@@ -201,6 +204,9 @@
     <ClCompile Include="include\stb_image\stb_image.cpp" />
     <ClCompile Include="src\Cober\Renderer\Texture.cpp">
       <Filter>Cober\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\Camera\OrthographicCameraController.cpp">
+      <Filter>Cober\Renderer\Camera</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

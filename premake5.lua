@@ -12,10 +12,10 @@ workspace "Cober"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
+IncludeDir["SDL"] = "Cober/include/SDL"
 IncludeDir["Glew"] = "Cober/include/Glew"
 IncludeDir["glm"] = "Cober/include/glm"
 IncludeDir["ImGui"] = "Cober/include/ImGui"
-IncludeDir["SDL"] = "Cober/include/SDL"
 IncludeDir["stb_image"] = "Cober/include/stb_image"
 
 group "Dependencies"
@@ -33,16 +33,16 @@ project "Cober"
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
 	pchheader "pch.h"
-	pchsource "Cober/src/pch.cpp" 
+	pchsource "Cober/src/pch.cpp" 	
 
 	files 
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
-		"%{prj.name}/include/**.cpp",
-		"%{prj.name}/include/**.h",
-		"include/glm/glm/**.hpp",
-		"include/glm/glm/**.inl"
+		"%{prj.name}/include/stb_image/**.h",
+		"%{prj.name}/include/stb_image/**.cpp",
+		"%{prj.name}/include/glm/glm/**.hpp",
+		"%{prj.name}/include/glm/glm/**.inl"
 	}
 	
 	defines 
@@ -54,10 +54,10 @@ project "Cober"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/include",
+		"%{IncludeDir.SDL}",
 		"%{IncludeDir.Glew}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.SDL}",
 		"%{IncludeDir.stb_image}"
 	}
 
@@ -72,16 +72,16 @@ project "Cober"
 		"SDL2",
 		"SDL2main",
 		"opengl32",
-		"glew32",
+		"glew32s",
 		"ImGui"
 	}
 
 	filter "system:windows"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines 
 		{
+			"GLEW_STATIC",
 			"CB_PLATFORM_WINDOWS",
 			"CB_BUILD_DLL",
 			"IMGUI_IMPL_OPENGL_LOADER_CUSTOM=<SDL_opengl.h>",
@@ -91,8 +91,7 @@ project "Cober"
 		postbuildcommands
 		{
 			"{COPY} %{cfg.buildtarget.relpath} ..\\bin\\" .. outputdir .. "\\Sandbox",
-			"{COPY} ..\\libraries\\SDL\\lib\\x64\\SDL2.dll ..\\bin\\" .. outputdir .. "\\Sandbox",
-			"{COPY} ..\\libraries\\Glew\\bin\\Release\\x64\\glew32.dll ..\\bin\\" .. outputdir .. "\\Sandbox"
+			"{COPY} ..\\libraries\\SDL\\lib\\x64\\SDL2.dll ..\\bin\\" .. outputdir .. "\\Sandbox"
 		} 
 
 

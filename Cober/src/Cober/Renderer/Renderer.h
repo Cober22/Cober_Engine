@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Cober/Renderer/API/RenderCommand.h"
+
 #include "Cober/Renderer/Camera/OrthographicCamera.h"
+
 #include "Shader.h"
 
 namespace Cober {
@@ -18,10 +20,10 @@ namespace Cober {
 
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	private:
-		struct SceneData 
+		struct SceneData
 		{
 			glm::mat4 ViewProjectionMatrix;
 		};
-		static SceneData* m_SceneData;
+		static Scope<SceneData> m_SceneData;
 	};
 }

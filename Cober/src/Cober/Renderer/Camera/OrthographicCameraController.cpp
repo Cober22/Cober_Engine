@@ -12,10 +12,22 @@ namespace Cober {
 	{
 		const Uint8* keystate = SDL_GetKeyboardState(NULL);
 		// --- Keyboard keys
-		if (keystate[SDL_SCANCODE_A]) { m_CameraPosition.x -= m_CameraTranslationSpeed * ts; }
-		if (keystate[SDL_SCANCODE_D]) { m_CameraPosition.x += m_CameraTranslationSpeed * ts; }
-		if (keystate[SDL_SCANCODE_S]) { m_CameraPosition.y -= m_CameraTranslationSpeed * ts; }
-		if (keystate[SDL_SCANCODE_W]) { m_CameraPosition.y += m_CameraTranslationSpeed * ts; }
+		if (keystate[SDL_SCANCODE_A]) { 
+			m_CameraPosition.x += cos(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
+			m_CameraPosition.y += sin(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
+		}
+		if (keystate[SDL_SCANCODE_D]) {
+			m_CameraPosition.x -= cos(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
+			m_CameraPosition.y -= sin(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
+		}
+		if (keystate[SDL_SCANCODE_S]) { 
+			m_CameraPosition.x += -sin(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
+			m_CameraPosition.y += cos(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
+		}
+		if (keystate[SDL_SCANCODE_W]) { 
+			m_CameraPosition.x -= -sin(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
+			m_CameraPosition.y -= cos(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
+		}
 
 		m_Camera.SetPosition(m_CameraPosition);
 		m_CameraTranslationSpeed = m_ZoomLevel;

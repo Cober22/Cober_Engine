@@ -52,7 +52,7 @@ namespace Cober {
 									(int)m_Data.Height,				// height of the window
 									SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);		// flags
 
-		m_Context = new OpenGLContext(m_Window);
+		m_Context = CreateScope<OpenGLContext>(m_Window);
 		m_Context->Init();
 
 		SetVSync(true);

@@ -29,7 +29,3 @@
 
 // [---- CAMERA ----]
 #include "Cober/Renderer/Camera/OrthographicCamera.h"
-
-
-// [---- Entry Point ----]
-#include "Cober/EntryPoint.h"

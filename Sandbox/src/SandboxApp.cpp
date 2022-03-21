@@ -1,11 +1,14 @@
 #include <Engine.h>
+#include <Cober/EntryPoint.h>
+
+#include "Platforms/OpenGL/OpenGLShader.h"
 
 #include "ImGui/imgui.h"
-#include "Platforms/OpenGL/OpenGLShader.h"
-//#include "Cober/Layers/LayerStack.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+#include "Sandbox2D.h"
 
 class ExampleLayer : public Cober::Layer
 {
@@ -14,7 +17,7 @@ public:
 		: Layer("Example"), m_CameraController(1280.0f / 720.0f)
 	{
 		// [---------- TRIANGLE ----------]
-		m_TriangleVAO.reset(Cober::VertexArray::Create());
+		m_TriangleVAO = Cober::VertexArray::Create();
 
 		float vertices[3 * 5] = {
 			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
@@ -37,7 +40,7 @@ public:
 		m_TriangleVAO->SetIndexBuffer(indexBuffer);
 
 		// [---------- SQUARE ----------]
-		m_SquareVAO.reset(Cober::VertexArray::Create());
+		m_SquareVAO = Cober::VertexArray::Create();
 
 		float squareVertices[5 * 4] = {
 			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
@@ -137,7 +140,7 @@ class Sandbox : public Cober::Application {
 public:
 	Sandbox() 
 	{
-		PushLayer(new ExampleLayer());
+		PushLayer(new Sandbox2D());
 	}
 
 	~Sandbox() {

@@ -26,7 +26,7 @@ public:
 		};
 
 		Cober::Ref<Cober::VertexBuffer> vertexBuffer;
-		vertexBuffer.reset(Cober::VertexBuffer::Create(vertices, sizeof(vertices)));
+		vertexBuffer = Cober::VertexBuffer::Create(vertices, sizeof(vertices));
 		Cober::BufferLayout layout = {
 			{ Cober::ShaderDataType::Float3, "a_Position" },
 			{ Cober::ShaderDataType::Float2, "a_TextCoord" },
@@ -36,7 +36,7 @@ public:
 
 		uint32_t indices[3] = { 0, 1, 2 };
 		Cober::Ref<Cober::IndexBuffer> indexBuffer;
-		indexBuffer.reset(Cober::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		indexBuffer = Cober::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 		m_TriangleVAO->SetIndexBuffer(indexBuffer);
 
 		// [---------- SQUARE ----------]
@@ -50,7 +50,7 @@ public:
 		};
 
 		Cober::Ref<Cober::VertexBuffer> squareVB;
-		squareVB.reset(Cober::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		squareVB = Cober::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
 		squareVB->SetLayout({
 			{ Cober::ShaderDataType::Float3, "a_Position" },
 			{ Cober::ShaderDataType::Float2, "a_TexCoord" }
@@ -59,7 +59,7 @@ public:
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
 		Cober::Ref<Cober::IndexBuffer> squareIB;
-		squareIB.reset(Cober::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		squareIB = Cober::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
 		m_SquareVAO->SetIndexBuffer(squareIB);
 
 
@@ -115,7 +115,7 @@ public:
 
 	void OnEvent(SDL_Event& event) override
 	{
-		m_CameraController.OnEvent(event);
+		//m_CameraController.OnEvent(event);
 	}
 
 private:
@@ -141,6 +141,7 @@ public:
 	Sandbox() 
 	{
 		PushLayer(new Sandbox2D());
+		//PushLayer(new ExampleLayer());
 	}
 
 	~Sandbox() {

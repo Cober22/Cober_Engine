@@ -24,7 +24,7 @@ namespace Cober {
 	public:
 		void Add(const Ref<Shader>& shader);
 		void Add(const std::string& name, const Ref<Shader>& shader);
-		Ref<Shader> Load(const std::string& filePath);	// Assets/Shaders/Texture.glsl
+		Ref<Shader> Load(const std::string& filePath);
 		Ref<Shader> Name(const std::string& name, const std::string& filePath);
 
 		Ref<Shader> Get(const std::string& name);

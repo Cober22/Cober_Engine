@@ -593,6 +593,7 @@ IF EXIST ..\libraries\SDL\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\libraries\SDL\
     <ClInclude Include="src\Cober\Renderer\Camera\OrthographicCameraController.h" />
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Cober\Renderer\Renderer.h" />
+    <ClInclude Include="src\Cober\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Cober\Renderer\Shader.h" />
     <ClInclude Include="src\Cober\Renderer\Texture.h" />
     <ClInclude Include="src\Cober\Renderer\VertexArray.h" />
@@ -621,6 +622,7 @@ IF EXIST ..\libraries\SDL\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\libraries\SDL\
     <ClCompile Include="src\Cober\Renderer\Camera\OrthographicCamera.cpp" />
     <ClCompile Include="src\Cober\Renderer\Camera\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Cober\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Cober\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Cober\Renderer\Shader.cpp" />
     <ClCompile Include="src\Cober\Renderer\Texture.cpp" />
     <ClCompile Include="src\Cober\Renderer\VertexArray.cpp" />

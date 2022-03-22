@@ -11,7 +11,7 @@ namespace Cober {
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None:    CB_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-		case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(filePath);
+		case RendererAPI::API::OpenGL:  return CreateRef<OpenGLShader>(filePath);
 		}
 
 		CB_ASSERT(false, "Unknown RendererAPI!");

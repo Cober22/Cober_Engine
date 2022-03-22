@@ -33,10 +33,10 @@ namespace Cober {
 		std::string Name;
 		ShaderDataType Type;
 		uint32_t Size;
-		uint32_t Offset;
+		size_t Offset;
 		bool Normalized;
 
-		BufferElement() {}
+		BufferElement() = default;
 
 		BufferElement(ShaderDataType type, const std::string& name, bool normalized = false)
 			: Name(name), Type(type), Size(ShaderDataTypeSize(type)), Offset(0), Normalized(normalized) {}
@@ -85,7 +85,7 @@ namespace Cober {
 	private:
 		void CalculateOffsetAndStride() {
 			
-			uint32_t offset = 0;
+			size_t offset = 0;
 			m_Stride = 0;
 			for (auto& element : m_Elements) {
 				element.Offset = offset;
@@ -109,7 +109,7 @@ namespace Cober {
 		virtual const BufferLayout& GetLayout() const = 0;
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 
-		static VertexBuffer* Create(float* vertices, uint32_t size);
+		static Ref<VertexBuffer> Create(float* vertices, uint32_t size);
 
 	};
 
@@ -123,6 +123,6 @@ namespace Cober {
 
 		virtual uint32_t GetCount() const = 0;
 
-		static IndexBuffer* Create(uint32_t* indices, uint32_t size);
+		static Ref<IndexBuffer> Create(uint32_t* indices, uint32_t size);
 	};
 }

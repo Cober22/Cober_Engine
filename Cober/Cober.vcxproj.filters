@@ -1419,6 +1419,9 @@
     <ClInclude Include="src\pch.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\Renderer2D.h">
+      <Filter>src\Cober\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\stb_image\stb_image.cpp">
@@ -1489,6 +1492,9 @@
     </ClCompile>
     <ClCompile Include="src\pch.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\Renderer2D.cpp">
+      <Filter>src\Cober\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

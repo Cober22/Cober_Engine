@@ -18,6 +18,7 @@
 
 // [---- Renderer ----]
 #include "Cober/Renderer/Renderer.h"
+#include "Cober/Renderer/Renderer2D.h"
 #include "Cober/Renderer/API/RenderCommand.h"
 #include "Cober/Renderer/Camera/OrthographicCameraController.h"
 

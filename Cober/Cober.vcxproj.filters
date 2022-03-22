@@ -1422,6 +1422,9 @@
     <ClInclude Include="src\Cober\Renderer\Renderer2D.h">
       <Filter>src\Cober\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\Instrumentator.h">
+      <Filter>src\Cober</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\stb_image\stb_image.cpp">

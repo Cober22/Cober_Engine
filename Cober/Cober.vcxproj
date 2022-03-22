@@ -583,6 +583,7 @@ IF EXIST ..\libraries\SDL\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\libraries\SDL\
     <ClInclude Include="src\Cober\Events\MouseEvent.h" />
     <ClInclude Include="src\Cober\Events\WindowEvent.h" />
     <ClInclude Include="src\Cober\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Cober\Instrumentator.h" />
     <ClInclude Include="src\Cober\Layers\Layer.h" />
     <ClInclude Include="src\Cober\Layers\LayerStack.h" />
     <ClInclude Include="src\Cober\Log.h" />

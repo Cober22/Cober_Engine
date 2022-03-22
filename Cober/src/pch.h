@@ -14,6 +14,7 @@
 #include <unordered_set>
 
 #include "Cober/Log.h"
+#include "Cober/Instrumentator.h"
 
 #ifdef CB_PLATFORM_WINDOWS
 	#include <Windows.h>

@@ -19,6 +19,11 @@ public:
 
 	}
 
+	void OnImGuiRender() override 
+	{
+
+	}
+
 	void OnEvent(SDL_Event& event) override
 	{
 	}

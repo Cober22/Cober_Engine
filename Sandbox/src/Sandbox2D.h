@@ -21,5 +21,7 @@ private:
 	Cober::Ref<Cober::VertexArray> m_SquareVAO;
 	Cober::Ref<Cober::Shader> m_ShaderSquare;
 
+	Cober::Ref<Cober::Texture2D> m_TextureTest;
+
 	glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 };

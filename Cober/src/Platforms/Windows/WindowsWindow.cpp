@@ -44,13 +44,16 @@ namespace Cober {
 			s_SDLInitialized = true;
 		}
 
+
+		uint32_t flags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
+
 		// Open an SDL window
 		m_Window = SDL_CreateWindow(m_Data.Title.c_str(),			// Window title
 									SDL_WINDOWPOS_CENTERED,			// posX on screen
 									SDL_WINDOWPOS_CENTERED,			// posY on screen
 									(int)m_Data.Width,				// width of the window
 									(int)m_Data.Height,				// height of the window
-									SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);		// flags
+									flags);		// flags
 
 		m_Context = CreateScope<OpenGLContext>(m_Window);
 		m_Context->Init();

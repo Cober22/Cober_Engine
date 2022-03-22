@@ -13,6 +13,7 @@ namespace Cober {
 
 	public:
 		OpenGLShader(const std::string& filePath);
+		OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
 		virtual ~OpenGLShader();
 
 		virtual void Bind() const override;

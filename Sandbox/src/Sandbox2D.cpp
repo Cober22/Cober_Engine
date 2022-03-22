@@ -28,7 +28,7 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 	Cober::RenderCommand::Clear();
 
 	Cober::Renderer2D::BeginScene(m_CameraController.GetCamera());
-	Cober::Renderer2D::DrawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f, }, { 0.8f, 0.2f, 0.3f, 1.0f });
+	Cober::Renderer2D::DrawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f, }, { 0.2f, 0.8f, 0.3f, 1.0f });
 	Cober::Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f, }, { 0.2f, 0.3f, 0.8f, 1.0f });
 	Cober::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 6.0f, 6.0f, }, m_TextureTest);
 	Cober::Renderer2D::EndScene();

@@ -11,7 +11,7 @@ namespace Cober {
 
 	struct Renderer2DStorage 
 	{
-		Ref<VertexArray> QuadVertexArray;
+		Ref<VertexArray> VAO;
 		Ref<Shader> TextureShader;
 		Ref<Texture2D> WhiteTexture;
 	};
@@ -21,7 +21,7 @@ namespace Cober {
 	void Renderer2D::Init()
 	{
 		s_Data = new Renderer2DStorage();
-		s_Data->QuadVertexArray = VertexArray::Create();
+		s_Data->VAO = VertexArray::Create();
 
 		float squareVertices[5 * 4] = {
 			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
@@ -36,17 +36,16 @@ namespace Cober {
 			{ ShaderDataType::Float3, "a_Position" },
 			{ ShaderDataType::Float2, "a_TextCoord" }
 			});
-		s_Data->QuadVertexArray->AddVertexBuffer(squareVB);
+		s_Data->VAO->AddVertexBuffer(squareVB);
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
 		Ref<IndexBuffer> squareIB;
 		squareIB = IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
-		s_Data->QuadVertexArray->SetIndexBuffer(squareIB);
+		s_Data->VAO->SetIndexBuffer(squareIB);
 
 		s_Data->WhiteTexture = Texture2D::Create(1, 1);
 		uint32_t whiteTexturerData = 0xffffffff;
 		s_Data->WhiteTexture->SetData(&whiteTexturerData, sizeof(uint32_t));
-		//s_Data->WhiteTexture = Shader::Create("Assets/Shaders/FlatColor.glsl");
 
 		s_Data->TextureShader = Shader::Create("Assets/Shaders/Texture.glsl");
 		s_Data->TextureShader->Bind();
@@ -82,8 +81,8 @@ namespace Cober {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 		s_Data->TextureShader->SetMat4("u_Transform", transform);
 
-		s_Data->QuadVertexArray->Bind();
-		RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
+		s_Data->VAO->Bind();
+		RenderCommand::DrawIndexed(s_Data->VAO);
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D> texture)
@@ -99,7 +98,7 @@ namespace Cober {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 		s_Data->TextureShader->SetMat4("u_Transform", transform);
 
-		s_Data->QuadVertexArray->Bind();
-		RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
+		s_Data->VAO->Bind();
+		RenderCommand::DrawIndexed(s_Data->VAO);
 	}
 }

@@ -76,6 +76,11 @@ project "Cober"
 		"ImGui"
 	}
 
+	postbuildcommands
+	{
+		"{COPY} ..\\libraries\\SDL\\lib\\x64\\SDL2.dll/ ..\\bin\\" .. outputdir .. "\\Sandbox"
+	}
+
 	filter "system:windows"
 		systemversion "latest"
 
@@ -87,13 +92,6 @@ project "Cober"
 			"IMGUI_IMPL_OPENGL_LOADER_CUSTOM=<SDL_opengl.h>",
 			"GL_GLEXT_PROTOTYPES=1"
 		}
-
-		postbuildcommands
-		{
-			"{COPY} %{cfg.buildtarget.relpath} ..\\bin\\" .. outputdir .. "\\Sandbox",
-			"{COPY} ..\\libraries\\SDL\\lib\\x64\\SDL2.dll ..\\bin\\" .. outputdir .. "\\Sandbox"
-		} 
-
 
 	filter "configurations:Debug"
 		defines "CB_DEBUG"

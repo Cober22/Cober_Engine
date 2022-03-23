@@ -92,8 +92,7 @@
       <AdditionalLibraryDirectories>lib;include\ImGui;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Debug-windows-x86_64\Cober\Cober.lib\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Cober\Cober.lib ..\bin\Debug-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Cober\Cober.lib ..\bin\Debug-windows-x86_64\Sandbox &gt; nul)
-IF EXIST ..\libraries\SDL\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\libraries\SDL\lib\x64\SDL2.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\libraries\SDL\lib\x64\SDL2.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\libraries\SDL\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\libraries\SDL\lib\x64\SDL2.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\libraries\SDL\lib\x64\SDL2.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -121,8 +120,7 @@ IF EXIST ..\libraries\SDL\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\libraries\SDL\
       <AdditionalLibraryDirectories>lib;include\ImGui;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Release-windows-x86_64\Cober\Cober.lib\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Cober\Cober.lib ..\bin\Release-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Cober\Cober.lib ..\bin\Release-windows-x86_64\Sandbox &gt; nul)
-IF EXIST ..\libraries\SDL\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\libraries\SDL\lib\x64\SDL2.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\libraries\SDL\lib\x64\SDL2.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\libraries\SDL\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\libraries\SDL\lib\x64\SDL2.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\libraries\SDL\lib\x64\SDL2.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -150,8 +148,7 @@ IF EXIST ..\libraries\SDL\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\libraries\SDL\
       <AdditionalLibraryDirectories>lib;include\ImGui;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Dist-windows-x86_64\Cober\Cober.lib\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\Cober\Cober.lib ..\bin\Dist-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\Cober\Cober.lib ..\bin\Dist-windows-x86_64\Sandbox &gt; nul)
-IF EXIST ..\libraries\SDL\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\libraries\SDL\lib\x64\SDL2.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\libraries\SDL\lib\x64\SDL2.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\libraries\SDL\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\libraries\SDL\lib\x64\SDL2.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\libraries\SDL\lib\x64\SDL2.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -592,6 +589,7 @@ IF EXIST ..\libraries\SDL\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\libraries\SDL\
     <ClInclude Include="src\Cober\Renderer\Buffer.h" />
     <ClInclude Include="src\Cober\Renderer\Camera\OrthographicCamera.h" />
     <ClInclude Include="src\Cober\Renderer\Camera\OrthographicCameraController.h" />
+    <ClInclude Include="src\Cober\Renderer\Camera\PerspectiveCamera.h" />
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Cober\Renderer\Renderer.h" />
     <ClInclude Include="src\Cober\Renderer\Renderer2D.h" />
@@ -622,6 +620,7 @@ IF EXIST ..\libraries\SDL\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\libraries\SDL\
     <ClCompile Include="src\Cober\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Cober\Renderer\Camera\OrthographicCamera.cpp" />
     <ClCompile Include="src\Cober\Renderer\Camera\OrthographicCameraController.cpp" />
+    <ClCompile Include="src\Cober\Renderer\Camera\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Cober\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Cober\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Cober\Renderer\Shader.cpp" />

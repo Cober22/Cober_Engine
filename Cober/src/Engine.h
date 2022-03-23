@@ -21,6 +21,7 @@
 #include "Cober/Renderer/Renderer2D.h"
 #include "Cober/Renderer/API/RenderCommand.h"
 #include "Cober/Renderer/Camera/OrthographicCameraController.h"
+#include "Cober/Renderer/Camera/PerspectiveCamera.h"
 
 #include "Cober/Renderer/Buffer.h"
 #include "Cober/Renderer/Shader.h"

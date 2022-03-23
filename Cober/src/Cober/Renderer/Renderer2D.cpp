@@ -63,6 +63,12 @@ namespace Cober {
 		s_Data->TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 	}
 
+	void Renderer2D::BeginScene(const PerspectiveCamera& camera)
+	{
+		s_Data->TextureShader->Bind();
+		s_Data->TextureShader->SetMat4("u_ModelViewProjection", camera.GetModelViewProjectionMatrix());
+	}
+
 	void Renderer2D::EndScene()
 	{
 	}

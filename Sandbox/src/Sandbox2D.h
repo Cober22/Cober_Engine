@@ -15,8 +15,8 @@ public:
 	void OnUpdate(Cober::Timestep ts) override;
 	void OnEvent(SDL_Event& e) override;
 private:
-	Cober::OrthographicCameraController m_CameraController;
-	
+	//Cober::OrthographicCameraController m_CameraController;
+	Cober::PerspectiveCamera m_CameraController;
 	// Temp
 	Cober::Ref<Cober::VertexArray> m_SquareVAO;
 	Cober::Ref<Cober::Shader> m_ShaderSquare;

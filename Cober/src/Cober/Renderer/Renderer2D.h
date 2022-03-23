@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Cober/Renderer/Camera/OrthographicCamera.h"
+#include "Cober/Renderer/Camera/PerspectiveCamera.h"
+
 #include "Cober/Renderer/Texture.h"
 
 namespace Cober {
@@ -12,6 +14,8 @@ namespace Cober {
 		static void Shutdown();
 
 		static void BeginScene(const OrthographicCamera& camera);
+		static void BeginScene(const PerspectiveCamera& camera);
+		
 		static void EndScene();
 
 		// Primitives

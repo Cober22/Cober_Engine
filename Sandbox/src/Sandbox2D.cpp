@@ -5,13 +5,14 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 Sandbox2D::Sandbox2D()
-	: Layer("Sandbox2D"), m_CameraController(1280.0f / 720.0f)
+	: Layer("Sandbox2D"), m_CameraController(glm::radians(45.0f), 1280.0f / 720.0f, 0.1f, 100.0f)//m_CameraController(1280.0f / 720.0f)
 {
 }
 
 void Sandbox2D::OnAttach()
 {
 	m_TextureTest = Cober::Texture2D::Create("Assets/Textures/BlendTest.png");
+	//m_CameraController.SetProjection();
 }
 
 void Sandbox2D::OnDetach()
@@ -25,7 +26,7 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 	// Update
 	{
 		CB_PROFILE_SCOPE("CameraController::OnUpdate");
-		m_CameraController.OnUpdate(ts);
+		//m_CameraController.OnUpdate(ts);
 	}
 
 	// Render
@@ -37,10 +38,10 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 	
 	{
 		CB_PROFILE_SCOPE("Render Draw");
-		Cober::Renderer2D::BeginScene(m_CameraController.GetCamera());
-		Cober::Renderer2D::DrawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f, }, { 0.2f, 0.8f, 0.3f, 1.0f });
-		Cober::Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f, }, { 0.2f, 0.3f, 0.8f, 1.0f });
-		Cober::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 6.0f, 6.0f, }, m_TextureTest);
+		Cober::Renderer2D::BeginScene(m_CameraController);// .GetCamera());
+		Cober::Renderer2D::DrawQuad({ -1.0f, 0.5f }, { 0.8f, 0.8f }, { 0.2f, 0.8f, 0.3f, 1.0f });
+		Cober::Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
+		Cober::Renderer2D::DrawQuad({ 0.0f, 0.0f }, { 6.0f, 6.0f }, m_TextureTest);
 		Cober::Renderer2D::EndScene();
 	}
 }
@@ -55,5 +56,5 @@ void Sandbox2D::OnImGuiRender()
 
 void Sandbox2D::OnEvent(SDL_Event& e)
 {
-	m_CameraController.OnEvent(e);
+	//m_CameraController.OnEvent(e);
 }

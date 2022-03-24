@@ -66,7 +66,7 @@ namespace Cober {
 		}
 		else
 		{
-			CB_LogError(LOG_APP, "Could not open file '{0}'", filePath);
+			CB_LogError(LOG_APP, "Could not open file ");
 		}
 
 		return result;

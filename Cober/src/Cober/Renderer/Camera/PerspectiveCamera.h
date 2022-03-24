@@ -12,16 +12,16 @@ namespace Cober {
 		void SetProjection(float angle, float aspectRatio, float nearPlane, float farPlane);
 
 		const glm::vec3& GetPosition() const { return m_Position; }
-		void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateProjectionMatrix(); }
+		void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateMVPMatrix(); }
 
 		float GetRotation() const { return m_Rotation; }
-		void SetRotation(float rotation) { m_Rotation = rotation; RecalculateProjectionMatrix(); }
+		void SetRotation(float rotation) { m_Rotation = rotation; RecalculateMVPMatrix(); }
 
 		const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
 		const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
-		const glm::mat4& GetModelViewProjectionMatrix() const { return m_ModelViewProjectionMatrix; }
+		const glm::mat4& GetModelMatrix() const { return m_ModelMatrix; }
 	private:
-		void RecalculateProjectionMatrix();
+		void RecalculateMVPMatrix();
 	private:
 		glm::mat4 m_ProjectionMatrix;
 		glm::mat4 m_ViewMatrix;

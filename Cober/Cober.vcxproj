@@ -590,9 +590,9 @@
     <ClInclude Include="src\Cober\Renderer\Camera\OrthographicCamera.h" />
     <ClInclude Include="src\Cober\Renderer\Camera\OrthographicCameraController.h" />
     <ClInclude Include="src\Cober\Renderer\Camera\PerspectiveCamera.h" />
+    <ClInclude Include="src\Cober\Renderer\Camera\PerspectiveCameraController.h" />
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Cober\Renderer\Renderer.h" />
-    <ClInclude Include="src\Cober\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Cober\Renderer\Shader.h" />
     <ClInclude Include="src\Cober\Renderer\Texture.h" />
     <ClInclude Include="src\Cober\Renderer\VertexArray.h" />
@@ -621,8 +621,8 @@
     <ClCompile Include="src\Cober\Renderer\Camera\OrthographicCamera.cpp" />
     <ClCompile Include="src\Cober\Renderer\Camera\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Cober\Renderer\Camera\PerspectiveCamera.cpp" />
+    <ClCompile Include="src\Cober\Renderer\Camera\PerspectiveCameraController.cpp" />
     <ClCompile Include="src\Cober\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\Cober\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Cober\Renderer\Shader.cpp" />
     <ClCompile Include="src\Cober\Renderer\Texture.cpp" />
     <ClCompile Include="src\Cober\Renderer\VertexArray.cpp" />

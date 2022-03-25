@@ -20,6 +20,7 @@ namespace Cober {
 		const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
 		const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
 		const glm::mat4& GetModelMatrix() const { return m_ModelMatrix; }
+		const glm::mat4& GetMVPMatrix() const { return m_ModelViewProjectionMatrix; }
 	private:
 		void RecalculateMVPMatrix();
 	private:

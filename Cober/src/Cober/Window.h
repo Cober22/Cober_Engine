@@ -12,11 +12,13 @@ namespace Cober {
 		std::string Title;
 		unsigned int Width;
 		unsigned int Height;
+		bool FullScreen;
 
 		WindowProps(const std::string& title = "Cober Engine",
 			unsigned int width = 1280,
-			unsigned int height = 720)
-			: Title(title), Width(width), Height(height) 
+			unsigned int height = 720,
+			bool fullscreen = false)
+			: Title(title), Width(width), Height(height), FullScreen(fullscreen)
 		{
 		}
 	};

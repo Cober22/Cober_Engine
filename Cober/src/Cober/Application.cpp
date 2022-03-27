@@ -7,11 +7,14 @@
 namespace Cober {
 
 	Application* Application::s_Instance = nullptr;
+	const float W_WIDTH = 1280.0f;
+	const float W_HEIGHT = 720.0f;
 
 	Application::Application() {
 
 		s_Instance = this;
-		_window = Window::Create();
+		WindowProps windowProps = WindowProps("Cober Engine", W_WIDTH, W_HEIGHT);
+		_window = Window::Create(windowProps);
 
 		Renderer::Init();
 
@@ -62,6 +65,7 @@ namespace Cober {
 	void Application::ProcessInputs() {
 
 		SDL_Event event;
+		SDL_Window* window = _window->GetNativeWindow();
 		
 		// Dispatcher events
 		while (SDL_PollEvent(&event)) {
@@ -71,8 +75,24 @@ namespace Cober {
 
 			switch (event.type) {
 				case SDL_QUIT:
-					_gameState = GameState::EXIT;
-				break;
+					_gameState = GameState::EXIT;	break;
+				case SDL_KEYDOWN:
+					if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+						_gameState = GameState::EXIT;
+					if (event.key.keysym.scancode == SDL_SCANCODE_F) {
+						w_fullscreen = w_fullscreen == true ? false : true;
+
+						if (w_fullscreen) {
+							//SDL_SetWindowSize(window, W_WIDTH, W_HEIGHT);		// TEST
+							SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+						}
+						else {
+							SDL_SetWindowFullscreen(window, 0);
+							//SDL_SetWindowSize(window, 800.0f, 600.0f);	// TEST
+						}
+					}
+					break;
+				//case SDL_WINDOWEVENT_SIZE_CHANGED:
 			}
 		}
 	}

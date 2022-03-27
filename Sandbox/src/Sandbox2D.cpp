@@ -5,8 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 Sandbox2D::Sandbox2D()
-	: Layer("Sandbox2D"), m_PerspCameraController(glm::radians(45.0f), 1280.0f / 720.0f, 0.1f, 100.0f), 
-						  m_OrthoCameraController(1280.0f / 720.0f)
+	: Layer("Sandbox2D"), OrthoCamera(1280.0f / 720.0f), camera(45.0f, { 1280.0f, 720.0f }, 0.1f, 100.0f)
 {
 }
 
@@ -28,7 +27,10 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 	// Update
 	{
 		CB_PROFILE_SCOPE("CameraController::OnUpdate");
-		m_PerspCameraController.OnUpdate(ts);
+		if (perspective)
+			camera.OnUpdate(ts);
+		else
+			OrthoCamera.OnUpdate(ts);
 	}
 
 	// Render
@@ -41,9 +43,46 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 	
 	{
 		CB_PROFILE_SCOPE("Render Draw");
-		Cober::Renderer::BeginScene(m_PerspCameraController.GetCamera());
-		Cober::Renderer::DrawQuad({ -1.0f, 0.5f, -15.0f }, { 0.8f, 0.8f }, { 0.2f, 0.8f, 0.3f, 1.0f });
-		Cober::Renderer::DrawQuad({ 0.0f, 0.0f, -10.0f }, { 1.0f, 1.0f }, { 0.2f, 0.3f, 0.8f, 1.0f });
+		if (perspective)
+			Cober::Renderer::BeginScene(camera);
+		else
+			Cober::Renderer::BeginScene(OrthoCamera.GetCamera());
+
+		// TEST
+		glm::vec3 cubePositions[10] = {
+			glm::vec3(0.0f,  0.0f,  0.0f),
+			glm::vec3(2.0f,  5.0f, -15.0f),
+			glm::vec3(-1.5f, -2.2f, -2.5f),
+			glm::vec3(-3.8f, -2.0f, -12.3f),
+			glm::vec3(2.4f, -0.4f, -3.5f),
+			glm::vec3(-1.7f,  3.0f, -7.5f),
+			glm::vec3(1.3f, -2.0f, -2.5f),
+			glm::vec3(1.5f,  2.0f, -2.5f),
+			glm::vec3(1.5f,  0.2f, -1.5f),
+			glm::vec3(-1.3f,  1.0f, -1.5f)
+		};
+
+		glm::vec4 cubeColors[10] = {
+			glm::vec4(0.2f, 0.8f, 0.3f, 1.0f),
+			glm::vec4(0.2f, 0.3f, 0.8f, 1.0f),
+			glm::vec4(0.8f, 0.2f, 0.3f, 1.0f),
+			glm::vec4(0.5f, 0.5f, 0.1f, 1.0f),
+			glm::vec4(0.1f, 0.5f, 0.5f, 1.0f),
+			glm::vec4(0.5f, 0.1f, 0.5f, 1.0f),
+			glm::vec4(0.8f, 0.6f, 0.1f, 1.0f),
+			glm::vec4(0.7f, 0.1f, 0.4f, 1.0f),
+			glm::vec4(0.5f, 0.2f, 0.7f, 1.0f),
+			glm::vec4(0.3f, 0.7f, 0.6f, 1.0f)
+		};
+
+		for (unsigned int i = 0; i < 10; i++) {
+			Cober::Renderer::DrawQuad(cubePositions[i], { 0.8f, 0.8f }, cubeColors[i]);
+		}
+
+		//camera.LookAt({ camX, camera.position.y, camZ }, camera.target, camera.upAxis);
+
+		//Cober::Renderer::DrawQuad({ -1.0f, 0.5f, -15.0f }, { 0.8f, 0.8f }, { 0.2f, 0.8f, 0.3f, 1.0f });
+		//Cober::Renderer::DrawQuad({ 0.0f, 0.0f, -10.0f }, { 1.0f, 1.0f }, { 0.2f, 0.3f, 0.8f, 1.0f });
 		//Cober::Renderer::DrawQuad({ 0.0f, 0.0f }, { 6.0f, 6.0f }, m_TextureTest);
 		Cober::Renderer::EndScene();
 	}
@@ -59,5 +98,9 @@ void Sandbox2D::OnImGuiRender()
 
 void Sandbox2D::OnEvent(SDL_Event& e)
 {
-	//m_CameraController.OnEvent(e);
+	const Uint8* keystate = SDL_GetKeyboardState(NULL);
+	if (keystate[SDL_SCANCODE_0] && e.type == SDL_KEYDOWN)
+		perspective = perspective == true ? false : true;
+
+	camera.OnEvent(e);
 }

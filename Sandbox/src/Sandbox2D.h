@@ -2,6 +2,13 @@
 
 #include "Engine.h"
 
+template<typename T>
+class Camera {
+public:
+	Camera() = default;
+	T camera;
+};
+
 class Sandbox2D : public Cober::Layer
 {
 public:
@@ -15,8 +22,9 @@ public:
 	void OnUpdate(Cober::Timestep ts) override;
 	void OnEvent(SDL_Event& e) override;
 private:
-	Cober::OrthographicCameraController OrthoCamera;
-	Cober::PerspectiveCamera camera;
+	Cober::PerspectiveCamera PerspCamera;
+	Cober::OrthographicCamera OrthoCamera;
+
 	bool perspective = true;
 	//Cober::Ref<Cober::VertexArray> m_SquareVAO;
 	//Cober::Ref<Cober::Shader> m_ShaderSquare;

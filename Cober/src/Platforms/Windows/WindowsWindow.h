@@ -17,6 +17,8 @@ namespace Cober {
 
 		inline unsigned int GetWidth() const override { return m_Data.Width; }
 		inline unsigned int GetHeight() const override { return m_Data.Height; }
+		inline void SetWidth(float width) override { m_Data.Width = width; }
+		inline void SetHeight(float height) override { m_Data.Height = height; }
 
 		// Window attributes
 		//inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }

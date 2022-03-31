@@ -43,7 +43,8 @@ namespace Cober {
 		ImGuiLayer* m_ImGuiLayer;
 		LayerStack m_LayerStack;
 		float m_LastFrameTime = 0.0f;
-		bool w_fullscreen = false;
+		bool w_Minimized = false;
+		bool w_Fullscreen = false;
 
 	private:
 		static Application* s_Instance;

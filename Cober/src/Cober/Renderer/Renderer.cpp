@@ -104,11 +104,17 @@ namespace Cober {
 		delete m_SceneData;
 	}
 
+	void Renderer::OnWindowResize(uint32_t width, uint32_t height)
+	{
+		RenderCommand::SetViewport(0, 0, width, height);
+	}
+
 	void Renderer::BeginScene(OrthographicCamera& camera)
 	{
 		m_SceneData->Shader->Bind();
 		m_SceneData->Shader->SetMat4("u_Projection", camera.GetProjectionMatrix());
 		m_SceneData->Shader->SetMat4("u_View", camera.GetViewMatrix());
+		m_SceneData->Shader->SetMat4("u_Model", camera.GetModelMatrix());
 	}
 
 	void Renderer::BeginScene(PerspectiveCamera& camera)

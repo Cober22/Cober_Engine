@@ -45,7 +45,7 @@ namespace Cober {
 		}
 
 
-		uint32_t flags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_MOUSE_CAPTURE;
+		uint32_t flags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;// | SDL_WINDOW_MOUSE_CAPTURE;
 
 		// Open an SDL window
 		m_Window = SDL_CreateWindow(m_Data.Title.c_str(),		// Window title

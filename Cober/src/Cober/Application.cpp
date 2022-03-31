@@ -15,6 +15,7 @@ namespace Cober {
 		s_Instance = this;
 		WindowProps windowProps = WindowProps("Cober Engine", W_WIDTH, W_HEIGHT);
 		_window = Window::Create(windowProps);
+		SDL_SetRelativeMouseMode(SDL_TRUE);
 
 		Renderer::Init();
 
@@ -44,14 +45,15 @@ namespace Cober {
 
 		while (_gameState != GameState::EXIT)
 		{
-			ProcessInputs();
-
 			float time = (float)(SDL_GetTicks() / 1000.0f);
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
 
-			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate(timestep);
+			if (!w_Minimized) {
+				ProcessInputs();
+				for (Layer* layer : m_LayerStack)
+					layer->OnUpdate(timestep);
+			}
 
 			m_ImGuiLayer->Begin();
 			for (Layer* layer : m_LayerStack)
@@ -64,12 +66,11 @@ namespace Cober {
 
 	void Application::ProcessInputs() {
 
-		SDL_Event event;
+		SDL_Event event; 
 		SDL_Window* window = _window->GetNativeWindow();
-		
 		// Dispatcher events
 		while (SDL_PollEvent(&event)) {
-			
+
 			for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 				(*--it)->OnEvent(event);
 
@@ -80,19 +81,25 @@ namespace Cober {
 					if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
 						_gameState = GameState::EXIT;
 					if (event.key.keysym.scancode == SDL_SCANCODE_F) {
-						w_fullscreen = w_fullscreen == true ? false : true;
+						w_Fullscreen = w_Fullscreen == true ? false : true;
 
-						if (w_fullscreen) {
-							//SDL_SetWindowSize(window, W_WIDTH, W_HEIGHT);		// TEST
+						if (w_Fullscreen)
 							SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-						}
-						else {
+						else 
 							SDL_SetWindowFullscreen(window, 0);
-							//SDL_SetWindowSize(window, 800.0f, 600.0f);	// TEST
-						}
 					}
 					break;
-				//case SDL_WINDOWEVENT_SIZE_CHANGED:
+				case SDL_WINDOWEVENT:
+					if (_window->GetWidth() == 0 || _window->GetHeight() == 0)
+						w_Minimized = true;
+					else {
+						int width{ 0 }, height{ 0 };
+						SDL_GetWindowSize(window, &width, &height);
+						_window->SetWidth(width);
+						_window->SetHeight(height);
+						w_Minimized = false;
+						Renderer::OnWindowResize(width, height);
+					}
 			}
 		}
 	}

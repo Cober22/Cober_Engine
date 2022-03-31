@@ -1371,7 +1371,7 @@
     <ClInclude Include="src\Cober\Renderer\Camera\OrthographicCamera.h">
       <Filter>src\Cober\Renderer\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Renderer\Camera\OrthographicCameraController.h">
+    <ClInclude Include="src\Cober\Renderer\Camera\CameraController.h">
       <Filter>src\Cober\Renderer\Camera</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h">
@@ -1457,7 +1457,7 @@
     <ClCompile Include="src\Cober\Renderer\Camera\OrthographicCamera.cpp">
       <Filter>src\Cober\Renderer\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\Camera\OrthographicCameraController.cpp">
+    <ClCompile Include="src\Cober\Renderer\Camera\CameraController.cpp">
       <Filter>src\Cober\Renderer\Camera</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\Renderer\Renderer.cpp">

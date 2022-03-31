@@ -35,6 +35,8 @@ namespace Cober {
 
 		virtual unsigned int GetWidth() const = 0;
 		virtual unsigned int GetHeight() const = 0;
+		virtual void SetWidth(float width) = 0;
+		virtual void SetHeight(float height) = 0;
 
 		// Window attributes
 		//virtual void SetEventCallback(const EventCallbackFn& callback) = 0;

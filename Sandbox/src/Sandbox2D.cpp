@@ -5,15 +5,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 Sandbox2D::Sandbox2D()
-	: Layer("Sandbox2D"), OrthoCamera(1280.0f / 720.0f), camera(45.0f, { 1280.0f, 720.0f }, 0.1f, 100.0f)
+	: Layer("Sandbox2D"), OrthoCamera({ 1280.0f, 720.0f }), PerspCamera(45.0f, { 1280.0f, 720.0f }, 0.1f, 100.0f)
 {
 }
 
 void Sandbox2D::OnAttach()
 {
-	m_TextureTest = Cober::Texture2D::Create("Assets/Textures/BlendTest.jpg");
-	//m_OrthoCameraController(float left, float right, float bottom, float top);
-	//m_PerspCameraController(glm::radians angle, float aspectRatio, floar nearPlane, float farPlane)
+	//m_TextureTest = Cober::Texture2D::Create("Assets/Textures/BlendTest.jpg");
 }
 
 void Sandbox2D::OnDetach()
@@ -28,7 +26,7 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 	{
 		CB_PROFILE_SCOPE("CameraController::OnUpdate");
 		if (perspective)
-			camera.OnUpdate(ts);
+			PerspCamera.OnUpdate(ts);
 		else
 			OrthoCamera.OnUpdate(ts);
 	}
@@ -44,10 +42,11 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 	{
 		CB_PROFILE_SCOPE("Render Draw");
 		if (perspective)
-			Cober::Renderer::BeginScene(camera);
+			Cober::Renderer::BeginScene(PerspCamera);
 		else
-			Cober::Renderer::BeginScene(OrthoCamera.GetCamera());
+			Cober::Renderer::BeginScene(OrthoCamera);
 
+	
 		// TEST
 		glm::vec3 cubePositions[10] = {
 			glm::vec3(0.0f,  0.0f,  0.0f),
@@ -79,8 +78,6 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 			Cober::Renderer::DrawQuad(cubePositions[i], { 0.8f, 0.8f }, cubeColors[i]);
 		}
 
-		//camera.LookAt({ camX, camera.position.y, camZ }, camera.target, camera.upAxis);
-
 		//Cober::Renderer::DrawQuad({ -1.0f, 0.5f, -15.0f }, { 0.8f, 0.8f }, { 0.2f, 0.8f, 0.3f, 1.0f });
 		//Cober::Renderer::DrawQuad({ 0.0f, 0.0f, -10.0f }, { 1.0f, 1.0f }, { 0.2f, 0.3f, 0.8f, 1.0f });
 		//Cober::Renderer::DrawQuad({ 0.0f, 0.0f }, { 6.0f, 6.0f }, m_TextureTest);
@@ -99,8 +96,21 @@ void Sandbox2D::OnImGuiRender()
 void Sandbox2D::OnEvent(SDL_Event& e)
 {
 	const Uint8* keystate = SDL_GetKeyboardState(NULL);
-	if (keystate[SDL_SCANCODE_0] && e.type == SDL_KEYDOWN)
+	if (keystate[SDL_SCANCODE_0] && e.type == SDL_KEYDOWN) {
 		perspective = perspective == true ? false : true;
 
-	camera.OnEvent(e);
+		/*if (perspective) {
+			OrthoCamera.SetPosition(PerspCamera.GetPosition());
+			OrthoCamera.SetDirection(PerspCamera.GetDirection());
+		}
+		else {
+			PerspCamera.SetPosition(OrthoCamera.GetPosition());
+			PerspCamera.SetDirection(OrthoCamera.GetDirection());
+		}*/
+	}
+
+	if (perspective)
+		PerspCamera.OnEvent(e);
+	else
+		OrthoCamera.OnEvent(e);
 }

@@ -1,33 +1,33 @@
 #pragma once
 
+#include "CameraController.h"
+#include "Cober/Timestep.h"
+
+#include <SDL/SDL.h>
 #include <glm/glm.hpp>
 
 namespace Cober {
 
-	class OrthographicCamera
+	class OrthographicCamera : public CameraController
 	{
 	public:
+		OrthographicCamera(glm::vec2 aspectRatio);
 		OrthographicCamera(float left, float right, float bottom, float top);
 
-		void SetProjection(float left, float right, float bottom, float top);
+		void OnUpdate(Timestep ts) override;
+		void OnEvent(SDL_Event& event) override;
 
-		const glm::vec3& GetPosition() const { return m_Position; }
-		void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateViewMatrix(); }
+		const glm::mat4& GetViewMatrix() const override { return  c_VMatrix; }
+		const glm::mat4& GetProjectionMatrix() const override { return  c_PMatrix; }
+		const glm::mat4& GetModelMatrix() const override { return  c_MMatrix; };
 
-		float GetRotation() const { return m_Rotation; }
-		void SetRotation(float rotation) { m_Rotation = rotation; RecalculateViewMatrix(); }
-
-		const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
-		const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
-		const glm::mat4& GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
-	private:
-		void RecalculateViewMatrix();
-	private:
-		glm::mat4 m_ProjectionMatrix;
-		glm::mat4 m_ViewMatrix;
-		glm::mat4 m_ViewProjectionMatrix;
-
-		glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
-		float m_Rotation = 0.0f;
+		glm::vec3& GetPosition() { return c_position; }
+		void SetPosition(glm::vec3& position) { c_position = position; }
+		glm::vec3& GetDirection() { return c_direction; }
+		void SetDirection(glm::vec3& direction) { c_direction = direction; }
+	public:
+		void OnMouseMotion(SDL_MouseMotionEvent& e) override;
+		void OnMouseScrolled(SDL_MouseWheelEvent& e) override;
+		void OnWindowResized(Window& e) override;
 	};
 }

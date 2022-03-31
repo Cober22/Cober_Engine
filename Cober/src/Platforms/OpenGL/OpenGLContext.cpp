@@ -23,7 +23,7 @@ namespace Cober {
 
 		GLenum error = glewInit();
 		if (error != GLEW_OK)
-			CB_ASSERT(false, ("{0}, Failed to initialize Glad!", (const char*)error));
+			CB_ASSERT(false, ("{0}, Failed to initialize Glew!", (const char*)error));
 
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 

@@ -61,6 +61,9 @@
     <Filter Include="src\Platforms\Windows">
       <UniqueIdentifier>{EE2C175D-5A99-D257-238D-6AB58FB8F4BF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Cober\Renderer\Primitives">
+      <UniqueIdentifier>{4d54a218-e884-4892-8a64-9a0e76413374}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\glm\glm\common.hpp">
@@ -1425,6 +1428,9 @@
     <ClInclude Include="src\Cober\Renderer\Camera\PerspectiveCamera.h">
       <Filter>src\Cober\Renderer\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\Primitives\Primitives.h">
+      <Filter>src\Cober\Renderer\Primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\stb_image\stb_image.cpp">
@@ -1463,9 +1469,6 @@
     <ClCompile Include="src\Cober\Renderer\Renderer.cpp">
       <Filter>src\Cober\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\Shader.cpp">
-      <Filter>src\Cober\Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="src\Cober\Renderer\Texture.cpp">
       <Filter>src\Cober\Renderer</Filter>
     </ClCompile>
@@ -1498,6 +1501,15 @@
     </ClCompile>
     <ClCompile Include="src\Cober\Renderer\Camera\PerspectiveCamera.cpp">
       <Filter>src\Cober\Renderer\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\Shader.cpp">
+      <Filter>src\Cober\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\Primitives\Cube.cpp">
+      <Filter>src\Cober\Renderer\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\Primitives\Square.cpp">
+      <Filter>src\Cober\Renderer\Primitives</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -2,13 +2,6 @@
 
 #include "Engine.h"
 
-template<typename T>
-class Camera {
-public:
-	Camera() = default;
-	T camera;
-};
-
 class Sandbox2D : public Cober::Layer
 {
 public:
@@ -26,8 +19,6 @@ private:
 	Cober::OrthographicCamera OrthoCamera;
 
 	bool perspective = true;
-	//Cober::Ref<Cober::VertexArray> m_SquareVAO;
-	//Cober::Ref<Cober::Shader> m_ShaderSquare;
 	Cober::Ref<Cober::Texture2D> m_TextureTest;
 
 	struct ProfileResult 

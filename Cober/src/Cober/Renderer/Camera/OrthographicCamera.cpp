@@ -125,4 +125,3 @@ namespace Cober {
 		SetProjection(-ratio * c_zoomLevel, ratio * c_zoomLevel, -c_zoomLevel, c_zoomLevel);
 	}
 }
-

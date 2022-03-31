@@ -11,7 +11,7 @@ Sandbox2D::Sandbox2D()
 
 void Sandbox2D::OnAttach()
 {
-	//m_TextureTest = Cober::Texture2D::Create("Assets/Textures/BlendTest.jpg");
+	m_TextureTest = Cober::Texture2D::Create("Assets/Textures/BlendTest.png");
 }
 
 void Sandbox2D::OnDetach()
@@ -49,7 +49,7 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 	
 		// TEST
 		glm::vec3 cubePositions[10] = {
-			glm::vec3(0.0f,  0.0f,  0.0f),
+			glm::vec3(0.0f,  3.5f,  0.0f),
 			glm::vec3(2.0f,  5.0f, -15.0f),
 			glm::vec3(-1.5f, -2.2f, -2.5f),
 			glm::vec3(-3.8f, -2.0f, -12.3f),
@@ -75,12 +75,12 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 		};
 
 		for (unsigned int i = 0; i < 10; i++) {
-			Cober::Renderer::DrawQuad(cubePositions[i], { 0.8f, 0.8f }, cubeColors[i]);
+			Cober::Renderer::DrawCube(cubePositions[i], { 0.8f, 0.8f }, cubeColors[i]);
 		}
 
 		//Cober::Renderer::DrawQuad({ -1.0f, 0.5f, -15.0f }, { 0.8f, 0.8f }, { 0.2f, 0.8f, 0.3f, 1.0f });
 		//Cober::Renderer::DrawQuad({ 0.0f, 0.0f, -10.0f }, { 1.0f, 1.0f }, { 0.2f, 0.3f, 0.8f, 1.0f });
-		//Cober::Renderer::DrawQuad({ 0.0f, 0.0f }, { 6.0f, 6.0f }, m_TextureTest);
+		Cober::Renderer::DrawSquare({ 0.0f, 0.0f }, { 6.0f, 6.0f }, m_TextureTest);
 		Cober::Renderer::EndScene();
 	}
 }
@@ -96,18 +96,8 @@ void Sandbox2D::OnImGuiRender()
 void Sandbox2D::OnEvent(SDL_Event& e)
 {
 	const Uint8* keystate = SDL_GetKeyboardState(NULL);
-	if (keystate[SDL_SCANCODE_0] && e.type == SDL_KEYDOWN) {
+	if (keystate[SDL_SCANCODE_0] && e.type == SDL_KEYDOWN)
 		perspective = perspective == true ? false : true;
-
-		/*if (perspective) {
-			OrthoCamera.SetPosition(PerspCamera.GetPosition());
-			OrthoCamera.SetDirection(PerspCamera.GetDirection());
-		}
-		else {
-			PerspCamera.SetPosition(OrthoCamera.GetPosition());
-			PerspCamera.SetDirection(OrthoCamera.GetDirection());
-		}*/
-	}
 
 	if (perspective)
 		PerspCamera.OnEvent(e);

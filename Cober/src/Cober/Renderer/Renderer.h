@@ -1,12 +1,11 @@
 #pragma once
+#include "API/RenderCommand.h"
 
-#include "Cober/Renderer/API/RenderCommand.h"
+#include "Camera/OrthographicCamera.h"
+#include "Camera/PerspectiveCamera.h"
 
-#include "Cober/Renderer/Camera/OrthographicCamera.h"
-#include "Cober/Renderer/Camera/PerspectiveCamera.h"
-
-#include "Cober/Renderer/Texture.h"
-
+#include "Texture.h"
+#include "Cober/Renderer/Primitives/Primitives.h"
 
 namespace Cober {
 
@@ -14,22 +13,23 @@ namespace Cober {
 
 	public:
 		static void Init();
-		static void Shutdown();
 		static void OnWindowResize(uint32_t width, uint32_t height);
 		
 		static void BeginScene(OrthographicCamera& camera);
 		static void BeginScene(PerspectiveCamera& camera);
 		static void EndScene();
 
-		//static void Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform = glm::mat4(1.0f));
-
-		// Primitives
-		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
-		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
-		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D> texture);
-		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D> texture);
-
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
-	private:
+		
+		// Primitives
+		static void DrawSquare(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
+		static void DrawSquare(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
+		static void DrawSquare(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D> texture);
+		static void DrawSquare(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D> texture);
+
+		static void DrawCube(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
+		static void DrawCube(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
+		static void DrawCube(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D> texture);
+		static void DrawCube(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D> texture);
 	};
 }

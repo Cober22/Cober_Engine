@@ -3,8 +3,6 @@
 #include "Cober/Renderer/Texture.h"
 #include "Cober/Renderer/Shader.h"
 
-#include "Cober/Renderer/Buffer.h"
-
 namespace Cober {
 
 	class Square {
@@ -20,11 +18,12 @@ namespace Cober {
 		Ref<Texture2D> WhiteTexture;
 
 		// Data
-		float squareVertices[5 * 4] = {
-			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
+		float squareVertices[8 * 4] = {
+			// positions			// normals			// texture coords
+			-1.0,	-1.0,	 1.0,	0.0,	0.0,	1.0,	0.0,	0.0,
+			 1.0,	-1.0,	 1.0,	0.0,	0.0,	1.0,	1.0,	0.0,
+			 1.0,	 1.0,	 1.0,	0.0,	0.0,	1.0,	1.0,	1.0,
+			-1.0,	 1.0,	 1.0,	0.0,	0.0,	1.0,	0.0,	1.0,
 		};
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
 
@@ -36,7 +35,81 @@ namespace Cober {
 	class Cube {
 	public:
 		Cube();
-		void Draw(const glm::vec3& position, const glm::vec2& size, Ref<Shader> shader);
+		void Draw(const glm::vec3& position, const glm::vec3& size, Ref<Shader> shader);
+		void Init();
+		Ref<VertexArray> GetVAO() { return VAO; }
+		Ref<Texture> GetTexture() { return WhiteTexture; }
+
+	private:
+		// Primitive Attributes
+		Ref<VertexArray> VAO;
+		Ref<Texture2D> WhiteTexture;
+
+		// Data		
+		float cubeVertices[6 * 4 * (3 + 3 + 2)] = {
+			// positions			// normals				// texture coords
+			// bottom
+			-1.0,	-1.0,	-1.0,	0.0,   -1.0,	0.0,	0.0,	0.0,
+			 1.0,	-1.0,	-1.0,	0.0,   -1.0,	0.0,	1.0,	0.0,
+			 1.0,	-1.0,	 1.0,	0.0,   -1.0,	0.0,	1.0,	1.0,
+			-1.0,	-1.0,	 1.0,	0.0,   -1.0,	0.0,	0.0,	1.0,
+			// front
+			-1.0,	-1.0,	 1.0,	0.0,	0.0,	1.0,	0.0,	0.0,
+			 1.0,	-1.0,	 1.0,	0.0,	0.0,	1.0,	1.0,	0.0, 
+			 1.0,	 1.0,	 1.0,	0.0,	0.0,	1.0,	1.0,	1.0,
+			-1.0,	 1.0,	 1.0,	0.0,	0.0,	1.0,	0.0,	1.0,
+			// top
+			-1.0,	 1.0,	 1.0,	0.0,	1.0,	0.0,	0.0,	0.0,
+			 1.0,	 1.0,	 1.0,	0.0,	1.0,	0.0,	1.0,	0.0,
+			 1.0,	 1.0,	-1.0,	0.0,	1.0,	0.0,	1.0,	1.0,
+			-1.0,	 1.0,	-1.0,	0.0,	1.0,	0.0,	0.0,	1.0,
+			// left
+			-1.0,	-1.0,	-1.0,  -1.0,	0.0,	0.0,	0.0,	0.0,
+			-1.0,	-1.0,	 1.0,  -1.0,	0.0,	0.0,	1.0,	0.0,
+			-1.0,	 1.0,	 1.0,  -1.0,	0.0,	0.0,	1.0,	1.0,
+			-1.0,	 1.0,	-1.0,  -1.0,	0.0,	0.0,	0.0,	1.0,
+			// right
+			 1.0,	-1.0,	 1.0,   1.0,	0.0,	0.0,	0.0,	0.0,
+			 1.0,	-1.0,	-1.0,   1.0,	0.0,	0.0,	1.0,	0.0,
+			 1.0,	 1.0,	-1.0,   1.0,	0.0,	0.0,	1.0,	1.0,
+			 1.0,	 1.0,	 1.0,   1.0,	0.0,	0.0,	0.0,	1.0,
+			// back
+			 1.0,	-1.0,	-1.0,	0.0,	0.0,   -1.0,	0.0,	0.0,
+			-1.0,	-1.0,	-1.0,	0.0,	0.0,   -1.0,	1.0,	0.0,
+			-1.0,	 1.0,	-1.0,	0.0,	0.0,   -1.0,	1.0,	1.0,
+			 1.0,	 1.0,	-1.0,	0.0,	0.0,   -1.0,	0.0,	1.0,
+		};
+		
+		uint32_t cubeIndices[6 * 2 * 3] = {
+			// front
+			0,   1,  2,
+			2,   3,  0,
+			// top
+			4,   5,  6,
+			6,   7,  4,
+			// left
+			16, 17, 18,
+			18, 19, 16,
+			// right
+			20, 21, 22,
+			22, 23, 20,
+			// back
+			8,   9, 10,
+			10, 11,  8,
+			// bottom
+			12, 13, 14,
+			14, 15, 12,
+		};
+
+		// Buffer Objects
+		Ref<VertexBuffer> cubeVB;
+		Ref<IndexBuffer> cubeIB;
+	};
+
+	class LightCube {
+	public:
+		LightCube();
+		void Draw(const glm::vec3& position, const glm::vec3& size, Ref<Shader> shader);
 		void Init();
 		Ref<VertexArray> GetVAO() { return VAO; }
 		Ref<Texture> GetTexture() { return WhiteTexture; }
@@ -47,7 +120,7 @@ namespace Cober {
 		Ref<Texture2D> WhiteTexture;
 
 		// Data
-		float cubeVertices[2 * 3 * 4] = {
+		float lightCubeVertices[2 * 3 * 4] = {
 			// front
 			-1.0, -1.0, -1.0,
 			 1.0, -1.0, -1.0,
@@ -57,19 +130,31 @@ namespace Cober {
 			-1.0, -1.0,  1.0,
 			 1.0, -1.0,  1.0,
 			 1.0,  1.0,  1.0,
-			-1.0,  1.0,  1.0
+			-1.0,  1.0,  1.0,
 		};
-		uint32_t cubeIndices[6 * 2 * 3] = {
-			0, 1, 3, 3, 1, 2,
-			1, 5, 2, 2, 5, 6,
-			5, 4, 6, 6, 4, 7,
-			4, 0, 7, 7, 0, 3,
-			3, 2, 7, 7, 2, 6,
-			4, 5, 0, 0, 5, 1
+		uint32_t lightCubeIndices[6 * 2 * 3] = {
+			// front
+			0, 1, 3,
+			1, 2, 3,
+			// back
+			4, 5, 7,
+			5, 6, 7,
+			// right
+			0, 1, 4,
+			1, 4, 5,
+			// left
+			2, 3, 7,
+			2, 6, 7,
+			// top
+			0, 3, 4,
+			3, 4, 7,
+			// bottom
+			1, 2, 5,
+			2, 5, 6,
 		};
 
 		// Buffer Objects
-		Ref<VertexBuffer> cubeVB = VertexBuffer::Create(cubeVertices, sizeof(cubeVertices));
-		Ref<IndexBuffer> cubeIB = IndexBuffer::Create(cubeIndices, sizeof(cubeIndices) / sizeof(uint32_t));
+		Ref<VertexBuffer> lightCubeVB;
+		Ref<IndexBuffer> lightCubeIB;
 	};
 }

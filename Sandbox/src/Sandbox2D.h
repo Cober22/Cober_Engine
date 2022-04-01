@@ -19,7 +19,9 @@ private:
 	Cober::OrthographicCamera OrthoCamera;
 
 	bool perspective = true;
-	Cober::Ref<Cober::Texture2D> m_TextureTest;
+	Cober::Ref<Cober::Texture2D> catTexture;
+	Cober::Ref<Cober::Texture2D> checkerboardTexture;
+	//Cober::Ref<Cober::Shader> m_ShaderSquare;
 
 	struct ProfileResult 
 	{

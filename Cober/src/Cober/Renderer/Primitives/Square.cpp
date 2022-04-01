@@ -25,6 +25,7 @@ namespace Cober {
 		squareVB = VertexBuffer::Create(squareVertices, sizeof(squareVertices));
 		squareVB->SetLayout({
 			{ ShaderDataType::Float3, "a_Position" },
+			{ ShaderDataType::Float3, "a_Normal" },
 			{ ShaderDataType::Float2, "a_TextCoord" }
 			});
 		VAO->AddVertexBuffer(squareVB);

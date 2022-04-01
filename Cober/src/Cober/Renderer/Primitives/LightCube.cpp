@@ -6,11 +6,11 @@
 
 namespace Cober {
 
-	Cube::Cube() {
+	LightCube::LightCube() {
 		Init();
 	}
 
-	void Cube::Draw(const glm::vec3& position, const glm::vec3& size, Ref<Shader> shader) {
+	void LightCube::Draw(const glm::vec3& position, const glm::vec3& size, Ref<Shader> shader) {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, size.z });
 		shader->SetMat4("u_Transform", transform);
 
@@ -18,21 +18,19 @@ namespace Cober {
 		RenderCommand::DrawIndexed(VAO);
 	}
 
-	void Cube::Init() {
+	void LightCube::Init() {
 		VAO = VertexArray::Create();
 
 		// [---------- VERTEX BUFFER ----------]
-		cubeVB = VertexBuffer::Create(cubeVertices, sizeof(cubeVertices));
-		cubeVB->SetLayout({
-			{ ShaderDataType::Float3, "a_Position" },
-			{ ShaderDataType::Float3, "a_Normal" },
-			{ ShaderDataType::Float2, "a_TextCoord" }
+		lightCubeVB = VertexBuffer::Create(lightCubeVertices, sizeof(lightCubeVertices));
+		lightCubeVB->SetLayout({
+			{ ShaderDataType::Float3, "a_Position" }
 			});
-		VAO->AddVertexBuffer(cubeVB);
+		VAO->AddVertexBuffer(lightCubeVB);
 
 		// [---------- INDEX BUFFER ----------]
-		cubeIB = IndexBuffer::Create(cubeIndices, sizeof(cubeIndices) / sizeof(uint32_t));
-		VAO->SetIndexBuffer(cubeIB);
+		lightCubeIB = IndexBuffer::Create(lightCubeIndices, sizeof(lightCubeIndices) / sizeof(uint32_t));
+		VAO->SetIndexBuffer(lightCubeIB);
 		WhiteTexture = Texture2D::Create(1, 1);
 		uint32_t whiteTexturerData = 0xffffffff;
 		WhiteTexture->SetData(&whiteTexturerData, sizeof(uint32_t));

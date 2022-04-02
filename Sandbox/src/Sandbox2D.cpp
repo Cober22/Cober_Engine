@@ -53,20 +53,20 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 
 		// TEST
 		glm::vec3 cubePositions[10] = {
-			glm::vec3(1.2f, 1.0f, -5.0f),	// Lighting Cube
-			glm::vec3(0.0f,  3.5f,  0.0f),
-			glm::vec3(2.0f,  5.0f, -15.0f),
-			glm::vec3(-1.5f, -2.2f, -2.5f),
-			glm::vec3(-3.8f, -2.0f, -12.3f),
-			glm::vec3(2.4f, -0.4f, -3.5f),
-			glm::vec3(-1.7f,  3.0f, -7.5f),
-			glm::vec3(1.3f, -2.0f, -2.5f),
-			glm::vec3(1.5f,  2.0f, -2.5f),
-			glm::vec3(1.5f,  0.2f, -1.5f)
+			glm::vec3(	1.0f,	 3.0f,  -4.0f),	// Lighting Cube
+			glm::vec3(	0.0f,	-1.0f,	-7.0f),
+			glm::vec3(	2.0f,	-1.0f,  -7.3f),
+			glm::vec3(  0.5f,	 1.0f,  -8.0f),
+			glm::vec3(  0.75f,	 3.0f,  -7.5f),
+			glm::vec3(	3.4f,	-1.0f,  -3.0f),
+			glm::vec3( -2.7f,   -1.0f,  -2.5f),
+			glm::vec3( -3.3f,	 1.0f,  -2.0f),
+			glm::vec3(	3.0f,    1.0f,  -2.2f),
+			glm::vec3( -4.0f,   -1.0f,  -1.5f)
 		};
 
 		glm::vec4 cubeColors[10] = {
-			glm::vec4(1.0f, 0.0f, 0.0f, 1.0f),
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
 			glm::vec4(0.8f, 0.2f, 0.3f, 1.0f),
 			glm::vec4(0.5f, 0.5f, 0.1f, 1.0f),
 			glm::vec4(0.1f, 0.5f, 0.5f, 1.0f),
@@ -80,14 +80,14 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 
 		for (unsigned int i = 0; i < 10; i++) {
 			if (i == 0)
-				Cober::Renderer::DrawLightCube(cubePositions[i], glm::vec3(0.4f)); //, cubeColors[i]
+				Cober::Renderer::DrawLightCube(cubePositions[i], glm::vec3(0.4f), cubeColors[i]);
 			else
-				Cober::Renderer::DrawCube(cubePositions[i], glm::vec3(0.8f), woodContainer, steelBorderContainer, {1.0f, 1.0f, 1.0f, 1.0f});
+				Cober::Renderer::DrawCube(cubePositions[i], glm::vec3(1.0f), woodContainer, steelBorderContainer, {1.0f, 1.0f, 1.0f, 1.0f});
 				//Cober::Renderer::DrawCube(cubePositions[i], glm::vec3(0.8f), woodContainer, steelBorderContainer, cubeColors[i]);
 				//Cober::Renderer::DrawCube(cubePositions[i], glm::vec3(0.8f), checkerboardTexture, cubeColors[i]);
 		}
 
-		Cober::Renderer::DrawSquare({ 0.0f, 0.0f }, { 3.0f, 3.0f }, catTexture);
+		Cober::Renderer::DrawSquare({ -2.0f, 0.0f }, { 2.0f, 2.0f }, catTexture);
 		//Cober::Renderer::DrawSquare({ -1.0f, 0.5f, -15.0f }, { 0.8f, 0.8f }, { 0.2f, 0.8f, 0.3f, 1.0f });
 		//Cober::Renderer::DrawSquare({ 0.0f, 0.0f, -10.0f }, { 1.0f, 1.0f }, { 0.2f, 0.3f, 0.8f, 1.0f });
 

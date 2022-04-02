@@ -106,7 +106,8 @@ namespace Cober {
 	void Renderer::DrawSquare(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D> texture, const glm::vec4& color)
 	{
 		SetupBasicPrimitiveShader(color);
-		texture->Bind();
+		texture->Bind(0);
+		texture->Bind(1);	// Provisional from delete the specular map from the cat Texture
 		primitive->square->Draw(position, size, basePrimitiveShader);
 	}
 

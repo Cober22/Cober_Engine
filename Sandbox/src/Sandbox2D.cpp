@@ -13,6 +13,8 @@ void Sandbox2D::OnAttach()
 {
 	catTexture = Cober::Texture2D::Create("Assets/Textures/BlendTest.png");
 	checkerboardTexture = Cober::Texture2D::Create("Assets/Textures/Checkerboard.png");
+	woodContainer = Cober::Texture2D::Create("Assets/Textures/WoodenContainer.png");
+	steelBorderContainer = Cober::Texture2D::Create("Assets/Textures/SteelBorderContainer.png");
 }
 
 void Sandbox2D::OnDetach()
@@ -35,8 +37,8 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 	// Render
 	{
 		CB_PROFILE_SCOPE("Render Prep");
-		Cober::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
-		//Cober::RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
+		//Cober::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+		Cober::RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
 		//Cober::RenderCommand::SetClearColor({ 0.8f, 0.35f, 0.35f, 1.0f });
 		Cober::RenderCommand::Clear();
 	}
@@ -64,7 +66,7 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 		};
 
 		glm::vec4 cubeColors[10] = {
-			glm::vec4(0.7f, 0.1f, 0.4f, 1.0f),
+			glm::vec4(1.0f, 0.0f, 0.0f, 1.0f),
 			glm::vec4(0.8f, 0.2f, 0.3f, 1.0f),
 			glm::vec4(0.5f, 0.5f, 0.1f, 1.0f),
 			glm::vec4(0.1f, 0.5f, 0.5f, 1.0f),
@@ -78,9 +80,11 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 
 		for (unsigned int i = 0; i < 10; i++) {
 			if (i == 0)
-				Cober::Renderer::DrawLightCube(cubePositions[i], glm::vec3(0.4f), cubeColors[i]);
+				Cober::Renderer::DrawLightCube(cubePositions[i], glm::vec3(0.4f)); //, cubeColors[i]
 			else
-				Cober::Renderer::DrawCube(cubePositions[i], glm::vec3(0.8f), checkerboardTexture, cubeColors[i]);
+				Cober::Renderer::DrawCube(cubePositions[i], glm::vec3(0.8f), woodContainer, steelBorderContainer, {1.0f, 1.0f, 1.0f, 1.0f});
+				//Cober::Renderer::DrawCube(cubePositions[i], glm::vec3(0.8f), woodContainer, steelBorderContainer, cubeColors[i]);
+				//Cober::Renderer::DrawCube(cubePositions[i], glm::vec3(0.8f), checkerboardTexture, cubeColors[i]);
 		}
 
 		Cober::Renderer::DrawSquare({ 0.0f, 0.0f }, { 3.0f, 3.0f }, catTexture);

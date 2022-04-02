@@ -1,3 +1,4 @@
+/////////////////////////////// VERTEX
 #type vertex
 #version 330 core
 
@@ -13,52 +14,60 @@ uniform mat4 u_Projection;
 uniform mat4 u_View;
 uniform mat4 u_Model;
 uniform mat4 u_Transform;
-uniform vec3 u_Normal;
+uniform mat3 u_Normal;
 
 void main()
 {
 	v_FragPos = vec3(u_Model * u_Transform * vec4(a_Position, 1.0));
 	v_TextCoord = a_TextCoord;
 	v_Normal = u_Normal * a_Normal;		// Traspose of the inverse of model matrix * a_Normal
-	v_Normal = mat3(transpose(inverse(u_Model))) * a_Normal;
 	gl_Position = u_Projection * u_View * vec4(v_FragPos, 1.0);
 }
 
-
+/////////////////////////////// FRAGMENT
 #type fragment
 #version 330 core
-			
-out vec4 color;
+out vec4 fragmentColor;
 
-in vec2 v_TextCoord;
-in vec3 v_Normal;
+struct Material {
+	sampler2D diffuse;
+	sampler2D specular;
+	float shininess;
+};
+
+struct Light {
+	vec3 position;
+
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+};
+
 in vec3 v_FragPos;
+in vec3 v_Normal;
+in vec2 v_TextCoord;
 
-uniform sampler2D u_Texture;
+uniform Material material;
+uniform Light light;
 uniform vec3 u_ViewPos;
 uniform vec4 u_Color;
-uniform vec3 u_LightColor;
-uniform vec3 u_LightPos;
 
 void main()
 {
 	// ambient
-	float ambientStrength = 0.1;
-	vec3 ambient = ambientStrength * u_LightColor;
+	vec4 ambient = vec4(light.ambient, 1.0) * texture(material.diffuse, v_TextCoord);
 
 	// diffuse
 	vec3 normal = normalize(v_Normal);
-	vec3 lightDir = normalize(u_LightPos - v_FragPos);
+	vec3 lightDir = normalize(light.position - v_FragPos);
 	float diff = max(dot(normal, lightDir), 0.0);
-	vec3 diffuse = diff * u_LightColor;
+	vec4 diffuse = vec4(light.diffuse, 1.0) * diff * texture(material.diffuse, v_TextCoord);
 
 	// specular
-	float specularStrength = 0.5;
 	vec3 viewDir = normalize(u_ViewPos - v_FragPos);
 	vec3 reflectDir = reflect(-lightDir, normal);  
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 128);
-	vec3 specular = specularStrength * spec * u_LightColor;  
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+	vec4 specular = vec4(light.specular, 1.0) * spec * texture(material.specular, v_TextCoord) * vec4(light.specular, 1.0);  
 
-	color = vec4((ambient + diffuse + specular), 1.0) * texture(u_Texture, v_TextCoord) * u_Color;
-	//color = (ambient + diffuse + specular) * u_Color;
+	fragmentColor = vec4(ambient + diffuse + specular) * u_Color;
 }

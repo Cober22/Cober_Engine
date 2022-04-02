@@ -3,31 +3,33 @@
 
 namespace Cober {
 
-	struct PrimitiveTypes {
+	struct PrimitiveType {
 		Ref<Square> square;
 		Ref<Cube> cube;
 		Ref<LightCube> lightCube;
 	};
 
-	static PrimitiveTypes* primitive;
-	Ref<Shader> shader;
+	static PrimitiveType* primitive;
+	Ref<Shader> basePrimitiveShader;
 	Ref<Shader> lightCubeShader;
 
 	glm::vec3 cameraPosition;
 	glm::vec3 lightPosition = glm::vec3(1.2f, 1.0f, -5.0f);	// TEST
+	glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);	// TEST
 
 	void Renderer::Init()
 	{
 		RenderCommand::Init();
-		primitive = new PrimitiveTypes();
 
+		primitive = new PrimitiveType();
 		primitive->square = CreateRef<Square>();
 		primitive->cube = CreateRef<Cube>();
 		primitive->lightCube = CreateRef<LightCube>();
 
-		shader = Shader::Create("Assets/Shaders/Cube.glsl");
-		shader->Bind();
-		//shader->SetInt("u_Texture", 0);
+		basePrimitiveShader = Shader::Create("Assets/Shaders/Primitive.glsl");
+		basePrimitiveShader->Bind();
+		basePrimitiveShader->SetInt("material.diffuse", 0);
+		basePrimitiveShader->SetInt("material.specular", 1);
 
 		lightCubeShader = Shader::Create("Assets/Shaders/Light.glsl");
 		lightCubeShader->Bind();
@@ -38,10 +40,20 @@ namespace Cober {
 		RenderCommand::SetViewport(0, 0, width, height);
 	}
 
+	void UploadShadersToFrustum(const Ref<Shader> shader, const glm::mat4 projection, const glm::mat4 view, const glm::mat4 model) {
+
+		shader->Bind();
+		shader->SetMat4("u_Projection", projection);
+		shader->SetMat4("u_View", view);
+		shader->SetMat4("u_Model", model);
+		// Calculate the normal matrix on the CPU and send it to the GPU because inversing matrices is a costly operation for shaders
+		shader->SetMat3("u_Normal", glm::transpose(glm::inverse(model)));
+	}
+
 	void Renderer::BeginScene(OrthographicCamera& camera)
 	{
 		cameraPosition = camera.GetPosition();
-		UploadShadersToFrustum(shader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
+		UploadShadersToFrustum(basePrimitiveShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
 		UploadShadersToFrustum(lightCubeShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
 
 	}
@@ -49,21 +61,29 @@ namespace Cober {
 	void Renderer::BeginScene(PerspectiveCamera& camera)
 	{
 		cameraPosition = camera.GetPosition();
-		UploadShadersToFrustum(shader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
+		UploadShadersToFrustum(basePrimitiveShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
 		UploadShadersToFrustum(lightCubeShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
-	}
-
-	void Renderer::UploadShadersToFrustum(const Ref<Shader> shader, const glm::mat4 projection, const glm::mat4 view, const glm::mat4 model) {
-
-		shader->Bind();
-		shader->SetMat4("u_Normal", glm::mat4(glm::transpose(glm::inverse(model))));
-		shader->SetMat4("u_Projection", projection);
-		shader->SetMat4("u_View", view);
-		shader->SetMat4("u_Model", model);
 	}
 
 	void Renderer::EndScene()
 	{
+	}
+
+	void SetupBasicPrimitiveShader(const glm::vec4& color) {
+
+		basePrimitiveShader->Bind();
+		basePrimitiveShader->SetFloat4("u_Color", color);
+		basePrimitiveShader->SetFloat3("u_ViewPos", cameraPosition);
+		basePrimitiveShader->SetFloat3("light.position", lightPosition);
+		basePrimitiveShader->SetFloat3("light.specular", lightColor);
+
+		// ONLY FOR TEST
+		//	/*
+		basePrimitiveShader->SetFloat3("light.ambient", { 0.2f, 0.2f, 0.2f });
+		basePrimitiveShader->SetFloat3("light.diffuse", { 0.5f, 0.5f, 0.5f }); // darkened
+		//	*/ 
+
+		basePrimitiveShader->SetFloat("material.shininess", 64.0f);
 	}
 
 	// [-------------------- SQUARE --------------------]
@@ -73,14 +93,9 @@ namespace Cober {
 	}
 	void Renderer::DrawSquare(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
-		shader->Bind();
-		shader->SetFloat4("u_Color", color);
-		shader->SetFloat3("u_LightColor", { 1.0f, 1.0f, 1.0f });
-		shader->SetFloat3("u_LightPos", lightPosition);
-		shader->SetFloat3("u_ViewPos", cameraPosition);
+		SetupBasicPrimitiveShader(color);
 		primitive->square->GetTexture()->Bind();
-
-		primitive->square->Draw(position, size, shader);
+		primitive->square->Draw(position, size, basePrimitiveShader);
 	}
 
 	void Renderer::DrawSquare(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D> texture, const glm::vec4& color)
@@ -90,14 +105,9 @@ namespace Cober {
 
 	void Renderer::DrawSquare(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D> texture, const glm::vec4& color)
 	{
-		shader->Bind();
-		shader->SetFloat4("u_Color", color);
-		shader->SetFloat3("u_LightColor", { 1.0f, 1.0f, 1.0f });
-		shader->SetFloat3("u_LightPos", lightPosition);
-		shader->SetFloat3("u_ViewPos", cameraPosition);
+		SetupBasicPrimitiveShader(color);
 		texture->Bind();
-
-		primitive->square->Draw(position, size, shader);
+		primitive->square->Draw(position, size, basePrimitiveShader);
 	}
 
 
@@ -108,32 +118,22 @@ namespace Cober {
 	}
 	void Renderer::DrawCube(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color)
 	{
-		shader->Bind();
-		shader->SetFloat4("u_Color", color);
-		shader->SetFloat3("u_LightColor", glm::vec3(1.0f));
-		shader->SetFloat3("u_LightPos", lightPosition);
-		shader->SetFloat3("u_ViewPos", cameraPosition);
-		
+		SetupBasicPrimitiveShader(color);
 		primitive->cube->GetTexture()->Bind();
-
-		primitive->cube->Draw(position, size, shader);
+		primitive->cube->Draw(position, size, basePrimitiveShader);
 	}
 
-	void Renderer::DrawCube(const glm::vec2& position, const glm::vec3& size, const Ref<Texture2D> texture, const glm::vec4& color)
+	void Renderer::DrawCube(const glm::vec2& position, const glm::vec3& size, const Ref<Texture2D> diffuseTexture, const Ref<Texture2D> specTexture, const glm::vec4& color)
 	{
-		DrawCube({ position.x, position.y, 0.0f }, size, texture, color);
+		DrawCube({ position.x, position.y, 0.0f }, size, diffuseTexture, specTexture, color);
 	}
 
-	void Renderer::DrawCube(const glm::vec3& position, const glm::vec3& size, const Ref<Texture2D> texture, const glm::vec4& color)
+	void Renderer::DrawCube(const glm::vec3& position, const glm::vec3& size, const Ref<Texture2D> diffuseTexture, const Ref<Texture2D> specTexture, const glm::vec4& color)
 	{
-		shader->Bind();
-		shader->SetFloat4("u_Color", color);
-		shader->SetFloat3("u_LightColor", glm::vec3(1.0f));
-		shader->SetFloat3("u_LightPos", lightPosition);
-		shader->SetFloat3("u_ViewPos", cameraPosition);
-		texture->Bind();
-
-		primitive->cube->Draw(position, size, shader);
+		SetupBasicPrimitiveShader(color);
+		diffuseTexture->Bind(0);
+		specTexture->Bind(1);
+		primitive->cube->Draw(position, size, basePrimitiveShader);
 	}
 
 
@@ -144,7 +144,9 @@ namespace Cober {
 	}
 	void Renderer::DrawLightCube(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color)
 	{
+		lightColor = color;
 		lightCubeShader->Bind();
+		lightCubeShader->SetFloat4("u_Color", color);
 		primitive->lightCube->Draw(position, size, lightCubeShader);
 	}
 }

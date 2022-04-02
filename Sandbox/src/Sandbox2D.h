@@ -21,6 +21,8 @@ private:
 	bool perspective = true;
 	Cober::Ref<Cober::Texture2D> catTexture;
 	Cober::Ref<Cober::Texture2D> checkerboardTexture;
+	Cober::Ref<Cober::Texture2D> woodContainer;
+	Cober::Ref<Cober::Texture2D> steelBorderContainer;
 	//Cober::Ref<Cober::Shader> m_ShaderSquare;
 
 	struct ProfileResult 

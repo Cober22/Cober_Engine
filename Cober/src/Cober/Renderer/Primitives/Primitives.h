@@ -18,18 +18,18 @@ namespace Cober {
 		Ref<Texture2D> WhiteTexture;
 
 		// Data
-		float squareVertices[8 * 4] = {
+		float vertices[8 * 4] = {
 			// positions			// normals			// texture coords
 			-1.0,	-1.0,	 1.0,	0.0,	0.0,	1.0,	0.0,	0.0,
 			 1.0,	-1.0,	 1.0,	0.0,	0.0,	1.0,	1.0,	0.0,
 			 1.0,	 1.0,	 1.0,	0.0,	0.0,	1.0,	1.0,	1.0,
 			-1.0,	 1.0,	 1.0,	0.0,	0.0,	1.0,	0.0,	1.0,
 		};
-		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
+		uint32_t indices[6] = { 0, 1, 2, 2, 3, 0 };
 
 		// Buffer Objects
-		Ref<VertexBuffer> squareVB;
-		Ref<IndexBuffer> squareIB;
+		Ref<VertexBuffer> VBO;
+		Ref<IndexBuffer> IBO;
 	};
 
 	class Cube {
@@ -46,13 +46,8 @@ namespace Cober {
 		Ref<Texture2D> WhiteTexture;
 
 		// Data		
-		float cubeVertices[6 * 4 * (3 + 3 + 2)] = {
+		float vertices[6 * 4 * (3 + 3 + 2)] = {
 			// positions			// normals				// texture coords
-			// bottom
-			-1.0,	-1.0,	-1.0,	0.0,   -1.0,	0.0,	0.0,	0.0,
-			 1.0,	-1.0,	-1.0,	0.0,   -1.0,	0.0,	1.0,	0.0,
-			 1.0,	-1.0,	 1.0,	0.0,   -1.0,	0.0,	1.0,	1.0,
-			-1.0,	-1.0,	 1.0,	0.0,   -1.0,	0.0,	0.0,	1.0,
 			// front
 			-1.0,	-1.0,	 1.0,	0.0,	0.0,	1.0,	0.0,	0.0,
 			 1.0,	-1.0,	 1.0,	0.0,	0.0,	1.0,	1.0,	0.0, 
@@ -63,6 +58,11 @@ namespace Cober {
 			 1.0,	 1.0,	 1.0,	0.0,	1.0,	0.0,	1.0,	0.0,
 			 1.0,	 1.0,	-1.0,	0.0,	1.0,	0.0,	1.0,	1.0,
 			-1.0,	 1.0,	-1.0,	0.0,	1.0,	0.0,	0.0,	1.0,
+			// back
+			 1.0,	-1.0,	-1.0,	0.0,	0.0,   -1.0,	0.0,	0.0,
+			-1.0,	-1.0,	-1.0,	0.0,	0.0,   -1.0,	1.0,	0.0,
+			-1.0,	 1.0,	-1.0,	0.0,	0.0,   -1.0,	1.0,	1.0,
+			 1.0,	 1.0,	-1.0,	0.0,	0.0,   -1.0,	0.0,	1.0,
 			// left
 			-1.0,	-1.0,	-1.0,  -1.0,	0.0,	0.0,	0.0,	0.0,
 			-1.0,	-1.0,	 1.0,  -1.0,	0.0,	0.0,	1.0,	0.0,
@@ -73,37 +73,37 @@ namespace Cober {
 			 1.0,	-1.0,	-1.0,   1.0,	0.0,	0.0,	1.0,	0.0,
 			 1.0,	 1.0,	-1.0,   1.0,	0.0,	0.0,	1.0,	1.0,
 			 1.0,	 1.0,	 1.0,   1.0,	0.0,	0.0,	0.0,	1.0,
-			// back
-			 1.0,	-1.0,	-1.0,	0.0,	0.0,   -1.0,	0.0,	0.0,
-			-1.0,	-1.0,	-1.0,	0.0,	0.0,   -1.0,	1.0,	0.0,
-			-1.0,	 1.0,	-1.0,	0.0,	0.0,   -1.0,	1.0,	1.0,
-			 1.0,	 1.0,	-1.0,	0.0,	0.0,   -1.0,	0.0,	1.0,
+			// bottom
+			-1.0,	-1.0,	-1.0,	0.0,   -1.0,	0.0,	0.0,	0.0,
+			 1.0,	-1.0,	-1.0,	0.0,   -1.0,	0.0,	1.0,	0.0,
+			 1.0,	-1.0,	 1.0,	0.0,   -1.0,	0.0,	1.0,	1.0,
+			-1.0,	-1.0,	 1.0,	0.0,   -1.0,	0.0,	0.0,	1.0,
 		};
 		
-		uint32_t cubeIndices[6 * 2 * 3] = {
+		uint32_t indices[6 * 2 * 3] = {
 			// front
 			0,   1,  2,
 			2,   3,  0,
 			// top
 			4,   5,  6,
 			6,   7,  4,
+			// back
+			8,   9, 10,
+			10, 11,  8,
 			// left
 			16, 17, 18,
 			18, 19, 16,
 			// right
 			20, 21, 22,
 			22, 23, 20,
-			// back
-			8,   9, 10,
-			10, 11,  8,
 			// bottom
 			12, 13, 14,
 			14, 15, 12,
 		};
 
 		// Buffer Objects
-		Ref<VertexBuffer> cubeVB;
-		Ref<IndexBuffer> cubeIB;
+		Ref<VertexBuffer> VBO;
+		Ref<IndexBuffer> IBO;
 	};
 
 	class LightCube {
@@ -120,7 +120,7 @@ namespace Cober {
 		Ref<Texture2D> WhiteTexture;
 
 		// Data
-		float lightCubeVertices[2 * 3 * 4] = {
+		float vertices[2 * 3 * 4] = {
 			// front
 			-1.0, -1.0, -1.0,
 			 1.0, -1.0, -1.0,
@@ -132,7 +132,7 @@ namespace Cober {
 			 1.0,  1.0,  1.0,
 			-1.0,  1.0,  1.0,
 		};
-		uint32_t lightCubeIndices[6 * 2 * 3] = {
+		uint32_t indices[6 * 2 * 3] = {
 			// front
 			0, 1, 3,
 			1, 2, 3,
@@ -154,7 +154,7 @@ namespace Cober {
 		};
 
 		// Buffer Objects
-		Ref<VertexBuffer> lightCubeVB;
-		Ref<IndexBuffer> lightCubeIB;
+		Ref<VertexBuffer> VBO;
+		Ref<IndexBuffer> IBO;
 	};
 }

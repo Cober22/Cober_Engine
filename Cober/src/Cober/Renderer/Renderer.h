@@ -17,7 +17,7 @@ namespace Cober {
 		
 		static void BeginScene(OrthographicCamera& camera);
 		static void BeginScene(PerspectiveCamera& camera);
-		static void UploadShadersToFrustum(const Ref<Shader> shader, const glm::mat4 projection, const glm::mat4 view, const glm::mat4 model);
+		//static void UploadShadersToFrustum(const Ref<Shader> shader, const glm::mat4 projection, const glm::mat4 view, const glm::mat4 model);
 		static void EndScene();
 		
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
@@ -30,10 +30,12 @@ namespace Cober {
 
 		static void DrawCube(const glm::vec2& position, const glm::vec3& size, const glm::vec4& color);
 		static void DrawCube(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color);
-		static void DrawCube(const glm::vec2& position, const glm::vec3& size, const Ref<Texture2D> texture, const glm::vec4& color = glm::vec4(1.0f));
-		static void DrawCube(const glm::vec3& position, const glm::vec3& size, const Ref<Texture2D> texture, const glm::vec4& color = glm::vec4(1.0f));
+		static void DrawCube(const glm::vec2& position, const glm::vec3& size, const Ref<Texture2D> diffuseTexture, const Ref<Texture2D> specTexture, const glm::vec4& color = glm::vec4(1.0f));
+		static void DrawCube(const glm::vec3& position, const glm::vec3& size, const Ref<Texture2D> diffuseTexture, const Ref<Texture2D> specTexture, const glm::vec4& color = glm::vec4(1.0f));
+		//static void DrawCube(const glm::vec2& position, const glm::vec3& size, const Ref<Texture2D> texture, const glm::vec4& color = glm::vec4(1.0f));
+		//static void DrawCube(const glm::vec3& position, const glm::vec3& size, const Ref<Texture2D> texture, const glm::vec4& color = glm::vec4(1.0f));
 
-		static void DrawLightCube(const glm::vec2& position, const glm::vec3& size, const glm::vec4& color);
-		static void DrawLightCube(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color);
+		static void DrawLightCube(const glm::vec2& position, const glm::vec3& size, const glm::vec4& color = glm::vec4(1.0f));
+		static void DrawLightCube(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color = glm::vec4(1.0f));
 	};
 }

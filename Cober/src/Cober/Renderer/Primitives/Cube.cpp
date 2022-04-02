@@ -22,17 +22,17 @@ namespace Cober {
 		VAO = VertexArray::Create();
 
 		// [---------- VERTEX BUFFER ----------]
-		cubeVB = VertexBuffer::Create(cubeVertices, sizeof(cubeVertices));
-		cubeVB->SetLayout({
+		VBO = VertexBuffer::Create(vertices, sizeof(vertices));
+		VBO->SetLayout({
 			{ ShaderDataType::Float3, "a_Position" },
 			{ ShaderDataType::Float3, "a_Normal" },
 			{ ShaderDataType::Float2, "a_TextCoord" }
 			});
-		VAO->AddVertexBuffer(cubeVB);
+		VAO->AddVertexBuffer(VBO);
 
 		// [---------- INDEX BUFFER ----------]
-		cubeIB = IndexBuffer::Create(cubeIndices, sizeof(cubeIndices) / sizeof(uint32_t));
-		VAO->SetIndexBuffer(cubeIB);
+		IBO = IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
+		VAO->SetIndexBuffer(IBO);
 		WhiteTexture = Texture2D::Create(1, 1);
 		uint32_t whiteTexturerData = 0xffffffff;
 		WhiteTexture->SetData(&whiteTexturerData, sizeof(uint32_t));

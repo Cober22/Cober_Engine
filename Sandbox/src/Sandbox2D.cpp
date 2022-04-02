@@ -54,15 +54,15 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 		// TEST
 		glm::vec3 cubePositions[10] = {
 			glm::vec3(	1.0f,	 3.0f,  -4.0f),	// Lighting Cube
-			glm::vec3(	0.0f,	-1.0f,	-7.0f),
-			glm::vec3(	2.0f,	-1.0f,  -7.3f),
-			glm::vec3(  0.5f,	 1.0f,  -8.0f),
-			glm::vec3(  0.75f,	 3.0f,  -7.5f),
-			glm::vec3(	3.4f,	-1.0f,  -3.0f),
-			glm::vec3( -2.7f,   -1.0f,  -2.5f),
-			glm::vec3( -3.3f,	 1.0f,  -2.0f),
-			glm::vec3(	3.0f,    1.0f,  -2.2f),
-			glm::vec3( -4.0f,   -1.0f,  -1.5f)
+			glm::vec3(	0.0f,	-2.0f,	-9.0f),
+			glm::vec3(	2.0f,	-2.0f,  -9.3f),
+			glm::vec3(  0.5f,	 0.0f,  -10.0f),
+			glm::vec3(  0.75f,	 2.0f,  -9.5f),
+			glm::vec3(	3.4f,	-2.0f,  -3.0f),
+			glm::vec3( -2.0f,   -2.0f,  -2.5f),
+			glm::vec3( -3.3f,	 0.0f,  -2.0f),
+			glm::vec3(	3.0f,    0.0f,  -2.2f),
+			glm::vec3( -4.0f,   -2.0f,  -1.5f)
 		};
 
 		glm::vec4 cubeColors[10] = {

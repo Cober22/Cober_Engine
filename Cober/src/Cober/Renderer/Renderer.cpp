@@ -14,8 +14,12 @@ namespace Cober {
 	Ref<Shader> lightCubeShader;
 
 	glm::vec3 cameraPosition;
-	glm::vec3 lightPosition = glm::vec3(1.2f, 1.0f, -5.0f);	// TEST
-	glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);	// TEST
+	glm::vec3 l_Color = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec4 l_Pos = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+
+	// l_Dir.w = 0.0f for use directional light
+	// l_Dir.w = 1.0f for use point light
+	glm::vec4 l_Dir = glm::vec4(-0.2f, -1.0f, -0.3f, 1.0f);	
 
 	void Renderer::Init()
 	{
@@ -74,14 +78,14 @@ namespace Cober {
 		basePrimitiveShader->Bind();
 		basePrimitiveShader->SetFloat4("u_Color", color);
 		basePrimitiveShader->SetFloat3("u_ViewPos", cameraPosition);
-		basePrimitiveShader->SetFloat3("light.position", lightPosition);
-		basePrimitiveShader->SetFloat3("light.specular", lightColor);
+
+		basePrimitiveShader->SetFloat4("light.direction", l_Dir);
+		basePrimitiveShader->SetFloat4("light.position", l_Pos);
+		basePrimitiveShader->SetFloat3("light.specular", l_Color);
 
 		// ONLY FOR TEST
-		//	/*
 		basePrimitiveShader->SetFloat3("light.ambient", { 0.2f, 0.2f, 0.2f });
 		basePrimitiveShader->SetFloat3("light.diffuse", { 0.5f, 0.5f, 0.5f }); // darkened
-		//	*/ 
 
 		basePrimitiveShader->SetFloat("material.shininess", 64.0f);
 	}
@@ -145,7 +149,8 @@ namespace Cober {
 	}
 	void Renderer::DrawLightCube(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color)
 	{
-		lightColor = color;
+		l_Color = color;
+		l_Pos = glm::vec4(position, 1.0);
 		lightCubeShader->Bind();
 		lightCubeShader->SetFloat4("u_Color", color);
 		primitive->lightCube->Draw(position, size, lightCubeShader);

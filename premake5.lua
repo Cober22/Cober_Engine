@@ -17,9 +17,11 @@ IncludeDir["Glew"] = "Cober/include/Glew"
 IncludeDir["glm"] = "Cober/include/glm"
 IncludeDir["ImGui"] = "Cober/include/ImGui"
 IncludeDir["stb_image"] = "Cober/include/stb_image"
+IncludeDir["Assimp"] = "Cober/include/Assimp/include"
 
 group "Dependencies"
 	include "Cober/include/ImGui"
+	include "Cober/include/Assimp"
 group ""
 
 project "Cober"
@@ -58,7 +60,8 @@ project "Cober"
 		"%{IncludeDir.Glew}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.stb_image}"
+		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.Assimp}"
 	}
 
 	libdirs 

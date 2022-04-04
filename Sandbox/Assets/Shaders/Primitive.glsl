@@ -32,6 +32,8 @@ struct Material {
 	sampler2D diffuse;
 	sampler2D specular;
 	float shininess;
+
+	vec3 color;
 };
 
 struct DirLight {
@@ -112,9 +114,9 @@ vec4 CalculateDirLight(DirLight light, vec3 normal, vec3 viewDir) {
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
 
 	vec4 color = vec4(light.color, 1.0);
-	vec4 ambient  = vec4(light.ambient,  1.0) * color * texture(material.diffuse,  v_TextCoord);
-	vec4 diffuse  = vec4(light.diffuse,  1.0) * color * diff * texture(material.diffuse,  v_TextCoord);
-	vec4 specular = vec4(light.specular, 1.0) * color * spec * texture(material.specular, v_TextCoord);
+	vec4 ambient  = vec4(light.ambient ,  1.0)	* color * texture(material.diffuse,  v_TextCoord);
+	vec4 diffuse  = vec4(light.diffuse , 1.0)	* color * diff * texture(material.diffuse,  v_TextCoord);
+	vec4 specular = vec4(light.specular, 1.0)	* color * spec * texture(material.specular, v_TextCoord);
 
 	return (ambient + diffuse + specular);
 }
@@ -133,9 +135,9 @@ vec4 CalculatePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewD
 	float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));   
 
 	vec4 color = vec4(light.color, 1.0);
-	vec4 ambient  = vec4(light.ambient,  1.0) * color * texture(material.diffuse,  v_TextCoord);
-	vec4 diffuse  = vec4(light.diffuse,  1.0) * color * diff * texture(material.diffuse,  v_TextCoord);
-	vec4 specular = vec4(light.specular, 1.0) * color * spec * texture(material.specular, v_TextCoord);
+	vec4 ambient  = vec4(light.ambient ,  1.0) * color * texture(material.diffuse,  v_TextCoord);
+	vec4 diffuse  = vec4(light.diffuse ,  1.0) * color * diff * texture(material.diffuse,  v_TextCoord);
+	vec4 specular = vec4(light.specular, 1.0)  * color * spec * texture(material.specular, v_TextCoord);
 
 	ambient  *= attenuation;
 	diffuse  *= attenuation;
@@ -165,9 +167,9 @@ vec4 CalculateSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir
     float intensity = smoothstep(light.outerCutOff, light.cutOff, theta);
     
 	vec4 color = vec4(light.color, 1.0);
-    vec4 ambient  = vec4(light.ambient,  1.0) * color * texture(material.diffuse, v_TextCoord);
-    vec4 diffuse  = vec4(light.diffuse,  1.0) * color * diff * texture(material.diffuse, v_TextCoord);
-    vec4 specular = vec4(light.specular, 1.0) * color * spec * texture(material.specular, v_TextCoord);
+    vec4 ambient  = vec4(light.ambient ,  1.0) * color * texture(material.diffuse, v_TextCoord);
+    vec4 diffuse  = vec4(light.diffuse ,  1.0) * color * diff * texture(material.diffuse, v_TextCoord);
+    vec4 specular = vec4(light.specular, 1.0)  * color * spec * texture(material.specular, v_TextCoord);
     
 	ambient  *= attenuation;// * intensity;
     diffuse  *= attenuation * intensity;

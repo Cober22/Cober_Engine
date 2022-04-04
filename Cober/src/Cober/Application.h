@@ -45,6 +45,7 @@ namespace Cober {
 		float m_LastFrameTime = 0.0f;
 		bool w_Minimized = false;
 		bool w_Fullscreen = false;
+		const int FPS = 60;
 
 	private:
 		static Application* s_Instance;

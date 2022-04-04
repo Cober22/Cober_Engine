@@ -13,3 +13,12 @@
 [submodule "Cober/include/imgui"]
 	path = Cober/include/imgui
 	url = https://github.com/ocornut/imgui
+[submodule "libraries/PhysX"]
+	path = libraries/PhysX
+	url = https://github.com/NVIDIAGameWorks/PhysX
+[submodule "libraries/Assimp"]
+	path = libraries/Assimp
+	url = https://github.com/assimp/assimp
+[submodule "Cober/include/Assimp"]
+	path = Cober/include/Assimp
+	url = https://github.com/AminAliari/assimp

@@ -13,7 +13,9 @@ void Sandbox2D::OnAttach()
 {
 	catTexture = Cober::Texture2D::Create("Assets/Textures/BlendTest.png");
 	checkerboardTexture = Cober::Texture2D::Create("Assets/Textures/Checkerboard.png");
-	woodContainer = Cober::Texture2D::Create("Assets/Textures/WoodenContainer.png");
+	
+	woodContainer = Cober::Texture2D::Create("Assets/Textures/GridGreyDark.png");
+	/*woodContainer = Cober::Texture2D::Create("Assets/Textures/WoodenContainer.png");*/
 	steelBorderContainer = Cober::Texture2D::Create("Assets/Textures/SteelBorderContainer.png");
 }
 
@@ -51,14 +53,17 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 		else
 			Cober::Renderer::BeginScene(OrthoCamera);
 
-		
-		for (unsigned int i = 0; i < 22; i++) {
-			if (i < 4)
+		int color = 0;
+		for (unsigned int i = 0; i < std::size(cubePositions); i++) {
+			if (i < std::size(pointLightPositions))
 				Cober::Renderer::DrawLightCube(pointLightPositions[i], glm::vec3(0.4f), cubeColors[i]);
 			if (i == 0)
 				Cober::Renderer::DrawLightCube(cubePositions[i], glm::vec3(0.8f), { 1.0f, 1.0f, 1.0f, 1.0f });
 			else
-				Cober::Renderer::DrawCube(cubePositions[i], glm::vec3(1.0f), woodContainer, steelBorderContainer, {1.0f, 1.0f, 1.0f, 1.0f});
+				Cober::Renderer::DrawCube(cubePositions[i], glm::vec3(1.0f), woodContainer, steelBorderContainer, { 1.0f, 1.0f, 1.0f, 1.0f });// cubeColors[color]);
+
+			//if (++color >= std::size(cubeColors))
+				//color = 0;
 		}
 
 		Cober::Renderer::DrawSquare({ 15.0, 0.0, -7.0f}, { 7.0f, 7.0f }, catTexture);

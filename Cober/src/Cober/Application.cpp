@@ -14,6 +14,7 @@ namespace Cober {
 
 		s_Instance = this;
 		WindowProps windowProps = WindowProps("Cober Engine", W_WIDTH, W_HEIGHT);
+		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "4");
 		_window = Window::Create(windowProps);
 		SDL_SetRelativeMouseMode(SDL_TRUE);
 
@@ -48,6 +49,10 @@ namespace Cober {
 			float time = (float)(SDL_GetTicks() / 1000.0f);
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
+
+			// Frame rate limit
+			if (1000/ FPS > m_LastFrameTime)
+				SDL_Delay(1000 / FPS - m_LastFrameTime);
 
 			if (!w_Minimized) {
 				ProcessInputs();

@@ -130,9 +130,7 @@ vec4 CalculatePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewD
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
 
 	float distance	  = length(light.position - v_FragPos);
-	///float attenuation = clamp( 10.0 / distance, 0.0, 1.0);
-	//float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));   
-	float attenuation = 1.0 / (1.0 + 0.09 * distance + 0.032 * (distance * distance));    
+	float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));   
 
 	vec4 color = vec4(light.color, 1.0);
 	vec4 ambient  = vec4(light.ambient,  1.0) * color * texture(material.diffuse,  v_TextCoord);
@@ -160,13 +158,11 @@ vec4 CalculateSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir
     
 	// attenuation
     float distance = length(light.position - fragPos);
-	//float attenuation = clamp( 10.0 / distance, 0.0, 1.0);
-    //float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));    
-	float attenuation = 1.0 / (1.0 + 0.09 * distance + 0.032 * (distance * distance));    
+    float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));    
     
 	// spotlight intensity
     float theta = dot(lightDir, normalize(-light.direction)); 
-    float intensity = smoothstep(cos(radians(light.outerCutOff)), cos(radians(light.cutOff)), theta);
+    float intensity = smoothstep(light.outerCutOff, light.cutOff, theta);
     
 	vec4 color = vec4(light.color, 1.0);
     vec4 ambient  = vec4(light.ambient,  1.0) * color * texture(material.diffuse, v_TextCoord);

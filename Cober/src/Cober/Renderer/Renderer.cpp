@@ -75,11 +75,11 @@ namespace Cober {
 		basePrimitiveShader->SetVec3("spotLight.ambient",	glm::vec3(0.4f, 0.4f, 0.4f));
 		basePrimitiveShader->SetVec3("spotLight.diffuse",	glm::vec3(0.8f, 0.8f, 0.8f));
 		basePrimitiveShader->SetVec3("spotLight.specular",	glm::vec3(1.0f, 1.0f, 1.0f));
-		basePrimitiveShader->SetFloat("spotLight.cutOff",	5.0f);
-		basePrimitiveShader->SetFloat("spotLight.outerCutOff", 10.0f);
+		basePrimitiveShader->SetFloat("spotLight.cutOff",	glm::cos(glm::radians(12.5f)));
+		basePrimitiveShader->SetFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
 		basePrimitiveShader->SetFloat("spotLight.constant", 1.0f);
-		basePrimitiveShader->SetFloat("spotLight.linear",	0.1f);
-		basePrimitiveShader->SetFloat("spotLight.quadratic",0.1f);
+		basePrimitiveShader->SetFloat("spotLight.linear",	0.09f);
+		basePrimitiveShader->SetFloat("spotLight.quadratic",0.032);
 		/////////////////////////// TEST
 	}
 
@@ -175,8 +175,8 @@ namespace Cober {
 		basePrimitiveShader->SetVec3(pointLight + ".diffuse",	glm::vec3(0.8f, 0.8f, 0.8f));
 		basePrimitiveShader->SetVec3(pointLight + ".specular", glm::vec3(1.0f, 1.0f, 1.0f));
 		basePrimitiveShader->SetFloat(pointLight + ".constant", 1.0f);
-		basePrimitiveShader->SetFloat(pointLight + ".linear",	0.1f);
-		basePrimitiveShader->SetFloat(pointLight + ".quadratic",0.1f);
+		basePrimitiveShader->SetFloat(pointLight + ".linear",	0.09f);
+		basePrimitiveShader->SetFloat(pointLight + ".quadratic",0.032f);
 		if (indexPointLight == 3)
 			basePrimitiveShader->SetVec3(pointLight + ".diffuse", glm::vec3(1.0f));
 

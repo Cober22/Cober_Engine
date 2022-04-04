@@ -182,7 +182,7 @@ namespace Cober {
 		UploadUniformInt(name, value);
 	}
 
-	void OpenGLShader::SetFloat(const std::string& name, int value)
+	void OpenGLShader::SetFloat(const std::string& name, float value)
 	{
 		UploadUniformFloat(name, value);
 	}

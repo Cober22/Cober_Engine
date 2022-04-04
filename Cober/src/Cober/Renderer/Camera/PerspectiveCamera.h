@@ -5,6 +5,7 @@
 
 #include <SDL/SDL.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace Cober {
 
@@ -15,7 +16,7 @@ namespace Cober {
 		void OnUpdate(Timestep ts) override;
 		void OnEvent(SDL_Event& event) override;
 
-		const glm::mat4& GetViewMatrix() const override { return  c_VMatrix; }
+		const glm::mat4& GetViewMatrix() const override { return  glm::lookAt(c_position, c_position + c_direction, c_upAxis); }
 		const glm::mat4& GetProjectionMatrix() const override { return  c_PMatrix; }
 		const glm::mat4& GetModelMatrix() const override { return c_MMatrix; }
 

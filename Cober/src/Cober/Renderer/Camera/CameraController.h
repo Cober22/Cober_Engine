@@ -44,7 +44,8 @@ namespace Cober {
 
 		// Camera Axis
 		glm::vec3 c_rightAxis = glm::normalize(glm::cross({ 0.0f, 1.0f, 0.0f }, c_direction));
-		glm::vec3 c_upAxis = glm::cross(c_direction, c_rightAxis);
+		glm::vec3 c_upAxis = { 0.0f, 1.0f, 0.0f };//glm::cross(c_direction, c_rightAxis);
+		glm::vec3 c_eye;
 	protected:	// Orthographic
 		float c_zoomLevel = 5.0f;
 		float c_OrthoRotation = 0.0f;

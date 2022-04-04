@@ -37,59 +37,31 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 	// Render
 	{
 		CB_PROFILE_SCOPE("Render Prep");
+		Cober::RenderCommand::SetClearColor({ 0.02f, 0.008f, 0.05f, 1.0f });
 		//Cober::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
-		Cober::RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
+		//Cober::RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
 		//Cober::RenderCommand::SetClearColor({ 0.8f, 0.35f, 0.35f, 1.0f });
 		Cober::RenderCommand::Clear();
 	}
 	
 	{
-
 		CB_PROFILE_SCOPE("Render Draw");
 		if (perspective)
 			Cober::Renderer::BeginScene(PerspCamera);
 		else
 			Cober::Renderer::BeginScene(OrthoCamera);
 
-		// TEST
-		glm::vec3 cubePositions[10] = {
-			glm::vec3(	1.0f,	 3.0f,  -4.0f),	// Lighting Cube
-			glm::vec3(	0.0f,	-2.0f,	-9.0f),
-			glm::vec3(	2.0f,	-2.0f,  -9.3f),
-			glm::vec3(  0.5f,	 0.0f,  -10.0f),
-			glm::vec3(  0.75f,	 2.0f,  -9.5f),
-			glm::vec3(	3.4f,	-2.0f,  -3.0f),
-			glm::vec3( -2.0f,   -2.0f,  -2.5f),
-			glm::vec3( -3.3f,	 0.0f,  -2.0f),
-			glm::vec3(	3.0f,    0.0f,  -2.2f),
-			glm::vec3( -4.0f,   -2.0f,  -1.5f)
-		};
-
-		glm::vec4 cubeColors[10] = {
-			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
-			glm::vec4(0.8f, 0.2f, 0.3f, 1.0f),
-			glm::vec4(0.5f, 0.5f, 0.1f, 1.0f),
-			glm::vec4(0.1f, 0.5f, 0.5f, 1.0f),
-			glm::vec4(0.5f, 0.1f, 0.5f, 1.0f),
-			glm::vec4(0.8f, 0.6f, 0.1f, 1.0f),
-			glm::vec4(1.0f, 0.5f, 0.3f, 1.0f),
-			glm::vec4(0.3f, 0.7f, 0.6f, 1.0f),
-			glm::vec4(0.2f, 0.3f, 0.8f, 1.0f),
-			glm::vec4(0.2f, 0.8f, 0.3f, 1.0f)
-		};
-
-		for (unsigned int i = 0; i < 10; i++) {
+		
+		for (unsigned int i = 0; i < 22; i++) {
+			if (i < 4)
+				Cober::Renderer::DrawLightCube(pointLightPositions[i], glm::vec3(0.4f), cubeColors[i]);
 			if (i == 0)
-				Cober::Renderer::DrawLightCube(cubePositions[i], glm::vec3(0.4f), cubeColors[i]);
+				Cober::Renderer::DrawLightCube(cubePositions[i], glm::vec3(0.8f), { 1.0f, 1.0f, 1.0f, 1.0f });
 			else
 				Cober::Renderer::DrawCube(cubePositions[i], glm::vec3(1.0f), woodContainer, steelBorderContainer, {1.0f, 1.0f, 1.0f, 1.0f});
-				//Cober::Renderer::DrawCube(cubePositions[i], glm::vec3(0.8f), woodContainer, steelBorderContainer, cubeColors[i]);
-				//Cober::Renderer::DrawCube(cubePositions[i], glm::vec3(0.8f), checkerboardTexture, cubeColors[i]);
 		}
 
-		Cober::Renderer::DrawSquare({ -2.0f, 0.0f }, { 2.0f, 2.0f }, catTexture);
-		//Cober::Renderer::DrawSquare({ -1.0f, 0.5f, -15.0f }, { 0.8f, 0.8f }, { 0.2f, 0.8f, 0.3f, 1.0f });
-		//Cober::Renderer::DrawSquare({ 0.0f, 0.0f, -10.0f }, { 1.0f, 1.0f }, { 0.2f, 0.3f, 0.8f, 1.0f });
+		Cober::Renderer::DrawSquare({ 15.0, 0.0, -7.0f}, { 7.0f, 7.0f }, catTexture);
 
 		Cober::Renderer::EndScene();
 	}

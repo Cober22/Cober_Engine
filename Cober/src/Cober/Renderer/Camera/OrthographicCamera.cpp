@@ -99,10 +99,7 @@ namespace Cober {
 		front.y = sin(glm::radians(c_pitch));
 		front.z = sin(glm::radians(c_yaw)) * cos(glm::radians(c_pitch));
 		
-		if (c_OrthoRotation != 0)
-			c_direction = glm::normalize(front) * c_OrthoRotation;
-		else
-			c_direction = glm::normalize(front);
+		c_direction = glm::normalize(front);
 
 		RecalculateMatrix();
 	}

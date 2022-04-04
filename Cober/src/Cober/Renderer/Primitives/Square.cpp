@@ -12,7 +12,7 @@ namespace Cober {
 
 	void Square::Draw(const glm::vec3& position, const glm::vec2& size, Ref<Shader> shader) {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
-		shader->SetMat4("u_Transform", transform);
+		shader->SetMat4("u_Model", transform);
 
 		VAO->Bind();
 		RenderCommand::DrawIndexed(VAO);

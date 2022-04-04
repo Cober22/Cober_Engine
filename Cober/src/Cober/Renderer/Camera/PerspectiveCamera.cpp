@@ -21,9 +21,9 @@ namespace Cober {
 		
 		// --- Keyboard keys
 		if (keystate[SDL_SCANCODE_A])
-			c_position -= glm::normalize(glm::cross(c_direction, c_upAxis)) * c_PerspTraslationSpeed * glm::vec3(ts);
+			c_position -= c_rightAxis *c_PerspTraslationSpeed* glm::vec3(ts);
 		if (keystate[SDL_SCANCODE_D])
-			c_position += glm::normalize(glm::cross(c_direction, c_upAxis)) * c_PerspTraslationSpeed * glm::vec3(ts);
+			c_position += c_rightAxis * c_PerspTraslationSpeed * glm::vec3(ts);
 		if (keystate[SDL_SCANCODE_S])
 			c_position -= c_direction * c_PerspTraslationSpeed * glm::vec3(ts);
 		if (keystate[SDL_SCANCODE_W])										

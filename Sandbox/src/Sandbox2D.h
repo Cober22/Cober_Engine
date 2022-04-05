@@ -23,6 +23,7 @@ private:
 	Cober::Ref<Cober::Texture2D> checkerboardTexture;
 	Cober::Ref<Cober::Texture2D> woodContainer;
 	Cober::Ref<Cober::Texture2D> steelBorderContainer;
+	Cober::Model gridModel;
 	//Cober::Ref<Cober::Shader> m_ShaderSquare;
 
 		// TEST

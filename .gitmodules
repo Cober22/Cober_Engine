@@ -22,3 +22,6 @@
 [submodule "Cober/include/Assimp"]
 	path = Cober/include/Assimp
 	url = https://github.com/AminAliari/assimp
+[submodule "Cober/include/assimpde"]
+	path = Cober/include/assimpde
+	url = https://github.com/assimp/assimp

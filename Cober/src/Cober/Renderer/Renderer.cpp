@@ -12,6 +12,7 @@ namespace Cober {
 	static PrimitiveType* primitive;
 	Ref<Shader> basePrimitiveShader;
 	Ref<Shader> lightCubeShader;
+	Ref<Shader> modelShader;
 
 	glm::vec3 cameraPosition;
 	glm::vec3 cameraDirection;
@@ -35,6 +36,9 @@ namespace Cober {
 
 		lightCubeShader = Shader::Create("Assets/Shaders/Light.glsl");
 		lightCubeShader->Bind();
+
+		modelShader = Shader::Create("Assets/Shaders/LoadModel.glsl");
+		modelShader->Bind();
 	}
 
 	void Renderer::OnWindowResize(uint32_t width, uint32_t height)
@@ -64,9 +68,9 @@ namespace Cober {
 		// Directional light
 		basePrimitiveShader->SetVec3("dirLight.color",		glm::vec3(1.0f, 1.0f, 1.0f));
 		basePrimitiveShader->SetVec3("dirLight.direction",	glm::vec3(-0.2f, -1.0f, -0.3f));
-		basePrimitiveShader->SetVec3("dirLight.ambient",	glm::vec3(0.0f));
-		basePrimitiveShader->SetVec3("dirLight.diffuse",	glm::vec3(0.0f));
-		basePrimitiveShader->SetVec3("dirLight.specular",	glm::vec3(0.0f));
+		basePrimitiveShader->SetVec3("dirLight.ambient",	glm::vec3(0.5f));
+		basePrimitiveShader->SetVec3("dirLight.diffuse",	glm::vec3(0.5f));
+		basePrimitiveShader->SetVec3("dirLight.specular",	glm::vec3(1.0f));
 
 		// Point Light
 		basePrimitiveShader->SetVec3("pointLight[0].color", glm::vec3(0.0f, 1.0f, 0.0f));
@@ -127,7 +131,7 @@ namespace Cober {
 		SetupBasicPrimitiveShader();
 		UploadShadersToFrustum(basePrimitiveShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
 		UploadShadersToFrustum(lightCubeShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
-
+		UploadShadersToFrustum(modelShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
 	}
 
 	void Renderer::BeginScene(PerspectiveCamera& camera)
@@ -137,10 +141,18 @@ namespace Cober {
 		SetupBasicPrimitiveShader();
 		UploadShadersToFrustum(basePrimitiveShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
 		UploadShadersToFrustum(lightCubeShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
+		UploadShadersToFrustum(modelShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
 	}
 
 	void Renderer::EndScene()
 	{
+	}
+
+	// [-------------------- MODEL --------------------]
+	void Renderer::DrawModel(Model model, const glm::vec3& position, const glm::vec3& size)
+	{
+		modelShader->Bind();
+		model.Draw(modelShader, position, size);
 	}
 
 	// [-------------------- SQUARE --------------------]

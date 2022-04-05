@@ -1383,6 +1383,12 @@
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h">
       <Filter>src\Cober\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\Primitives\Mesh.h">
+      <Filter>src\Cober\Renderer\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\Primitives\Model.h">
+      <Filter>src\Cober\Renderer\Primitives</Filter>
+    </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Primitives\Primitives.h">
       <Filter>src\Cober\Renderer\Primitives</Filter>
     </ClInclude>
@@ -1473,6 +1479,12 @@
       <Filter>src\Cober\Renderer\Primitives</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\Renderer\Primitives\LightCube.cpp">
+      <Filter>src\Cober\Renderer\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\Primitives\Mesh.cpp">
+      <Filter>src\Cober\Renderer\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\Primitives\Model.cpp">
       <Filter>src\Cober\Renderer\Primitives</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\Renderer\Primitives\Square.cpp">

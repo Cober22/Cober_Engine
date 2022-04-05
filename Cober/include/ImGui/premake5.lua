@@ -1,6 +1,7 @@
 project "ImGui"
 	kind "StaticLib"
 	language "C++"
+	warnings "Off"
     cppdialect "C++17"
     staticruntime "on"
 

@@ -110,7 +110,6 @@ namespace Cober {
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 
 		static Ref<VertexBuffer> Create(float* vertices, uint32_t size);
-
 	};
 
 	class IndexBuffer {

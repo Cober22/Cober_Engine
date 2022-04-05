@@ -17,6 +17,13 @@ void Sandbox2D::OnAttach()
 	woodContainer = Cober::Texture2D::Create("Assets/Textures/GridGreyDark.png");
 	/*woodContainer = Cober::Texture2D::Create("Assets/Textures/WoodenContainer.png");*/
 	steelBorderContainer = Cober::Texture2D::Create("Assets/Textures/SteelBorderContainer.png");
+
+	// load models
+	// -----------
+	gridModel = Cober::Model::Create("Assets/Models/backpack/backpack.obj");
+	//gridModel = Cober::Model::Create("Assets/Models/thegrid/GRID.fbx");
+	//gridModel = Cober::Model::Create("Assets/Models/wallWithGates/MuroGrades.fbx");
+	//gridModel = Cober::Model::Create("Assets/Models/test/untitled.obj");
 }
 
 void Sandbox2D::OnDetach()
@@ -39,9 +46,9 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 	// Render
 	{
 		CB_PROFILE_SCOPE("Render Prep");
-		Cober::RenderCommand::SetClearColor({ 0.02f, 0.008f, 0.05f, 1.0f });
+		//Cober::RenderCommand::SetClearColor({ 0.02f, 0.008f, 0.05f, 1.0f });	// DARK BLUE
 		//Cober::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
-		//Cober::RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
+		Cober::RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
 		//Cober::RenderCommand::SetClearColor({ 0.8f, 0.35f, 0.35f, 1.0f });
 		Cober::RenderCommand::Clear();
 	}
@@ -65,7 +72,7 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 			//if (++color >= std::size(cubeColors))
 				//color = 0;
 		}
-
+		Cober::Renderer::DrawModel(gridModel, glm::vec3(0.0f), glm::vec3(0.5f));
 		Cober::Renderer::DrawSquare({ 15.0, 0.0, -7.0f}, { 7.0f, 7.0f }, catTexture);
 
 		Cober::Renderer::EndScene();

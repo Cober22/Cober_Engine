@@ -17,17 +17,17 @@ IncludeDir["Glew"] = "Cober/include/Glew"
 IncludeDir["glm"] = "Cober/include/glm"
 IncludeDir["ImGui"] = "Cober/include/ImGui"
 IncludeDir["stb_image"] = "Cober/include/stb_image"
-IncludeDir["Assimp"] = "Cober/include/Assimp/include"
+IncludeDir["Assimp"] = "Cober/include/assimp"
 
 group "Dependencies"
 	include "Cober/include/ImGui"
-	include "Cober/include/Assimp"
 group ""
 
 project "Cober"
 	location "Cober"
 	kind "StaticLib"
 	language "C++"
+	warnings "Off"
 	cppdialect "C++17"
 	staticruntime "on"
 
@@ -76,7 +76,8 @@ project "Cober"
 		"SDL2main",
 		"opengl32",
 		"glew32s",
-		"ImGui"
+		"ImGui",
+		"assimp-vc142-mt"
 	}
 
 	postbuildcommands

@@ -52,6 +52,10 @@ namespace Cober {
 		return m_Name;
 	}
 
+	const uint32_t OpenGLShader::GetID() const {
+		return m_RendererID;
+	}
+
 	std::string OpenGLShader::ReadFile(const std::string& filePath) 
 	{
 		std::string result;

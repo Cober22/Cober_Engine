@@ -26,7 +26,6 @@
 #include "Cober/Renderer/VertexArray.h"
 #include "Cober/Renderer/Texture.h"
 #include "Cober/Renderer/Primitives/Mesh.h"
-#include "Cober/Renderer/Primitives/Model.h"
 
 
 // [---- CAMERA ----]

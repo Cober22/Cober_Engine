@@ -591,8 +591,8 @@
     <ClInclude Include="src\Cober\Renderer\Camera\OrthographicCamera.h" />
     <ClInclude Include="src\Cober\Renderer\Camera\PerspectiveCamera.h" />
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Cober\Renderer\Material.h" />
     <ClInclude Include="src\Cober\Renderer\Primitives\Mesh.h" />
-    <ClInclude Include="src\Cober\Renderer\Primitives\Model.h" />
     <ClInclude Include="src\Cober\Renderer\Primitives\Primitives.h" />
     <ClInclude Include="src\Cober\Renderer\Renderer.h" />
     <ClInclude Include="src\Cober\Renderer\Shader.h" />
@@ -626,7 +626,6 @@
     <ClCompile Include="src\Cober\Renderer\Primitives\Cube.cpp" />
     <ClCompile Include="src\Cober\Renderer\Primitives\LightCube.cpp" />
     <ClCompile Include="src\Cober\Renderer\Primitives\Mesh.cpp" />
-    <ClCompile Include="src\Cober\Renderer\Primitives\Model.cpp" />
     <ClCompile Include="src\Cober\Renderer\Primitives\Square.cpp" />
     <ClCompile Include="src\Cober\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Cober\Renderer\Shader.cpp" />

@@ -1,49 +1,75 @@
 #pragma once
 
-#define MAX_BONE_INFLUENCE 4
 #include "Cober/Renderer/Shader.h"
+#include "Cober/Renderer/Material.h"
+#include "Cober/Renderer/Texture.h"
 
-// Provisional
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <Glew/Glew.h>
+#include <assimp/Importer.hpp>  // C++ importer interface
+#include <assimp/scene.h>       // Output data structure
+#include <assimp/postprocess.h> // Post processing flags
 
-#include "stb_image/stb_image.h"
-
+#define INVALID_MATERIAL 0xFFFFFFFF
 
 namespace Cober {
 
-    struct MeshVertex {
-        glm::vec3 Position;
-        glm::vec3 Normal;
-        glm::vec2 TexCoords;
-        glm::vec3 Tangent;
-        glm::vec3 Bitangent;
-        //bone indexes which will influence this vertex
-        int m_BoneIDs[MAX_BONE_INFLUENCE];
-        //weights from each bone
-        float m_Weights[MAX_BONE_INFLUENCE];
-    };
-
-    struct MeshTexture {
-        unsigned int id;
-        std::string type;
-        std::string path;
-    };
-
-	class Mesh {
-
+    class Mesh {
     public:
-        std::vector<MeshVertex>   vertices;
-        std::vector<unsigned int> indices;
-        std::vector<MeshTexture>  textures;
-        unsigned int VAO;
+        Mesh() {};
+        ~Mesh();
 
-        Mesh(std::vector<MeshVertex> vertices, std::vector<unsigned int> indices, std::vector<MeshTexture> textures);
-
-        void Draw(Ref<Shader> shader, const glm::vec3& position, const glm::vec3& size);
+        bool LoadMesh(const std::string& path);
+        void Render();
+        void Render(unsigned int NumInstances, const glm::vec4* MVPMats, const glm::vec4* WorldMats);
+        // WorldTrans& GetWorldTransform() {return m_worldTransform; }
     private:
-        unsigned int VBO, EBO;
-        void SetupMesh();
-	};
+        void Clear();
+        bool InitFromScene(const aiScene* pScene, const std::string& path);
+        void CountVerticesAndIndices(const aiScene* pScene, unsigned int& NumVertices, unsigned int& NumIndices);
+        void ReserveSpace(unsigned int NumVertices, unsigned int NumIndices);
+        void InitAllMeshes(const aiScene* pScene);
+        void InitSingleMesh(const aiMesh* paiMesh);
+        bool InitMaterials(const aiScene* pScene, const std::string& Filename);
+        void PopulateBuffers();
+
+    private:
+        #define INVALID_MATERIAL 0xFFFFFFFF
+
+        enum BUFFER_TYPE {
+            POS_VB = 0,
+            NORMAL_VB = 3,
+            TEXCOORD_VB = 2,
+            INDEX_BUFFER = 1,
+            WVP_MAT_VB = 4,    // required only for instancing
+            WORLD_MAT_VB = 5,  // required only for instancing
+            NUM_BUFFERS = 6
+        };
+        //WorldTrans m_worldTransform;
+        uint32_t m_VAO = 0;
+        uint32_t m_Buffers[NUM_BUFFERS] = { 0 };
+
+        struct BasicMeshEntry {
+            BasicMeshEntry()
+            {
+                NumIndices = 0;
+                BaseVertex = 0;
+                BaseIndex = 0;
+                MaterialIndex = INVALID_MATERIAL;
+            }
+
+            unsigned int NumIndices;
+            unsigned int BaseVertex;
+            unsigned int BaseIndex;
+            unsigned int MaterialIndex;
+        };
+
+        std::vector<BasicMeshEntry> m_Meshes;
+        //std::vector<Material> m_Materials;
+        std::vector<Ref<Texture2D>> m_Textures;
+
+        // Temporary space for vertex stuff before we load them into the GPU
+        std::vector<glm::vec3> m_Positions;
+        std::vector<glm::vec3> m_Normals;
+        std::vector<glm::vec2> m_TexCoords;
+        std::vector<unsigned int> m_Indices;
+    };
 }

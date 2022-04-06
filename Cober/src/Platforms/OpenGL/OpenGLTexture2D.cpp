@@ -13,8 +13,8 @@ namespace Cober {
 		// [---------- BLENDING ----------]
 		m_InternalFormat = GL_RGBA8, m_DataFormat = GL_RGBA;
 		
-		glCreateTextures(GL_TEXTURE_2D_MULTISAMPLE, 1, &m_RendererID);
-		glTextureStorage2DMultisample(m_RendererID, 4, m_InternalFormat, m_Width, m_Height, GL_TRUE);
+		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
+		glTextureStorage2D(m_RendererID, 1, m_InternalFormat, m_Width, m_Height);
 
 		glGenerateMipmap(m_RendererID);
 		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);

@@ -20,10 +20,12 @@ void Sandbox2D::OnAttach()
 
 	// load models
 	// -----------
-	gridModel = Cober::Model::Create("Assets/Models/backpack/backpack.obj");
-	//gridModel = Cober::Model::Create("Assets/Models/thegrid/GRID.fbx");
-	//gridModel = Cober::Model::Create("Assets/Models/wallWithGates/MuroGrades.fbx");
-	//gridModel = Cober::Model::Create("Assets/Models/test/untitled.obj");
+	gridModel = Cober::CreateRef<Cober::Mesh>();
+	gridModel->LoadMesh("Assets/Models/backpack/backpack.obj");
+	//gridModel->LoadMesh("Assets/Models/chessBoard/Chess.fbx");
+	//gridModel->LoadMesh("Assets/Models/thegrid/GRID.obj");
+	//gridModel->LoadMesh("Assets/Models/wallWithGates/MuroGrades.fbx");
+	//gridModel->LoadMesh("Assets/Models/test/untitled.obj");
 }
 
 void Sandbox2D::OnDetach()
@@ -72,8 +74,8 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 			//if (++color >= std::size(cubeColors))
 				//color = 0;
 		}
-		Cober::Renderer::DrawModel(gridModel, glm::vec3(0.0f), glm::vec3(0.5f));
 		Cober::Renderer::DrawSquare({ 15.0, 0.0, -7.0f}, { 7.0f, 7.0f }, catTexture);
+		Cober::Renderer::DrawModel(gridModel, glm::vec3(0.0f), glm::vec3(0.5f));
 
 		Cober::Renderer::EndScene();
 	}

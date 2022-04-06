@@ -55,7 +55,7 @@ namespace Cober {
 		float c_CamSensitivity = 5.0f;
 		float c_pitch = 0.0f, c_yaw = -90.0f, c_yawSpeed = 10.0f, c_roll = 0.0f;
 		float c_fov = 45.0f, c_nearPlane = 0.1f, c_farPlane = 100.0f;
-		float c_PerspTraslationSpeed = 10.0f;
+		float c_PerspTraslationSpeed = c_fov / 10.0f;
 		// Mouse Controller
 		bool m_firstMouse = true;
 		float lastX = c_aspectRatio.x / 2, lastY = c_aspectRatio.y / 2;

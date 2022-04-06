@@ -61,14 +61,14 @@ namespace Cober {
 		basePrimitiveShader->Bind();
 		basePrimitiveShader->SetVec3("u_ViewPos", cameraPosition);
 		// Material properties
-		//basePrimitiveShader->SetVec3("material.diffuse", {1.0f, 1.0f, 1.0f});
+		basePrimitiveShader->SetVec3("material.diffuse", {1.0f, 1.0f, 1.0f});
 		basePrimitiveShader->SetFloat("material.shininess", 32.0f);
 
 		/////////////////////////// TEST
 		// Directional light
 		basePrimitiveShader->SetVec3("dirLight.color",		glm::vec3(1.0f, 1.0f, 1.0f));
 		basePrimitiveShader->SetVec3("dirLight.direction",	glm::vec3(-0.2f, -1.0f, -0.3f));
-		basePrimitiveShader->SetVec3("dirLight.ambient",	glm::vec3(0.5f));
+		basePrimitiveShader->SetVec3("dirLight.ambient",	glm::vec3(0.05f));
 		basePrimitiveShader->SetVec3("dirLight.diffuse",	glm::vec3(0.5f));
 		basePrimitiveShader->SetVec3("dirLight.specular",	glm::vec3(1.0f));
 
@@ -149,10 +149,12 @@ namespace Cober {
 	}
 
 	// [-------------------- MODEL --------------------]
-	void Renderer::DrawModel(Model model, const glm::vec3& position, const glm::vec3& size)
+	void Renderer::DrawModel(Ref<Mesh> model, const glm::vec3& position, const glm::vec3& size)
 	{
 		modelShader->Bind();
-		model.Draw(modelShader, position, size);
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, size.z });
+		modelShader->SetMat4("u_Model", transform);
+		model->Render();
 	}
 
 	// [-------------------- SQUARE --------------------]

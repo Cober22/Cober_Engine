@@ -1,103 +1,216 @@
 #include "pch.h"
 #include "Mesh.h"
 
+// PROVISIONAL
+#include <Glew/glew.h>
+
 namespace Cober {
 
-    Mesh::Mesh(std::vector<MeshVertex> vertices, std::vector<unsigned int> indices, std::vector<MeshTexture> textures) {
-        this->vertices = vertices;
-        this->indices = indices;
-        this->textures = textures;
+#define POSITION_LOCATION  0
+#define NORMAL_LOCATION    1
+#define TEX_COORD_LOCATION 2
 
-        // now that we have all the required data, set the vertex buffers and its attribute pointers.
-        SetupMesh();
+    Mesh::~Mesh() { 
+
+        Clear(); 
     }
 
-    void Mesh::Draw(Ref<Shader> shader, const glm::vec3& position, const glm::vec3& size) { // PROVISIONAL
+    void Mesh::Clear() {
 
-        //glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, size.z });
-        //shader->SetMat4("u_Model", transform);
+        //for (unsigned int i = 0; i < m_Textures.size(); i++)
+            //SAFE_DELETE(m_Textures[i]);
+        if (m_Buffers[0] != 0)
+            glDeleteBuffers(ARRAY_SIZE_IN_ELEMENTS(m_Buffers), m_Buffers);
 
-        //model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-        //model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-        //VAO->Bind();
-        //RenderCommand::DrawIndexed(VAO);
-        
-        // bind appropriate textures
-        unsigned int diffuseNr = 1;
-        unsigned int specularNr = 1;
-        unsigned int normalNr = 1;
-        unsigned int heightNr = 1;
-        for (unsigned int i = 0; i < textures.size(); i++)
-        {
-            glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
-            // retrieve texture number (the N in diffuse_textureN)
-            std::string number;
-            std::string name = textures[i].type;
-            if (name == "texture_diffuse")
-                number = std::to_string(diffuseNr++);
-            else if (name == "texture_specular")
-                number = std::to_string(specularNr++); // transfer unsigned int to string
-            else if (name == "texture_normal")
-                number = std::to_string(normalNr++); // transfer unsigned int to string
-            else if (name == "texture_height")
-                number = std::to_string(heightNr++); // transfer unsigned int to string
-
-            // now set the sampler to the correct texture unit
-            glUniform1i(glGetUniformLocation(shader->GetID(), (name + number).c_str()), i);
-            // and finally bind the texture
-            glBindTexture(GL_TEXTURE_2D, textures[i].id);
+        if (m_VAO != 0) {
+            glDeleteVertexArrays(1, &m_VAO);
+            m_VAO = 0;
         }
+    }
 
-        // draw mesh
-        glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, 0);
+    bool Mesh::LoadMesh(const std::string& path) {
+
+        // Release the previously loaded mesh (if it exists)
+        Clear();
+
+        // Create the VAO
+        glGenVertexArrays(1, &m_VAO);
+        glBindVertexArray(m_VAO);
+
+        // Create the buffers for the vertices attributes
+        glGenBuffers(ARRAY_SIZE_IN_ELEMENTS(m_Buffers), m_Buffers);
+
+        bool Ret = false;
+        Assimp::Importer Importer;
+
+        const aiScene* pScene = Importer.ReadFile(path.c_str(), ASSIMP_LOAD_FLAGS);
+
+        if (pScene)
+            Ret = InitFromScene(pScene, path);
+
         glBindVertexArray(0);
 
-        // always good practice to set everything back to defaults once configured.
-        glActiveTexture(GL_TEXTURE0);
+        return Ret;
     }
 
-    void Mesh::SetupMesh() {  // PROVISIONAL
-        
-        // create buffers/arrays
-        glGenVertexArrays(1, &VAO);
-        glGenBuffers(1, &VBO);
-        glGenBuffers(1, &EBO);
+    bool Mesh::InitFromScene(const aiScene* pScene, const std::string& path) {
 
-        glBindVertexArray(VAO);
-        // load data into vertex buffers
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        // A great thing about structs is that their memory layout is sequential for all its items.
-        // The effect is that we can simply pass a pointer to the struct and it translates perfectly to a glm::vec3/2 array which
-        // again translates to 3/2 floats which translates to a byte array.
-        glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(MeshVertex), &vertices[0], GL_STATIC_DRAW);
+        m_Meshes.resize(pScene->mNumMeshes);
+        m_Textures.resize(pScene->mNumMaterials);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
+        unsigned int NumVertices = 0;
+        unsigned int NumIndices = 0;
 
-        // set the vertex attribute pointers
-        // vertex Positions
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(MeshVertex), (void*)0);
-        // vertex normals
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(MeshVertex), (void*)offsetof(MeshVertex, Normal));
-        // vertex texture coords
-        glEnableVertexAttribArray(2);
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(MeshVertex), (void*)offsetof(MeshVertex, TexCoords));
-        // vertex tangent
-        glEnableVertexAttribArray(3);
-        glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(MeshVertex), (void*)offsetof(MeshVertex, Tangent));
-        // vertex bitangent
-        glEnableVertexAttribArray(4);
-        glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(MeshVertex), (void*)offsetof(MeshVertex, Bitangent));
-        // ids
-        glEnableVertexAttribArray(5);
-        glVertexAttribIPointer(5, 4, GL_INT, sizeof(MeshVertex), (void*)offsetof(MeshVertex, m_BoneIDs));
+        CountVerticesAndIndices(pScene, NumVertices, NumIndices);
+        ReserveSpace(NumVertices, NumIndices);
+        InitAllMeshes(pScene);
 
-        // weights
-        glEnableVertexAttribArray(6);
-        glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(MeshVertex), (void*)offsetof(MeshVertex, m_Weights));
+        if (!InitMaterials(pScene, path))
+            return false;
+
+        PopulateBuffers();
+        return GLCheckError();
+    }
+
+    void Mesh::CountVerticesAndIndices(const aiScene* pScene, unsigned int& NumVertices, unsigned int& NumIndices) {
+
+        for (unsigned int i = 0; i < m_Meshes.size(); i++) {
+
+            m_Meshes[i].MaterialIndex = pScene->mMeshes[i]->mMaterialIndex;
+            m_Meshes[i].NumIndices = pScene->mMeshes[i]->mNumFaces * 3;
+            m_Meshes[i].BaseVertex = NumVertices;
+            m_Meshes[i].BaseIndex = NumIndices;
+
+            NumVertices += pScene->mMeshes[i]->mNumVertices;
+            NumIndices += m_Meshes[i].NumIndices;
+        }
+    }
+
+    void Mesh::ReserveSpace(unsigned int NumVertices, unsigned int NumIndices) {
+
+        m_Positions.reserve(NumVertices);
+        m_Normals.reserve(NumVertices);
+        m_TexCoords.reserve(NumVertices);
+        m_Indices.reserve(NumIndices);
+    }
+
+    void Mesh::InitAllMeshes(const aiScene* pScene) {
+
+        for (unsigned int i = 0; i < m_Meshes.size(); i++) {
+            const aiMesh* paiMesh = pScene->mMeshes[i];
+            InitSingleMesh(paiMesh);
+        }
+    }
+
+    void Mesh::InitSingleMesh(const aiMesh* paiMesh) {
+
+        const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
+
+        // Populate the vertex attribute vectors
+        for (unsigned int i = 0; i < paiMesh->mNumVertices; i++) {
+
+            const aiVector3D& pPos = paiMesh->mVertices[i];
+            const aiVector3D& pNormal = paiMesh->mNormals[i];
+            const aiVector3D& pTexCoord = paiMesh->HasTextureCoords(0) ? paiMesh->mTextureCoords[0][i] : Zero3D;
+
+            m_Positions.push_back(glm::vec3(pPos.x, pPos.y, pPos.z));
+            m_Normals.push_back(glm::vec3(pNormal.x, pNormal.y, pNormal.z));
+            m_TexCoords.push_back(glm::vec2(pTexCoord.x, pTexCoord.y));
+        }
+
+        // Populate the index buffer
+        for (unsigned int i = 0; i < paiMesh->mNumFaces; i++) {
+            const aiFace& Face = paiMesh->mFaces[i];
+            assert(Face.mNumIndices == 3);
+            m_Indices.push_back(Face.mIndices[0]);
+            m_Indices.push_back(Face.mIndices[1]);
+            m_Indices.push_back(Face.mIndices[2]);
+        }
+    }
+
+    bool Mesh::InitMaterials(const aiScene * pScene, const std::string & Filename) {
+
+        // Extract the directory part from the file name
+        std::string::size_type SlashIndex = Filename.find_last_of("/");
+
+        std::string Dir;
+
+        if (SlashIndex == std::string::npos)
+            Dir = ".";
+        else if (SlashIndex == 0)
+            Dir = "/";
+        else
+            Dir = Filename.substr(0, SlashIndex);
+
+        bool Ret = true;
+
+        // Initialize the materials
+        for (unsigned int i = 0; i < pScene->mNumMaterials; i++) {
+            const aiMaterial* pMaterial = pScene->mMaterials[i];
+            m_Textures[i] = NULL;
+
+            if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
+                aiString Path;
+
+                if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
+                    std::string p(Path.data);
+
+                    if (p.substr(0, 2) == ".\\")
+                        p = p.substr(2, p.size() - 2);
+
+                    std::string FullPath = Dir + "/" + p;
+
+                    printf("Loaded diffuse texture '%s' at index %d\n", FullPath.c_str(), i);
+                    m_Textures[i] = Texture2D::Create(FullPath.c_str());
+                }
+            }
+        }
+
+        return Ret;
+    }
+
+    void Mesh::PopulateBuffers() {
+
+        glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[POS_VB]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(m_Positions[0]) * m_Positions.size(), &m_Positions[0], GL_STATIC_DRAW);
+        glEnableVertexAttribArray(POSITION_LOCATION);
+        glVertexAttribPointer(POSITION_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+        glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[NORMAL_VB]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(m_Normals[0]) * m_Normals.size(), &m_Normals[0], GL_STATIC_DRAW);
+        glEnableVertexAttribArray(NORMAL_LOCATION);
+        glVertexAttribPointer(NORMAL_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+        glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[TEXCOORD_VB]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(m_TexCoords[0]) * m_TexCoords.size(), &m_TexCoords[0], GL_STATIC_DRAW);
+        glEnableVertexAttribArray(TEX_COORD_LOCATION);
+        glVertexAttribPointer(TEX_COORD_LOCATION, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Buffers[INDEX_BUFFER]);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_Indices[0]) * m_Indices.size(), &m_Indices[0], GL_STATIC_DRAW);
+    }
+
+
+    void Mesh::Render() {
+
+        glBindVertexArray(m_VAO);
+
+        for (unsigned int i = 0; i < m_Meshes.size(); i++) {
+            unsigned int MaterialIndex = m_Meshes[i].MaterialIndex;
+
+            assert(MaterialIndex < m_Textures.size());
+
+            if (m_Textures[MaterialIndex])
+                m_Textures[MaterialIndex]->Bind(0);
+
+            glDrawElementsBaseVertex(GL_TRIANGLES,
+                m_Meshes[i].NumIndices,
+                GL_UNSIGNED_INT,
+                (void*)(sizeof(unsigned int) * m_Meshes[i].BaseIndex),
+                m_Meshes[i].BaseVertex);
+        }
+
+        //Make sure the VAO is not changed from the outside
         glBindVertexArray(0);
     }
 }

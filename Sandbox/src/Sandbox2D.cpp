@@ -75,7 +75,7 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 				//color = 0;
 		}
 		Cober::Renderer::DrawSquare({ 15.0, 0.0, -7.0f}, { 7.0f, 7.0f }, catTexture);
-		Cober::Renderer::DrawModel(gridModel, glm::vec3(0.0f), glm::vec3(0.5f));
+		Cober::Renderer::DrawModel(gridModel, glm::vec3(0.0f), glm::vec3(1.0f));
 
 		Cober::Renderer::EndScene();
 	}

@@ -78,6 +78,7 @@ in vec3 v_FragPos;
 in vec3 v_Normal;
 in vec2 v_TextCoord;
 
+uniform sampler2D gSampler;
 uniform vec3 u_ViewPos;
 uniform Material material;
 uniform DirLight dirLight;
@@ -100,7 +101,7 @@ void main()
 
 	result += CalculateSpotLight(spotLight, normal, v_FragPos, viewDir);
 
-    fragmentColor = result;
+    fragmentColor = result * vec4(texture(gSampler, v_TextCoord));
 }
 
 vec4 CalculateDirLight(DirLight light, vec3 normal, vec3 viewDir) {
@@ -113,9 +114,9 @@ vec4 CalculateDirLight(DirLight light, vec3 normal, vec3 viewDir) {
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
 
 	vec4 color = vec4(light.color, 1.0);
-	vec4 ambient  = vec4(light.ambient , 1.0)	* color * texture(material.diffuse,  v_TextCoord);
-	vec4 diffuse  = vec4(light.diffuse , 1.0)	* color * diff * texture(material.diffuse,  v_TextCoord);
-	vec4 specular = vec4(light.specular, 1.0)	* color * spec * texture(material.specular, v_TextCoord);
+	vec4 ambient  = vec4(light.ambient , 1.0) * color * texture(material.diffuse,  v_TextCoord);
+	vec4 diffuse  = vec4(light.diffuse , 1.0) * color * diff * texture(material.diffuse,  v_TextCoord);
+	vec4 specular = vec4(light.specular, 1.0) * color * spec * texture(material.specular, v_TextCoord);
 
 	return (ambient + diffuse + specular);
 }

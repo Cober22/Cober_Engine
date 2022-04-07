@@ -151,9 +151,9 @@ namespace Cober {
 	// [-------------------- MODEL --------------------]
 	void Renderer::DrawModel(Ref<Mesh> model, const glm::vec3& position, const glm::vec3& size)
 	{
-		modelShader->Bind();
+		basePrimitiveShader->Bind();
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, size.z });
-		modelShader->SetMat4("u_Model", transform);
+		basePrimitiveShader->SetMat4("u_Model", transform);
 		model->Render();
 	}
 

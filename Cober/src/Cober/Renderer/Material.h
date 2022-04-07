@@ -11,8 +11,13 @@ namespace Cober {
         glm::vec3 DiffuseColor  = glm::vec3(0.0f);
         glm::vec3 SpecularColor = glm::vec3(0.0f);
 
+        
+
+        Ref<Texture2D> pSpecularExponent = NULL; // base color of the material
         // TODO: need to deallocate these
-        Ref<Texture2D> pDiffuse = NULL; // base color of the material
-        Ref<Texture2D> pSpecularExponent = NULL;
+        // 
+        std::vector<Ref<Texture2D>> textures; //Size
+        // 
+        //std::vector<Ref<Texture2D>> MaterialTextures[sizeof(matTextureTypes)];
     };
 }

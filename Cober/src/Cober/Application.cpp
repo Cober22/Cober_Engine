@@ -49,10 +49,17 @@ namespace Cober {
 			float time = (float)(SDL_GetTicks() / 1000.0f);
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
+			timeInSeconds += timestep;
+			frames++;
 
 			// Frame rate limit
-			if (1000/ FPS > m_LastFrameTime)
-				SDL_Delay(1000 / FPS - m_LastFrameTime);
+			if (timeInSeconds >= 1.0f) {
+				//std::cout << frames << std::endl;
+				frames = 0;
+				timeInSeconds = 0;
+			}
+			//if (1000/ FPS_LIMIT > m_LastFrameTime)
+				//SDL_Delay(1000 / FPS_LIMIT);
 
 			if (!w_Minimized) {
 				ProcessInputs();

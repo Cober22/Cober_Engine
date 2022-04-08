@@ -43,9 +43,12 @@ namespace Cober {
 		ImGuiLayer* m_ImGuiLayer;
 		LayerStack m_LayerStack;
 		float m_LastFrameTime = 0.0f;
+		float timeInSeconds = 0.0f;
+		int frames = 0;
 		bool w_Minimized = false;
 		bool w_Fullscreen = false;
-		const int FPS = 60;
+		const int FPS_LIMIT = 10;
+
 
 	private:
 		static Application* s_Instance;

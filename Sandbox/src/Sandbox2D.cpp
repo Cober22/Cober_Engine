@@ -5,34 +5,85 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 Sandbox2D::Sandbox2D()
-	: Layer("Sandbox2D"), OrthoCamera({ 1280.0f, 720.0f }), PerspCamera(45.0f, { 1280.0f, 720.0f }, 0.1f, 100.0f)
+	: Layer("Sandbox2D"), OrthoCamera({ 1280.0f, 720.0f }), PerspCamera(45.0f, { 1280.0f, 720.0f }, 0.1f, 500.0f)
 {
 }
 
 void Sandbox2D::OnAttach()
 {
-	catTexture = Cober::Texture2D::Create("Assets/Textures/BlendTest.png");
-	checkerboardTexture = Cober::Texture2D::Create("Assets/Textures/Checkerboard.png");
+	catTexture = Texture2D::Create("Assets/Textures/BlendTest.png");
+	//checkerboardTexture = Texture2D::Create("Assets/Textures/Checkerboard.png");
 	
-	woodContainer = Cober::Texture2D::Create("Assets/Textures/GridGreyDark.png");
-	/*woodContainer = Cober::Texture2D::Create("Assets/Textures/WoodenContainer.png");*/
-	steelBorderContainer = Cober::Texture2D::Create("Assets/Textures/SteelBorderContainer.png");
-
-	// load models
+	// Create Lights
 	// -----------
-	gridModel = Cober::CreateRef<Cober::Mesh>();
-	gridModel->LoadMesh("Assets/Models/backpack/backpack.obj");
+	// ----------- DIRECTIONAL Light
+	dirLight = CreateRef<DirectionalLight>(
+		glm::vec3(-0.2f, -1.0f, -0.3f),	// ---	Direction 
+		glm::vec3(0.45f, 0.1f, 0.6f),	//----------------	Color
+		0.1f, // -----------------------------  Ambient Intensity
+		0.3f);// -----------------------------  Diffuse Intensity
+
+	// ----------- POINT Lights
+	for (unsigned int i = 0; i < std::size(pLightPos); i++) {
+		Ref<PointLight> pointLight = CreateRef<PointLight>(
+			pLightPos[i],	// -------	 Position
+			Colors[i],		// -------	 Color
+			0.5f, // -----------------   Ambient Intensity
+			0.7f, // -----------------   Diffuse Intensity
+			0.2f, // -----------------   Attenuation Linear
+			0.1f);// -----------------   Attenuation Exponencial
+		pointLights.push_back(pointLight);
+	}
+	// ----------- SPOT Lights
+	Ref<SpotLight> spotLight = CreateRef<SpotLight>(
+		PerspCamera.GetDirection(),	// Camera Direction 
+		PerspCamera.GetPosition(),	// Camera Position
+		glm::vec3(1.0f, 1.0f, 0.0f),// Color
+		8.0f,	// -----------------   CutOff	
+		10.0f,	// -----------------   OuterCutOff
+		0.1f,	// -----------------   Ambient Intensity
+		0.8f,	// -----------------   Diffuse Intensity
+		0.09f,	// -----------------   Attenuation Linear
+		0.032f);// -----------------   Attenuation Exponencial
+	spotLights.push_back(spotLight);
+	Ref<SpotLight> spotLight2 = CreateRef<SpotLight>(
+		glm::vec3(-0.035, -0.95, -0.71),	// Camera Direction 
+		glm::vec3(0.0f, 8.0f, -5.0f),	// Camera Position
+		glm::vec3(1.0f, 0.0f, 0.0f),// Color
+		15.0f,	// -----------------   CutOff	
+		20.0f,	// -----------------   OuterCutOff
+		0.4f,	// -----------------   Ambient Intensity
+		1.0f,	// -----------------   Diffuse Intensity
+		0.009f,	// -----------------   Attenuation Linear
+		0.0032f);// -----------------   Attenuation Exponencial
+	spotLights.push_back(spotLight2);
+
+	// Create Textures
+	// -----------
+	woodContainer = Texture2D::Create("Assets/Textures/GridObscure.png");
+	//woodContainer =  Texture2D::Create("Assets/Textures/WoodenContainer.png");
+	steelBorderContainer =  Texture2D::Create("Assets/Textures/SteelBorderContainer.png");
+
+	// Load models
+	// -----------
+	gridModel = CreateRef<Mesh>();
+	arenaModel = CreateRef<Mesh>();
+	//gridModel->LoadMesh("Assets/Models/backpack/backpack.obj");
 	//gridModel->LoadMesh("Assets/Models/chessBoard/Chess.fbx");
-	//gridModel->LoadMesh("Assets/Models/thegrid/GRID.obj");
+	gridModel->LoadMesh("Assets/Models/thegrid/GRID.obj");
+	//arenaModel->LoadMesh("Assets/Models/arena/Game Level - Arena .obj");
+	//arenaModel->LoadMesh("Assets/Models/arena/source/Castle Garden scene.fbx");
+	//arenaModel->LoadMesh("Assets/Models/mech/source/MechHangar_.fbx");
 	//gridModel->LoadMesh("Assets/Models/wallWithGates/MuroGrades.fbx");
 	//gridModel->LoadMesh("Assets/Models/test/untitled.obj");
+
 }
 
 void Sandbox2D::OnDetach()
 {
 }
 
-void Sandbox2D::OnUpdate(Cober::Timestep ts)
+void Sandbox2D::OnUpdate( Timestep ts)
 {	
 	CB_PROFILE_FUNCTION();
 
@@ -48,36 +99,44 @@ void Sandbox2D::OnUpdate(Cober::Timestep ts)
 	// Render
 	{
 		CB_PROFILE_SCOPE("Render Prep");
-		//Cober::RenderCommand::SetClearColor({ 0.02f, 0.008f, 0.05f, 1.0f });	// DARK BLUE
-		//Cober::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
-		Cober::RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
-		//Cober::RenderCommand::SetClearColor({ 0.8f, 0.35f, 0.35f, 1.0f });
-		Cober::RenderCommand::Clear();
+		// BACKGRUOND COLOR!
+		//RenderCommand::SetClearColor({ 0.02f, 0.008f, 0.05f, 1.0f });	// DARK BLUE
+		//RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+		 RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
+		//RenderCommand::SetClearColor({ 0.8f, 0.35f, 0.35f, 1.0f });
+		 RenderCommand::Clear();
 	}
 	
 	{
 		CB_PROFILE_SCOPE("Render Draw");
 		if (perspective)
-			Cober::Renderer::BeginScene(PerspCamera);
+			 Renderer::BeginScene(PerspCamera);
 		else
-			Cober::Renderer::BeginScene(OrthoCamera);
+			 Renderer::BeginScene(OrthoCamera);
 
-		int color = 0;
-		for (unsigned int i = 0; i < std::size(cubePositions); i++) {
-			if (i < std::size(pointLightPositions))
-				Cober::Renderer::DrawLightCube(pointLightPositions[i], glm::vec3(0.4f), cubeColors[i]);
-			if (i == 0)
-				Cober::Renderer::DrawLightCube(cubePositions[i], glm::vec3(0.8f), { 1.0f, 1.0f, 1.0f, 1.0f });
-			else
-				Cober::Renderer::DrawCube(cubePositions[i], glm::vec3(1.0f), woodContainer, steelBorderContainer, { 1.0f, 1.0f, 1.0f, 1.0f });// cubeColors[color]);
 
-			//if (++color >= std::size(cubeColors))
-				//color = 0;
-		}
-		Cober::Renderer::DrawSquare({ 15.0, 0.0, -7.0f}, { 7.0f, 7.0f }, catTexture);
-		Cober::Renderer::DrawModel(gridModel, glm::vec3(0.0f), glm::vec3(1.0f));
+		// SQUARES!
+		Renderer::DrawSquare({ 15.0, 5.0, -7.0f}, { 7.0f, 7.0f }, catTexture);
 
-		Cober::Renderer::EndScene();
+		// CUBES!
+		for (unsigned int i = 0; i < std::size(cubePositions); i++)
+			 Renderer::DrawCube(cubePositions[i], glm::vec3(1.0f), woodContainer, steelBorderContainer, { 1.0f, 1.0f, 1.0f});// cubeColors[color]);
+
+		// LIGHTS!
+		Renderer::DrawDirectionalLight(dirLight, true);
+		Renderer::DrawPointLights(pointLights, true);
+
+		spotLights[0]->SetDirection(PerspCamera.GetDirection());
+		spotLights[0]->SetPosition(PerspCamera.GetPosition());
+		Renderer::DrawSpotLights(spotLights, true);
+		
+		//MODELS
+		Renderer::DrawModel(gridModel, glm::vec3(0.0f, -3.0f, 0.0f), glm::vec3(0.5f));
+		Renderer::DrawModel(arenaModel, glm::vec3(0.0f, -3.0f, 0.0f), glm::vec3(0.5f));
+
+
+
+		Renderer::EndScene();
 	}
 }
 

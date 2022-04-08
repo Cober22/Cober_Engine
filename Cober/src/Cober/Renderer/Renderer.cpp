@@ -3,14 +3,7 @@
 
 namespace Cober {
 
-	struct PrimitiveType {
-		Ref<Square> square;
-		Ref<Cube> cube;
-		Ref<LightCube> lightCube;
-	};
-
-	static PrimitiveType* primitive;
-	Ref<Shader> basePrimitiveShader;
+	Ref<Shader> basicShader;
 	Ref<Shader> lightCubeShader;
 	Ref<Shader> modelShader;
 
@@ -24,15 +17,14 @@ namespace Cober {
 	{
 		RenderCommand::Init();
 
-		primitive = new PrimitiveType();
 		primitive->square = CreateRef<Square>();
 		primitive->cube = CreateRef<Cube>();
 		primitive->lightCube = CreateRef<LightCube>();
 
-		basePrimitiveShader = Shader::Create("Assets/Shaders/Primitive.glsl");
-		basePrimitiveShader->Bind();
-		basePrimitiveShader->SetInt("material.diffuse", 0);
-		basePrimitiveShader->SetInt("material.specular", 1);
+		basicShader = Shader::Create("Assets/Shaders/Primitive.glsl");
+		basicShader->Bind();
+		basicShader->SetInt("material.diffuse", 0);
+		basicShader->SetInt("material.specular", 1);
 
 		lightCubeShader = Shader::Create("Assets/Shaders/Light.glsl");
 		lightCubeShader->Bind();
@@ -58,70 +50,11 @@ namespace Cober {
 
 	void SetupBasicPrimitiveShader() {
 		
-		basePrimitiveShader->Bind();
-		basePrimitiveShader->SetVec3("u_ViewPos", cameraPosition);
+		basicShader->Bind();
+		basicShader->SetVec3("u_ViewPos", cameraPosition);
 		// Material properties
-		basePrimitiveShader->SetVec3("material.diffuse", {1.0f, 1.0f, 1.0f});
-		basePrimitiveShader->SetFloat("material.shininess", 32.0f);
-
-		/////////////////////////// TEST
-		// Directional light
-		basePrimitiveShader->SetVec3("dirLight.color",		glm::vec3(1.0f, 1.0f, 1.0f));
-		basePrimitiveShader->SetVec3("dirLight.direction",	glm::vec3(-0.2f, -1.0f, -0.3f));
-		basePrimitiveShader->SetVec3("dirLight.ambient",	glm::vec3(0.05f));
-		basePrimitiveShader->SetVec3("dirLight.diffuse",	glm::vec3(0.5f));
-		basePrimitiveShader->SetVec3("dirLight.specular",	glm::vec3(1.0f));
-
-		// Point Light
-		basePrimitiveShader->SetVec3("pointLight[0].color", glm::vec3(0.0f, 1.0f, 0.0f));
-		basePrimitiveShader->SetVec3("pointLight[0].position", glm::vec3(10.7f, 0.2f, -2.0f));
-		basePrimitiveShader->SetVec3("pointLight[0].ambient", glm::vec3(1.0f));
-		basePrimitiveShader->SetVec3("pointLight[0].diffuse", glm::vec3(1.0f));
-		basePrimitiveShader->SetVec3("pointLight[0].specular", glm::vec3(1.0f));
-		basePrimitiveShader->SetFloat("pointLight[0].constant", 1.0f);
-		basePrimitiveShader->SetFloat("pointLight[0].linear", 0.2f);
-		basePrimitiveShader->SetFloat("pointLight[0].quadratic", 0.1f);
-
-		basePrimitiveShader->SetVec3("pointLight[1].color", glm::vec3(0.0f, 0.0f, 1.0f));
-		basePrimitiveShader->SetVec3("pointLight[1].position", glm::vec3(2.3f, 3.3f, -44.0f));
-		basePrimitiveShader->SetVec3("pointLight[1].ambient", glm::vec3(1.0f));
-		basePrimitiveShader->SetVec3("pointLight[1].diffuse", glm::vec3(1.0f));
-		basePrimitiveShader->SetVec3("pointLight[1].specular", glm::vec3(1.0f));
-		basePrimitiveShader->SetFloat("pointLight[1].constant", 1.0f);
-		basePrimitiveShader->SetFloat("pointLight[1].linear", 0.2f);
-		basePrimitiveShader->SetFloat("pointLight[1].quadratic", 0.1f);
-
-		basePrimitiveShader->SetVec3("pointLight[2].color", glm::vec3(1.0f, 0.0f, 0.0f));
-		basePrimitiveShader->SetVec3("pointLight[2].position", glm::vec3(-4.0f, 2.0f, -12.0f));
-		basePrimitiveShader->SetVec3("pointLight[2].ambient", glm::vec3(1.0f));
-		basePrimitiveShader->SetVec3("pointLight[2].diffuse", glm::vec3(1.0f));
-		basePrimitiveShader->SetVec3("pointLight[2].specular", glm::vec3(1.0f));
-		basePrimitiveShader->SetFloat("pointLight[2].constant", 1.0f);
-		basePrimitiveShader->SetFloat("pointLight[2].linear", 0.2);
-		basePrimitiveShader->SetFloat("pointLight[2].quadratic", 0.1f);
-
-		basePrimitiveShader->SetVec3("pointLight[3].color", glm::vec3(1.0f, 0.0f, 1.0f));
-		basePrimitiveShader->SetVec3("pointLight[3].position", glm::vec3(0.0f, 0.0f, -30.0f));
-		basePrimitiveShader->SetVec3("pointLight[3].ambient", glm::vec3(1.0f));
-		basePrimitiveShader->SetVec3("pointLight[3].diffuse", glm::vec3(1.0));
-		basePrimitiveShader->SetVec3("pointLight[3].specular", glm::vec3(1.0));
-		basePrimitiveShader->SetFloat("pointLight[3].constant", 1.0f);
-		basePrimitiveShader->SetFloat("pointLight[3].linear", 0.2f);
-		basePrimitiveShader->SetFloat("pointLight[3].quadratic", 0.1f);
-
-		// Spot Lights
-		basePrimitiveShader->SetVec3("spotLight.color",		glm::vec3(1.0f, 1.0f, 0.0f));
-		basePrimitiveShader->SetVec3("spotLight.position",	cameraPosition);
-		basePrimitiveShader->SetVec3("spotLight.direction", cameraDirection);
-		basePrimitiveShader->SetVec3("spotLight.ambient",	glm::vec3(0.05f));
-		basePrimitiveShader->SetVec3("spotLight.diffuse",	glm::vec3(0.8f));
-		basePrimitiveShader->SetVec3("spotLight.specular",	glm::vec3(1.0f));
-		basePrimitiveShader->SetFloat("spotLight.cutOff",	glm::cos(glm::radians(8.5f)));
-		basePrimitiveShader->SetFloat("spotLight.outerCutOff", glm::cos(glm::radians(10.0f)));
-		basePrimitiveShader->SetFloat("spotLight.constant", 1.0f);
-		basePrimitiveShader->SetFloat("spotLight.linear",	0.09f);
-		basePrimitiveShader->SetFloat("spotLight.quadratic",0.032);
-		/////////////////////////// TEST
+		basicShader->SetVec3("material.diffuse", { 1.0f, 1.0f, 1.0f });
+		basicShader->SetFloat("material.shininess", 32.0f);
 	}
 
 	void Renderer::BeginScene(OrthographicCamera& camera)
@@ -129,7 +62,7 @@ namespace Cober {
 		cameraPosition = camera.GetPosition();
 		cameraDirection = camera.GetDirection();
 		SetupBasicPrimitiveShader();
-		UploadShadersToFrustum(basePrimitiveShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
+		UploadShadersToFrustum(basicShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
 		UploadShadersToFrustum(lightCubeShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
 		UploadShadersToFrustum(modelShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
 	}
@@ -139,7 +72,7 @@ namespace Cober {
 		cameraPosition = camera.GetPosition();
 		cameraDirection = camera.GetDirection();
 		SetupBasicPrimitiveShader();
-		UploadShadersToFrustum(basePrimitiveShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
+		UploadShadersToFrustum(basicShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
 		UploadShadersToFrustum(lightCubeShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
 		UploadShadersToFrustum(modelShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
 	}
@@ -151,73 +84,162 @@ namespace Cober {
 	// [-------------------- MODEL --------------------]
 	void Renderer::DrawModel(Ref<Mesh> model, const glm::vec3& position, const glm::vec3& size)
 	{
-		basePrimitiveShader->Bind();
+		basicShader->Bind();
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, size.z });
-		basePrimitiveShader->SetMat4("u_Model", transform);
+		basicShader->SetMat4("u_Model", transform);
 		model->Render();
 	}
 
 	// [-------------------- SQUARE --------------------]
-	void Renderer::DrawSquare(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
+	void Renderer::DrawSquare(const glm::vec2& position, const glm::vec2& size, const glm::vec3& color)
 	{
 		DrawSquare({ position.x, position.y, 0.0f }, size, color);
 	}
-	void Renderer::DrawSquare(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
+	void Renderer::DrawSquare(const glm::vec3& position, const glm::vec2& size, const glm::vec3& color)
 	{
-		basePrimitiveShader->Bind();
+		basicShader->Bind();
 		primitive->square->GetTexture()->Bind();
-		primitive->square->Draw(position, size, basePrimitiveShader);
+		primitive->square->Draw(position, size, basicShader);
 	}
 
-	void Renderer::DrawSquare(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D> texture, const glm::vec4& color)
+	void Renderer::DrawSquare(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D> texture, const glm::vec3& color)
 	{
 		DrawSquare({ position.x, position.y, 0.0f }, size, texture, color);
 	}
 
-	void Renderer::DrawSquare(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D> texture, const glm::vec4& color)
+	void Renderer::DrawSquare(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D> texture, const glm::vec3& color)
 	{
-		basePrimitiveShader->Bind();
+		basicShader->Bind();
 		texture->Bind(0);
 		texture->Bind(1);	// Provisional, delete the specular map from the cat Texture
-		primitive->square->Draw(position, size, basePrimitiveShader);
+		primitive->square->Draw(position, size, basicShader);
 	}
 
 
 	// [-------------------- CUBE --------------------]
-	void Renderer::DrawCube(const glm::vec2& position, const glm::vec3& size, const glm::vec4& color)
+	void Renderer::DrawCube(const glm::vec2& position, const glm::vec3& size, const glm::vec3& color)
 	{
 		DrawCube({ position.x, position.y, 0.0f }, size, color);
 	}
-	void Renderer::DrawCube(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color)
+	void Renderer::DrawCube(const glm::vec3& position, const glm::vec3& size, const glm::vec3& color)
 	{
-		basePrimitiveShader->Bind();
+		basicShader->Bind();
 		primitive->cube->GetTexture()->Bind();
-		primitive->cube->Draw(position, size, basePrimitiveShader);
+		primitive->cube->Draw(position, size, basicShader);
 	}
 
-	void Renderer::DrawCube(const glm::vec2& position, const glm::vec3& size, const Ref<Texture2D> diffuseTexture, const Ref<Texture2D> specTexture, const glm::vec4& color)
+	void Renderer::DrawCube(const glm::vec2& position, const glm::vec3& size, const Ref<Texture2D> diffuseTexture, const Ref<Texture2D> specTexture, const glm::vec3& color)
 	{
 		DrawCube({ position.x, position.y, 0.0f }, size, diffuseTexture, specTexture, color);
 	}
 
-	void Renderer::DrawCube(const glm::vec3& position, const glm::vec3& size, const Ref<Texture2D> diffuseTexture, const Ref<Texture2D> specTexture, const glm::vec4& color)
+	void Renderer::DrawCube(const glm::vec3& position, const glm::vec3& size, const Ref<Texture2D> diffuseTexture, const Ref<Texture2D> specTexture, const glm::vec3& color)
 	{
-		basePrimitiveShader->Bind();
+		basicShader->Bind();
 		diffuseTexture->Bind(0);
 		specTexture->Bind(1);
-		primitive->cube->Draw(position, size, basePrimitiveShader);
+		primitive->cube->Draw(position, size, basicShader);
 	}
 
 
 	// [-------------------- LIGHT CUBE --------------------]
-	void Renderer::DrawLightCube(const glm::vec2& position, const glm::vec3& size, const glm::vec4& color)
+	void Renderer::DrawLightCube(const glm::vec2& position, const glm::vec3& size, const glm::vec3& color)
 	{
 		DrawLightCube({ position.x, position.y, 0.0f }, size, color);
 	}
-	void Renderer::DrawLightCube(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color)
+	void Renderer::DrawLightCube(const glm::vec3& position, const glm::vec3& size, const glm::vec3& color)
 	{
 		lightCubeShader->Bind();
-		lightCubeShader->SetFloat4("u_Color", color);
+		lightCubeShader->SetFloat3("u_Color", color);
 		primitive->lightCube->Draw(position, size, lightCubeShader);
+	}
+
+
+	// [-------------------- LIGHTING --------------------]
+	void BindDirectionalLight(const glm::vec3& direction, const glm::vec3& color, 
+							  float ambient, float diffuse) {
+	
+		basicShader->SetVec3("dirLight.direction",	direction);
+		basicShader->SetVec3("dirLight.color",		color);
+		basicShader->SetFloat("dirLight.ambient",	ambient);
+		basicShader->SetFloat("dirLight.diffuse",	diffuse);
+		basicShader->SetFloat("dirLight.specular",	1.0f);
+	}
+
+	void BindPointLight(int i, const glm::vec3& position, const glm::vec3& color, 
+						float ambient, float diffuse, 
+						float linear, float exp) {
+
+		std::string index = std::to_string(i);
+		basicShader->SetVec3("pointLight[" + index + "].position", position);
+		basicShader->SetVec3("pointLight[" + index + "].color", color);
+		basicShader->SetFloat("pointLight[" + index + "].ambient", ambient);
+		basicShader->SetFloat("pointLight[" + index + "].diffuse", diffuse);
+		basicShader->SetFloat("pointLight[" + index + "].specular", 1.0f);
+		basicShader->SetFloat("pointLight[" + index + "].constant", 1.0f);
+		basicShader->SetFloat("pointLight[" + index + "].linear", linear);
+		basicShader->SetFloat("pointLight[" + index + "].quadratic", exp);
+	}
+
+	void BindSpotLight(	int i, const glm::vec3& direction, const glm::vec3& position, const glm::vec3& color,
+						float cutOff, float outerCutOff, 
+						float ambient, float diffuse, 
+						float linear, float exp) {
+		
+		std::string index = std::to_string(i);
+		basicShader->SetVec3("spotLight[" + index + "].position",	position);
+		basicShader->SetVec3("spotLight[" + index + "].color",		color);
+		basicShader->SetVec3("spotLight[" + index + "].direction",  direction);
+		basicShader->SetFloat("spotLight[" + index + "].ambient",	ambient);
+		basicShader->SetFloat("spotLight[" + index + "].diffuse",	diffuse);
+		basicShader->SetFloat("spotLight[" + index + "].specular",	1.0f);
+		basicShader->SetFloat("spotLight[" + index + "].cutOff",	glm::cos(glm::radians(cutOff)));
+		basicShader->SetFloat("spotLight[" + index + "].outerCutOff", glm::cos(glm::radians(outerCutOff)));
+		basicShader->SetFloat("spotLight[" + index + "].constant",	1.0f);
+		basicShader->SetFloat("spotLight[" + index + "].linear",	linear);
+		basicShader->SetFloat("spotLight[" + index + "].quadratic",	exp);
+	}
+
+	void Renderer::DrawDirectionalLight(Ref<DirectionalLight> light, bool drawCube) {
+
+		if (drawCube)
+			Renderer::DrawLightCube({0.0f, 200.0f, 0.0f}, glm::vec3(20.0f), light->Color);
+
+		basicShader->Bind();
+		BindDirectionalLight(light->Direction, light->Color, 
+							 light->AmbientIntensity, light->DiffuseIntensity);
+	}
+	void Renderer::DrawPointLights(std::vector<Ref<PointLight>> pointLight, bool drawCube) {
+
+		int i = 0;
+		for each (Ref<PointLight> light in pointLight) {
+			if (drawCube)
+				Renderer::DrawLightCube(light->Position, glm::vec3(0.5f), light->Color);
+
+			basicShader->Bind();
+			BindPointLight(	i,
+							light->Position, light->Color, 
+							light->AmbientIntensity, light->DiffuseIntensity,	
+							light->Attenuation.Linear, light->Attenuation.Exp);
+			i++;
+		}
+		basicShader->SetInt("NUM_POINT_LIGHTS", pointLight.size());
+	}
+	void Renderer::DrawSpotLights(std::vector<Ref<SpotLight>> spotLight, bool drawCube) {
+
+		int i = 0;
+		for each (Ref<SpotLight> light in spotLight) {
+			if (drawCube && i != 0)
+				Renderer::DrawLightCube(light->Position, glm::vec3(0.5f), light->Color);
+			
+			basicShader->Bind();
+			BindSpotLight(i,
+				          light->Direction, light->Position, light->Color,
+				          light->CutOff, light->OuterCutOff,
+				          light->AmbientIntensity, light->DiffuseIntensity,
+				          light->Attenuation.Linear, light->Attenuation.Exp);
+			i++;
+		}
+		basicShader->SetInt("NUM_SPOT_LIGHTS", spotLight.size());
 	}
 }

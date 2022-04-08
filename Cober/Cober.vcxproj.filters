@@ -1435,6 +1435,7 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Material.h" />
+    <ClInclude Include="src\Cober\Renderer\Lighting.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\stb_image\stb_image.cpp">

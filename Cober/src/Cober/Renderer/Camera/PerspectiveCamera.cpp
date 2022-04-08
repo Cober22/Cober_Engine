@@ -21,7 +21,7 @@ namespace Cober {
 		
 		// --- Keyboard keys
 		if (keystate[SDL_SCANCODE_A])
-			c_position -= c_rightAxis *c_PerspTraslationSpeed* glm::vec3(ts);
+			c_position -= c_rightAxis * c_PerspTraslationSpeed * glm::vec3(ts);
 		if (keystate[SDL_SCANCODE_D])
 			c_position += c_rightAxis * c_PerspTraslationSpeed * glm::vec3(ts);
 		if (keystate[SDL_SCANCODE_S])
@@ -82,7 +82,7 @@ namespace Cober {
 		zoom -= e.preciseY;
 		zoom = std::max(zoom, 1.0f);
 		zoom = std::min(zoom, 45.0f);
-		c_PerspTraslationSpeed = zoom / 10;
+		c_PerspTraslationSpeed = zoom / 5;
 		SetProjection(zoom, c_aspectRatio, c_nearPlane, c_farPlane);
 	}
 

@@ -591,6 +591,7 @@
     <ClInclude Include="src\Cober\Renderer\Camera\OrthographicCamera.h" />
     <ClInclude Include="src\Cober\Renderer\Camera\PerspectiveCamera.h" />
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Cober\Renderer\Lighting.h" />
     <ClInclude Include="src\Cober\Renderer\Material.h" />
     <ClInclude Include="src\Cober\Renderer\Primitives\Mesh.h" />
     <ClInclude Include="src\Cober\Renderer\Primitives\Primitives.h" />

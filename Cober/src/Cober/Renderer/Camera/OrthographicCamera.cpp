@@ -76,8 +76,8 @@ namespace Cober {
 				OnMouseMotion(event.motion);	break;
 			case SDL_MOUSEWHEEL:
 				OnMouseScrolled(event.wheel);	break;
-			case SDL_WINDOWEVENT:
-				OnWindowResized(Application::Get().GetWindow());	break;
+			//case SDL_WINDOWEVENT_RESIZED:
+			//	OnWindowResized(Application::Get().GetWindow());	break;
 		}
 	}
 

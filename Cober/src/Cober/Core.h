@@ -106,8 +106,25 @@
 #define ZERO_MEM_VAR(var) memset(&var, 0, sizeof(var))
 #define ARRAY_SIZE_IN_ELEMENTS(a) (sizeof(a)/sizeof(a[0]))
 
-#define ASSIMP_LOAD_FLAGS (aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs |  aiProcess_JoinIdenticalVertices)
+//#define ASSIMP_LOAD_FLAGS (aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs |  aiProcess_JoinIdenticalVertices)
+#define ASSIMP_LOAD_FLAGS (aiProcess_FlipUVs |	aiProcess_JoinIdenticalVertices | aiProcess_ValidateDataStructure |	aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords |	aiProcess_LimitBoneWeights | aiProcess_OptimizeMeshes |	aiProcess_GenSmoothNormals | aiProcess_SplitLargeMeshes | aiProcess_Triangulate | aiProcess_SortByPType)
 
+			//aiProcess_FlipUVs |
+			//aiProcess_JoinIdenticalVertices |		// join identical vertices/ optimize indexing
+			//aiProcess_ValidateDataStructure |		// perform a full validation of the loader's output
+			//aiProcess_ImproveCacheLocality |		// improve the cache locality of the output vertices
+			//aiProcess_RemoveRedundantMaterials |	// remove redundant materials
+			//aiProcess_GenUVCoords |					// convert spherical, cylindrical, box and planar mapping to proper UVs
+			//aiProcess_TransformUVCoords |			// pre-process UV transformations (scaling, translation ...)
+			////aiProcess_FindInstances |				// search for instanced meshes and remove them by references to one master
+			//aiProcess_LimitBoneWeights |			// limit bone weights to 4 per vertex
+			//aiProcess_OptimizeMeshes |				// join small meshes, if possible;
+			////aiProcess_PreTransformVertices |		
+			//aiProcess_GenSmoothNormals |			// generate smooth normal vectors if not existing
+			//aiProcess_SplitLargeMeshes |			// split large, unrenderable meshes into sub-meshes
+			//aiProcess_Triangulate |					// triangulate polygons with more than 3 edges
+			//aiProcess_ConvertToLeftHanded |			// convert everything to D3D left handed space
+			//aiProcess_SortByPType);
 
 namespace Cober {
 

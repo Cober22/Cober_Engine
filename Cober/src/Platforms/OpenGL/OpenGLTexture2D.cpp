@@ -40,7 +40,7 @@ namespace Cober {
 		}
 
 
-		CB_ASSERT(data, "Failed to laod image!");
+		CB_ASSERT(data, "Failed to load image!");
 		m_Width = width;
 		m_Height = height;
 

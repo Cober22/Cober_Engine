@@ -1,3 +1,4 @@
+/////////////////////////////// VERTEX
 #type vertex
 #version 330 core
 
@@ -103,7 +104,7 @@ void main()
 	for(int i = 0; i < 2; i++)
 		result += CalculateSpotLight(spotLight[i], normal, v_FragPos, viewDir);
 
-    fragmentColor = result;// * vec4(texture(gSampler, v_TextCoord));
+    fragmentColor = result * vec4(texture(gSampler, v_TextCoord));
 }
 
 vec4 CalculateDirLight(DirLight light, vec3 normal, vec3 viewDir) {

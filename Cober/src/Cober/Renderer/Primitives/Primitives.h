@@ -5,31 +5,49 @@
 
 namespace Cober {
 
-	class Square {
+	class Quad {
 	public:
-		Square();
-		void Draw(const glm::vec3& position, const glm::vec2& size, Ref<Shader> shader);
+		Quad();
+		void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color);
+		void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor = 1.0f);
+		
 		void Init();
+		// Functions
+		Ref<VertexBuffer> GetVBO() { return VBO; }
 		Ref<VertexArray> GetVAO() { return VAO; }
 		Ref<Texture> GetTexture() { return WhiteTexture; }
+		Ref<Shader> GetShader() { return shader; }
+
+		// Functions
+		static const uint32_t maxQuads = 20000;
+		static const uint32_t maxVertices = maxQuads * 4;
+		static const uint32_t maxIndices = maxQuads * 6;
+		static const uint32_t maxTextureSlots = 32;
+		std::array<Ref<Texture2D>, maxTextureSlots> textureSlots;
+		uint32_t textureSlotIndex = 1;
+		uint32_t indexCount = 0;	// 0 = white texture
+
+		struct Attributes {
+			glm::vec3 Position;
+			glm::vec4 Color;
+			glm::vec2 TexCoord;
+			float TexIndex;
+			float TilingFactor;
+		};
+		Attributes* attributes = nullptr;
+		//Ref<Stats> stats;
 	private:
 		// Primitive Attributes
-		Ref<VertexArray> VAO;
-		Ref<Texture2D> WhiteTexture;
-
-		// Data
-		float vertices[8 * 4] = {
-			// positions			// normals			// texture coords
-			-1.0,	-1.0,	 1.0,	0.0,	0.0,	1.0,	0.0,	0.0,
-			 1.0,	-1.0,	 1.0,	0.0,	0.0,	1.0,	1.0,	0.0,
-			 1.0,	 1.0,	 1.0,	0.0,	0.0,	1.0,	1.0,	1.0,
-			-1.0,	 1.0,	 1.0,	0.0,	0.0,	1.0,	0.0,	1.0,
-		};
-		uint32_t indices[6] = { 0, 1, 2, 2, 3, 0 };
-
+		
 		// Buffer Objects
 		Ref<VertexBuffer> VBO;
 		Ref<IndexBuffer> IBO;
+		Ref<VertexArray> VAO;
+		Ref<Shader> shader;
+		Ref<Texture2D> WhiteTexture;
+
+		glm::vec4 vertexPositions[4];
+		size_t vertexCount = 4;
 	};
 
 	class Cube {
@@ -79,7 +97,6 @@ namespace Cober {
 			 1.0,	-1.0,	 1.0,	0.0,   -1.0,	0.0,	1.0,	1.0,
 			-1.0,	-1.0,	 1.0,	0.0,   -1.0,	0.0,	0.0,	1.0,
 		};
-		
 		uint32_t indices[6 * 2 * 3] = {
 			// front
 			0,   1,  2,

@@ -5,15 +5,17 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 Sandbox2D::Sandbox2D()
-	: Layer("Sandbox2D"), OrthoCamera({ 1280.0f, 720.0f }), PerspCamera(45.0f, { 1280.0f, 720.0f }, 0.1f, 500.0f)
+	: Layer("Sandbox2D"), OrthoCamera({ 1280.0f, 720.0f })//, PerspCamera(45.0f, { 1280.0f, 720.0f }, 0.1f, 500.0f)
 {
 }
 
 void Sandbox2D::OnAttach()
 {
+	/*catTexture = Texture2D::Create("Assets/Textures/BlendTest.png");*/
 	catTexture = Texture2D::Create("Assets/Textures/BlendTest.png");
+	baseAtlas = Texture2D::Create("Assets/Textures/BaseAtlas.png");
 	//checkerboardTexture = Texture2D::Create("Assets/Textures/Checkerboard.png");
-	
+	/*
 	// Create Lights
 	// -----------
 	// ----------- DIRECTIONAL Light
@@ -55,7 +57,7 @@ void Sandbox2D::OnAttach()
 		0.4f,	// -----------------   Ambient Intensity
 		1.0f,	// -----------------   Diffuse Intensity
 		0.009f,	// -----------------   Attenuation Linear
-		0.0032f);// -----------------   Attenuation Exponencial
+		0.0032f);// ----------------   Attenuation Exponencial
 	spotLights.push_back(spotLight2);
 
 	// Create Textures
@@ -68,15 +70,9 @@ void Sandbox2D::OnAttach()
 	// -----------
 	gridModel = CreateRef<Mesh>();
 	arenaModel = CreateRef<Mesh>();
-	//gridModel->LoadMesh("Assets/Models/backpack/backpack.obj");
-	//gridModel->LoadMesh("Assets/Models/chessBoard/Chess.fbx");
 	gridModel->LoadMesh("Assets/Models/thegrid/GRID.obj");
-	//arenaModel->LoadMesh("Assets/Models/arena/Game Level - Arena .obj");
-	//arenaModel->LoadMesh("Assets/Models/arena/source/Castle Garden scene.fbx");
-	//arenaModel->LoadMesh("Assets/Models/mech/source/MechHangar_.fbx");
-	//gridModel->LoadMesh("Assets/Models/wallWithGates/MuroGrades.fbx");
-	//gridModel->LoadMesh("Assets/Models/test/untitled.obj");
-
+	arenaModel->LoadMesh("Assets/Models/thegridFBX/GRID.fbx");
+	*/
 }
 
 void Sandbox2D::OnDetach()
@@ -90,9 +86,9 @@ void Sandbox2D::OnUpdate( Timestep ts)
 	// Update
 	{
 		CB_PROFILE_SCOPE("CameraController::OnUpdate");
-		if (perspective)
-			PerspCamera.OnUpdate(ts);
-		else
+		//if (perspective)
+			//PerspCamera.OnUpdate(ts);
+		//else
 			OrthoCamera.OnUpdate(ts);
 	}
 
@@ -109,31 +105,34 @@ void Sandbox2D::OnUpdate( Timestep ts)
 	
 	{
 		CB_PROFILE_SCOPE("Render Draw");
-		if (perspective)
-			 Renderer::BeginScene(PerspCamera);
-		else
-			 Renderer::BeginScene(OrthoCamera);
+		//if (perspective)
+			 //Renderer::BeginScene(PerspCamera);
+		//else
+		 Renderer::BeginScene(OrthoCamera);
 
 
-		// SQUARES!
-		Renderer::DrawSquare({ 15.0, 5.0, -7.0f}, { 7.0f, 7.0f }, catTexture);
+		 Renderer::DrawRotatedQuad({ 10.0, 5.0, -7.0f}, 45.0f, { 7.0f, 7.0f });
+		 Renderer::DrawRotatedQuad({ 10.0, 5.0, -7.0f }, 40.0f, { 7.0f, 7.0f });
+		 Renderer::DrawQuad({ 15.0, 5.0, -14.0f }, { 7.0f, 7.0f }, catTexture);
+		 Renderer::DrawRotatedQuad({ 0.0, 5.0, -7.0f }, 40.0f, { 7.0f, 7.0f }, baseAtlas);
 
 		// CUBES!
-		for (unsigned int i = 0; i < std::size(cubePositions); i++)
-			 Renderer::DrawCube(cubePositions[i], glm::vec3(1.0f), woodContainer, steelBorderContainer, { 1.0f, 1.0f, 1.0f});// cubeColors[color]);
+		//for (unsigned int i = 0; i < std::size(cubePositions); i++)
+		//	 Renderer::DrawCube(cubePositions[i], glm::vec3(1.0f), woodContainer, steelBorderContainer, { 1.0f, 1.0f, 1.0f});// cubeColors[color]);
 
-		// LIGHTS!
-		Renderer::DrawDirectionalLight(dirLight, true);
-		Renderer::DrawPointLights(pointLights, true);
+		//// LIGHTS!
+		//Renderer::DrawDirectionalLight(dirLight, true);
+		//Renderer::DrawPointLights(pointLights, true);
 
-		spotLights[0]->SetDirection(PerspCamera.GetDirection());
-		spotLights[0]->SetPosition(PerspCamera.GetPosition());
-		Renderer::DrawSpotLights(spotLights, true);
+		//spotLights[0]->SetDirection(PerspCamera.GetDirection());
+		//spotLights[0]->SetPosition(PerspCamera.GetPosition());
+		//Renderer::DrawSpotLights(spotLights, true);
 		
 		//MODELS
-		Renderer::DrawModel(gridModel, glm::vec3(0.0f, -3.0f, 0.0f), glm::vec3(0.5f));
-		Renderer::DrawModel(arenaModel, glm::vec3(0.0f, -3.0f, 0.0f), glm::vec3(0.5f));
-
+		//if (perspective) {
+			//Renderer::DrawModel(gridModel, glm::vec3(0.0f, -3.0f, 0.0f), glm::vec3(0.5f));
+			//Renderer::DrawModel(arenaModel);
+		//}
 
 
 		Renderer::EndScene();
@@ -142,20 +141,31 @@ void Sandbox2D::OnUpdate( Timestep ts)
 
 void Sandbox2D::OnImGuiRender()
 {
-	//CB_PROFILE_FUNCTION();
+	CB_PROFILE_FUNCTION();
 	//ImGui::Begin("Settings");
-	//ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
+	
+
+	//auto stats = Renderer::GetStats();
+	//ImGui::Text("Renderer2D Stats");
+	//ImGui::Text("Draw Calls %d", stats->DrawCalls);
+	//ImGui::Text("Quads: %d", stats->QuadCount);
+	//ImGui::Text("Vertices: %d", stats->GetTotalVertexCount());
+	//ImGui::Text("Indices: %d", stats->GetTotalIndexCount());
+	//ImGui::ColorEdit4("quad Color", glm::value_ptr(m_quadColor));
+	
+	//uint32_t textureID = catTexture->GetRendererID();
+	//ImGui::Image((void*)textureID, ImVec2{1280, 720}, ImVec2{ 0, 1 }, ImVec{ 1, 0 });
 	//ImGui::End();
 }
 
 void Sandbox2D::OnEvent(SDL_Event& e)
 {
 	const Uint8* keystate = SDL_GetKeyboardState(NULL);
-	if (keystate[SDL_SCANCODE_0] && e.type == SDL_KEYDOWN)
-		perspective = perspective == true ? false : true;
-
-	if (perspective)
-		PerspCamera.OnEvent(e);
-	else
+	//if (keystate[SDL_SCANCODE_0] && e.type == SDL_KEYDOWN)
+	//	perspective = perspective == true ? false : true;
+	//
+	//if (perspective)
+	//	PerspCamera.OnEvent(e);
+	//else
 		OrthoCamera.OnEvent(e);
 }

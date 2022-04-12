@@ -21,22 +21,20 @@ namespace Cober {
 
 		primitive.cube = CreateRef<Cube>();
 		primitive.lightCube = CreateRef<LightCube>();
-
+		
 		basicShader = Shader::Create("Assets/Shaders/Primitive.glsl");
 		basicShader->Bind();
 		basicShader->SetInt("material.diffuse", 0);
 		basicShader->SetInt("material.specular", 1);
-
+		
 		lightCubeShader = Shader::Create("Assets/Shaders/Light.glsl");
 		lightCubeShader->Bind();
-
-		modelShader = Shader::Create("Assets/Shaders/LoadModel.glsl");
-		modelShader->Bind();
+		
+		//modelShader = Shader::Create("Assets/Shaders/LoadModel.glsl");
+		//modelShader->Bind();
 
 		primitive.quad = new Quad();
 		baseQuadAttributes = new Quad::Attributes[Quad::maxVertices];
-		textureShader = Shader::Create("Assets/Shaders/Texture.glsl");
-		textureShader->Bind();
 	}
 
 	void Renderer::OnWindowResize(uint32_t width, uint32_t height)
@@ -67,47 +65,39 @@ namespace Cober {
 	{
 		CB_PROFILE_FUNCTION();
 
-		// TEXTURE TEST
-		primitive.quad->GetShader()->Bind();
+		cameraPosition = camera.GetPosition();
+		cameraDirection = camera.GetDirection();
+
+		SetupBasicPrimitiveShader();
+		UploadShadersToFrustum(basicShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
+
+		UploadShadersToFrustum(lightCubeShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
+
+		//UploadShadersToFrustum(modelShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
+	
+		UploadShadersToFrustum(primitive.quad->GetShader(), camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
 		primitive.quad->indexCount = 0;
 		primitive.quad->attributes = baseQuadAttributes;
 		primitive.quad->textureSlotIndex = 1;
-
-		primitive.quad->GetShader()->SetMat4("u_Projection", camera.GetProjectionMatrix());
-		primitive.quad->GetShader()->SetMat4("u_View", camera.GetViewMatrix());
-		//primitive.quad->GetShader()->SetMat4("u_Model", camera.GetModelMatrix());
-		// END TEST
-
-		cameraPosition = camera.GetPosition();
-		cameraDirection = camera.GetDirection();
-		//SetupBasicPrimitiveShader();
-		//UploadShadersToFrustum(basicShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
-		//UploadShadersToFrustum(lightCubeShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
-		//UploadShadersToFrustum(modelShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
 	}
 
 	void Renderer::BeginScene(PerspectiveCamera& camera)
 	{
 		CB_PROFILE_FUNCTION();
-		// TEXTURE TEST
-		primitive.quad->GetShader()->Bind();
+		cameraPosition = camera.GetPosition();
+		cameraDirection = camera.GetDirection();
+
+		SetupBasicPrimitiveShader();
+		UploadShadersToFrustum(basicShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
+
+		UploadShadersToFrustum(lightCubeShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
+		// Models
+		//UploadShadersToFrustum(modelShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
+		// Textures
+		UploadShadersToFrustum(primitive.quad->GetShader(), camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
 		primitive.quad->indexCount = 0;
 		primitive.quad->attributes = baseQuadAttributes;
 		primitive.quad->textureSlotIndex = 1;
-
-		primitive.quad->GetShader()->SetMat4("u_Projection", camera.GetProjectionMatrix());
-		primitive.quad->GetShader()->SetMat4("u_View", camera.GetViewMatrix());
-		//primitive.quad->GetShader()->SetMat4("u_Model", camera.GetModelMatrix());
-		// END TEST
-
-		cameraPosition = camera.GetPosition();
-		cameraDirection = camera.GetDirection();
-		//SetupBasicPrimitiveShader();
-		//UploadShadersToFrustum(basicShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
-		//UploadShadersToFrustum(lightCubeShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
-		//UploadShadersToFrustum(modelShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
-		//UploadShadersToFrustum(primitive.quad->GetShader(), camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
-
 	}
 
 	void Renderer::Shutdown() 
@@ -132,9 +122,9 @@ namespace Cober {
 		// Bind textures
 		for (uint32_t i = 0; i < primitive.quad->textureSlotIndex; i++)
 			primitive.quad->textureSlots[i]->Bind(i);
+		primitive.quad->GetVAO()->Bind();
 		RenderCommand::DrawIndexed(primitive.quad->GetVAO(), primitive.quad->indexCount);
 		//stats->DrawCalls++;
-
 	}
 
 	void Renderer::FlushAndReset() {
@@ -169,7 +159,7 @@ namespace Cober {
 		model->Render();
 	}
 
-	// [-------------------- QUEAD --------------------]
+	// [-------------------- QUAD --------------------]
 	void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
 	{	//  NOT Rotation -  NOT Texture
 		DrawQuad({ position.x, position.y, 0.0f }, size, color);
@@ -177,8 +167,6 @@ namespace Cober {
 	void Renderer::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
 		primitive.quad->GetShader()->Bind();
-		if (primitive.quad->indexCount >= primitive.quad->maxIndices)
-			FlushAndReset();
 		primitive.quad->Draw(position, 0.0f, size, color);
 	}
 
@@ -190,8 +178,6 @@ namespace Cober {
 	void Renderer::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color)
 	{
 		primitive.quad->GetShader()->Bind();
-		if (primitive.quad->indexCount >= primitive.quad->maxIndices)
-			FlushAndReset();
 		primitive.quad->Draw(position, 0, size, texture, color);
 	}
 
@@ -204,8 +190,6 @@ namespace Cober {
 	void Renderer::DrawRotatedQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color)
 	{
 		primitive.quad->GetShader()->Bind();
-		if (primitive.quad->indexCount >= primitive.quad->maxIndices)
-			FlushAndReset();
 		primitive.quad->Draw(position, rotation, size, color);
 	}
 
@@ -217,8 +201,6 @@ namespace Cober {
 	void Renderer::DrawRotatedQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor)
 	{
 		primitive.quad->GetShader()->Bind();
-		if (primitive.quad->indexCount >= primitive.quad->maxIndices)
-			FlushAndReset();
 		primitive.quad->Draw(position, rotation, size, texture, color, tilingFactor); 
 	}
 

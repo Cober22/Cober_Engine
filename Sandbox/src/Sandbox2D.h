@@ -22,10 +22,10 @@ public:
 	void OnUpdate(Timestep ts) override;
 	void OnEvent(SDL_Event& e) override;
 private:
-	//PerspectiveCamera PerspCamera;
+	PerspectiveCamera PerspCamera;
 	OrthographicCamera OrthoCamera;
 
-	bool perspective = false;
+	bool perspective = true;
 	// Textures
 	Ref<Texture2D> catTexture;
 	Ref<Texture2D> baseAtlas;

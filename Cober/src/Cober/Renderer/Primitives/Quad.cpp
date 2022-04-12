@@ -62,10 +62,10 @@ namespace Cober {
 
 		textureSlots[0] = WhiteTexture;
 
-		vertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
-		vertexPositions[1] = {  0.5f, -0.5f, 0.0f, 1.0f };
-		vertexPositions[2] = {  0.5f,  0.5f, 0.0f, 1.0f };
-		vertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
+		vertexPositions[0] = { -1.0f, -1.0f, 0.0f, 1.0f };
+		vertexPositions[1] = {  1.0f, -1.0f, 0.0f, 1.0f };
+		vertexPositions[2] = {  1.0f,  1.0f, 0.0f, 1.0f };
+		vertexPositions[3] = { -1.0f,  1.0f, 0.0f, 1.0f };
 	}
 
 	void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color) {
@@ -78,6 +78,9 @@ namespace Cober {
 						{ 0.0f, 1.0f } 
 					};
 		const float tilingFactor = 1.0f;
+
+		if (indexCount >= maxIndices)
+			Renderer::FlushAndReset();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 							* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
@@ -92,29 +95,25 @@ namespace Cober {
 			attributes++;
 		}
 		indexCount += 6;
-		//std::cout << "Color: " << attributes->Color.x << " " << attributes->Color.y << " " << attributes->Color.z << std::endl;
-		//std::cout << "TexCoord: " << attributes->TexCoord.x << " " << attributes->TexCoord.y << std::endl;
-		//std::cout << "TexIndex: " << attributes->TexIndex << std::endl;
-		//std::cout << "TilingFactor: " << attributes->TilingFactor << std::endl;
 	}
 	
 	void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, 
 					const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor) {
 
-		//constexpr size_t quadVertexCount = 4;
-		//constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
 		// For loading Sprite Sheets...
 		// ............................
 		constexpr float x = 3, y = 3;	// Index of the sprite to load	// Provisional
 		constexpr float sheetWidth = 1024.0f, sheetHeight = 1024.0f;	// Provisional
-		constexpr float spriteWidth = 128.0f, spriteHeight = 128.0f;	// Provisional
-		//constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
+		constexpr float spriteWidth = 125.0f, spriteHeight = 125.0f;	// Provisional
 		constexpr glm::vec2 textureCoords[] = {
 			{(x * spriteWidth) / sheetWidth, (y * spriteHeight) / sheetHeight },
 			{(x + 1) * spriteWidth / sheetWidth, (y * spriteHeight) / sheetHeight},
 			{(x + 1) * spriteWidth / sheetWidth, ((y + 1) * spriteHeight) / sheetHeight},
 			{(x * spriteWidth) / sheetWidth, ((y + 1) * spriteHeight) / sheetHeight}
 		};
+
+		if (indexCount >= maxIndices)
+			Renderer::FlushAndReset();
 
 		float textureIndex = 0.0f;
 		for (uint32_t i = 1; i < textureSlotIndex; i++) {

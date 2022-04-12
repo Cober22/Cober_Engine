@@ -18,6 +18,8 @@ namespace Cober {
 
 		virtual const std::vector<Ref<VertexBuffer>>& GetVertexBuffers() const { return m_VertexBuffers; };
 		virtual const Ref<IndexBuffer>& GetIndexBuffer() const { return m_IndexBuffer; };
+		virtual const uint32_t GetRendererID() const { return m_RendererID; };
+
 	private:
 		uint32_t m_RendererID;
 		uint32_t index = 0;

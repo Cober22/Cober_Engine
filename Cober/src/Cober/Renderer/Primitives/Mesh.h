@@ -2,7 +2,7 @@
 
 #include "Cober/Renderer/Shader.h"
 #include "Cober/Renderer/Material.h"
-#include "Cober/Renderer/Texture.h"
+#include "Cober/Renderer/VertexArray.h"
 
 #include <assimp/Importer.hpp>  // C++ importer interface
 #include <assimp/scene.h>       // Output data structure
@@ -50,7 +50,7 @@ namespace Cober {
 
         //WorldTrans m_worldTransform;
         uint32_t m_VAO = 0;
-        uint32_t m_Buffers[NUM_BUFFERS] = { 0 };
+        uint32_t m_Buffers[NUM_BUFFERS];
 
         struct BasicMeshEntry {
             BasicMeshEntry()

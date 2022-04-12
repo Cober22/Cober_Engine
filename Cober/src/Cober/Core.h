@@ -106,8 +106,8 @@
 #define ZERO_MEM_VAR(var) memset(&var, 0, sizeof(var))
 #define ARRAY_SIZE_IN_ELEMENTS(a) (sizeof(a)/sizeof(a[0]))
 
-//#define ASSIMP_LOAD_FLAGS (aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs |  aiProcess_JoinIdenticalVertices)
-#define ASSIMP_LOAD_FLAGS (aiProcess_FlipUVs |	aiProcess_JoinIdenticalVertices | aiProcess_ValidateDataStructure |	aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords |	aiProcess_LimitBoneWeights | aiProcess_OptimizeMeshes |	aiProcess_GenSmoothNormals | aiProcess_SplitLargeMeshes | aiProcess_Triangulate | aiProcess_SortByPType)
+#define ASSIMP_LOAD_FLAGS (aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs |  aiProcess_JoinIdenticalVertices)
+//#define ASSIMP_LOAD_FLAGS (aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices | aiProcess_ValidateDataStructure |	aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords |	aiProcess_LimitBoneWeights | aiProcess_OptimizeMeshes |	aiProcess_GenSmoothNormals | aiProcess_SplitLargeMeshes | aiProcess_Triangulate | aiProcess_SortByPType)
 
 			//aiProcess_FlipUVs |
 			//aiProcess_JoinIdenticalVertices |		// join identical vertices/ optimize indexing

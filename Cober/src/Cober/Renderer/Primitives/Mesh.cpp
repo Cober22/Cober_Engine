@@ -33,6 +33,7 @@ namespace Cober {
         // Create the VAO
         glGenVertexArrays(1, &m_VAO);
         glBindVertexArray(m_VAO);
+        //glBindBuffer(GL_VERTEX_ARRAY, m_Buffers);
 
         // Create the buffers for the vertices attributes
         glGenBuffers(ARRAY_SIZE_IN_ELEMENTS(m_Buffers), m_Buffers);
@@ -212,9 +213,9 @@ namespace Cober {
             if (pMaterial->GetTexture(texType, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
                 std::string p(Path.data);
 
-                for (int i = 0; i < p.length(); i++)
-                    if (p[i] == '\\')
-                        p[i] = '/';
+                //for (int i = 0; i < p.length(); i++)
+                //    if (p[i] == '\\')
+                //        p[i] = '/';
 
                 if (p.substr(0, 2) == ".\\")
                     p = p.substr(2, p.size() - 2);
@@ -224,6 +225,11 @@ namespace Cober {
                 printf("Loaded texture '%s' at index %d\n" , FullPath.c_str(), index);
                 int lastIndex = m_Materials[index].textures.size() - 1;
                 m_Materials[index].textures[lastIndex] = (Texture2D::Create(FullPath.c_str()));
+                
+                if (!m_Materials[index].textures[lastIndex])
+                    printf("Error loading diffuse texture '%s'\n", FullPath.c_str());
+                else
+                    printf("Loaded diffuse texture '%s' at index %d\n", FullPath.c_str(), index);
             }
         }
     }
@@ -285,9 +291,10 @@ namespace Cober {
             unsigned int MaterialIndex = m_Meshes[i].MaterialIndex;
             assert(MaterialIndex < m_Materials.size());
 
-            for (int type = 0; type < m_Materials[MaterialIndex].textures.size(); type++)
-                if (m_Materials[MaterialIndex].textures[type] != NULL)
+            for (int type = 0; type < m_Materials[MaterialIndex].textures.size(); type++) {
+                if (m_Materials[MaterialIndex].textures[type] != nullptr)
                     m_Materials[MaterialIndex].textures[type]->Bind(type);
+            }
 
             glDrawElementsBaseVertex(GL_TRIANGLES,
                                      m_Meshes[i].NumIndices,

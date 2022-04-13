@@ -109,7 +109,6 @@ void main()
 	
 	result += CalculateDirLight(dirLight, normal, texColor);
 	
-	
 	for(int i = 0; i < 4; i++) {
 		if (pointLight[i].ambient != 0 || pointLight[i].diffuse != 0)
 			result += CalculatePointLight(pointLight[i], normal, v_FragPos, texColor);
@@ -120,7 +119,7 @@ void main()
 			result += CalculateSpotLight(spotLight[i], normal, v_FragPos, texColor);
 	}
 
-    fragmentColor = texColor;
+    fragmentColor = result;
 }
 
 vec4 CalculateDirLight(DirLight light, vec3 normal, vec4 texture) {

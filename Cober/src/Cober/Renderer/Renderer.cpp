@@ -317,9 +317,9 @@ namespace Cober {
 		basicShader->Bind();
 		BindDirectionalLight(basicShader, light->Direction, light->Color, 
 							 light->AmbientIntensity, light->DiffuseIntensity);
-		//primitive.quad->GetShader()->Bind();
-		//BindDirectionalLight(primitive.quad->GetShader(), light->Direction, light->Color,
-		//					 light->AmbientIntensity, light->DiffuseIntensity);
+		primitive.quad->GetShader()->Bind();
+		BindDirectionalLight(primitive.quad->GetShader(), light->Direction, light->Color,
+							 light->AmbientIntensity, light->DiffuseIntensity);
 	}
 	void Renderer::DrawPointLights(std::vector<Ref<PointLight>> pointLight, bool drawCube) {
 
@@ -333,11 +333,11 @@ namespace Cober {
 							light->Position, light->Color, 
 							light->AmbientIntensity, light->DiffuseIntensity,	
 							light->Attenuation.Linear, light->Attenuation.Exp);
-			//primitive.quad->GetShader()->Bind();
-			//BindPointLight(	primitive.quad->GetShader(), i,
-			//				light->Position, light->Color,
-			//				light->AmbientIntensity, light->DiffuseIntensity,
-			//				light->Attenuation.Linear, light->Attenuation.Exp);
+			primitive.quad->GetShader()->Bind();
+			BindPointLight(	primitive.quad->GetShader(), i,
+							light->Position, light->Color,
+							light->AmbientIntensity, light->DiffuseIntensity,
+							light->Attenuation.Linear, light->Attenuation.Exp);
 			i++;
 		}
 		basicShader->SetInt("NUM_POINT_LIGHTS", pointLight.size());
@@ -355,12 +355,12 @@ namespace Cober {
 							light->CutOff, light->OuterCutOff,
 							light->AmbientIntensity, light->DiffuseIntensity,
 							light->Attenuation.Linear, light->Attenuation.Exp);
-			//primitive.quad->GetShader()->Bind();
-			//BindSpotLight(	primitive.quad->GetShader(), i,
-			//				light->Direction, light->Position, light->Color,
-			//				light->CutOff, light->OuterCutOff,
-			//				light->AmbientIntensity, light->DiffuseIntensity,
-			//				light->Attenuation.Linear, light->Attenuation.Exp);
+			primitive.quad->GetShader()->Bind();
+			BindSpotLight(	primitive.quad->GetShader(), i,
+							light->Direction, light->Position, light->Color,
+							light->CutOff, light->OuterCutOff,
+							light->AmbientIntensity, light->DiffuseIntensity,
+							light->Attenuation.Linear, light->Attenuation.Exp);
 			i++;
 		}
 		basicShader->SetInt("NUM_SPOT_LIGHTS", spotLight.size());

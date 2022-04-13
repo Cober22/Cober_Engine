@@ -42,6 +42,10 @@ namespace Cober {
 		layer->OnAttach();
 	}
 
+	void Application::Close() {
+		_gameState = GameState::EXIT;
+	}
+
 	void Application::Run() {
 
 		while (_gameState != GameState::EXIT)

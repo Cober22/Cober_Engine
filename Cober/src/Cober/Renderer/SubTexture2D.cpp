@@ -12,10 +12,10 @@ namespace Cober {
 		m_TexCoords[3] = { min.x, max.y };
 	}
 
-	Ref<SubTexture2D> SubTexture2D::CreateFromCoords(const Ref<Texture2D>& texture, const glm::vec2& coord, const glm::vec2& spriteSize) {
+	Ref<SubTexture2D> SubTexture2D::CreateFromCoords(const Ref<Texture2D>& texture, const glm::vec2& coord, const glm::vec2& cellsize, const glm::vec2& spriteSize) {
 
-		glm::vec2 min = { (coord.x * spriteSize.x) / texture->GetWidth(), (coord.y * spriteSize.y) / texture->GetHeight() };
-		glm::vec2 max = { (coord.x + 1) * spriteSize.x / texture->GetWidth(), ((coord.y + 1) * spriteSize.y) / texture->GetHeight() };
+		glm::vec2 min = { (coord.x * cellsize.x) / texture->GetWidth(), (coord.y * cellsize.y) / texture->GetHeight() };
+		glm::vec2 max = { (coord.x + spriteSize.x) * cellsize.x / texture->GetWidth(), ((coord.y + spriteSize.y) * cellsize.y) / texture->GetHeight() };
 		return CreateRef<SubTexture2D>(texture, min, max);
 	}
 }

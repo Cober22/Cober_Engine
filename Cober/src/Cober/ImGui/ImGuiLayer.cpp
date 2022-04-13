@@ -14,6 +14,7 @@ namespace Cober {
 	ImGuiLayer::ImGuiLayer()
 		: Layer("ImGuiLayer")
 	{
+
 	}
 
 	ImGuiLayer::~ImGuiLayer()
@@ -80,6 +81,11 @@ namespace Cober {
 	}
 
 	void ImGuiLayer::OnEvent(SDL_Event& event) {
+
+
+		//ImGuiIO& io = ImGui::GetIO();
+		//event.Handled |= e.IsInCategory(EventCategoryMouse) & io.WantCaptureMouse;
+		//event.Handled |= e.IsInCategory(EventCategoryKeyboard) & io.WantCaptureKeyboard;
 
 		ImGui_ImplSDL2_ProcessEvent(&event);
 	}

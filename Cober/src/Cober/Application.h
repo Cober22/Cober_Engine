@@ -23,14 +23,14 @@ namespace Cober {
 		Application();
 		virtual ~Application();
 
-		void Run();
-
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
 
+		void Close();
+		void Run();
+
 		inline static Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() { return *_window; }
-
 		inline SDL_GLContext GetContext() { return _context; }
 		inline void SetContext(SDL_GLContext context) { _context = context; }
 	private:

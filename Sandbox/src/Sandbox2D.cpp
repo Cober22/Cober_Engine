@@ -45,7 +45,7 @@ void Sandbox2D::OnAttach()
 	spotLights.push_back(spotLight);
 	Ref<SpotLight> spotLight2 = CreateRef<SpotLight>(
 		glm::vec3(-0.035, -0.95, -0.71),	// Camera Direction 
-		glm::vec3(0.0f, 8.0f, -5.0f),	// Camera Position
+		glm::vec3(5.0f, 8.0f, 2.0f),	// Camera Position
 		glm::vec3(1.0f, 0.0f, 0.0f),// Color
 		15.0f,	// -----------------   CutOff	
 		20.0f,	// -----------------   OuterCutOff
@@ -63,7 +63,7 @@ void Sandbox2D::OnAttach()
 	/*catTexture = Texture2D::Create("Assets/Textures/BlendTest.png");*/
 	catTexture = Texture2D::Create("Assets/Textures/BlendTest.png");
 	baseAtlas = Texture2D::Create("Assets/Textures/BaseAtlas.png");
-	bridgeTexture = SubTexture2D::CreateFromCoords(baseAtlas, { 3, 4 }, {128, 128});
+	bridgeTexture = SubTexture2D::CreateFromCoords(baseAtlas, { 3, 4 }, { 128, 128 }, {1, 2});
 	//checkerboardTexture = Texture2D::Create("Assets/Textures/Checkerboard.png");
 
 	// Load models
@@ -128,8 +128,8 @@ void Sandbox2D::OnUpdate( Timestep ts)
 
 		Renderer::DrawQuad({ 10.0, 10.0, -7.0f }, { 1.0f, 1.0f }, glm::vec4(1.0f, 0.0f, 1.0f, 1.0f));
 		Renderer::DrawRotatedQuad({ 10.0, 5.0, -7.0f}, 45.0f, { 1.0f, 1.0f });
-		Renderer::DrawQuad({ 4.0, 5.0, -2.0f }, { 3.5f, 3.5f }, catTexture, glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-		Renderer::DrawRotatedQuad({ -4.0, 0.0, -15.0f }, 0.0f, { 2.0f, 2.0f }, bridgeTexture);
+		Renderer::DrawQuad({ 4.0, 5.0, -2.0f }, { 3.5f, 3.5f }, catTexture);
+		Renderer::DrawRotatedQuad({ -4.0, 0.0, -15.0f }, 0.0f, { 1.0f, 2.0f }, bridgeTexture);
 		Renderer::DrawRotatedQuad({ -10.0, 0.0, -2.0f }, 75.0f, { 2.0f, 2.0f }, catTexture);
 
 		Renderer::EndScene();
@@ -139,7 +139,8 @@ void Sandbox2D::OnUpdate( Timestep ts)
 void Sandbox2D::OnImGuiRender()
 {
 	CB_PROFILE_FUNCTION();
-	/*
+	
+	// Note: Switch this to true to enable dockspace
 	static bool dockingEnabled = false;
 	if (dockingEnabled)
 	{
@@ -194,30 +195,48 @@ void Sandbox2D::OnImGuiRender()
 				// Disabling fullscreen would allow the window to be moved to the front of other windows, 
 				// which we can't undo at the moment without finer window depth/z control.
 				//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
-				//if (ImGui::MenuItem("Exit")) Application::Get().Close();
+
+				if (ImGui::MenuItem("Exit")) Application::Get().Close();
 				ImGui::EndMenu();
 			}
-			ImGui::End();
+
+			ImGui::EndMenuBar();
 		}
-		else
-		{
-			ImGui::Begin("Settings");
 
-			//auto stats = Renderer::GetStats();
-			//ImGui::Text("Renderer2D Stats:");
-			//ImGui::Text("Draw Calls: %d", stats.DrawCalls);
-			//ImGui::Text("Quads: %d", stats.QuadCount);
-			//ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
-			//ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+		ImGui::Begin("Settings");
 
-			//ImGui::ColorEdit4("Square Color", value_ptr(m_SquareColor));
+		//auto stats = Hazel::Renderer2D::GetStats();
+		//ImGui::Text("Renderer2D Stats:");
+		//ImGui::Text("Draw Calls: %d", stats.DrawCalls);
+		//ImGui::Text("Quads: %d", stats.QuadCount);
+		//ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
+		//ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 
-			uint32_t textureID = catTexture->GetRendererID();
-			ImGui::Image((void*)textureID, ImVec2{ 256.0f, 256.0f });
-			ImGui::End();
-		}
+		//ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
+
+		uint32_t textureID = catTexture->GetRendererID();
+		ImGui::Image((void*)textureID, ImVec2{ 256.0f, 256.0f });
+		ImGui::End();
+
+		ImGui::End();
 	}
-	*/
+	else
+	{
+		ImGui::Begin("Settings");
+
+		//auto stats = Renderer::GetStats();
+		//ImGui::Text("Renderer2D Stats:");
+		//ImGui::Text("Draw Calls: %d", stats.DrawCalls);
+		//ImGui::Text("Quads: %d", stats.QuadCount);
+		//ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
+		//ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+
+		//ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
+
+		uint32_t textureID = catTexture->GetRendererID();
+		ImGui::Image((void*)textureID, ImVec2{ 256.0f, 256.0f });
+		ImGui::End();
+	}
 }
 
 void Sandbox2D::OnEvent(SDL_Event& e)

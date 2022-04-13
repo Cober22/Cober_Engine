@@ -152,7 +152,7 @@ namespace Cober {
 			attributes->TexCoord = textureCoords[i];
 			attributes->TexIndex = textureIndex;
 			attributes->TilingFactor = tilingFactor;
-			attributes->Normal = glm::vec3(0.0f, 0.0f, 1.0f);
+			attributes->Normal = glm::vec3(0.0f, 0.0f, -1.0f);
 			attributes++;
 		}
 		indexCount += 6;

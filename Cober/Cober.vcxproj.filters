@@ -1437,6 +1437,8 @@
     <ClInclude Include="src\Cober\Renderer\Material.h" />
     <ClInclude Include="src\Cober\Renderer\Lighting.h" />
     <ClInclude Include="src\Cober\Renderer\SubTexture2D.h" />
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLFramebuffer.h" />
+    <ClInclude Include="src\Cober\Renderer\Framebuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\stb_image\stb_image.cpp">
@@ -1524,5 +1526,7 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\Renderer\SubTexture2D.cpp" />
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLFramebuffer.cpp" />
+    <ClCompile Include="src\Cober\Renderer\Framebuffer.cpp" />
   </ItemGroup>
 </Project>

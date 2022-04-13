@@ -23,6 +23,7 @@
 #include "Cober/Renderer/Texture.h"
 #include "Cober/Renderer/SubTexture2D.h"
 #include "Cober/Renderer/Lighting.h"
+#include "Cober/Renderer/Framebuffer.h"
 #include "Cober/Renderer/Primitives/Mesh.h"
 
 

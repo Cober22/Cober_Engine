@@ -16,7 +16,8 @@ namespace Cober {
 		WindowProps windowProps = WindowProps("Cober Engine", W_WIDTH, W_HEIGHT);
 		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "4");
 		_window = Window::Create(windowProps);
-		SDL_SetRelativeMouseMode(SDL_TRUE);
+		// Disable on Dockspace
+		//SDL_SetRelativeMouseMode(SDL_TRUE);
 
 		Renderer::Init();
 
@@ -103,6 +104,12 @@ namespace Cober {
 							SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
 						else 
 							SDL_SetWindowFullscreen(window, 0);
+					}
+					if (event.key.keysym.scancode == SDL_SCANCODE_M) {
+						if (SDL_GetRelativeMouseMode() == SDL_TRUE)
+							SDL_SetRelativeMouseMode(SDL_FALSE);
+						else
+							SDL_SetRelativeMouseMode(SDL_TRUE);
 					}
 					break;
 				case SDL_WINDOWEVENT:

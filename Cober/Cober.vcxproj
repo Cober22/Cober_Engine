@@ -590,6 +590,7 @@
     <ClInclude Include="src\Cober\Renderer\Camera\CameraController.h" />
     <ClInclude Include="src\Cober\Renderer\Camera\OrthographicCamera.h" />
     <ClInclude Include="src\Cober\Renderer\Camera\PerspectiveCamera.h" />
+    <ClInclude Include="src\Cober\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Cober\Renderer\Lighting.h" />
     <ClInclude Include="src\Cober\Renderer\Material.h" />
@@ -605,6 +606,7 @@
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLFramebuffer.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLTexture2D.h" />
@@ -625,6 +627,7 @@
     <ClCompile Include="src\Cober\Renderer\Camera\CameraController.cpp" />
     <ClCompile Include="src\Cober\Renderer\Camera\OrthographicCamera.cpp" />
     <ClCompile Include="src\Cober\Renderer\Camera\PerspectiveCamera.cpp" />
+    <ClCompile Include="src\Cober\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\Cober\Renderer\Primitives\Cube.cpp" />
     <ClCompile Include="src\Cober\Renderer\Primitives\LightCube.cpp" />
     <ClCompile Include="src\Cober\Renderer\Primitives\Mesh.cpp" />
@@ -636,6 +639,7 @@
     <ClCompile Include="src\Cober\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLFramebuffer.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLTexture2D.cpp" />

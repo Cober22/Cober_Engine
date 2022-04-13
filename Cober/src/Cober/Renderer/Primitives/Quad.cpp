@@ -19,12 +19,12 @@ namespace Cober {
 		// [---------- VERTEX BUFFER ----------]
 		VBO = VertexBuffer::Create(maxVertices * sizeof(Attributes));
 		VBO->SetLayout({
-			{ ShaderDataType::Float3, "a_Position" },
-			{ ShaderDataType::Float4, "a_Color" },
-			{ ShaderDataType::Float2, "a_TexCoord" },
-			//{ ShaderDataType::Float3, "a_Normal" },
-			{ ShaderDataType::Float,  "a_TexIndex" },
-			{ ShaderDataType::Float,  "a_TilingFactor" }
+			{ ShaderDataType::Float3, "a_Position"	},
+			{ ShaderDataType::Float4, "a_Color"		},
+			{ ShaderDataType::Float2, "a_TexCoord"	},
+			{ ShaderDataType::Int,	  "a_TexIndex"	},
+			{ ShaderDataType::Float,  "a_TilingFactor" },
+			{ ShaderDataType::Float3,  "a_Normal" },
 			});
 		VAO->AddVertexBuffer(VBO);
 
@@ -67,24 +67,84 @@ namespace Cober {
 		vertexPositions[2] = {  1.0f,  1.0f, 0.0f, 1.0f };
 		vertexPositions[3] = { -1.0f,  1.0f, 0.0f, 1.0f };
 	}
-
-	void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color) {
+	void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color, float tilingFactor) {
 		
-		const float textureIndex = 0.0f; // White Texture
-		constexpr glm::vec2 textureCoords[] = { 
-						{ 0.0f, 0.0f }, 
-						{ 1.0f, 0.0f }, 
-						{ 1.0f, 1.0f }, 
-						{ 0.0f, 1.0f } 
-					};
-		const float tilingFactor = 1.0f;
+		const int textureIndex = 0; // White Texture
+		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
 
 		if (indexCount >= maxIndices)
 			Renderer::FlushAndReset();
 
+		SetAttributes(position, rotation, size, color, textureIndex, textureCoords, tilingFactor);
+	}
+	
+	void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, 
+					const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor) {
+
+		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+
+		if (indexCount >= maxIndices)
+			Renderer::FlushAndReset();
+
+		int textureIndex = 0;
+		for (uint32_t i = 1; i < textureSlotIndex; i++) {
+
+			if (textureSlots[i].get() == texture.get()) {
+				textureIndex = (int)i;
+				break;
+			}
+		}
+
+		if (textureIndex == 0) {
+
+			if (indexCount >= maxIndices)
+				Renderer::FlushAndReset();
+
+			textureIndex = textureSlotIndex;
+			textureSlots[textureSlotIndex] = texture;
+			textureSlotIndex++;
+		}
+
+		SetAttributes(position, rotation, size, color, textureIndex, textureCoords, tilingFactor);
+	}
+
+	void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
+		
+		// For loading Sprite Sheets...
+		// ............................
+		const glm::vec2* textureCoords = subtexture->GetTexCoords();
+		const Ref<Texture2D> texture = subtexture->GetTexture();
+
+		if (indexCount >= maxIndices)
+			Renderer::FlushAndReset();
+
+		int textureIndex = 0;
+		for (uint32_t i = 1; i < textureSlotIndex; i++) {
+
+			if (textureSlots[i].get() == texture.get()) {
+				textureIndex = (int)i;
+				break;
+			}
+		}
+
+		if (textureIndex == 0) {
+
+			if (indexCount >= maxIndices)
+				Renderer::FlushAndReset();
+
+			textureIndex = textureSlotIndex;
+			textureSlots[textureSlotIndex] = texture;
+			textureSlotIndex++;
+		}
+
+		SetAttributes(position, rotation, size, color, textureIndex, textureCoords, tilingFactor);
+	}
+
+	void Quad::SetAttributes(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color, int textureIndex, const glm::vec2* textureCoords, float tilingFactor) {
+
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
-							* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
-							* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
 		for (size_t i = 0; i < vertexCount; i++) {
 			attributes->Position = transform * vertexPositions[i];
@@ -92,59 +152,7 @@ namespace Cober {
 			attributes->TexCoord = textureCoords[i];
 			attributes->TexIndex = textureIndex;
 			attributes->TilingFactor = tilingFactor;
-			attributes++;
-		}
-		indexCount += 6;
-	}
-	
-	void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, 
-					const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor) {
-
-		// For loading Sprite Sheets...
-		// ............................
-		constexpr float x = 3, y = 3;	// Index of the sprite to load	// Provisional
-		constexpr float sheetWidth = 1024.0f, sheetHeight = 1024.0f;	// Provisional
-		constexpr float spriteWidth = 125.0f, spriteHeight = 125.0f;	// Provisional
-		constexpr glm::vec2 textureCoords[] = {
-			{(x * spriteWidth) / sheetWidth, (y * spriteHeight) / sheetHeight },
-			{(x + 1) * spriteWidth / sheetWidth, (y * spriteHeight) / sheetHeight},
-			{(x + 1) * spriteWidth / sheetWidth, ((y + 1) * spriteHeight) / sheetHeight},
-			{(x * spriteWidth) / sheetWidth, ((y + 1) * spriteHeight) / sheetHeight}
-		};
-
-		if (indexCount >= maxIndices)
-			Renderer::FlushAndReset();
-
-		float textureIndex = 0.0f;
-		for (uint32_t i = 1; i < textureSlotIndex; i++) {
-
-			if (textureSlots[i].get() == texture.get()) {
-				textureIndex = (float)i;
-				break;
-			}
-		}
-
-		if (textureIndex == 0.0f) {
-
-			if (indexCount >= maxIndices)
-				Renderer::FlushAndReset();
-
-			textureIndex = (float)textureSlotIndex;
-			textureSlots[textureSlotIndex] = texture;
-			textureSlotIndex++;
-		}
-
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
-							* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
-							* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
-
-		for (size_t i = 0; i < vertexCount; i++)
-		{
-			attributes->Position = transform * vertexPositions[i];
-			attributes->Color = color;
-			attributes->TexCoord = textureCoords[i];
-			attributes->TexIndex = textureIndex;
-			attributes->TilingFactor = tilingFactor;
+			attributes->Normal = glm::vec3(0.0f, 0.0f, 1.0f);
 			attributes++;
 		}
 		indexCount += 6;

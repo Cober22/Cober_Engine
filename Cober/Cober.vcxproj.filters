@@ -1436,6 +1436,7 @@
     </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Material.h" />
     <ClInclude Include="src\Cober\Renderer\Lighting.h" />
+    <ClInclude Include="src\Cober\Renderer\SubTexture2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\stb_image\stb_image.cpp">
@@ -1522,5 +1523,6 @@
     <ClCompile Include="src\pch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\SubTexture2D.cpp" />
   </ItemGroup>
 </Project>

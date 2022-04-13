@@ -3,9 +3,11 @@
 #include <string>
 #include "Cober/Core.h"
 
+#include <glm/glm.hpp>
+
 namespace Cober {
 
-	class Texture 
+	class Texture
 	{
 	public:
 		virtual ~Texture() = default;

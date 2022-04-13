@@ -170,17 +170,26 @@ namespace Cober {
 		primitive.quad->Draw(position, 0.0f, size, color);
 	}
 
-	void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color)
+	void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor)
 	{	//  NOT Rotation - YES Texture
-		DrawQuad({ position.x, position.y, 0.0f }, size, texture, color);
+		DrawQuad({ position.x, position.y, 0.0f }, size, texture, color, tilingFactor);
 	}
 
-	void Renderer::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color)
+	void Renderer::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor)
 	{
 		primitive.quad->GetShader()->Bind();
-		primitive.quad->Draw(position, 0, size, texture, color);
+		primitive.quad->Draw(position, 0, size, texture, color, tilingFactor);
 	}
 
+	void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
+		DrawQuad({ position.x, position.y, 0.0f }, size, subtexture, color, tilingFactor);
+	}
+
+	void Renderer::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
+		
+		primitive.quad->GetShader()->Bind();
+		primitive.quad->Draw(position, 0, size, subtexture, color, tilingFactor);
+	}
 
 	void Renderer::DrawRotatedQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const glm::vec4& color)
 	{	// NOT Rotation - YES Texture
@@ -198,11 +207,23 @@ namespace Cober {
 		DrawRotatedQuad({ position.x, position.y, 0.0f }, rotation, size, texture, color, tilingFactor);
 	}
 
-	void Renderer::DrawRotatedQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor)
-	{
+	void Renderer::DrawRotatedQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor) {
+
 		primitive.quad->GetShader()->Bind();
 		primitive.quad->Draw(position, rotation, size, texture, color, tilingFactor); 
 	}
+
+	void Renderer::DrawRotatedQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
+		DrawRotatedQuad({ position.x, position.y, 0.0f }, rotation, size, subtexture, color, tilingFactor);
+	}
+
+	void Renderer::DrawRotatedQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
+	
+		primitive.quad->GetShader()->Bind();
+		primitive.quad->Draw(position, rotation, size, subtexture, color, tilingFactor);
+	}
+
+
 
 	// [-------------------- CUBE --------------------]
 	void Renderer::DrawCube(const glm::vec2& position, const glm::vec3& size, const glm::vec3& color)
@@ -244,48 +265,48 @@ namespace Cober {
 
 
 	// [-------------------- LIGHTING --------------------]
-	void BindDirectionalLight(const glm::vec3& direction, const glm::vec3& color, 
+	void BindDirectionalLight(Ref<Shader>& shader, const glm::vec3& direction, const glm::vec3& color,
 							  float ambient, float diffuse) {
 	
-		basicShader->SetVec3("dirLight.direction",	direction);
-		basicShader->SetVec3("dirLight.color",		color);
-		basicShader->SetFloat("dirLight.ambient",	ambient);
-		basicShader->SetFloat("dirLight.diffuse",	diffuse);
-		basicShader->SetFloat("dirLight.specular",	1.0f);
+		shader->SetVec3("dirLight.direction",	direction);
+		shader->SetVec3("dirLight.color",		color);
+		shader->SetFloat("dirLight.ambient",	ambient);
+		shader->SetFloat("dirLight.diffuse",	diffuse);
+		shader->SetFloat("dirLight.specular",	1.0f);
 	}
 
-	void BindPointLight(int i, const glm::vec3& position, const glm::vec3& color, 
+	void BindPointLight(Ref<Shader>& shader, int i, const glm::vec3& position, const glm::vec3& color,
 						float ambient, float diffuse, 
 						float linear, float exp) {
 
 		std::string index = std::to_string(i);
-		basicShader->SetVec3("pointLight[" + index + "].position", position);
-		basicShader->SetVec3("pointLight[" + index + "].color", color);
-		basicShader->SetFloat("pointLight[" + index + "].ambient", ambient);
-		basicShader->SetFloat("pointLight[" + index + "].diffuse", diffuse);
-		basicShader->SetFloat("pointLight[" + index + "].specular", 1.0f);
-		basicShader->SetFloat("pointLight[" + index + "].constant", 1.0f);
-		basicShader->SetFloat("pointLight[" + index + "].linear", linear);
-		basicShader->SetFloat("pointLight[" + index + "].quadratic", exp);
+		shader->SetVec3("pointLight[" + index + "].position",	position);
+		shader->SetVec3("pointLight[" + index + "].color",		color);
+		shader->SetFloat("pointLight[" + index + "].ambient",	ambient);
+		shader->SetFloat("pointLight[" + index + "].diffuse",	diffuse);
+		shader->SetFloat("pointLight[" + index + "].specular",	1.0f);
+		shader->SetFloat("pointLight[" + index + "].constant",	1.0f);
+		shader->SetFloat("pointLight[" + index + "].linear",	linear);
+		shader->SetFloat("pointLight[" + index + "].quadratic", exp);
 	}
 
-	void BindSpotLight(	int i, const glm::vec3& direction, const glm::vec3& position, const glm::vec3& color,
+	void BindSpotLight(	Ref<Shader>& shader, int i, const glm::vec3& direction, const glm::vec3& position, const glm::vec3& color,
 						float cutOff, float outerCutOff, 
 						float ambient, float diffuse, 
 						float linear, float exp) {
 		
 		std::string index = std::to_string(i);
-		basicShader->SetVec3("spotLight[" + index + "].position",	position);
-		basicShader->SetVec3("spotLight[" + index + "].color",		color);
-		basicShader->SetVec3("spotLight[" + index + "].direction",  direction);
-		basicShader->SetFloat("spotLight[" + index + "].ambient",	ambient);
-		basicShader->SetFloat("spotLight[" + index + "].diffuse",	diffuse);
-		basicShader->SetFloat("spotLight[" + index + "].specular",	1.0f);
-		basicShader->SetFloat("spotLight[" + index + "].cutOff",	glm::cos(glm::radians(cutOff)));
-		basicShader->SetFloat("spotLight[" + index + "].outerCutOff", glm::cos(glm::radians(outerCutOff)));
-		basicShader->SetFloat("spotLight[" + index + "].constant",	1.0f);
-		basicShader->SetFloat("spotLight[" + index + "].linear",	linear);
-		basicShader->SetFloat("spotLight[" + index + "].quadratic",	exp);
+		shader->SetVec3("spotLight[" + index + "].position",	position);
+		shader->SetVec3("spotLight[" + index + "].color",		color);
+		shader->SetVec3("spotLight[" + index + "].direction",	direction);
+		shader->SetFloat("spotLight[" + index + "].ambient",	ambient);
+		shader->SetFloat("spotLight[" + index + "].diffuse",	diffuse);
+		shader->SetFloat("spotLight[" + index + "].specular",	1.0f);
+		shader->SetFloat("spotLight[" + index + "].cutOff",		glm::cos(glm::radians(cutOff)));
+		shader->SetFloat("spotLight[" + index + "].outerCutOff", glm::cos(glm::radians(outerCutOff)));
+		shader->SetFloat("spotLight[" + index + "].constant",	1.0f);
+		shader->SetFloat("spotLight[" + index + "].linear",		linear);
+		shader->SetFloat("spotLight[" + index + "].quadratic",	exp);
 	}
 
 	void Renderer::DrawDirectionalLight(Ref<DirectionalLight> light, bool drawCube) {
@@ -294,8 +315,11 @@ namespace Cober {
 			Renderer::DrawLightCube({0.0f, 200.0f, 0.0f}, glm::vec3(20.0f), light->Color);
 
 		basicShader->Bind();
-		BindDirectionalLight(light->Direction, light->Color, 
+		BindDirectionalLight(basicShader, light->Direction, light->Color, 
 							 light->AmbientIntensity, light->DiffuseIntensity);
+		//primitive.quad->GetShader()->Bind();
+		//BindDirectionalLight(primitive.quad->GetShader(), light->Direction, light->Color,
+		//					 light->AmbientIntensity, light->DiffuseIntensity);
 	}
 	void Renderer::DrawPointLights(std::vector<Ref<PointLight>> pointLight, bool drawCube) {
 
@@ -305,10 +329,15 @@ namespace Cober {
 				Renderer::DrawLightCube(light->Position, glm::vec3(0.5f), light->Color);
 
 			basicShader->Bind();
-			BindPointLight(	i,
+			BindPointLight(	basicShader, i,
 							light->Position, light->Color, 
 							light->AmbientIntensity, light->DiffuseIntensity,	
 							light->Attenuation.Linear, light->Attenuation.Exp);
+			//primitive.quad->GetShader()->Bind();
+			//BindPointLight(	primitive.quad->GetShader(), i,
+			//				light->Position, light->Color,
+			//				light->AmbientIntensity, light->DiffuseIntensity,
+			//				light->Attenuation.Linear, light->Attenuation.Exp);
 			i++;
 		}
 		basicShader->SetInt("NUM_POINT_LIGHTS", pointLight.size());
@@ -321,11 +350,17 @@ namespace Cober {
 				Renderer::DrawLightCube(light->Position, glm::vec3(0.5f), light->Color);
 			
 			basicShader->Bind();
-			BindSpotLight(i,
-				          light->Direction, light->Position, light->Color,
-				          light->CutOff, light->OuterCutOff,
-				          light->AmbientIntensity, light->DiffuseIntensity,
-				          light->Attenuation.Linear, light->Attenuation.Exp);
+			BindSpotLight(	basicShader, i,
+							light->Direction, light->Position, light->Color,
+							light->CutOff, light->OuterCutOff,
+							light->AmbientIntensity, light->DiffuseIntensity,
+							light->Attenuation.Linear, light->Attenuation.Exp);
+			//primitive.quad->GetShader()->Bind();
+			//BindSpotLight(	primitive.quad->GetShader(), i,
+			//				light->Direction, light->Position, light->Color,
+			//				light->CutOff, light->OuterCutOff,
+			//				light->AmbientIntensity, light->DiffuseIntensity,
+			//				light->Attenuation.Linear, light->Attenuation.Exp);
 			i++;
 		}
 		basicShader->SetInt("NUM_SPOT_LIGHTS", spotLight.size());

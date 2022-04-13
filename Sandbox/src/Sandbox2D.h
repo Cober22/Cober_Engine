@@ -28,10 +28,11 @@ private:
 	bool perspective = true;
 	// Textures
 	Ref<Texture2D> catTexture;
-	Ref<Texture2D> baseAtlas;
 	Ref<Texture2D> checkerboardTexture;
 	Ref<Texture2D> woodContainer;
 	Ref<Texture2D> steelBorderContainer;
+	Ref<Texture2D> baseAtlas;
+	Ref<SubTexture2D> bridgeTexture;
 	// Models
 	Ref<Mesh> gridModel;
 	Ref<Mesh> arenaModel;

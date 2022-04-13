@@ -79,8 +79,6 @@ in vec2 v_TextCoord;
 uniform int NUM_POINT_LIGHTS;
 uniform int NUM_SPOT_LIGHTS;
 
-//uniform sampler2D gSampler;
-
 uniform vec3 u_ViewPos;
 uniform Material material;
 uniform DirLight dirLight;
@@ -96,7 +94,6 @@ void main()
 	vec3 normal = normalize(v_Normal);
 	vec3 viewDir = normalize(u_ViewPos - v_FragPos);
 	vec4 result;
-	vec4 lightValue;
 
 	result += CalculateDirLight(dirLight, normal, viewDir);
 	
@@ -110,7 +107,7 @@ void main()
 			result += CalculateSpotLight(spotLight[i], normal, v_FragPos, viewDir);
 	}
 
-    fragmentColor = result;// * vec4(texture(gSampler, v_TextCoord));
+    fragmentColor = result;
 }
 
 vec4 CalculateDirLight(DirLight light, vec3 normal, vec3 viewDir) {

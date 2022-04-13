@@ -1,6 +1,7 @@
 #pragma once
 #include "Cober/Renderer/VertexArray.h"
 #include "Cober/Renderer/Texture.h"
+#include "Cober/Renderer/SubTexture2D.h"
 #include "Cober/Renderer/Shader.h"
 
 namespace Cober {
@@ -8,8 +9,9 @@ namespace Cober {
 	class Quad {
 	public:
 		Quad();
-		void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color);
-		void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor = 1.0f);
+		void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
+		void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
+		void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
 		
 		void Init();
 		// Functions
@@ -31,14 +33,16 @@ namespace Cober {
 			glm::vec3 Position;
 			glm::vec4 Color;
 			glm::vec2 TexCoord;
-			float TexIndex;
+			int TexIndex;
 			float TilingFactor;
+			glm::vec3 Normal;
 		};
 		Attributes* attributes = nullptr;
 		//Ref<Stats> stats;
 	private:
-		// Primitive Attributes
-		
+		void SetAttributes(const glm::vec3& position, float rotation, const glm::vec2& size, 
+						   const glm::vec4& color, int textureIndex, const glm::vec2* textureCoords, float tilingFactor);
+
 		// Buffer Objects
 		Ref<VertexBuffer> VBO;
 		Ref<IndexBuffer> IBO;

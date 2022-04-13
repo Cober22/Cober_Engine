@@ -26,7 +26,7 @@ namespace Cober {
 		VBO->SetLayout({
 			{ ShaderDataType::Float3, "a_Position" },
 			{ ShaderDataType::Float3, "a_Normal" },
-			{ ShaderDataType::Float2, "a_TextCoord" }
+			{ ShaderDataType::Float2, "a_TexCoord" }
 			});
 		VAO->AddVertexBuffer(VBO);
 

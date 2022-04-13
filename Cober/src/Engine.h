@@ -21,6 +21,7 @@
 #include "Cober/Renderer/Shader.h"
 #include "Cober/Renderer/VertexArray.h"
 #include "Cober/Renderer/Texture.h"
+#include "Cober/Renderer/SubTexture2D.h"
 #include "Cober/Renderer/Lighting.h"
 #include "Cober/Renderer/Primitives/Mesh.h"
 

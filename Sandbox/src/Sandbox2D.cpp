@@ -63,6 +63,7 @@ void Sandbox2D::OnAttach()
 	/*catTexture = Texture2D::Create("Assets/Textures/BlendTest.png");*/
 	catTexture = Texture2D::Create("Assets/Textures/BlendTest.png");
 	baseAtlas = Texture2D::Create("Assets/Textures/BaseAtlas.png");
+	bridgeTexture = SubTexture2D::CreateFromCoords(baseAtlas, { 3, 4 }, {128, 128});
 	//checkerboardTexture = Texture2D::Create("Assets/Textures/Checkerboard.png");
 
 	// Load models
@@ -110,28 +111,26 @@ void Sandbox2D::OnUpdate( Timestep ts)
 			Renderer::BeginScene(OrthoCamera);
 
 		//CUBES!
-		//if (perspective) {
-			for (unsigned int i = 0; i < std::size(cubePositions); i++)
-				Renderer::DrawCube(cubePositions[i], glm::vec3(1.0f), woodContainer, steelBorderContainer, { 1.0f, 1.0f, 1.0f });// cubeColors[color]);
-			
-			//LIGHTS!
-			Renderer::DrawDirectionalLight(dirLight, true);
-			Renderer::DrawPointLights(pointLights, true);
-			//
-			spotLights[0]->SetDirection(PerspCamera.GetDirection());
-			spotLights[0]->SetPosition(PerspCamera.GetPosition());
-			Renderer::DrawSpotLights(spotLights, true);
-			
-			//MODELS	!!!!!!!!!!!!!	ERROR, SOLUCIONAR
-			Renderer::DrawModel(gridModel, glm::vec3(0.0f, -3.0f, 0.0f), glm::vec3(0.5f));
-			Renderer::DrawModel(arenaModel);
-		//}
-		//else {
-			Renderer::DrawQuad({ 2.0, 5.0, -2.0f }, { 5.0f, 5.0f }, catTexture);
-			Renderer::DrawQuad({ 10.0, 10.0, -7.0f }, { 1.0f, 1.0f }, glm::vec4(1.0f, 0.0f, 1.0f, 1.0f));
-			Renderer::DrawRotatedQuad({ 0.0, 0.0, -3.0f }, 40.0f, { 1.0f, 1.0f }, baseAtlas, glm::vec4(1.0f, 0.0f, 1.0f, 1.0f));
-			Renderer::DrawRotatedQuad({ 10.0, 5.0, -7.0f}, 45.0f, { 1.0f, 1.0f });
-		//}
+		for (unsigned int i = 0; i < std::size(cubePositions); i++)
+			Renderer::DrawCube(cubePositions[i], glm::vec3(1.0f), woodContainer, steelBorderContainer, { 1.0f, 1.0f, 1.0f });// cubeColors[color]);
+		
+		//LIGHTS!
+		Renderer::DrawDirectionalLight(dirLight, true);
+		Renderer::DrawPointLights(pointLights, true);
+		//
+		spotLights[0]->SetDirection(PerspCamera.GetDirection());
+		spotLights[0]->SetPosition(PerspCamera.GetPosition());
+		Renderer::DrawSpotLights(spotLights, true);
+		
+		//MODELS
+		Renderer::DrawModel(gridModel, glm::vec3(0.0f, -3.0f, 0.0f), glm::vec3(0.5f));
+		//Renderer::DrawModel(arenaModel);
+
+		Renderer::DrawQuad({ 10.0, 10.0, -7.0f }, { 1.0f, 1.0f }, glm::vec4(1.0f, 0.0f, 1.0f, 1.0f));
+		Renderer::DrawRotatedQuad({ 10.0, 5.0, -7.0f}, 45.0f, { 1.0f, 1.0f });
+		Renderer::DrawQuad({ 4.0, 5.0, -2.0f }, { 3.5f, 3.5f }, catTexture, glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+		Renderer::DrawRotatedQuad({ -4.0, 0.0, -15.0f }, 0.0f, { 2.0f, 2.0f }, bridgeTexture);
+		Renderer::DrawRotatedQuad({ -10.0, 0.0, -2.0f }, 75.0f, { 2.0f, 2.0f }, catTexture);
 
 		Renderer::EndScene();
 	}

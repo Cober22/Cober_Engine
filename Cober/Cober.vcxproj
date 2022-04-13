@@ -597,6 +597,7 @@
     <ClInclude Include="src\Cober\Renderer\Primitives\Primitives.h" />
     <ClInclude Include="src\Cober\Renderer\Renderer.h" />
     <ClInclude Include="src\Cober\Renderer\Shader.h" />
+    <ClInclude Include="src\Cober\Renderer\SubTexture2D.h" />
     <ClInclude Include="src\Cober\Renderer\Texture.h" />
     <ClInclude Include="src\Cober\Renderer\VertexArray.h" />
     <ClInclude Include="src\Cober\Timestep.h" />
@@ -630,6 +631,7 @@
     <ClCompile Include="src\Cober\Renderer\Primitives\Quad.cpp" />
     <ClCompile Include="src\Cober\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Cober\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Cober\Renderer\SubTexture2D.cpp" />
     <ClCompile Include="src\Cober\Renderer\Texture.cpp" />
     <ClCompile Include="src\Cober\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp" />

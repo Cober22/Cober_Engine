@@ -12,12 +12,13 @@ namespace Cober {
 	void OpenGLRendererAPI::Init() 
 	{
 		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 		glEnable(GL_DEPTH_TEST);
-		//glEnable(GL_MULTISAMPLE);
-		//glFrontFace(GL_CW);
-		//glCullFace(GL_BACK);
+		glEnable(GL_ALPHA_TEST);
+
+		glAlphaFunc(GL_GREATER, 0.5F);
+
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBlendFunc(GL_ONE, GL_ZERO);
 	}
 
 	void OpenGLRendererAPI::SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)

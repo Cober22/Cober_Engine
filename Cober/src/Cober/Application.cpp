@@ -10,14 +10,13 @@ namespace Cober {
 	const float W_WIDTH = 1280.0f;
 	const float W_HEIGHT = 720.0f;
 
-	Application::Application() {
+	Application::Application(const std::string& name) {
+
+		//SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "4");
 
 		s_Instance = this;
 		WindowProps windowProps = WindowProps("Cober Engine", W_WIDTH, W_HEIGHT);
-		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "4");
-		_window = Window::Create(windowProps);
-		// Disable on Dockspace
-		//SDL_SetRelativeMouseMode(SDL_TRUE);
+		_window = Window::Create(WindowProps(name));
 
 		Renderer::Init();
 

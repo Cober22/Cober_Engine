@@ -25,8 +25,6 @@ private:
 	PerspectiveCamera PerspCamera;
 	OrthographicCamera OrthoCamera;
 
-	Ref<Framebuffer> m_Framebuffer;
-
 	bool perspective = true;
 	// Textures
 	Ref<Texture2D> catTexture;

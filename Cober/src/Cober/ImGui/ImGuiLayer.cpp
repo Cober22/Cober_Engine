@@ -45,7 +45,8 @@ namespace Cober {
 		}
 
 		Application& app = Application::Get();
-		ImGui_ImplSDL2_InitForOpenGL(app.GetWindow().GetNativeWindow(), app.GetContext());
+		SDL_Window* window = static_cast<SDL_Window*>(app.GetWindow().GetNativeWindow());
+		ImGui_ImplSDL2_InitForOpenGL(window, SDL_GL_GetCurrentContext());
 		ImGui_ImplOpenGL3_Init("#version 460");
 	}
 
@@ -76,7 +77,7 @@ namespace Cober {
 
 			ImGui::UpdatePlatformWindows();
 			ImGui::RenderPlatformWindowsDefault();
-			SDL_GL_MakeCurrent(app.GetWindow().GetNativeWindow(), app.GetContext());
+			SDL_GL_MakeCurrent(app.GetWindow().GetNativeWindow(), SDL_GL_GetCurrentContext());
 		}
 	}
 

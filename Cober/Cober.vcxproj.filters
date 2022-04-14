@@ -1380,7 +1380,16 @@
     <ClInclude Include="src\Cober\Renderer\Camera\PerspectiveCamera.h">
       <Filter>src\Cober\Renderer\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\Framebuffer.h">
+      <Filter>src\Cober\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h">
+      <Filter>src\Cober\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\Lighting.h">
+      <Filter>src\Cober\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\Material.h">
       <Filter>src\Cober\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Primitives\Mesh.h">
@@ -1393,6 +1402,9 @@
       <Filter>src\Cober\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Shader.h">
+      <Filter>src\Cober\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\SubTexture2D.h">
       <Filter>src\Cober\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Texture.h">
@@ -1416,6 +1428,9 @@
     <ClInclude Include="src\Platforms\OpenGL\OpenGLContext.h">
       <Filter>src\Platforms\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platforms\OpenGL\OpenGLFramebuffer.h">
+      <Filter>src\Platforms\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platforms\OpenGL\OpenGLRendererAPI.h">
       <Filter>src\Platforms\OpenGL</Filter>
     </ClInclude>
@@ -1434,11 +1449,6 @@
     <ClInclude Include="src\pch.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Renderer\Material.h" />
-    <ClInclude Include="src\Cober\Renderer\Lighting.h" />
-    <ClInclude Include="src\Cober\Renderer\SubTexture2D.h" />
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLFramebuffer.h" />
-    <ClInclude Include="src\Cober\Renderer\Framebuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\stb_image\stb_image.cpp">
@@ -1477,6 +1487,9 @@
     <ClCompile Include="src\Cober\Renderer\Camera\PerspectiveCamera.cpp">
       <Filter>src\Cober\Renderer\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\Framebuffer.cpp">
+      <Filter>src\Cober\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Cober\Renderer\Primitives\Cube.cpp">
       <Filter>src\Cober\Renderer\Primitives</Filter>
     </ClCompile>
@@ -1495,6 +1508,9 @@
     <ClCompile Include="src\Cober\Renderer\Shader.cpp">
       <Filter>src\Cober\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\SubTexture2D.cpp">
+      <Filter>src\Cober\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Cober\Renderer\Texture.cpp">
       <Filter>src\Cober\Renderer</Filter>
     </ClCompile>
@@ -1505,6 +1521,9 @@
       <Filter>src\Platforms\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Platforms\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platforms\OpenGL\OpenGLFramebuffer.cpp">
       <Filter>src\Platforms\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\OpenGLRendererAPI.cpp">
@@ -1525,8 +1544,5 @@
     <ClCompile Include="src\pch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\SubTexture2D.cpp" />
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLFramebuffer.cpp" />
-    <ClCompile Include="src\Cober\Renderer\Framebuffer.cpp" />
   </ItemGroup>
 </Project>

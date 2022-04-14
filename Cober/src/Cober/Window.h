@@ -10,13 +10,13 @@ namespace Cober {
 	struct WindowProps {
 		
 		std::string Title;
-		unsigned int Width;
-		unsigned int Height;
+		uint32_t Width;
+		uint32_t Height;
 		bool FullScreen;
 
 		WindowProps(const std::string& title = "Cober Engine",
-			unsigned int width = 1280,
-			unsigned int height = 720,
+			uint32_t width = 1280,
+			uint32_t height = 720,
 			bool fullscreen = false)
 			: Title(title), Width(width), Height(height), FullScreen(fullscreen)
 		{
@@ -33,8 +33,8 @@ namespace Cober {
 
 		virtual void OnUpdate() = 0;
 
-		virtual unsigned int GetWidth() const = 0;
-		virtual unsigned int GetHeight() const = 0;
+		virtual uint32_t GetWidth() const = 0;
+		virtual uint32_t GetHeight() const = 0;
 		virtual void SetWidth(float width) = 0;
 		virtual void SetHeight(float height) = 0;
 

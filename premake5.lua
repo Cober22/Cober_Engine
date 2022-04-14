@@ -112,6 +112,54 @@ project "Cober"
 		-- buildoptions "/MD"
 		optimize "on"
 
+project "CoberEditor"
+	location "CoberEditor"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files 
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp"
+	}
+
+	includedirs
+	{
+		"Cober/include",
+		"Cober/src",
+		"%{IncludeDir.glm}"
+	}
+
+	links 
+	{
+		"Cober"
+	}
+
+	filter "system:windows"
+		systemversion "latest"
+
+		defines 
+		{
+			"CB_PLATFORM_WINDOWS",
+		}
+
+	filter "configurations:Debug"
+		defines "CB_DEBUG"
+		symbols "on"
+
+	filter "configurations:Release"
+		defines "CB_RELEASE"
+		optimize "on"
+
+	filter "configurations:Dist"
+		defines "CB_DIST"
+		optimize "on"
+
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"

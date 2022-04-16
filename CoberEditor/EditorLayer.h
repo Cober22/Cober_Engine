@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Engine.h"
+#include <Engine.h>
 
+using namespace Cober;
 using namespace glm;
 
 namespace Cober {
@@ -44,6 +45,8 @@ namespace Cober {
 		POINT_LIGHT	pointLights;
 		SPOT_LIGHT	spotLights;
 		//Cober::Ref<Cober::Shader> m_ShaderQuad;
+		bool m_ViewportFocused = false, m_ViewportHovered = false;
+		glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
 
 		struct ProfileResult 
 		{

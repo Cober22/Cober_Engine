@@ -2,8 +2,6 @@
 
 #include "Cober/Renderer/Texture.h"
 
-#include <glew.h>
-
 namespace Cober {
 
 	class OpenGLTexture2D : public Texture2D 

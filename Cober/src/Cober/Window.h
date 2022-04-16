@@ -3,7 +3,6 @@
 #include "pch.h"
 
 #include "Cober/Core.h"
-#include <SDL/SDL.h>
 
 namespace Cober {
 
@@ -43,7 +42,7 @@ namespace Cober {
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;
 
-		virtual SDL_Window* GetNativeWindow() const = 0;
+		virtual GLFWwindow* GetNativeWindow() const = 0;
 
 		static Window* Create(const WindowProps& props = WindowProps());
 	};

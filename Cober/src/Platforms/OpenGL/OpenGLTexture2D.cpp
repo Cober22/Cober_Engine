@@ -3,8 +3,6 @@
 
 #include "stb_image/stb_image.h"
 
-#include <Glew/glew.h>
-
 namespace Cober {
 
 	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)

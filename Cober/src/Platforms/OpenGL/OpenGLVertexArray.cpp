@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "OpenGLVertexArray.h"
 
-#include <Glew/Glew.h>
-
 namespace Cober {
 
 	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)

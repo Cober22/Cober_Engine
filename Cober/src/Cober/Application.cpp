@@ -83,7 +83,7 @@ namespace Cober {
 	void Application::ProcessInputs() {
 
 		SDL_Event event; 
-		SDL_Window* window = _window->GetNativeWindow();
+		GLFWwindow* window = _window->GetNativeWindow();
 		// Dispatcher events
 		while (SDL_PollEvent(&event)) {
 
@@ -96,31 +96,32 @@ namespace Cober {
 				case SDL_KEYDOWN:
 					if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
 						_gameState = GameState::EXIT;
-					if (event.key.keysym.scancode == SDL_SCANCODE_F) {
-						w_Fullscreen = w_Fullscreen == true ? false : true;
-
-						if (w_Fullscreen)
-							SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-						else 
-							SDL_SetWindowFullscreen(window, 0);
-					}
-					if (event.key.keysym.scancode == SDL_SCANCODE_M) {
-						if (SDL_GetRelativeMouseMode() == SDL_TRUE)
-							SDL_SetRelativeMouseMode(SDL_FALSE);
-						else
-							SDL_SetRelativeMouseMode(SDL_TRUE);
-					}
+					//if (event.key.keysym.scancode == SDL_SCANCODE_F) {
+					//	w_Fullscreen = w_Fullscreen == true ? false : true;
+					//
+					//	if (w_Fullscreen)
+					//		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+					//	else 
+					//		SDL_SetWindowFullscreen(window, 0);
+					//}
+					//if (event.key.keysym.scancode == SDL_SCANCODE_M) {
+					//	if (SDL_GetRelativeMouseMode() == SDL_TRUE)
+					//		SDL_SetRelativeMouseMode(SDL_FALSE);
+					//	else
+					//		SDL_SetRelativeMouseMode(SDL_TRUE);
+					//}
 					break;
 				case SDL_WINDOWEVENT:
 					if (_window->GetWidth() == 0 || _window->GetHeight() == 0)
 						w_Minimized = true;
 					else {
-						int width{ 0 }, height{ 0 };
-						SDL_GetWindowSize(window, &width, &height);
-						_window->SetWidth(width);
-						_window->SetHeight(height);
+						int* width = nullptr, *height = nullptr;
+
+						glfwGetWindowSize(window, width, height);
+						_window->SetWidth((float&)width);
+						_window->SetHeight((float&)height);
 						w_Minimized = false;
-						Renderer::OnWindowResize(width, height);
+						Renderer::OnWindowResize((float&)width, (float&)height);
 					}
 			}
 		}

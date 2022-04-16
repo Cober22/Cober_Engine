@@ -1,11 +1,7 @@
 #include "pch.h"
 #include "OpenGLRendererAPI.h"
 
-#include <Glew/Glew.h>
-#include <GL/GL.h>
-#include <SDL/SDL.h>
-
-
+//#include <GL/GL.h>
 
 namespace Cober {
 

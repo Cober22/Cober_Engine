@@ -3,8 +3,6 @@
 #include "Cober/Window.h"
 #include "Cober/Renderer/GraphicsContext.h"
 
-#include <SDL/SDL.h>
-
 namespace Cober {
 
 	class WindowsWindow : public Window
@@ -25,12 +23,12 @@ namespace Cober {
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 
-		inline virtual SDL_Window* GetNativeWindow() const { return m_Window; }
+		inline virtual GLFWwindow* GetNativeWindow() const { return m_Window; }
 	private:
 		virtual void Init(const WindowProps& props);
 		virtual void Shutdown();
 	private:
-		SDL_Window* m_Window;
+		GLFWwindow* m_Window;
 		Scope<GraphicsContext> m_Context;
 		
 		struct WindowData 

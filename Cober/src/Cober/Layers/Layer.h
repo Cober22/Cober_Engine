@@ -4,8 +4,6 @@
 
 #include "Cober/Timestep.h"
 
-#include <SDL/SDL.h>
-
 namespace Cober {
 	
 	class Layer 

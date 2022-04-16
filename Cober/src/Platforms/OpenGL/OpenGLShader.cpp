@@ -1,9 +1,6 @@
 #include "pch.h"
 #include "OpenGLShader.h"
 
-#include <fstream>
-#include <Glew/Glew.h>
-
 #include <glm/gtc/type_ptr.hpp>
 
 namespace Cober {

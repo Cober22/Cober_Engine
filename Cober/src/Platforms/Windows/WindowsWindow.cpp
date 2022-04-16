@@ -33,8 +33,11 @@ namespace Cober {
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
 
-		//CB_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
+		// Init GLFW
+		if (!glfwInit())
+			fprintf(stderr, "Error: GLFW Window couldn't be initialized\n");
 
+		// Init SDL
 		if (!s_SDLInitialized) 
 		{
 			// TODO: SDL_Quit(); on system shutdhown
@@ -44,17 +47,11 @@ namespace Cober {
 			s_SDLInitialized = true;
 		}
 
+		// Init WINDOW
+		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
+		glfwSetWindowUserPointer(m_Window, &m_Data);
 
-		uint32_t flags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI;// | SDL_WINDOW_MOUSE_CAPTURE;
-
-		// Open an SDL window
-		m_Window = SDL_CreateWindow(m_Data.Title.c_str(),		// Window title
-									SDL_WINDOWPOS_CENTERED,		// posX on screen
-									SDL_WINDOWPOS_CENTERED,		// posY on screen
-									(int)m_Data.Width,			// width of the window
-									(int)m_Data.Height,			// height of the window
-									flags);						// flags
-
+		// Init Window CONTEXT
 		m_Context = CreateScope<OpenGLContext>(m_Window);
 		m_Context->Init();
 
@@ -154,20 +151,22 @@ namespace Cober {
 
 	void Cober::WindowsWindow::Shutdown()
 	{
-		SDL_DestroyWindow(m_Window);
+		glfwDestroyWindow(m_Window);
+		glfwTerminate();
 	}
 
 	void WindowsWindow::OnUpdate()
 	{
+		glfwPollEvents();
 		m_Context->SwapBuffers();
 	}
 	
 	void WindowsWindow::SetVSync(bool enabled)
 	{
 		if (enabled)
-			SDL_GL_SetSwapInterval(1);
+			glfwSwapInterval(1);
 		else
-			SDL_GL_SetSwapInterval(0);
+			glfwSwapInterval(0);
 
 		m_Data.VSync = enabled;
 	}

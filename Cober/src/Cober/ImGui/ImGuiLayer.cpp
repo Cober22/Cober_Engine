@@ -4,10 +4,9 @@
 #include "imgui.h"
 #include "backends/imgui_impl_opengl3.h"
 #include "backends/imgui_impl_sdl.h"
+#include "backends/imgui_impl_glfw.h"
 
 #include "Cober/Application.h"
-
-#include <SDL/SDL.h>
 
 namespace Cober {
 
@@ -45,23 +44,46 @@ namespace Cober {
 		}
 
 		Application& app = Application::Get();
-		SDL_Window* window = static_cast<SDL_Window*>(app.GetWindow().GetNativeWindow());
-		ImGui_ImplSDL2_InitForOpenGL(window, SDL_GL_GetCurrentContext());
+		window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
+		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init("#version 460");
 	}
 
 	void ImGuiLayer::OnDetach()  {
 
 		ImGui_ImplOpenGL3_Shutdown();
-		ImGui_ImplSDL2_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
 	}
 
 	void ImGuiLayer::Begin() {
 
 		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplSDL2_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
+
+		// Create the docking environment
+		ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar |
+			ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+			ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus |
+			ImGuiWindowFlags_NoBackground;
+
+		ImGuiViewport* viewport = ImGui::GetMainViewport();
+		ImGui::SetNextWindowPos(viewport->Pos);
+		ImGui::SetNextWindowSize(viewport->Size);
+		ImGui::SetNextWindowViewport(viewport->ID);
+
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+		ImGui::Begin("InvisibleWindow", nullptr, windowFlags);
+		ImGui::PopStyleVar(3);
+
+		// DockSpace
+		ImGuiID dockSpaceId = ImGui::GetID("InvisibleWindowDockSpace");
+		ImGui::DockSpace(dockSpaceId, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
+
+		ImGui::End();
 	}
 
 	void ImGuiLayer::End() {
@@ -75,18 +97,14 @@ namespace Cober {
 
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
 
+			GLFWwindow* context = glfwGetCurrentContext();
 			ImGui::UpdatePlatformWindows();
 			ImGui::RenderPlatformWindowsDefault();
-			SDL_GL_MakeCurrent(app.GetWindow().GetNativeWindow(), SDL_GL_GetCurrentContext());
+			glfwMakeContextCurrent(context);
 		}
 	}
 
 	void ImGuiLayer::OnEvent(SDL_Event& event) {
-
-
-		//ImGuiIO& io = ImGui::GetIO();
-		//event.Handled |= e.IsInCategory(EventCategoryMouse) & io.WantCaptureMouse;
-		//event.Handled |= e.IsInCategory(EventCategoryKeyboard) & io.WantCaptureKeyboard;
 
 		ImGui_ImplSDL2_ProcessEvent(&event);
 	}

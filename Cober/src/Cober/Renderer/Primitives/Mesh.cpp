@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "Mesh.h"
 
-// PROVISIONAL
-#include <Glew/glew.h>
 
 namespace Cober {
 

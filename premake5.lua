@@ -1,12 +1,16 @@
 workspace "Cober" 
 	architecture "x64"
-	startproject "Sandbox"
+	startproject "CoberEditor"
 
 	configurations 
 	{
 		"Debug",
 		"Release",
 		"Dist"
+	}
+	flags
+	{
+		"MultiProcessorCompile"
 	}
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
@@ -18,6 +22,7 @@ IncludeDir["glm"] = "Cober/include/glm"
 IncludeDir["ImGui"] = "Cober/include/ImGui"
 IncludeDir["stb_image"] = "Cober/include/stb_image"
 IncludeDir["Assimp"] = "Cober/include/assimp"
+IncludeDir["GLFW"] = "Cober/include/GLFW"
 
 group "Dependencies"
 	include "Cober/include/ImGui"
@@ -61,7 +66,8 @@ project "Cober"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.stb_image}",
-		"%{IncludeDir.Assimp}"
+		"%{IncludeDir.Assimp}",
+		"%{IncludeDir.GLFW}"
 	}
 
 	libdirs 
@@ -77,6 +83,7 @@ project "Cober"
 		"opengl32",
 		"glew32s",
 		"ImGui",
+		"glfw3_mt",
 		"assimp-vc142-mt"
 	}
 
@@ -124,8 +131,8 @@ project "CoberEditor"
 
 	files 
 	{
-		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/**.h",
+		"%{prj.name}/**.cpp"
 	}
 
 	includedirs
@@ -142,11 +149,12 @@ project "CoberEditor"
 
 	filter "system:windows"
 		systemversion "latest"
-
+		
 		defines 
 		{
 			"CB_PLATFORM_WINDOWS",
 		}
+
 
 	filter "configurations:Debug"
 		defines "CB_DEBUG"

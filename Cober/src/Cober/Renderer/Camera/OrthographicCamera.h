@@ -3,7 +3,6 @@
 #include "CameraController.h"
 #include "Cober/Timestep.h"
 
-#include <SDL/SDL.h>
 #include <glm/glm.hpp>
 
 namespace Cober {

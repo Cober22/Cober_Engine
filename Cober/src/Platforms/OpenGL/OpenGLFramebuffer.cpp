@@ -25,6 +25,7 @@ namespace Cober {
 			glDeleteTextures(1, &m_DepthAttachment);
 		}
 
+
 		glCreateFramebuffers(1, &m_RendererID);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
 
@@ -38,9 +39,7 @@ namespace Cober {
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_DepthAttachment);
 		glBindTexture(GL_TEXTURE_2D, m_DepthAttachment);
-		//glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH24_STENCIL8, m_Specification.Width, m_Specification.Height);
-		 glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH24_STENCIL8, m_Specification.Width, m_Specification.Height, 0,
-		 	GL_DEPTH_STENCIL, GL_UNSIGNED_INT_24_8, NULL);
+		glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH24_STENCIL8, m_Specification.Width, m_Specification.Height);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, m_DepthAttachment, 0);
 
 		CB_ASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Framebuffer is incomplete!");
@@ -51,7 +50,8 @@ namespace Cober {
 	void OpenGLFramebuffer::Bind()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
-		glViewport(0, 0, m_Specification.Width, m_Specification.Height);
+		//glViewport(0, 0, m_Specification.Width, m_Specification.Height);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	void OpenGLFramebuffer::Unbind()
@@ -63,6 +63,10 @@ namespace Cober {
 	{
 		m_Specification.Width = width;
 		m_Specification.Height = height;
+
+		//window->SetWidth((float)width);
+		//window->SetHeight((float)height);
+
 
 		Invalidate();
 	}

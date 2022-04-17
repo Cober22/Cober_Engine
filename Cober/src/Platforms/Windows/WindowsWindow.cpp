@@ -1,11 +1,13 @@
 #include "pch.h"
 #include "WindowsWindow.h"
+#include "Cober/Renderer/Renderer.h"
 
 #include "Platforms/OpenGL/OpenGLContext.h"
 
 namespace Cober {
 
 	static bool s_SDLInitialized = false;
+	static uint8_t s_GLFWWindowCount = 0;
 
 	static void SDLErrorCallback(int error, const char* description) 
 	{
@@ -33,25 +35,30 @@ namespace Cober {
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
 
-		// Init GLFW
-		if (!glfwInit())
-			fprintf(stderr, "Error: GLFW Window couldn't be initialized\n");
-
 		// Init SDL
-		if (!s_SDLInitialized) 
+		//if (!s_SDLInitialized) 
+		//{
+		//	// TODO: SDL_Quit(); on system shutdhown
+		//	int success = SDL_Init(SDL_INIT_EVERYTHING);
+		//	//CB_CORE_ASSERT(success, "Could not initialize SDL!");
+		//	//sdlSetErrorCallback(SDLErrorCallback);
+		//	s_SDLInitialized = true;
+		//}
+
+		// Init GLFW
+		if (s_GLFWWindowCount == 0)
 		{
-			// TODO: SDL_Quit(); on system shutdhown
-			int success = SDL_Init(SDL_INIT_EVERYTHING);
-			//CB_CORE_ASSERT(success, "Could not initialize SDL!");
-			//sdlSetErrorCallback(SDLErrorCallback);
-			s_SDLInitialized = true;
+			CB_PROFILE_SCOPE("glfwInit");
+			int success = glfwInit();
+			CB_ASSERT(success, "Could not initialize GLFW!");
 		}
 
 		// Init WINDOW
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
-		glfwSetWindowUserPointer(m_Window, &m_Data);
+		++s_GLFWWindowCount;
 
 		// Init Window CONTEXT
+		glfwSetWindowUserPointer(m_Window, &m_Data);
 		m_Context = CreateScope<OpenGLContext>(m_Window);
 		m_Context->Init();
 
@@ -152,12 +159,17 @@ namespace Cober {
 	void Cober::WindowsWindow::Shutdown()
 	{
 		glfwDestroyWindow(m_Window);
-		glfwTerminate();
+		--s_GLFWWindowCount;
+		if (s_GLFWWindowCount == 0)
+		{
+			glfwTerminate();
+		}
 	}
 
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
+		//RenderCommand::SetViewport(0, 0, m_Data.Width, m_Data.Height);
 		m_Context->SwapBuffers();
 	}
 	

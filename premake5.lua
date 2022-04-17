@@ -72,8 +72,7 @@ project "Cober"
 
 	libdirs 
 	{
-		"%{prj.name}/lib",
-		"%{IncludeDir.ImGui}"
+		"%{prj.name}/lib"
 	}
 
 	links 

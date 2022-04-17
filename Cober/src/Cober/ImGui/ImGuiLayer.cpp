@@ -3,7 +3,6 @@
 
 #include "imgui.h"
 #include "backends/imgui_impl_opengl3.h"
-#include "backends/imgui_impl_sdl.h"
 #include "backends/imgui_impl_glfw.h"
 
 #include "Cober/Application.h"
@@ -46,7 +45,7 @@ namespace Cober {
 		Application& app = Application::Get();
 		window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
-		ImGui_ImplOpenGL3_Init("#version 460");
+		ImGui_ImplOpenGL3_Init("#version 410");
 	}
 
 	void ImGuiLayer::OnDetach()  {
@@ -82,8 +81,6 @@ namespace Cober {
 		// DockSpace
 		ImGuiID dockSpaceId = ImGui::GetID("InvisibleWindowDockSpace");
 		ImGui::DockSpace(dockSpaceId, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
-
-		ImGui::End();
 	}
 
 	void ImGuiLayer::End() {
@@ -106,6 +103,6 @@ namespace Cober {
 
 	void ImGuiLayer::OnEvent(SDL_Event& event) {
 
-		ImGui_ImplSDL2_ProcessEvent(&event);
+		//ImGui_ImplSDL2_ProcessEvent(&event);
 	}
 }

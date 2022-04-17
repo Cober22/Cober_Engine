@@ -1,1 +1,1 @@
-{"otherData": {},"traceEvents":[]}
+{"otherData": {},"traceEvents":[{"cat":"function","dur":286049,"name":"glfwInit","ph":"X","pid":0,"tid":2680734894,"ts":118624680502}]}

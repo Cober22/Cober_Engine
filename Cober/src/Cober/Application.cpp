@@ -65,17 +65,28 @@ namespace Cober {
 			//if (1000/ FPS_LIMIT > m_LastFrameTime)
 				//SDL_Delay(1000 / FPS_LIMIT);
 
-			if (!w_Minimized) {
-				ProcessInputs();
-				for (Layer* layer : m_LayerStack)
-					layer->OnUpdate(timestep);
+				// Render
+			{
+				CB_PROFILE_SCOPE("Render Prep");
+				// BACKGRUOND COLOR!
+				//RenderCommand::SetClearColor({ 0.02f, 0.008f, 0.05f, 1.0f });	// DARK BLUE
+				RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+				//RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
+			   //RenderCommand::SetClearColor({ 0.8f, 0.35f, 0.35f, 1.0f });
+				RenderCommand::Clear();
 			}
+
+
+			
+			for (Layer* layer : m_LayerStack)
+				layer->OnUpdate(timestep);
 
 			m_ImGuiLayer->Begin();
 			for (Layer* layer : m_LayerStack)
 				layer->OnImGuiRender();
 			m_ImGuiLayer->End();
 
+			//ProcessInputs();
 			_window->OnUpdate();
 		}
 	}

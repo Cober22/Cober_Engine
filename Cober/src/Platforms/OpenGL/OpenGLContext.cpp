@@ -15,15 +15,25 @@ namespace Cober {
 
 	void OpenGLContext::Init()
 	{
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		glfwMakeContextCurrent(m_WindowHandle);
 
 		GLenum error = glewInit();
 		if (error != GLEW_OK)
 			CB_ASSERT(false, ("{0}, Failed to initialize Glew!", (const char*)error));
 
-		//SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-		//
-		//// Check for OpenGL Version
+
+
+		std::cout << "OpenGL Info:" << std::endl;
+		std::cout << "Vendor:\t" << (const char*)glGetString(GL_VENDOR) << std::endl;
+		std::cout << "Renderer:\t" << (const char*)glGetString(GL_RENDERER) << std::endl;
+		std::cout << "Version:\t" << (const char*)glGetString(GL_VERSION) << std::endl;
+		std::cout << "GLSL:\t\t" << (const char*)glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+		
+		// Check for OpenGL Version
 		//#ifdef CB_ENABLE_ASSERTS
 		//		int versionMajor;
 		//		int versionMinor;

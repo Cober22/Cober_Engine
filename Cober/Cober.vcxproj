@@ -91,7 +91,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;glew32s.lib;glfw3_mt.lib;assimp-vc142-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>lib;include\ImGui;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
       <Command>IF EXIST ..\libraries\SDL\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\libraries\SDL\lib\x64\SDL2.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\libraries\SDL\lib\x64\SDL2.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul)</Command>
@@ -120,7 +120,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;glew32s.lib;glfw3_mt.lib;assimp-vc142-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>lib;include\ImGui;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
       <Command>IF EXIST ..\libraries\SDL\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\libraries\SDL\lib\x64\SDL2.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\libraries\SDL\lib\x64\SDL2.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul)</Command>
@@ -149,7 +149,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;glew32s.lib;glfw3_mt.lib;assimp-vc142-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>lib;include\ImGui;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
       <Command>IF EXIST ..\libraries\SDL\lib\x64\SDL2.dll\ (xcopy /Q /E /Y /I ..\libraries\SDL\lib\x64\SDL2.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\libraries\SDL\lib\x64\SDL2.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul)</Command>

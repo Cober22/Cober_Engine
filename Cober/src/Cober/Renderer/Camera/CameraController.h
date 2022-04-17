@@ -17,14 +17,15 @@ namespace Cober {
 		void RecalculateMatrix();
 
 		virtual void OnUpdate(Timestep ts) = 0;
-		virtual void OnEvent(SDL_Event& event) = 0;
+		virtual void OnEvent() = 0;
+		virtual void Resize(float width, float heigth) = 0;
 
 	public:
 		void SetProjection(float left, float right, float bottom, float top);
 		void SetProjection(float angle, glm::vec2 aspectRatio, float nearPlane, float farPlane);
 
-		virtual void OnMouseMotion(SDL_MouseMotionEvent& e) = 0;
-		virtual void OnMouseScrolled(SDL_MouseWheelEvent& e) = 0;
+		virtual void OnMouseMotion() = 0;
+		virtual void OnMouseScrolled() = 0;
 		virtual void OnWindowResized(Window& e) = 0;
 	public:
 		virtual const glm::mat4& GetViewMatrix() const = 0;

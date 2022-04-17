@@ -92,34 +92,30 @@ namespace Cober {
 	{	
 		CB_PROFILE_FUNCTION();
 
-		// Update
+	
+		// Camera Update
 		{
 			CB_PROFILE_SCOPE("CameraController::OnUpdate");
-			if (perspective)
+			if (perspective) {
+				//if (m_ViewportFocused)
 				PerspCamera.OnUpdate(ts);
-			else
+			}
+			else {
+				//if (m_ViewportFocused)
 				OrthoCamera.OnUpdate(ts);
+			}
 		}
 
-		// Render
-		{
-			CB_PROFILE_SCOPE("Render Prep");
-			m_Framebuffer->Bind();
-			// BACKGRUOND COLOR!
-			//RenderCommand::SetClearColor({ 0.02f, 0.008f, 0.05f, 1.0f });	// DARK BLUE
-			//RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
-			 RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
-			//RenderCommand::SetClearColor({ 0.8f, 0.35f, 0.35f, 1.0f });
-			 RenderCommand::Clear();
-		}
-	
+		// Update
 		{
 			CB_PROFILE_SCOPE("Render Draw");
+			m_Framebuffer->Bind();
 			if (perspective)
 				Renderer::BeginScene(PerspCamera);
 			else
 				Renderer::BeginScene(OrthoCamera);
 
+			//m_Framebuffer->Bind();
 			//CUBES!
 			for (unsigned int i = 0; i < std::size(cubePositions); i++)
 				Renderer::DrawCube(cubePositions[i], glm::vec3(1.0f), woodContainer, steelBorderContainer, { 1.0f, 1.0f, 1.0f });// cubeColors[color]);
@@ -150,6 +146,7 @@ namespace Cober {
 	void EditorLayer::OnImGuiRender()
 	{
 		CB_PROFILE_FUNCTION();
+
 		//if (ImGui::BeginMenuBar())
 		//{
 		//	if (ImGui::BeginMenu("File"))
@@ -166,7 +163,6 @@ namespace Cober {
 		//}
 
 		ImGui::Begin("Settings");
-
 		//auto stats = Hazel::Renderer2D::GetStats();
 		//ImGui::Text("Renderer2D Stats:");
 		//ImGui::Text("Draw Calls: %d", stats.DrawCalls);
@@ -175,40 +171,41 @@ namespace Cober {
 		//ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 
 		//ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
-
 		ImGui::End();
 
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+		//ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
 		ImGui::Begin("Viewport");
-
-		//m_ViewportFocused = ImGui::IsWindowFocused();
-		//m_ViewportHovered = ImGui::IsWindowHovered();
-		//Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
-
+			
+		m_ViewportFocused = ImGui::IsWindowFocused();
+		m_ViewportHovered = ImGui::IsWindowHovered();
+		////Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
+		//
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-		if (m_ViewportSize != *((glm::vec2*)&viewportPanelSize)) {
-
+		if (m_ViewportSize != *((glm::vec2*)&viewportPanelSize))
+		{
 			m_Framebuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
 			m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
+		
+			PerspCamera.Resize(viewportPanelSize.x, viewportPanelSize.y);
 		}
-		//
-		//	m_CameraController.OnResize(viewportPanelSize.x, viewportPanelSize.y);
-		//}
 		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
 		ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 		ImGui::End();
-		ImGui::PopStyleVar();
+		ImGui::End();
+
+		//ImGui::PopStyleVar();
+
 	}
 
 	void EditorLayer::OnEvent(SDL_Event& e)
 	{
-		const Uint8* keystate = SDL_GetKeyboardState(NULL);
-		if (keystate[SDL_SCANCODE_0] && e.type == SDL_KEYDOWN)
-			perspective = perspective == true ? false : true;
-	
-		if (perspective)
-			PerspCamera.OnEvent(e);
-		else
-			OrthoCamera.OnEvent(e);
+		//const Uint8* keystate = SDL_GetKeyboardState(NULL);
+		//if (keystate[SDL_SCANCODE_0] && e.type == SDL_KEYDOWN)
+		//	perspective = perspective == true ? false : true;
+		//
+		//if (perspective)
+		//	PerspCamera.OnEvent(e);
+		//else
+		//	OrthoCamera.OnEvent(e);
 	}
 }

@@ -42,10 +42,6 @@ namespace Cober {
 			CB_ASSERT(success, "Could not initialize GLFW!");
 		}
 
-		if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-			std::cout << "dawsdasd" << std::endl;
-			std::cout << SDL_GetError() << std::endl;
-		}
 		// Init WINDOW
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		++s_GLFWWindowCount;

@@ -16,7 +16,7 @@ workspace "Cober"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
-IncludeDir["SDL"] = "Cober/include/SDL"
+--IncludeDir["SDL"] = "Cober/include/SDL"
 IncludeDir["Glew"] = "Cober/include/Glew"
 IncludeDir["glm"] = "Cober/include/glm"
 IncludeDir["ImGui"] = "Cober/include/ImGui"
@@ -61,7 +61,6 @@ project "Cober"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/include",
-		"%{IncludeDir.SDL}",
 		"%{IncludeDir.Glew}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.ImGui}",
@@ -77,8 +76,6 @@ project "Cober"
 
 	links 
 	{
-		"SDL2",
-		"SDL2main",
 		"opengl32",
 		"glew32s",
 		"ImGui",
@@ -88,7 +85,7 @@ project "Cober"
 
 	postbuildcommands
 	{
-		"{COPY} ..\\libraries\\SDL\\lib\\x64\\SDL2.dll/ ..\\bin\\" .. outputdir .. "\\Sandbox"
+		"{COPY} ..\\%{prj.name}\\lib\\assimp-vc142-mt.dll/ ..\\bin\\" .. outputdir .. "\\CoberEditor"
 	}
 
 	filter "system:windows"

@@ -103,7 +103,7 @@ namespace Cober {
 		}
 	}
 
-	void ImGuiLayer::OnEvent(SDL_Event& event) {
+	void ImGuiLayer::OnEvent() {
 
 		//ImGui_ImplSDL2_ProcessEvent(&event);
 	}

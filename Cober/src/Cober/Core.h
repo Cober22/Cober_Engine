@@ -7,7 +7,7 @@
 	/* Windows x64/x86 */
 	#ifdef _WIN64
 		/* Windows x64  */
-		#define HZ_PLATFORM_WINDOWS
+		#define CB_PLATFORM_WINDOWS
 	#else
 		/* Windows x86 */
 		#
@@ -34,10 +34,10 @@
   * since android is based on the linux kernel
   * it has __linux__ defined */
 #elif defined(__ANDROID__)
-	#define HZ_PLATFORM_ANDROID
+	#define CB_PLATFORM_ANDROID
 	#error "Android is not supported!"
 #elif defined(__linux__)
-	#define HZ_PLATFORM_LINUX
+	#define CB_PLATFORM_LINUX
 	#error "Linux is not supported!"
 #else
 	/* Unknown compiler/platform */
@@ -46,18 +46,18 @@
 
 
 // DLL support
-#ifdef HZ_PLATFORM_WINDOWS
-	#if HZ_DYNAMIC_LINK
-		#ifdef HZ_BUILD_DLL
-			#define HAZEL_API __declspec(dllexport)
+#ifdef CB_PLATFORM_WINDOWS
+	#if CB_DYNAMIC_LINK
+		#ifdef CB_BUILD_DLL
+			#define COBER_API __declspec(dllexport)
 		#else
-			#define HAZEL_API __declspec(dllimport)
+			#define COBER_API __declspec(dllimport)
 		#endif
 	#else
-		#define HAZEL_API
+		#define COBER_API
 	#endif
 #else
-	#error Hazel only supports Windows!
+	#error CoberEngine only supports Windows!
 #endif // End of DLL support
 
 
@@ -107,7 +107,7 @@
 #define ARRAY_SIZE_IN_ELEMENTS(a) (sizeof(a)/sizeof(a[0]))
 
 #define ASSIMP_LOAD_FLAGS (aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs |  aiProcess_JoinIdenticalVertices)
-//#define ASSIMP_LOAD_FLAGS (aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices | aiProcess_ValidateDataStructure |	aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords |	aiProcess_LimitBoneWeights | aiProcess_OptimizeMeshes |	aiProcess_GenSmoothNormals | aiProcess_SplitLargeMeshes | aiProcess_Triangulate | aiProcess_SortByPType)
+//#define ASSIMP_LOAD_FLAGS (aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices | aiProcess_ValidateDataStructure | aiProcess_ImproveCacheLocality | aiProcess_RemoveRedundantMaterials | aiProcess_GenUVCoords | aiProcess_TransformUVCoords |	aiProcess_LimitBoneWeights | aiProcess_OptimizeMeshes |	aiProcess_GenSmoothNormals | aiProcess_SplitLargeMeshes | aiProcess_Triangulate | aiProcess_SortByPType)
 
 			//aiProcess_FlipUVs |
 			//aiProcess_JoinIdenticalVertices |		// join identical vertices/ optimize indexing

@@ -1,0 +1,1 @@
+Click on GenerateProject.bat and execute project two times (the first to copy dlls and the other for execute the .exe file)

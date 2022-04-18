@@ -20,7 +20,7 @@
 #define GLFW_INCLUDE_NONE
 #include <Glew/glew.h>
 #include <GLFW/glfw3.h>
-#include <SDL/SDL.h>
+//#include <SDL/SDL.h>
 
 
 #ifdef CB_PLATFORM_WINDOWS

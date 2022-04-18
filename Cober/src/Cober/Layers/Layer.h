@@ -16,7 +16,7 @@ namespace Cober {
 		virtual void OnDetach() {}
 		virtual void OnImGuiRender() {}
 		virtual void OnUpdate(Timestep ts) {}
-		virtual void OnEvent(SDL_Event& event) {}
+		virtual void OnEvent() {}
 
 		inline const std::string& GetName() const { return m_DebugName; }
 		 

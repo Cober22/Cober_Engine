@@ -92,7 +92,6 @@ namespace Cober {
 	{	
 		CB_PROFILE_FUNCTION();
 
-	
 		// Camera Update
 		{
 			CB_PROFILE_SCOPE("CameraController::OnUpdate");
@@ -243,15 +242,15 @@ namespace Cober {
 		ImGui::End();
 	}
 
-	void EditorLayer::OnEvent(SDL_Event& e)
+	void EditorLayer::OnEvent()
 	{
-		const Uint8* keystate = SDL_GetKeyboardState(NULL);
-		if (keystate[SDL_SCANCODE_0] && e.type == SDL_KEYDOWN)
-			perspective = perspective == true ? false : true;
-		
+		//const Uint8* keystate = SDL_GetKeyboardState(NULL);
+		//if (keystate[SDL_SCANCODE_0] && e.type == SDL_KEYDOWN)
+		//	perspective = perspective == true ? false : true;
+		//
 		if (perspective)
-			PerspCamera.OnEvent(e);
+			PerspCamera.OnEvent();
 		else
-			OrthoCamera.OnEvent(e);
+			OrthoCamera.OnEvent();
 	}
 }

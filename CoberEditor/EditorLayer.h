@@ -22,7 +22,7 @@ namespace Cober {
 		virtual void OnImGuiRender() override;
 
 		void OnUpdate(Timestep ts) override;
-		void OnEvent(SDL_Event& e) override;
+		void OnEvent() override;
 	private:
 		PerspectiveCamera PerspCamera;
 		OrthographicCamera OrthoCamera;

@@ -48,7 +48,7 @@ namespace Cober {
 
 		while (_gameState != GameState::EXIT)
 		{
-			float time = (float)(SDL_GetTicks() / 1000.0f);
+			float time = (float)(glfwGetTime());
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
 			timeInSeconds += timestep;
@@ -90,58 +90,63 @@ namespace Cober {
 
 	void Application::ProcessInputs() {
 
-		SDL_Event event; 
-		GLFWwindow* window = _window->GetNativeWindow();
-		//const uint8_t* state = SDL_GetKeyboardState(NULL);
-		//if (state[SDL_SCANCODE_RIGHT]) printf("Right");
-		//if (state[SDL_SCANCODE_LEFT]) printf("Left");
-		//if (state[SDL_SCANCODE_UP]) printf("Up");
-		//if (state[SDL_SCANCODE_DOWN]) printf("Down");
-		// Dispatcher events
-		while (SDL_PollEvent(&event)) {
+		glfwPollEvents();
 
-			std::cout << event.type << std::endl;
-			//std::cout << event.key << std::endl;
-			//std::cout << event.key.keysym.sym << std::endl;
-
-			for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
-				(*--it)->OnEvent(event);
-
-			switch (event.type) {
-				case SDL_QUIT:
-					_gameState = GameState::EXIT;	break;
-				case SDL_KEYDOWN:
-					if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
-						_gameState = GameState::EXIT;
-					//if (event.key.keysym.scancode == SDL_SCANCODE_F) {
-					//	w_Fullscreen = w_Fullscreen == true ? false : true;
-					//
-					//	if (w_Fullscreen)
-					//		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-					//	else 
-					//		SDL_SetWindowFullscreen(window, 0);
-					//}
-					if (event.key.keysym.scancode == SDL_SCANCODE_M) {
-						if (SDL_GetRelativeMouseMode() == SDL_TRUE)
-							SDL_SetRelativeMouseMode(SDL_FALSE);
-						else
-							SDL_SetRelativeMouseMode(SDL_TRUE);
-					}
-					break;
-				case SDL_WINDOWEVENT:
-					if (_window->GetWidth() == 0 || _window->GetHeight() == 0)
-						w_Minimized = true;
-					else {
-						int* width = nullptr, *height = nullptr;
-
-						glfwGetWindowSize(window, width, height);
-						_window->SetWidth((float&)width);
-						_window->SetHeight((float&)height);
-						w_Minimized = false;
-						Renderer::OnWindowResize((float&)width, (float&)height);
-					}
-					break;
-			}
-		}
+		// ONLY FOR TEST
+		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
+			(*--it)->OnEvent();
+		//SDL_Event event; 
+		//GLFWwindow* window = _window->GetNativeWindow();
+		////const uint8_t* state = SDL_GetKeyboardState(NULL);
+		////if (state[SDL_SCANCODE_RIGHT]) printf("Right");
+		////if (state[SDL_SCANCODE_LEFT]) printf("Left");
+		////if (state[SDL_SCANCODE_UP]) printf("Up");
+		////if (state[SDL_SCANCODE_DOWN]) printf("Down");
+		//// Dispatcher events
+		//while (SDL_PollEvent(&event)) {
+		//
+		//	std::cout << event.type << std::endl;
+		//	//std::cout << event.key << std::endl;
+		//	//std::cout << event.key.keysym.sym << std::endl;
+		//
+		//	for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
+		//		(*--it)->OnEvent(event);
+		//
+		//	switch (event.type) {
+		//		case SDL_QUIT:
+		//			_gameState = GameState::EXIT;	break;
+		//		case SDL_KEYDOWN:
+		//			if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+		//				_gameState = GameState::EXIT;
+		//			//if (event.key.keysym.scancode == SDL_SCANCODE_F) {
+		//			//	w_Fullscreen = w_Fullscreen == true ? false : true;
+		//			//
+		//			//	if (w_Fullscreen)
+		//			//		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+		//			//	else 
+		//			//		SDL_SetWindowFullscreen(window, 0);
+		//			//}
+		//			if (event.key.keysym.scancode == SDL_SCANCODE_M) {
+		//				if (SDL_GetRelativeMouseMode() == SDL_TRUE)
+		//					SDL_SetRelativeMouseMode(SDL_FALSE);
+		//				else
+		//					SDL_SetRelativeMouseMode(SDL_TRUE);
+		//			}
+		//			break;
+		//		case SDL_WINDOWEVENT:
+		//			if (_window->GetWidth() == 0 || _window->GetHeight() == 0)
+		//				w_Minimized = true;
+		//			else {
+		//				int* width = nullptr, *height = nullptr;
+		//
+		//				glfwGetWindowSize(window, width, height);
+		//				_window->SetWidth((float&)width);
+		//				_window->SetHeight((float&)height);
+		//				w_Minimized = false;
+		//				Renderer::OnWindowResize((float&)width, (float&)height);
+		//			}
+		//			break;
+		//	}
+		//}
 	}
 }

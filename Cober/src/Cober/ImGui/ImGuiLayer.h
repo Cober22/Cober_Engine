@@ -12,7 +12,7 @@ namespace Cober {
 
 		virtual void OnAttach() override;
 		virtual void OnDetach() override;
-		virtual void OnEvent(SDL_Event& event) override;
+		virtual void OnEvent() override;
 
 		void Begin();
 		void End();

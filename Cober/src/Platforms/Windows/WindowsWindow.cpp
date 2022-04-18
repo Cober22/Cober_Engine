@@ -8,23 +8,24 @@ namespace Cober {
 
 	static uint8_t s_GLFWWindowCount = 0;
 
-	static void SDLErrorCallback(int error, const char* description) 
-	{
-		//CB_CORE_ERROR("SDL Error ({0}): {1}", error, description);
-	}
-
 	WindowsWindow::WindowsWindow(const WindowProps& props)
 	{
+		CB_PROFILE_FUNCTION();
+
 		Init(props);
 	}
 	
 	WindowsWindow::~WindowsWindow()
 	{
+		CB_PROFILE_FUNCTION();
+
 		Shutdown();
 	}
 	
 	void WindowsWindow::Init(const WindowProps& props)
 	{
+		CB_PROFILE_FUNCTION();
+
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
@@ -40,13 +41,14 @@ namespace Cober {
 		// Init WINDOW
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		++s_GLFWWindowCount;
-		glfwSetWindowUserPointer(m_Window, &m_Data);
 
 		// Init Window CONTEXT
 
 		m_Context = GraphicsContext::Create(m_Window);
 		m_Context->Init();
 		
+
+		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
 		// Set GLFW callbacks
@@ -73,24 +75,24 @@ namespace Cober {
 
 				switch (action)
 				{
-				case GLFW_PRESS:
-				{
-					KeyPressedEvent event(static_cast<KeyCode>(key), 0);
-					data.EventCallback(event);
-					break;
-				}
-				case GLFW_RELEASE:
-				{
-					KeyReleasedEvent event(static_cast<KeyCode>(key));
-					data.EventCallback(event);
-					break;
-				}
-				case GLFW_REPEAT:
-				{
-					KeyPressedEvent event(static_cast<KeyCode>(key), 1);
-					data.EventCallback(event);
-					break;
-				}
+					case GLFW_PRESS:
+					{
+						KeyPressedEvent event(static_cast<KeyCode>(key), 0);
+						data.EventCallback(event);
+						break;
+					}
+					case GLFW_RELEASE:
+					{
+						KeyReleasedEvent event(static_cast<KeyCode>(key));
+						data.EventCallback(event);
+						break;
+					}
+					case GLFW_REPEAT:
+					{
+						KeyPressedEvent event(static_cast<KeyCode>(key), 1);
+						data.EventCallback(event);
+						break;
+					}
 				}
 			});
 
@@ -108,18 +110,18 @@ namespace Cober {
 
 				switch (action)
 				{
-				case GLFW_PRESS:
-				{
-					MouseButtonPressedEvent event(static_cast<MouseCode>(button));
-					data.EventCallback(event);
-					break;
-				}
-				case GLFW_RELEASE:
-				{
-					MouseButtonReleasedEvent event(static_cast<MouseCode>(button));
-					data.EventCallback(event);
-					break;
-				}
+					case GLFW_PRESS:
+					{
+						MouseButtonPressedEvent event(static_cast<MouseCode>(button));
+						data.EventCallback(event);
+						break;
+					}
+					case GLFW_RELEASE:
+					{
+						MouseButtonReleasedEvent event(static_cast<MouseCode>(button));
+						data.EventCallback(event);
+						break;
+					}
 				}
 			});
 

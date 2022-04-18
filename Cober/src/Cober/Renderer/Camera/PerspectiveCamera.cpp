@@ -63,9 +63,28 @@ namespace Cober {
 
 		float mouseX = static_cast<float>(event.GetX());
 		float mouseY = static_cast<float>(event.GetY());
+
+		if (m_firstMouse)
+		{
+			lastX = mouseX;
+			lastY = mouseY;
+			m_firstMouse = false;
+		}
+
+		float xoffset = mouseX - lastX;
+		float yoffset = lastY - mouseY;
+		lastX = mouseX;
+		lastY = mouseY;
+
+		float sensitivity = 0.1f;
+		xoffset *= sensitivity;
+		yoffset *= sensitivity;
+
+		c_yaw += xoffset * m_mouseSensitivity;
+		c_pitch += yoffset * m_mouseSensitivity;
 		
-		c_yaw += mouseX	* m_mouseSensitivity;
-		c_pitch -= mouseY * m_mouseSensitivity;
+		//c_yaw += mouseX	* m_mouseSensitivity;
+		//c_pitch -= mouseY * m_mouseSensitivity;
 		
 		c_pitch = std::max(c_pitch, -60.0f);
 		c_pitch = std::min(c_pitch, 60.0f);

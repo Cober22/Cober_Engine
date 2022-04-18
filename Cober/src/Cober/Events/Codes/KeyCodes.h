@@ -1,30 +1,32 @@
 #pragma once
 
+#include <ostream>
+
 namespace Cober
 {
 	typedef enum class KeyCode : uint16_t
 	{
 		// From glfw3.h
 		Space = 32,
-		Apostrophe = 39,
-		Comma = 44,
-		Minus = 45,
-		Period = 46,
-		Slash = 47,
+		Apostrophe = 39, /* ' */
+		Comma = 44, /* , */
+		Minus = 45, /* - */
+		Period = 46, /* . */
+		Slash = 47, /* / */
 
-		D0 = 48,
-		D1 = 49,
-		D2 = 50,
-		D3 = 51,
-		D4 = 52,
-		D5 = 53,
-		D6 = 54,
-		D7 = 55,
-		D8 = 56,
-		D9 = 57,
+		D0 = 48, /* 0 */
+		D1 = 49, /* 1 */
+		D2 = 50, /* 2 */
+		D3 = 51, /* 3 */
+		D4 = 52, /* 4 */
+		D5 = 53, /* 5 */
+		D6 = 54, /* 6 */
+		D7 = 55, /* 7 */
+		D8 = 56, /* 8 */
+		D9 = 57, /* 9 */
 
-		Semicolon = 59,
-		Equal = 61,
+		Semicolon = 59, /* ; */
+		Equal = 61, /* = */
 
 		A = 65,
 		B = 66,
@@ -53,15 +55,15 @@ namespace Cober
 		Y = 89,
 		Z = 90,
 
-		LeftBracket = 91,
-		Backslash = 92,
-		RightBracket = 93,
-		GraveAccent = 96,
+		LeftBracket = 91,  /* [ */
+		Backslash = 92,  /* \ */
+		RightBracket = 93,  /* ] */
+		GraveAccent = 96,  /* ` */
 
-		World1 = 161,
-		World2 = 162,
+		World1 = 161, /* non-US #1 */
+		World2 = 162, /* non-US #2 */
 
-		// Function keys 
+		/* Function keys */
 		Escape = 256,
 		Enter = 257,
 		Tab = 258,
@@ -107,7 +109,7 @@ namespace Cober
 		F24 = 313,
 		F25 = 314,
 
-		// Keypad
+		/* Keypad */
 		KP0 = 320,
 		KP1 = 321,
 		KP2 = 322,
@@ -146,11 +148,11 @@ namespace Cober
 
 // From glfw3.h
 #define KEY_SPACE           ::Cober::Key::Space
-#define KEY_APOSTROPHE      ::Cober::Key::Apostrophe    
-#define KEY_COMMA           ::Cober::Key::Comma         
-#define KEY_MINUS           ::Cober::Key::Minus         
-#define KEY_PERIOD          ::Cober::Key::Period        
-#define KEY_SLASH           ::Cober::Key::Slash         
+#define KEY_APOSTROPHE      ::Cober::Key::Apostrophe    /* ' */
+#define KEY_COMMA           ::Cober::Key::Comma         /* , */
+#define KEY_MINUS           ::Cober::Key::Minus         /* - */
+#define KEY_PERIOD          ::Cober::Key::Period        /* . */
+#define KEY_SLASH           ::Cober::Key::Slash         /* / */
 #define KEY_0               ::Cober::Key::D0
 #define KEY_1               ::Cober::Key::D1
 #define KEY_2               ::Cober::Key::D2
@@ -161,8 +163,8 @@ namespace Cober
 #define KEY_7               ::Cober::Key::D7
 #define KEY_8               ::Cober::Key::D8
 #define KEY_9               ::Cober::Key::D9
-#define KEY_SEMICOLON       ::Cober::Key::Semicolon     
-#define KEY_EQUAL           ::Cober::Key::Equal         
+#define KEY_SEMICOLON       ::Cober::Key::Semicolon     /* ; */
+#define KEY_EQUAL           ::Cober::Key::Equal         /* = */
 #define KEY_A               ::Cober::Key::A
 #define KEY_B               ::Cober::Key::B
 #define KEY_C               ::Cober::Key::C
@@ -189,14 +191,14 @@ namespace Cober
 #define KEY_X               ::Cober::Key::X
 #define KEY_Y               ::Cober::Key::Y
 #define KEY_Z               ::Cober::Key::Z
-#define KEY_LEFT_BRACKET    ::Cober::Key::LeftBracket   
-#define KEY_BACKSLASH       ::Cober::Key::Backslash     
-#define KEY_RIGHT_BRACKET   ::Cober::Key::RightBracket  
-#define KEY_GRAVE_ACCENT    ::Cober::Key::GraveAccent   
-#define KEY_WORLD_1         ::Cober::Key::World1        
-#define KEY_WORLD_2         ::Cober::Key::World2        
-							 
-// Function keys	  
+#define KEY_LEFT_BRACKET    ::Cober::Key::LeftBracket   /* [ */
+#define KEY_BACKSLASH       ::Cober::Key::Backslash     /* \ */
+#define KEY_RIGHT_BRACKET   ::Cober::Key::RightBracket  /* ] */
+#define KEY_GRAVE_ACCENT    ::Cober::Key::GraveAccent   /* ` */
+#define KEY_WORLD_1         ::Cober::Key::World1        /* non-US #1 */
+#define KEY_WORLD_2         ::Cober::Key::World2        /* non-US #2 */
+							  
+/* Function keys */			  
 #define KEY_ESCAPE          ::Cober::Key::Escape
 #define KEY_ENTER           ::Cober::Key::Enter
 #define KEY_TAB             ::Cober::Key::Tab
@@ -242,7 +244,7 @@ namespace Cober
 #define KEY_F24             ::Cober::Key::F24
 #define KEY_F25             ::Cober::Key::F25
 							  
-// Keypad				  
+/* Keypad */				  
 #define KEY_KP_0            ::Cober::Key::KP0
 #define KEY_KP_1            ::Cober::Key::KP1
 #define KEY_KP_2            ::Cober::Key::KP2
@@ -270,3 +272,4 @@ namespace Cober
 #define KEY_RIGHT_ALT       ::Cober::Key::RightAlt
 #define KEY_RIGHT_SUPER     ::Cober::Key::RightSuper
 #define KEY_MENU            ::Cober::Key::Menu
+							  

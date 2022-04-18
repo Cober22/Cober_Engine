@@ -11,7 +11,9 @@
 
 
 // [---- INPUT SYSTEM ----]
-
+#include "Cober/Events/Input.h"
+#include "Cober/Events/Codes/KeyCodes.h"
+#include "Cober/Events/Codes/MouseCodes.h"
 
 // [---- RENDERER ----]
 #include "Cober/Renderer/Renderer.h"

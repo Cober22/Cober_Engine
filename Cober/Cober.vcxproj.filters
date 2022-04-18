@@ -1335,7 +1335,7 @@
     <ClInclude Include="src\Cober\Events\EventManager.h">
       <Filter>src\Cober\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Events\InputManager.h">
+    <ClInclude Include="src\Cober\Events\Input.h">
       <Filter>src\Cober\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Events\KeyEvents.h">
@@ -1344,7 +1344,7 @@
     <ClInclude Include="src\Cober\Events\MouseEvents.h">
       <Filter>src\Cober\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Events\WindowEvents.h">
+    <ClInclude Include="src\Cober\Events\ApplicationEvents.h">
       <Filter>src\Cober\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\ImGui\ImGuiLayer.h">
@@ -1544,5 +1544,10 @@
     <ClCompile Include="src\pch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platforms\Windows\WindowsInput.cpp">
+      <Filter>src\Platforms\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\GraphicsContext.cpp" />
+    <ClCompile Include="src\Cober\Window.cpp" />
   </ItemGroup>
 </Project>

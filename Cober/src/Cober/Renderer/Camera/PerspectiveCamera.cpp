@@ -17,28 +17,21 @@ namespace Cober {
 
 	void PerspectiveCamera::OnUpdate(Timestep ts) {
 
-		//const Uint8* keystate = SDL_GetKeyboardState(NULL);
-		//
-		//// --- Keyboard keys
-		//if (keystate[SDL_SCANCODE_A])
-		//	c_position -= c_rightAxis * c_PerspTraslationSpeed * glm::vec3(ts);
-		//if (keystate[SDL_SCANCODE_D])
-		//	c_position += c_rightAxis * c_PerspTraslationSpeed * glm::vec3(ts);
-		//if (keystate[SDL_SCANCODE_S])
-		//	c_position -= c_direction * c_PerspTraslationSpeed * glm::vec3(ts);
-		//if (keystate[SDL_SCANCODE_W])										
-		//	c_position += c_direction * c_PerspTraslationSpeed * glm::vec3(ts);
-		//
-		//if (keystate[SDL_SCANCODE_Q]) 
-		//	c_yaw -= c_yawSpeed * c_CamSensitivity * ts;
-		//if (keystate[SDL_SCANCODE_E])
-		//	c_yaw += c_yawSpeed * c_CamSensitivity * ts;
-		//
-		//// ONLY FOR TEST
-		c_yaw -= c_yawSpeed * c_CamSensitivity * ts;
-		c_position.z = -20.0f;
-		//// ONLY FOR TEST
+		// --- Keyboard keys
+		if (Input::IsKeyPressed(KEY_A))
+			c_position -= c_rightAxis * c_PerspTraslationSpeed * glm::vec3(ts);
+		if (Input::IsKeyPressed(KEY_D))
+			c_position += c_rightAxis * c_PerspTraslationSpeed * glm::vec3(ts);
+		if (Input::IsKeyPressed(KEY_S))
+			c_position -= c_direction * c_PerspTraslationSpeed * glm::vec3(ts);
+		if (Input::IsKeyPressed(KEY_W))
+			c_position += c_direction * c_PerspTraslationSpeed * glm::vec3(ts);
 		
+		if (Input::IsKeyPressed(KEY_Q))
+			c_yaw -= c_yawSpeed * c_CamSensitivity * ts;
+		if (Input::IsKeyPressed(KEY_E))
+			c_yaw += c_yawSpeed * c_CamSensitivity * ts;
+				
 		glm::vec3 front;
 		front.x = cos(glm::radians(c_yaw)) * cos(glm::radians(c_pitch));
 		front.y = sin(glm::radians(c_pitch));
@@ -54,50 +47,57 @@ namespace Cober {
 		SetProjection(c_fov, {width, heigth}, c_nearPlane, c_farPlane);
 	}
 
-	void PerspectiveCamera::OnEvent() {
+	void PerspectiveCamera::OnEvent(Event& event) {
 		
-		//switch (event.type) {
-		//	case SDL_MOUSEMOTION:
-		//		OnMouseMotion(event.motion);	break;
-		//	case SDL_MOUSEWHEEL:
-		//		OnMouseScrolled(event.wheel);	break;
-		//	case SDL_WINDOWEVENT:
-		//		OnWindowResized(Application::Get().GetWindow());	break;
-		//}
+		CB_PROFILE_FUNCTION();
+
+		EventDispatcher dispatcher(event);
+		dispatcher.Dispatch<MouseMovedEvent>(CB_BIND_EVENT(PerspectiveCamera::OnMouseMotion));
+		dispatcher.Dispatch<MouseScrolledEvent>(CB_BIND_EVENT(PerspectiveCamera::OnMouseScrolled));
+		dispatcher.Dispatch<WindowResizeEvent>(CB_BIND_EVENT(PerspectiveCamera::OnWindowResized));
 	}
 
-	void PerspectiveCamera::OnMouseMotion() {
+	bool PerspectiveCamera::OnMouseMotion(MouseMovedEvent& event) {
 
-		//float mouseX = static_cast<float>(e.xrel);
-		//float mouseY = static_cast<float>(e.yrel);
-		//
-		//c_yaw += mouseX	* m_mouseSensitivity;
-		//c_pitch -= mouseY * m_mouseSensitivity;
-		//
-		//c_pitch = std::max(c_pitch, -60.0f);
-		//c_pitch = std::min(c_pitch, 60.0f);
-		//
-		//glm::vec3 front;
-		//front.x = cos(glm::radians(c_yaw)) * cos(glm::radians(c_pitch));
-		//front.y = sin(glm::radians(c_pitch));
-		//front.z = sin(glm::radians(c_yaw)) * cos(glm::radians(c_pitch));
-		//c_direction = glm::normalize(front);
-		//
-		//RecalculateMatrix();
+		CB_PROFILE_FUNCTION();
+
+		float mouseX = static_cast<float>(event.GetX());
+		float mouseY = static_cast<float>(event.GetY());
+		
+		c_yaw += mouseX	* m_mouseSensitivity;
+		c_pitch -= mouseY * m_mouseSensitivity;
+		
+		c_pitch = std::max(c_pitch, -60.0f);
+		c_pitch = std::min(c_pitch, 60.0f);
+		
+		glm::vec3 front;
+		front.x = cos(glm::radians(c_yaw)) * cos(glm::radians(c_pitch));
+		front.y = sin(glm::radians(c_pitch));
+		front.z = sin(glm::radians(c_yaw)) * cos(glm::radians(c_pitch));
+		c_direction = glm::normalize(front);
+		
+		RecalculateMatrix();
+		return false;
 	}
 
-	void PerspectiveCamera::OnMouseScrolled()
+	bool PerspectiveCamera::OnMouseScrolled(MouseScrolledEvent& event)
 	{
-		//float zoom = c_fov;
-		//zoom -= e.preciseY;
-		//zoom = std::max(zoom, 1.0f);
-		//zoom = std::min(zoom, 45.0f);
-		//c_PerspTraslationSpeed = zoom / 5;
-		//SetProjection(zoom, c_aspectRatio, c_nearPlane, c_farPlane);
+		CB_PROFILE_FUNCTION();
+
+		float zoom = c_fov;
+		zoom -= event.GetYOffset();
+		zoom = std::max(zoom, 1.0f);
+		zoom = std::min(zoom, 45.0f);
+		c_PerspTraslationSpeed = zoom / 5;
+		SetProjection(zoom, c_aspectRatio, c_nearPlane, c_farPlane);
+		return false;
 	}
 
-	void PerspectiveCamera::OnWindowResized(Window& e)
+	bool PerspectiveCamera::OnWindowResized(WindowResizeEvent& event)
 	{
-		SetProjection(c_fov, { e.GetWidth(), e.GetHeight() }, c_nearPlane, c_farPlane);
+		CB_PROFILE_FUNCTION();
+
+		SetProjection(c_fov, { event.GetWidth(), event.GetHeight() }, c_nearPlane, c_farPlane);
+		return false;
 	}
 }

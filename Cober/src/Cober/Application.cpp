@@ -1,8 +1,11 @@
 #include "pch.h"
 
 #include "Application.h"
-#include "Cober/Timestep.h"
+
+//#include "Cober/Log.h"
+#include "Cober/Events/Input.h"
 #include "Cober/Renderer/Renderer.h"
+#include "Cober/Timestep.h"
 
 namespace Cober {
 
@@ -12,9 +15,12 @@ namespace Cober {
 
 	Application::Application(const std::string& name) {
 
+		CB_PROFILE_FUNCTION();
+
 		s_Instance = this;
 		WindowProps windowProps = WindowProps("Cober Engine", W_WIDTH, W_HEIGHT);
 		_window = Window::Create(WindowProps(name));
+		_window->SetEventCallback(CB_BIND_EVENT(Application::OnEvent));
 
 		Renderer::Init();
 
@@ -26,9 +32,14 @@ namespace Cober {
 
 	Application::~Application() {
 
+		CB_PROFILE_FUNCTION();
+
+		Renderer::Shutdown();
 	}
 
 	void Application::PushLayer(Layer* layer) {
+
+		CB_PROFILE_FUNCTION();
 
 		m_LayerStack.PushLayer(layer);
 		layer->OnAttach();
@@ -36,18 +47,34 @@ namespace Cober {
 
 	void Application::PushOverlay(Layer* layer) {
 
+		CB_PROFILE_FUNCTION();
+
 		m_LayerStack.PushOverlay(layer);
 		layer->OnAttach();
 	}
 
-	void Application::Close() {
-		_gameState = GameState::EXIT;
-	}
+	//void Application::OnEvent(Event& event) {
+
+	//	CB_PROFILE_FUNCTION();
+
+	//	EventDispatcher dispatcher(event);
+	//	dispatcher.Dispatch<WindowCloseEvent>(CB_BIND_EVENT(Application::OnWindowClose));
+	//	dispatcher.Dispatch<WindowResizeEvent>(CB_BIND_EVENT(Application::OnWindowResize));
+
+	//	for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
+	//	{
+	//		if (event.Handled)
+	//			break;
+	//		(*it)->OnEvent(event);
+	//	}
+	//}
 
 	void Application::Run() {
 
 		while (_gameState != GameState::EXIT)
 		{
+			CB_PROFILE_SCOPE("RunLoop");
+
 			float time = (float)(glfwGetTime());
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
@@ -65,88 +92,73 @@ namespace Cober {
 
 			if (!w_Minimized)
 			{
-				CB_PROFILE_SCOPE("Render Prep");
-				// BACKGRUOND COLOR!
-				//RenderCommand::SetClearColor({ 0.02f, 0.008f, 0.05f, 1.0f });	// DARK BLUE
-				//RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
-				RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
-			   //RenderCommand::SetClearColor({ 0.8f, 0.35f, 0.35f, 1.0f });
-				RenderCommand::Clear();
-				
-				for (Layer* layer : m_LayerStack)
-					layer->OnUpdate(timestep);
+				{
+					CB_PROFILE_SCOPE("Render Prep");
+					//RenderCommand::SetClearColor({ 0.02f, 0.008f, 0.05f, 1.0f });	// DARK BLUE
+					//RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+					RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
+					//RenderCommand::SetClearColor({ 0.8f, 0.35f, 0.35f, 1.0f });
+					RenderCommand::Clear();
+				}
+				{
+					CB_PROFILE_SCOPE("LayerStack OnUpdate");
 
-				m_ImGuiLayer->Begin();
-				for (Layer* layer : m_LayerStack)
-					layer->OnImGuiRender();
+					for (Layer* layer : m_LayerStack)
+						layer->OnUpdate(timestep);
+				}
+				{
+					CB_PROFILE_SCOPE("LayerStack OnImGuiRenderer");
+
+					m_ImGuiLayer->Begin();
+					for (Layer* layer : m_LayerStack)
+						layer->OnImGuiRender();
+				}
 				m_ImGuiLayer->End();
-
-				ProcessInputs();
 			}
 			
 			_window->OnUpdate();
 		}
 	}
 
-	void Application::ProcessInputs() {
+	void Application::Close() {
+		_gameState = GameState::EXIT;
+	}
 
-		glfwPollEvents();
+	//void Application::OnEvent(Event& e)
+	//{
+	//	CB_PROFILE_FUNCTION();
 
-		// ONLY FOR TEST
-		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
-			(*--it)->OnEvent();
-		//SDL_Event event; 
-		//GLFWwindow* window = _window->GetNativeWindow();
-		////const uint8_t* state = SDL_GetKeyboardState(NULL);
-		////if (state[SDL_SCANCODE_RIGHT]) printf("Right");
-		////if (state[SDL_SCANCODE_LEFT]) printf("Left");
-		////if (state[SDL_SCANCODE_UP]) printf("Up");
-		////if (state[SDL_SCANCODE_DOWN]) printf("Down");
-		//// Dispatcher events
-		//while (SDL_PollEvent(&event)) {
-		//
-		//	std::cout << event.type << std::endl;
-		//	//std::cout << event.key << std::endl;
-		//	//std::cout << event.key.keysym.sym << std::endl;
-		//
-		//	for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
-		//		(*--it)->OnEvent(event);
-		//
-		//	switch (event.type) {
-		//		case SDL_QUIT:
-		//			_gameState = GameState::EXIT;	break;
-		//		case SDL_KEYDOWN:
-		//			if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
-		//				_gameState = GameState::EXIT;
-		//			//if (event.key.keysym.scancode == SDL_SCANCODE_F) {
-		//			//	w_Fullscreen = w_Fullscreen == true ? false : true;
-		//			//
-		//			//	if (w_Fullscreen)
-		//			//		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-		//			//	else 
-		//			//		SDL_SetWindowFullscreen(window, 0);
-		//			//}
-		//			if (event.key.keysym.scancode == SDL_SCANCODE_M) {
-		//				if (SDL_GetRelativeMouseMode() == SDL_TRUE)
-		//					SDL_SetRelativeMouseMode(SDL_FALSE);
-		//				else
-		//					SDL_SetRelativeMouseMode(SDL_TRUE);
-		//			}
-		//			break;
-		//		case SDL_WINDOWEVENT:
-		//			if (_window->GetWidth() == 0 || _window->GetHeight() == 0)
-		//				w_Minimized = true;
-		//			else {
-		//				int* width = nullptr, *height = nullptr;
-		//
-		//				glfwGetWindowSize(window, width, height);
-		//				_window->SetWidth((float&)width);
-		//				_window->SetHeight((float&)height);
-		//				w_Minimized = false;
-		//				Renderer::OnWindowResize((float&)width, (float&)height);
-		//			}
-		//			break;
-		//	}
-		//}
+	//	EventDispatcher dispatcher(e);
+	//	dispatcher.Dispatch<WindowCloseEvent>(CB_BIND_EVENT(Application::OnWindowClose));
+	//	dispatcher.Dispatch<WindowResizeEvent>(CB_BIND_EVENT(Application::OnWindowResize));
+
+	//	for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
+	//	{
+	//		if (e.Handled)
+	//			break;
+	//		(*it)->OnEvent(e);
+	//	}
+	//}
+
+	bool Application::OnWindowClose(WindowCloseEvent& event)
+	{
+		_gameState = GameState::EXIT;
+		return true;
+	}
+
+	bool Application::OnWindowResize(WindowResizeEvent& event)
+	{
+		CB_PROFILE_FUNCTION();
+
+		if (event.GetWidth() == 0 || event.GetHeight() == 0)
+		{
+			w_Minimized = true;
+			return false;
+		}
+
+		w_Minimized = false;
+		Renderer::OnWindowResize(event.GetWidth(), event.GetHeight());
+
+		return false;
 	}
 }

@@ -13,7 +13,7 @@ namespace Cober {
 	public:
 		PerspectiveCamera(float fov, glm::vec2 aspectRatio, float nearPlane, float farPlane);
 		void OnUpdate(Timestep ts) override;
-		void OnEvent() override;
+		void OnEvent(Event& event) override;
 		void Resize(float width, float heigth) override;
 
 		const glm::mat4& GetViewMatrix() const override { return  glm::lookAt(c_position, c_position + c_direction, c_upAxis); }
@@ -25,8 +25,8 @@ namespace Cober {
 		glm::vec3& GetDirection() { return c_direction; }
 		void SetDirection(glm::vec3& direction) { c_direction = direction; }
 	public:
-		void OnMouseMotion() override;
-		void OnMouseScrolled() override;
-		void OnWindowResized(Window& e) override;
+		bool OnMouseMotion(MouseMovedEvent& event) override;
+		bool OnMouseScrolled(MouseScrolledEvent& event) override;
+		bool OnWindowResized(WindowResizeEvent& event) override;
 	};
 }

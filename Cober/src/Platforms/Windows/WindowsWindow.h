@@ -19,7 +19,7 @@ namespace Cober {
 		inline void SetHeight(float height) override { m_Data.Height = height; }
 
 		// Window attributes
-		//inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
+		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 
@@ -37,7 +37,7 @@ namespace Cober {
 			unsigned int Width, Height;
 			bool VSync;
 
-			//EventCallbackFn EventCallback;
+			EventCallbackFn EventCallback;
 		};
 
 		WindowData m_Data;

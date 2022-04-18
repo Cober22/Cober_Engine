@@ -3,6 +3,7 @@
 #include "pch.h"
 
 #include "Cober/Core.h"
+#include "Cober/Events/EventManager.h"
 
 namespace Cober {
 
@@ -22,11 +23,11 @@ namespace Cober {
 		}
 	};
 
-	// Interface representing a desktiop system based Window
+	// Interface representing a desktop system based Window
 	class Window
 	{
 	public:
-		//using EventCallbackFn = std::function<void(SDL_Event&)>;
+		using EventCallbackFn = std::function<void(Event&)>;
 
 		virtual ~Window() {}
 
@@ -38,12 +39,12 @@ namespace Cober {
 		virtual void SetHeight(float height) = 0;
 
 		// Window attributes
-		//virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
+		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;
 
 		virtual GLFWwindow* GetNativeWindow() const = 0;
 
-		static Window* Create(const WindowProps& props = WindowProps());
+		static Scope<Window> Create(const WindowProps& props = WindowProps());
 	};
 }

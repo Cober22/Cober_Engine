@@ -7,6 +7,11 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "Cober/Events/EventManager.h"
+#include "Cober/Events/Input.h"
+#include "Cober/Events/Codes/KeyCodes.h"
+#include "Cober/Events/MouseEvents.h"
+
 namespace Cober {
 
 	class CameraController
@@ -17,16 +22,16 @@ namespace Cober {
 		void RecalculateMatrix();
 
 		virtual void OnUpdate(Timestep ts) = 0;
-		virtual void OnEvent() = 0;
+		virtual void OnEvent(Event& event) = 0;
 		virtual void Resize(float width, float heigth) = 0;
 
 	public:
 		void SetProjection(float left, float right, float bottom, float top);
 		void SetProjection(float angle, glm::vec2 aspectRatio, float nearPlane, float farPlane);
 
-		virtual void OnMouseMotion() = 0;
-		virtual void OnMouseScrolled() = 0;
-		virtual void OnWindowResized(Window& e) = 0;
+		virtual bool OnMouseMotion(MouseMovedEvent& event) = 0;
+		virtual bool OnMouseScrolled(MouseScrolledEvent& event) = 0;
+		virtual bool OnWindowResized(WindowResizeEvent& event) = 0;
 	public:
 		virtual const glm::mat4& GetViewMatrix() const = 0;
 		virtual const glm::mat4& GetProjectionMatrix() const = 0;

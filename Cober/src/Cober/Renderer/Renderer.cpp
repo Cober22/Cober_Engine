@@ -104,7 +104,7 @@ namespace Cober {
 	void Renderer::Shutdown() 
 	{
 		CB_PROFILE_FUNCTION();
-		delete[] primitive.quad->attributes;
+		//delete[] primitive.quad->attributes;
 	}
 
 	void Renderer::EndScene()

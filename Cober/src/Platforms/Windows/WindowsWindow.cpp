@@ -13,11 +13,6 @@ namespace Cober {
 		//CB_CORE_ERROR("SDL Error ({0}): {1}", error, description);
 	}
 
-	Window* Window::Create(const WindowProps& props) 
-	{
-		return new WindowsWindow(props);
-	}
-
 	WindowsWindow::WindowsWindow(const WindowProps& props)
 	{
 		Init(props);
@@ -48,31 +43,31 @@ namespace Cober {
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 
 		// Init Window CONTEXT
-		m_Context = CreateScope<OpenGLContext>(m_Window);
+
+		m_Context = GraphicsContext::Create(m_Window);
 		m_Context->Init();
 		
 		SetVSync(true);
 
-		// Set SDL callbacks
-		/*
-		SDL_SetWindowSize(m_Window, [](SDL_Window* window, int width, int height)
-		{
-			WindowData& data = *(WindowData*)SDL_GetWindowData(window);
-			data.Width = width;
-			data.Height = height;
+		// Set GLFW callbacks
+		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
+			{
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+				data.Width = width;
+				data.Height = height;
 
-			WindowResizeEvent event(width, height);
-			data.EventCallback(event);
-		});
-		
-		SDL_CLOSE(m_Window, [](GLFWwindow* window)
+				WindowResizeEvent event(width, height);
+				data.EventCallback(event);
+			});
+
+		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
 			{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 				WindowCloseEvent event;
 				data.EventCallback(event);
 			});
 
-		SDL_KeyboardEvent(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 			{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
@@ -80,19 +75,19 @@ namespace Cober {
 				{
 				case GLFW_PRESS:
 				{
-					KeyPressedEvent event(key, 0);
+					KeyPressedEvent event(static_cast<KeyCode>(key), 0);
 					data.EventCallback(event);
 					break;
 				}
 				case GLFW_RELEASE:
 				{
-					KeyReleasedEvent event(key);
+					KeyReleasedEvent event(static_cast<KeyCode>(key));
 					data.EventCallback(event);
 					break;
 				}
 				case GLFW_REPEAT:
 				{
-					KeyPressedEvent event(key, 1);
+					KeyPressedEvent event(static_cast<KeyCode>(key), 1);
 					data.EventCallback(event);
 					break;
 				}
@@ -103,7 +98,7 @@ namespace Cober {
 			{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-				KeyTypedEvent event(keycode);
+				KeyTypedEvent event(static_cast<KeyCode>(keycode));
 				data.EventCallback(event);
 			});
 
@@ -115,13 +110,13 @@ namespace Cober {
 				{
 				case GLFW_PRESS:
 				{
-					MouseButtonPressedEvent event(button);
+					MouseButtonPressedEvent event(static_cast<MouseCode>(button));
 					data.EventCallback(event);
 					break;
 				}
 				case GLFW_RELEASE:
 				{
-					MouseButtonReleasedEvent event(button);
+					MouseButtonReleasedEvent event(static_cast<MouseCode>(button));
 					data.EventCallback(event);
 					break;
 				}
@@ -142,28 +137,32 @@ namespace Cober {
 
 				MouseMovedEvent event((float)xPos, (float)yPos);
 				data.EventCallback(event);
-			});*/
+			});
 	}
 
 	void Cober::WindowsWindow::Shutdown()
 	{
+		CB_PROFILE_FUNCTION();
+
 		glfwDestroyWindow(m_Window);
 		--s_GLFWWindowCount;
+	
 		if (s_GLFWWindowCount == 0)
-		{
 			glfwTerminate();
-		}
 	}
 
 	void WindowsWindow::OnUpdate()
 	{
-		//glfwPollEvents();
-		//RenderCommand::SetViewport(0, 0, m_Data.Width, m_Data.Height);
+		CB_PROFILE_FUNCTION();
+
+		glfwPollEvents();
 		m_Context->SwapBuffers();
 	}
 	
 	void WindowsWindow::SetVSync(bool enabled)
 	{
+		CB_PROFILE_FUNCTION();
+
 		if (enabled)
 			glfwSwapInterval(1);
 		else

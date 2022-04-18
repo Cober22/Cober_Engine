@@ -579,10 +579,10 @@
     <ClInclude Include="src\Cober\Events\Codes\KeyCodes.h" />
     <ClInclude Include="src\Cober\Events\Codes\MouseCodes.h" />
     <ClInclude Include="src\Cober\Events\EventManager.h" />
-    <ClInclude Include="src\Cober\Events\InputManager.h" />
+    <ClInclude Include="src\Cober\Events\Input.h" />
     <ClInclude Include="src\Cober\Events\KeyEvents.h" />
     <ClInclude Include="src\Cober\Events\MouseEvents.h" />
-    <ClInclude Include="src\Cober\Events\WindowEvents.h" />
+    <ClInclude Include="src\Cober\Events\ApplicationEvents.h" />
     <ClInclude Include="src\Cober\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Cober\Instrumentator.h" />
     <ClInclude Include="src\Cober\Layers\Layer.h" />
@@ -632,6 +632,7 @@
     <ClCompile Include="src\Cober\Renderer\Camera\OrthographicCamera.cpp" />
     <ClCompile Include="src\Cober\Renderer\Camera\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Cober\Renderer\Framebuffer.cpp" />
+    <ClCompile Include="src\Cober\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Cober\Renderer\Primitives\Cube.cpp" />
     <ClCompile Include="src\Cober\Renderer\Primitives\LightCube.cpp" />
     <ClCompile Include="src\Cober\Renderer\Primitives\Mesh.cpp" />
@@ -641,6 +642,7 @@
     <ClCompile Include="src\Cober\Renderer\SubTexture2D.cpp" />
     <ClCompile Include="src\Cober\Renderer\Texture.cpp" />
     <ClCompile Include="src\Cober\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Cober\Window.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLFramebuffer.cpp" />
@@ -648,6 +650,7 @@
     <ClCompile Include="src\Platforms\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLTexture2D.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\Platforms\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platforms\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

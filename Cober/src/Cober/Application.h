@@ -1,15 +1,12 @@
 #pragma once
 
-#include "pch.h"
 #include "Core.h"
-#include "Layers/LayerStack.h"
-
 #include "Window.h"
+#include "Layers/LayerStack.h"
+#include "Events/EventManager.h"
+#include "Events/ApplicationEvents.h"
 
 #include "ImGui/ImGuiLayer.h"
-#include "Cober/Renderer/Shader.h"
-#include "Cober/Renderer/Buffer.h"
-#include "Cober/Renderer/VertexArray.h"
 
 namespace Cober {
 
@@ -21,20 +18,37 @@ namespace Cober {
 		Application(const std::string& name = "");
 		virtual ~Application();
 
+		void Run();
+		void Close();
+
+		void OnEvent(Event& e)
+		{
+			CB_PROFILE_FUNCTION();
+
+			EventDispatcher dispatcher(e);
+			dispatcher.Dispatch<WindowCloseEvent>(CB_BIND_EVENT(Application::OnWindowClose));
+			dispatcher.Dispatch<WindowResizeEvent>(CB_BIND_EVENT(Application::OnWindowResize));
+
+			for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
+			{
+				if (e.Handled)
+					break;
+				(*it)->OnEvent(e);
+			}
+		};
+
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
 
-		void Close();
-		void Run();
-
-		inline static Application& Get() { return *s_Instance; }
-		inline Window& GetWindow() { return *_window; }
+		static Application& Get() { return *s_Instance; }
+		Window& GetWindow() { return *_window; }
+		ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; }
 	private:
-		void ProcessInputs();
-		
-		Window* _window;
+		bool OnWindowClose(WindowCloseEvent& e);
+		bool OnWindowResize(WindowResizeEvent& e);
+	private:
+		std::unique_ptr<Window> _window;
 		GameState _gameState;
-
 		ImGuiLayer* m_ImGuiLayer;
 		LayerStack m_LayerStack;
 		float m_LastFrameTime = 0.0f;
@@ -43,10 +57,9 @@ namespace Cober {
 		bool w_Minimized = false;
 		bool w_Fullscreen = false;
 		const int FPS_LIMIT = 10;
-
-
 	private:
 		static Application* s_Instance;
+		//friend int ::main(int argc, char** argv);
 	};
 
 	// To be defined in a client

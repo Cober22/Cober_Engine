@@ -103,8 +103,13 @@ namespace Cober {
 		}
 	}
 
-	void ImGuiLayer::OnEvent() {
+	void ImGuiLayer::OnEvent(Event& event) {
 
-		//ImGui_ImplSDL2_ProcessEvent(&event);
+		if (m_BlockEvents)
+		{
+			ImGuiIO& io = ImGui::GetIO();
+			event.Handled |= event.IsInCategory(EventCategoryMouse) & io.WantCaptureMouse;
+			event.Handled |= event.IsInCategory(EventCategoryKeyboard) & io.WantCaptureKeyboard;
+		}
 	}
 }

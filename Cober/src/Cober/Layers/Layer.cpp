@@ -7,9 +7,4 @@ namespace Cober {
 		: m_DebugName(debugName)
 	{
 	}
-
-	Layer::~Layer()
-	{
-	}
-
 }

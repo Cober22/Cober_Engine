@@ -19,10 +19,10 @@ namespace Cober {
 
 		virtual void OnAttach() override;
 		virtual void OnDetach() override;
-		virtual void OnImGuiRender() override;
 
 		void OnUpdate(Timestep ts) override;
-		void OnEvent() override;
+		virtual void OnImGuiRender() override;
+		void OnEvent(Event& event) override;
 	private:
 		PerspectiveCamera PerspCamera;
 		OrthographicCamera OrthoCamera;

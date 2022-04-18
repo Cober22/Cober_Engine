@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Core.h"
 
 #ifdef CB_PLATFORM_WINDOWS

@@ -1,7 +1,6 @@
 #pragma once
 #include "Core.h"
 
-
 // [---------------------------------------------]
 // [------------------- ERROR -------------------]
 #define CB_GetError(...)				//SDL_GetError(__VA_ARGS__)

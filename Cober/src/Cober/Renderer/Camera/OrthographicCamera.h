@@ -14,7 +14,7 @@ namespace Cober {
 		OrthographicCamera(float left, float right, float bottom, float top);
 
 		void OnUpdate(Timestep ts) override;
-		void OnEvent() override;
+		void OnEvent(SDL_Event& e) override;
 		void Resize(float width, float heigth) override;
 
 		const glm::mat4& GetViewMatrix() const override { return  c_VMatrix; }
@@ -26,8 +26,8 @@ namespace Cober {
 		glm::vec3& GetDirection() { return c_direction; }
 		void SetDirection(glm::vec3& direction) { c_direction = direction; }
 	public:
-		void OnMouseMotion() override;
-		void OnMouseScrolled() override;
+		void OnMouseMotion(SDL_MouseMotionEvent& e) override;
+		void OnMouseScrolled(SDL_MouseWheelEvent& e) override;
 		void OnWindowResized(Window& e) override;
 	};
 }

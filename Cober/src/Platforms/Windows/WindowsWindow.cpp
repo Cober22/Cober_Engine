@@ -6,7 +6,6 @@
 
 namespace Cober {
 
-	static bool s_SDLInitialized = false;
 	static uint8_t s_GLFWWindowCount = 0;
 
 	static void SDLErrorCallback(int error, const char* description) 
@@ -35,16 +34,6 @@ namespace Cober {
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
 
-		// Init SDL
-		//if (!s_SDLInitialized) 
-		//{
-		//	// TODO: SDL_Quit(); on system shutdhown
-		//	int success = SDL_Init(SDL_INIT_EVERYTHING);
-		//	//CB_CORE_ASSERT(success, "Could not initialize SDL!");
-		//	//sdlSetErrorCallback(SDLErrorCallback);
-		//	s_SDLInitialized = true;
-		//}
-
 		// Init GLFW
 		if (s_GLFWWindowCount == 0)
 		{
@@ -53,15 +42,19 @@ namespace Cober {
 			CB_ASSERT(success, "Could not initialize GLFW!");
 		}
 
+		if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+			std::cout << "dawsdasd" << std::endl;
+			std::cout << SDL_GetError() << std::endl;
+		}
 		// Init WINDOW
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		++s_GLFWWindowCount;
+		glfwSetWindowUserPointer(m_Window, &m_Data);
 
 		// Init Window CONTEXT
-		glfwSetWindowUserPointer(m_Window, &m_Data);
 		m_Context = CreateScope<OpenGLContext>(m_Window);
 		m_Context->Init();
-
+		
 		SetVSync(true);
 
 		// Set SDL callbacks
@@ -168,7 +161,7 @@ namespace Cober {
 
 	void WindowsWindow::OnUpdate()
 	{
-		glfwPollEvents();
+		//glfwPollEvents();
 		//RenderCommand::SetViewport(0, 0, m_Data.Width, m_Data.Height);
 		m_Context->SwapBuffers();
 	}

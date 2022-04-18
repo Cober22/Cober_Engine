@@ -8,6 +8,7 @@ namespace Cober {
 	Ref<Shader> modelShader;
 	Ref<Shader> textureShader;
 
+
 	glm::vec3 cameraPosition;
 	glm::vec3 cameraDirection;
 	glm::vec3 l_Color = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -124,7 +125,7 @@ namespace Cober {
 			primitive.quad->textureSlots[i]->Bind(i);
 		primitive.quad->GetVAO()->Bind();
 		RenderCommand::DrawIndexed(primitive.quad->GetVAO(), primitive.quad->indexCount);
-		//stats->DrawCalls++;
+		stats.DrawCalls++;
 	}
 
 	void Renderer::FlushAndReset() {
@@ -135,19 +136,6 @@ namespace Cober {
 		primitive.quad->attributes = baseQuadAttributes;
 
 		primitive.quad->textureSlotIndex = 1;
-	}
-
-
-	void Renderer::ResetStats()
-	{
-		/*if (primitive.quad)
-			memset(&primitive.quad->stats, 0, sizeof(Stats));*/
-	}
-	Ref<Stats> Renderer::GetStats()
-	{
-		/*if (primitive.quad)
-			return primitive.quad->stats;*/
-		return nullptr;
 	}
 
 	// [-------------------- MODEL --------------------]
@@ -168,6 +156,7 @@ namespace Cober {
 	{
 		primitive.quad->GetShader()->Bind();
 		primitive.quad->Draw(position, 0.0f, size, color);
+		stats.QuadCount++;
 	}
 
 	void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor)
@@ -179,6 +168,7 @@ namespace Cober {
 	{
 		primitive.quad->GetShader()->Bind();
 		primitive.quad->Draw(position, 0, size, texture, color, tilingFactor);
+		stats.QuadCount++;
 	}
 
 	void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
@@ -189,6 +179,7 @@ namespace Cober {
 		
 		primitive.quad->GetShader()->Bind();
 		primitive.quad->Draw(position, 0, size, subtexture, color, tilingFactor);
+		stats.QuadCount++;
 	}
 
 	void Renderer::DrawRotatedQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const glm::vec4& color)
@@ -200,6 +191,7 @@ namespace Cober {
 	{
 		primitive.quad->GetShader()->Bind();
 		primitive.quad->Draw(position, rotation, size, color);
+		stats.QuadCount++;
 	}
 
 	void Renderer::DrawRotatedQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor)
@@ -211,6 +203,7 @@ namespace Cober {
 
 		primitive.quad->GetShader()->Bind();
 		primitive.quad->Draw(position, rotation, size, texture, color, tilingFactor); 
+		stats.QuadCount++;
 	}
 
 	void Renderer::DrawRotatedQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
@@ -221,6 +214,7 @@ namespace Cober {
 	
 		primitive.quad->GetShader()->Bind();
 		primitive.quad->Draw(position, rotation, size, subtexture, color, tilingFactor);
+		stats.QuadCount++;
 	}
 
 
@@ -235,6 +229,7 @@ namespace Cober {
 		basicShader->Bind();
 		primitive.cube->GetTexture()->Bind();
 		primitive.cube->Draw(position, size, basicShader);
+		stats.CubeCount++;
 	}
 
 	void Renderer::DrawCube(const glm::vec2& position, const glm::vec3& size, const Ref<Texture2D>& diffuseTexture, const Ref<Texture2D>& specTexture, const glm::vec3& color)
@@ -248,6 +243,7 @@ namespace Cober {
 		diffuseTexture->Bind(0);
 		specTexture->Bind(1);
 		primitive.cube->Draw(position, size, basicShader);
+		stats.CubeCount++;
 	}
 
 
@@ -261,6 +257,7 @@ namespace Cober {
 		lightCubeShader->Bind();
 		lightCubeShader->SetFloat3("u_Color", color);
 		primitive.lightCube->Draw(position, size, lightCubeShader);
+		stats.LightCount++;
 	}
 
 

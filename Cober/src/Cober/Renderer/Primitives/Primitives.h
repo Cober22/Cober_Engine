@@ -38,7 +38,6 @@ namespace Cober {
 			glm::vec3 Normal;
 		};
 		Attributes* attributes = nullptr;
-		//Ref<Stats> stats;
 	private:
 		void SetAttributes(const glm::vec3& position, float rotation, const glm::vec2& size, 
 						   const glm::vec4& color, int textureIndex, const glm::vec2* textureCoords, float tilingFactor);

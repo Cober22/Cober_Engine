@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Cober/Renderer/Framebuffer.h"
-#include "Cober/Window.h"
 
 namespace Cober {
 
@@ -24,6 +23,5 @@ namespace Cober {
 		uint32_t m_RendererID;
 		uint32_t m_ColorAttachment, m_DepthAttachment;
 		FramebufferSpecification m_Specification;
-		Window* window;
 	};
 }

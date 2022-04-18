@@ -1332,19 +1332,19 @@
     <ClInclude Include="src\Cober\Events\Codes\MouseCodes.h">
       <Filter>src\Cober\Events\Codes</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Events\Event.h">
+    <ClInclude Include="src\Cober\Events\EventManager.h">
       <Filter>src\Cober\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Events\Input.h">
+    <ClInclude Include="src\Cober\Events\InputManager.h">
       <Filter>src\Cober\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Events\KeyEvent.h">
+    <ClInclude Include="src\Cober\Events\KeyEvents.h">
       <Filter>src\Cober\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Events\MouseEvent.h">
+    <ClInclude Include="src\Cober\Events\MouseEvents.h">
       <Filter>src\Cober\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Events\WindowEvent.h">
+    <ClInclude Include="src\Cober\Events\WindowEvents.h">
       <Filter>src\Cober\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\ImGui\ImGuiLayer.h">

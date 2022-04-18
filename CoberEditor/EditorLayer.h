@@ -46,7 +46,7 @@ namespace Cober {
 		SPOT_LIGHT	spotLights;
 		//Cober::Ref<Cober::Shader> m_ShaderQuad;
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
-		glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
+		glm::vec2 m_ViewportSize = { 0, 0 };
 
 		struct ProfileResult 
 		{

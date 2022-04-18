@@ -12,8 +12,6 @@ namespace Cober {
 
 	Application::Application(const std::string& name) {
 
-		//SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "4");
-
 		s_Instance = this;
 		WindowProps windowProps = WindowProps("Cober Engine", W_WIDTH, W_HEIGHT);
 		_window = Window::Create(WindowProps(name));
@@ -65,28 +63,27 @@ namespace Cober {
 			//if (1000/ FPS_LIMIT > m_LastFrameTime)
 				//SDL_Delay(1000 / FPS_LIMIT);
 
-				// Render
+			if (!w_Minimized)
 			{
 				CB_PROFILE_SCOPE("Render Prep");
 				// BACKGRUOND COLOR!
 				//RenderCommand::SetClearColor({ 0.02f, 0.008f, 0.05f, 1.0f });	// DARK BLUE
-				RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
-				//RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
+				//RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+				RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
 			   //RenderCommand::SetClearColor({ 0.8f, 0.35f, 0.35f, 1.0f });
 				RenderCommand::Clear();
+				
+				for (Layer* layer : m_LayerStack)
+					layer->OnUpdate(timestep);
+
+				m_ImGuiLayer->Begin();
+				for (Layer* layer : m_LayerStack)
+					layer->OnImGuiRender();
+				m_ImGuiLayer->End();
+
+				ProcessInputs();
 			}
-
-
 			
-			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate(timestep);
-
-			m_ImGuiLayer->Begin();
-			for (Layer* layer : m_LayerStack)
-				layer->OnImGuiRender();
-			m_ImGuiLayer->End();
-
-			//ProcessInputs();
 			_window->OnUpdate();
 		}
 	}
@@ -95,8 +92,17 @@ namespace Cober {
 
 		SDL_Event event; 
 		GLFWwindow* window = _window->GetNativeWindow();
+		//const uint8_t* state = SDL_GetKeyboardState(NULL);
+		//if (state[SDL_SCANCODE_RIGHT]) printf("Right");
+		//if (state[SDL_SCANCODE_LEFT]) printf("Left");
+		//if (state[SDL_SCANCODE_UP]) printf("Up");
+		//if (state[SDL_SCANCODE_DOWN]) printf("Down");
 		// Dispatcher events
 		while (SDL_PollEvent(&event)) {
+
+			std::cout << event.type << std::endl;
+			//std::cout << event.key << std::endl;
+			//std::cout << event.key.keysym.sym << std::endl;
 
 			for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 				(*--it)->OnEvent(event);
@@ -115,12 +121,12 @@ namespace Cober {
 					//	else 
 					//		SDL_SetWindowFullscreen(window, 0);
 					//}
-					//if (event.key.keysym.scancode == SDL_SCANCODE_M) {
-					//	if (SDL_GetRelativeMouseMode() == SDL_TRUE)
-					//		SDL_SetRelativeMouseMode(SDL_FALSE);
-					//	else
-					//		SDL_SetRelativeMouseMode(SDL_TRUE);
-					//}
+					if (event.key.keysym.scancode == SDL_SCANCODE_M) {
+						if (SDL_GetRelativeMouseMode() == SDL_TRUE)
+							SDL_SetRelativeMouseMode(SDL_FALSE);
+						else
+							SDL_SetRelativeMouseMode(SDL_TRUE);
+					}
 					break;
 				case SDL_WINDOWEVENT:
 					if (_window->GetWidth() == 0 || _window->GetHeight() == 0)
@@ -134,6 +140,7 @@ namespace Cober {
 						w_Minimized = false;
 						Renderer::OnWindowResize((float&)width, (float&)height);
 					}
+					break;
 			}
 		}
 	}

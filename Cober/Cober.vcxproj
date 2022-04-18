@@ -578,11 +578,11 @@
     <ClInclude Include="src\Cober\Events\Codes\ControllerCodes.h" />
     <ClInclude Include="src\Cober\Events\Codes\KeyCodes.h" />
     <ClInclude Include="src\Cober\Events\Codes\MouseCodes.h" />
-    <ClInclude Include="src\Cober\Events\Event.h" />
-    <ClInclude Include="src\Cober\Events\Input.h" />
-    <ClInclude Include="src\Cober\Events\KeyEvent.h" />
-    <ClInclude Include="src\Cober\Events\MouseEvent.h" />
-    <ClInclude Include="src\Cober\Events\WindowEvent.h" />
+    <ClInclude Include="src\Cober\Events\EventManager.h" />
+    <ClInclude Include="src\Cober\Events\InputManager.h" />
+    <ClInclude Include="src\Cober\Events\KeyEvents.h" />
+    <ClInclude Include="src\Cober\Events\MouseEvents.h" />
+    <ClInclude Include="src\Cober\Events\WindowEvents.h" />
     <ClInclude Include="src\Cober\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Cober\Instrumentator.h" />
     <ClInclude Include="src\Cober\Layers\Layer.h" />

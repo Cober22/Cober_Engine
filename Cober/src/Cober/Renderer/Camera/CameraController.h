@@ -17,15 +17,15 @@ namespace Cober {
 		void RecalculateMatrix();
 
 		virtual void OnUpdate(Timestep ts) = 0;
-		virtual void OnEvent() = 0;
+		virtual void OnEvent(SDL_Event& e) = 0;
 		virtual void Resize(float width, float heigth) = 0;
 
 	public:
 		void SetProjection(float left, float right, float bottom, float top);
 		void SetProjection(float angle, glm::vec2 aspectRatio, float nearPlane, float farPlane);
 
-		virtual void OnMouseMotion() = 0;
-		virtual void OnMouseScrolled() = 0;
+		virtual void OnMouseMotion(SDL_MouseMotionEvent& e) = 0;
+		virtual void OnMouseScrolled(SDL_MouseWheelEvent& e) = 0;
 		virtual void OnWindowResized(Window& e) = 0;
 	public:
 		virtual const glm::mat4& GetViewMatrix() const = 0;
@@ -53,7 +53,7 @@ namespace Cober {
 
 	protected:	// Perspective
 		float c_CamSensitivity = 5.0f;
-		float c_pitch = 0.0f, c_yaw = -90.0f, c_yawSpeed = 10.0f, c_roll = 0.0f;
+		float c_pitch = 0.0f, c_yaw = -90.0f, c_yawSpeed = 5.0f, c_roll = 0.0f;
 		float c_fov = 45.0f, c_nearPlane = 0.1f, c_farPlane = 100.0f;
 		float c_PerspTraslationSpeed = c_fov / 5.0f;
 		// Mouse Controller

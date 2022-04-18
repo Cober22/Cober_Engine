@@ -15,17 +15,11 @@ namespace Cober {
 
 	void OpenGLContext::Init()
 	{
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		glfwMakeContextCurrent(m_WindowHandle);
 
 		GLenum error = glewInit();
 		if (error != GLEW_OK)
 			CB_ASSERT(false, ("{0}, Failed to initialize Glew!", (const char*)error));
-
-
 
 		std::cout << "OpenGL Info:" << std::endl;
 		std::cout << "Vendor:\t" << (const char*)glGetString(GL_VENDOR) << std::endl;
@@ -34,14 +28,14 @@ namespace Cober {
 		std::cout << "GLSL:\t\t" << (const char*)glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 		
 		// Check for OpenGL Version
-		//#ifdef CB_ENABLE_ASSERTS
-		//		int versionMajor;
-		//		int versionMinor;
-		//		glGetIntegerv(GL_MAJOR_VERSION, &versionMajor);
-		//		glGetIntegerv(GL_MINOR_VERSION, &versionMinor);
-		//
-		//		CB_ASSERT(versionMajor > 4 || (versionMajor == 4 && versionMinor >= 5), "CoberEngine requires at least OpenGL version 4.6!");
-		//#endif
+		#ifdef CB_ENABLE_ASSERTS
+				int versionMajor;
+				int versionMinor;
+				glGetIntegerv(GL_MAJOR_VERSION, &versionMajor);
+				glGetIntegerv(GL_MINOR_VERSION, &versionMinor);
+		
+				CB_ASSERT(versionMajor > 4 || (versionMajor == 4 && versionMinor >= 5), "CoberEngine requires at least OpenGL version 4.6!");
+		#endif
 	}
 
 	void OpenGLContext::SwapBuffers() 

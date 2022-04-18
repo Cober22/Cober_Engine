@@ -50,7 +50,7 @@ namespace Cober {
 	void OpenGLFramebuffer::Bind()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
-		//glViewport(0, 0, m_Specification.Width, m_Specification.Height);
+		glViewport(0, 0, m_Specification.Width, m_Specification.Height);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
@@ -63,10 +63,6 @@ namespace Cober {
 	{
 		m_Specification.Width = width;
 		m_Specification.Height = height;
-
-		//window->SetWidth((float)width);
-		//window->SetHeight((float)height);
-
 
 		Invalidate();
 	}

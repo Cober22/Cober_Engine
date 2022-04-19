@@ -21,24 +21,25 @@ namespace Cober {
 		void Run();
 		void Close();
 
-		void OnEvent(Event& e)
-		{
+		void OnEvent(Event& event) {
+
 			CB_PROFILE_FUNCTION();
 
-			EventDispatcher dispatcher(e);
+			EventDispatcher dispatcher(event);
 			dispatcher.Dispatch<WindowCloseEvent>(CB_BIND_EVENT(Application::OnWindowClose));
 			dispatcher.Dispatch<WindowResizeEvent>(CB_BIND_EVENT(Application::OnWindowResize));
 
 			for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
 			{
-				if (e.Handled)
+				if (event.Handled)
 					break;
-				(*it)->OnEvent(e);
+				(*it)->OnEvent(event);
 			}
-		};
+		}
 
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
+		void ProcessInputs();
 
 		static Application& Get() { return *s_Instance; }
 		Window& GetWindow() { return *_window; }
@@ -54,7 +55,9 @@ namespace Cober {
 		float m_LastFrameTime = 0.0f;
 		float timeInSeconds = 0.0f;
 		int frames = 0;
+		bool m_CursorMode = false;
 		bool w_Minimized = false;
+		bool w_Maximized = false;
 		bool w_Fullscreen = false;
 		const int FPS_LIMIT = 10;
 	private:

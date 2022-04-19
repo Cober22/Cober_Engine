@@ -26,8 +26,8 @@ namespace Cober {
 	private:
 		PerspectiveCamera PerspCamera;
 		OrthographicCamera OrthoCamera;
-
 		Ref<Framebuffer> m_Framebuffer;
+		uint32_t frames;
 
 		bool perspective = true;
 		// Textures

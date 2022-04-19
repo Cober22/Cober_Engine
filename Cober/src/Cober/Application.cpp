@@ -53,21 +53,9 @@ namespace Cober {
 		layer->OnAttach();
 	}
 
-	//void Application::OnEvent(Event& event) {
-
-	//	CB_PROFILE_FUNCTION();
-
-	//	EventDispatcher dispatcher(event);
-	//	dispatcher.Dispatch<WindowCloseEvent>(CB_BIND_EVENT(Application::OnWindowClose));
-	//	dispatcher.Dispatch<WindowResizeEvent>(CB_BIND_EVENT(Application::OnWindowResize));
-
-	//	for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
-	//	{
-	//		if (event.Handled)
-	//			break;
-	//		(*it)->OnEvent(event);
-	//	}
-	//}
+	void Application::Close() {
+		_gameState = GameState::EXIT;
+	}
 
 	void Application::Run() {
 
@@ -81,9 +69,10 @@ namespace Cober {
 			timeInSeconds += timestep;
 			frames++;
 
-			// Frame rate limit
+			// Frame rate
 			if (timeInSeconds >= 1.0f) {
-				//std::cout << frames << std::endl;
+				std::cout << frames << std::endl;
+				timestep.SetFrames(frames);
 				frames = 0;
 				timeInSeconds = 0;
 			}
@@ -114,31 +103,32 @@ namespace Cober {
 						layer->OnImGuiRender();
 				}
 				m_ImGuiLayer->End();
+				ProcessInputs();
 			}
 			
 			_window->OnUpdate();
 		}
 	}
 
-	void Application::Close() {
-		_gameState = GameState::EXIT;
+	void Application::ProcessInputs() {
+		
+		if (Input::IsKeyPressedOne(KEY_M)) {
+			m_CursorMode = m_CursorMode == true ? false : true;
+			if (m_CursorMode)
+				glfwSetInputMode(_window->GetNativeWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			else
+				glfwSetInputMode(_window->GetNativeWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		}
+		if (Input::IsKeyPressedOne(KEY_ESCAPE))
+			_gameState = GameState::EXIT;
+		if (Input::IsKeyPressedOne(KEY_F)) {
+			w_Maximized = w_Maximized == true ? false : true;
+			if (w_Maximized)
+				glfwMaximizeWindow(_window->GetNativeWindow());
+			else
+				glfwRestoreWindow(_window->GetNativeWindow());
+		}
 	}
-
-	//void Application::OnEvent(Event& e)
-	//{
-	//	CB_PROFILE_FUNCTION();
-
-	//	EventDispatcher dispatcher(e);
-	//	dispatcher.Dispatch<WindowCloseEvent>(CB_BIND_EVENT(Application::OnWindowClose));
-	//	dispatcher.Dispatch<WindowResizeEvent>(CB_BIND_EVENT(Application::OnWindowResize));
-
-	//	for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
-	//	{
-	//		if (e.Handled)
-	//			break;
-	//		(*it)->OnEvent(e);
-	//	}
-	//}
 
 	bool Application::OnWindowClose(WindowCloseEvent& event)
 	{

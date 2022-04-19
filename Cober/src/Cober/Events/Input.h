@@ -10,6 +10,8 @@ namespace Cober {
 	{
 	public:
 		static bool IsKeyPressed(KeyCode key);
+		static bool IsKeyPressedOne(KeyCode key);
+		static bool IsKeyReleased(KeyCode key);
 
 		static bool IsMouseButtonPressed(MouseCode button);
 		static std::pair<float, float> GetMousePosition();

@@ -93,7 +93,7 @@ namespace Cober {
 	void EditorLayer::OnUpdate(Timestep ts)
 	{	
 		CB_PROFILE_FUNCTION();
-
+		frames = ts.GetFrames();
 
 		// Resize
 		if (FramebufferSpecification spec = m_Framebuffer->GetSpecification();
@@ -229,6 +229,7 @@ namespace Cober {
 		ImGui::Text("LightPoint: %d", stats.LightCount);
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+		ImGui::Text("Frames: %d", frames);
 
 		//ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
 		ImGui::End();

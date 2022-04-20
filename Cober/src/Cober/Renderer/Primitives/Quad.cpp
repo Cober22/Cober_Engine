@@ -67,7 +67,7 @@ namespace Cober {
 		vertexPositions[2] = {  1.0f,  1.0f, 0.0f, 1.0f };
 		vertexPositions[3] = { -1.0f,  1.0f, 0.0f, 1.0f };
 	}
-	void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color, float tilingFactor) {
+	void Quad::Draw(const glm::mat4& transform, const glm::vec4& color, float tilingFactor) {
 		
 		const int textureIndex = 0; // White Texture
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
@@ -75,11 +75,10 @@ namespace Cober {
 		if (indexCount >= maxIndices)
 			Renderer::FlushAndReset();
 
-		SetAttributes(position, rotation, size, color, textureIndex, textureCoords, tilingFactor);
+		SetAttributes(transform, color, textureIndex, textureCoords, tilingFactor);
 	}
 	
-	void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, 
-					const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor) {
+	void Quad::Draw(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor) {
 
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
 
@@ -105,10 +104,10 @@ namespace Cober {
 			textureSlotIndex++;
 		}
 
-		SetAttributes(position, rotation, size, color, textureIndex, textureCoords, tilingFactor);
+		SetAttributes(transform, color, textureIndex, textureCoords, tilingFactor);
 	}
 
-	void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
+	void Quad::Draw(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
 		
 		// For loading Sprite Sheets...
 		// ............................
@@ -137,14 +136,10 @@ namespace Cober {
 			textureSlotIndex++;
 		}
 
-		SetAttributes(position, rotation, size, color, textureIndex, textureCoords, tilingFactor);
+		SetAttributes(transform, color, textureIndex, textureCoords, tilingFactor);
 	}
 
-	void Quad::SetAttributes(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color, int textureIndex, const glm::vec2* textureCoords, float tilingFactor) {
-
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
-			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
-			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+	void Quad::SetAttributes(const glm::mat4& transform, const glm::vec4& color, int textureIndex, const glm::vec2* textureCoords, float tilingFactor) {
 
 		for (size_t i = 0; i < vertexCount; i++) {
 			attributes->Position = transform * vertexPositions[i];
@@ -152,7 +147,7 @@ namespace Cober {
 			attributes->TexCoord = textureCoords[i];
 			attributes->TexIndex = textureIndex;
 			attributes->TilingFactor = tilingFactor;
-			attributes->Normal = glm::vec3(0.0f, 0.0f, -1.0f);
+			attributes->Normal = glm::vec3(0.0f, 0.0f, 1.0f);
 			attributes++;
 		}
 		indexCount += 6;

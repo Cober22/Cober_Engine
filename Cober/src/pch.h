@@ -1,5 +1,10 @@
 #pragma once
 
+// Memory Leaks
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 #include <iostream>
 #include <memory>
 #include <utility>
@@ -20,8 +25,6 @@
 #define GLFW_INCLUDE_NONE
 #include <Glew/glew.h>
 #include <GLFW/glfw3.h>
-//#include <SDL/SDL.h>
-
 
 #ifdef CB_PLATFORM_WINDOWS
 	#include <Windows.h>

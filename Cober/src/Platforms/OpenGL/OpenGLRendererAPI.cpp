@@ -10,6 +10,7 @@ namespace Cober {
 		glEnable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_ALPHA_TEST);
+		glEnable(GL_MULTISAMPLE);
 
 		glAlphaFunc(GL_GREATER, 0.5F);
 

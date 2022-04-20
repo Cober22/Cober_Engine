@@ -37,13 +37,13 @@ namespace Cober {
 			int success = glfwInit();
 			CB_ASSERT(success, "Could not initialize GLFW!");
 		}
+		glfwWindowHint(GLFW_SAMPLES, 4);
 
 		// Init WINDOW
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		++s_GLFWWindowCount;
 
 		// Init Window CONTEXT
-
 		m_Context = GraphicsContext::Create(m_Window);
 		m_Context->Init();
 		
@@ -146,6 +146,7 @@ namespace Cober {
 	{
 		CB_PROFILE_FUNCTION();
 
+		_CrtDumpMemoryLeaks();
 		glfwDestroyWindow(m_Window);
 		--s_GLFWWindowCount;
 	

@@ -82,6 +82,11 @@ namespace Cober {
 		fbSpec.Width = 1280;
 		fbSpec.Height = 720;
 		m_Framebuffer = Framebuffer::Create(fbSpec);
+
+		m_ActiveScene = CreateRef<Scene>();
+		m_SquareEntity = m_ActiveScene->CreateEntity();
+		m_ActiveScene->Reg().emplace<TransformComponent>(m_SquareEntity);
+		m_ActiveScene->Reg().emplace<SpriteRendererComponent>(m_SquareEntity, glm::vec4({0.0f, 1.0f, 0.0f, 1.0f}));
 	}
 
 	void EditorLayer::OnDetach()
@@ -107,14 +112,16 @@ namespace Cober {
 		// Camera Update
 		{
 			CB_PROFILE_SCOPE("CameraController::OnUpdate");
-			if (perspective) {
-				if (m_ViewportFocused)
+			
+			if (m_ViewportFocused) {
+
+				if (perspective)
 					PerspCamera.OnUpdate(ts);
-			}
-			else {
-				if (m_ViewportFocused)
+				else
 					OrthoCamera.OnUpdate(ts);
 			}
+
+			//m_ActiveScene->OnUpdate(ts);
 		}
 
 		// Update
@@ -127,6 +134,8 @@ namespace Cober {
 				Renderer::BeginScene(PerspCamera);
 			else
 				Renderer::BeginScene(OrthoCamera);
+
+			m_ActiveScene->OnUpdate(ts);
 
 			//CUBES!
 			for (unsigned int i = 0; i < std::size(cubePositions); i++)
@@ -219,7 +228,6 @@ namespace Cober {
 			ImGui::EndMenuBar();
 		}
 
-
 		ImGui::Begin("Settings");
 		auto stats = Renderer::GetStats();
 		ImGui::Text("Renderer Stats:");
@@ -230,8 +238,9 @@ namespace Cober {
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 		ImGui::Text("Frames: %d", frames);
+		auto& squareColor = m_ActiveScene->Reg().get<SpriteRendererComponent>(m_SquareEntity).Color;
+		ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
 
-		//ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
 		ImGui::End();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });

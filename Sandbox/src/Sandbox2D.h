@@ -20,7 +20,7 @@ public:
 	virtual void OnImGuiRender() override;
 
 	void OnUpdate(Timestep ts) override;
-	void OnEvent(SDL_Event& e) override;
+	//void OnEvent(SDL_Event& e) override;
 private:
 	PerspectiveCamera PerspCamera;
 	OrthographicCamera OrthoCamera;
@@ -40,7 +40,6 @@ private:
 	DIR_LIGHT	dirLight;
 	POINT_LIGHT	pointLights;
 	SPOT_LIGHT	spotLights;
-	//Cober::Ref<Cober::Shader> m_ShaderQuad;
 
 	struct ProfileResult 
 	{

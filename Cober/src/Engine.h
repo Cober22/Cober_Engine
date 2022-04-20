@@ -3,10 +3,9 @@
 // [---- CORE ----]
 #include "Cober/Application.h"
 #include "Cober/Layers/Layer.h"
-//////// Log & Stats
+// ----- Log & Stats
 #include "Cober/Log.h"
-//#include "Cober/Stats.h"
-//////// Delta Time
+// ----- Delta Time
 #include "Cober/Timestep.h"
 
 
@@ -35,6 +34,11 @@
 #include "Cober/Renderer/Camera/PerspectiveCamera.h"
 
 
+// [---- SCENE----]
+#include "Cober/Scene/Scene.h"
+#include "Cober/Scene/Components.h"
+
+
 // [---- UI ----]
 #include "Cober/ImGui/ImGuiLayer.h"
 
@@ -48,6 +52,7 @@
 
 
 // [---- IA ----]
+
 
 
 

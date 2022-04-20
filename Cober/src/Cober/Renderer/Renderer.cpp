@@ -155,68 +155,94 @@ namespace Cober {
 	void Renderer::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
 		primitive.quad->GetShader()->Bind();
-		primitive.quad->Draw(position, 0.0f, size, color);
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		DrawQuad(transform, color);
 		stats.QuadCount++;
 	}
-
 	void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor)
 	{	//  NOT Rotation - YES Texture
 		DrawQuad({ position.x, position.y, 0.0f }, size, texture, color, tilingFactor);
 	}
-
 	void Renderer::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor)
 	{
 		primitive.quad->GetShader()->Bind();
-		primitive.quad->Draw(position, 0, size, texture, color, tilingFactor);
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		DrawQuad(transform, texture, color, tilingFactor);
 		stats.QuadCount++;
 	}
-
 	void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
 		DrawQuad({ position.x, position.y, 0.0f }, size, subtexture, color, tilingFactor);
 	}
-
 	void Renderer::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
 		
 		primitive.quad->GetShader()->Bind();
-		primitive.quad->Draw(position, 0, size, subtexture, color, tilingFactor);
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		DrawQuad(transform, subtexture, color, tilingFactor);
 		stats.QuadCount++;
+	}
+	void Renderer::DrawQuad(const glm::mat4& transform, const glm::vec4& color) {
+		primitive.quad->Draw(transform, color);
+	}
+	void Renderer::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor) {
+		primitive.quad->Draw(transform, texture, color, tilingFactor);
+	}
+	void Renderer::DrawQuad(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
+		primitive.quad->Draw(transform, subtexture, color, tilingFactor);
 	}
 
 	void Renderer::DrawRotatedQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const glm::vec4& color)
 	{	// NOT Rotation - YES Texture
 		DrawRotatedQuad({ position.x, position.y, 0.0f }, 0, size, color);
 	}
-
 	void Renderer::DrawRotatedQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color)
 	{
 		primitive.quad->GetShader()->Bind();
-		primitive.quad->Draw(position, rotation, size, color);
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		DrawRotatedQuad(transform, color);
 		stats.QuadCount++;
 	}
-
 	void Renderer::DrawRotatedQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor)
 	{	// YES Rotation - YES Texture
 		DrawRotatedQuad({ position.x, position.y, 0.0f }, rotation, size, texture, color, tilingFactor);
 	}
-
 	void Renderer::DrawRotatedQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor) {
 
 		primitive.quad->GetShader()->Bind();
-		primitive.quad->Draw(position, rotation, size, texture, color, tilingFactor); 
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		DrawRotatedQuad(transform, texture, color, tilingFactor);
 		stats.QuadCount++;
 	}
-
 	void Renderer::DrawRotatedQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
 		DrawRotatedQuad({ position.x, position.y, 0.0f }, rotation, size, subtexture, color, tilingFactor);
 	}
-
 	void Renderer::DrawRotatedQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
 	
 		primitive.quad->GetShader()->Bind();
-		primitive.quad->Draw(position, rotation, size, subtexture, color, tilingFactor);
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+		DrawRotatedQuad(transform, subtexture, color, tilingFactor);
 		stats.QuadCount++;
 	}
-
+	void Renderer::DrawRotatedQuad(const glm::mat4& transform, const glm::vec4& color) {
+		
+		primitive.quad->Draw(transform, color);
+	}
+	void Renderer::DrawRotatedQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor) {
+		
+		primitive.quad->Draw(transform, texture, color, tilingFactor);
+	}
+	void Renderer::DrawRotatedQuad(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
+		
+		primitive.quad->Draw(transform, subtexture, color, tilingFactor);
+	}
 
 
 	// [-------------------- CUBE --------------------]

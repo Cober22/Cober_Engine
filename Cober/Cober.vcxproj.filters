@@ -4,6 +4,9 @@
     <Filter Include="include">
       <UniqueIdentifier>{89AF369E-F58E-B539-FEA6-40106A051C9B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\ENTT">
+      <UniqueIdentifier>{F379C869-DFDC-570E-8862-90C474A42391}</UniqueIdentifier>
+    </Filter>
     <Filter Include="include\glm">
       <UniqueIdentifier>{58D6C031-C48B-3927-4D80-33FEB934302B}</UniqueIdentifier>
     </Filter>
@@ -66,6 +69,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\ENTT\entt.hpp">
+      <Filter>include\ENTT</Filter>
+    </ClInclude>
     <ClInclude Include="include\glm\glm\common.hpp">
       <Filter>include\glm\glm</Filter>
     </ClInclude>
@@ -1323,6 +1329,9 @@
     <ClInclude Include="src\Cober\EntryPoint.h">
       <Filter>src\Cober</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\Events\ApplicationEvents.h">
+      <Filter>src\Cober\Events</Filter>
+    </ClInclude>
     <ClInclude Include="src\Cober\Events\Codes\ControllerCodes.h">
       <Filter>src\Cober\Events\Codes</Filter>
     </ClInclude>
@@ -1342,9 +1351,6 @@
       <Filter>src\Cober\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Events\MouseEvents.h">
-      <Filter>src\Cober\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cober\Events\ApplicationEvents.h">
       <Filter>src\Cober\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\ImGui\ImGuiLayer.h">
@@ -1449,6 +1455,8 @@
     <ClInclude Include="src\pch.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\Scene\Scene.h" />
+    <ClInclude Include="src\Cober\Scene\Components.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\stb_image\stb_image.cpp">
@@ -1490,6 +1498,9 @@
     <ClCompile Include="src\Cober\Renderer\Framebuffer.cpp">
       <Filter>src\Cober\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\GraphicsContext.cpp">
+      <Filter>src\Cober\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Cober\Renderer\Primitives\Cube.cpp">
       <Filter>src\Cober\Renderer\Primitives</Filter>
     </ClCompile>
@@ -1517,6 +1528,9 @@
     <ClCompile Include="src\Cober\Renderer\VertexArray.cpp">
       <Filter>src\Cober\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Cober\Window.cpp">
+      <Filter>src\Cober</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Platforms\OpenGL</Filter>
     </ClCompile>
@@ -1538,16 +1552,16 @@
     <ClCompile Include="src\Platforms\OpenGL\OpenGLVertexArray.cpp">
       <Filter>src\Platforms\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platforms\Windows\WindowsInput.cpp">
+      <Filter>src\Platforms\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platforms\Windows\WindowsWindow.cpp">
       <Filter>src\Platforms\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platforms\Windows\WindowsInput.cpp">
-      <Filter>src\Platforms\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\GraphicsContext.cpp" />
-    <ClCompile Include="src\Cober\Window.cpp" />
+    <ClCompile Include="src\Cober\Scene\Scene.cpp" />
+    <ClCompile Include="src\Cober\Scene\Components.cpp" />
   </ItemGroup>
 </Project>

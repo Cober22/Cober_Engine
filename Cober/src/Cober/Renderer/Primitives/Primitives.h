@@ -9,9 +9,9 @@ namespace Cober {
 	class Quad {
 	public:
 		Quad();
-		void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
-		void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
-		void Quad::Draw(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
+		void Quad::Draw(const glm::mat4& transform, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
+		void Quad::Draw(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
+		void Quad::Draw(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
 		
 		void Init();
 		// Functions
@@ -39,8 +39,7 @@ namespace Cober {
 		};
 		Attributes* attributes = nullptr;
 	private:
-		void SetAttributes(const glm::vec3& position, float rotation, const glm::vec2& size, 
-						   const glm::vec4& color, int textureIndex, const glm::vec2* textureCoords, float tilingFactor);
+		void SetAttributes(const glm::mat4& transform, const glm::vec4& color, int textureIndex, const glm::vec2* textureCoords, float tilingFactor);
 
 		// Buffer Objects
 		Ref<VertexBuffer> VBO;

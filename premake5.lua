@@ -23,6 +23,7 @@ IncludeDir["ImGui"] = "Cober/include/ImGui"
 IncludeDir["stb_image"] = "Cober/include/stb_image"
 IncludeDir["Assimp"] = "Cober/include/assimp"
 IncludeDir["GLFW"] = "Cober/include/GLFW"
+IncludeDir["ENTT"] = "Cober/include/ENTT"
 
 group "Dependencies"
 	include "Cober/include/ImGui"
@@ -49,7 +50,8 @@ project "Cober"
 		"%{prj.name}/include/stb_image/**.h",
 		"%{prj.name}/include/stb_image/**.cpp",
 		"%{prj.name}/include/glm/glm/**.hpp",
-		"%{prj.name}/include/glm/glm/**.inl"
+		"%{prj.name}/include/glm/glm/**.inl",
+		"%{prj.name}/include/ENTT/**.hpp"
 	}
 	
 	defines 
@@ -66,7 +68,8 @@ project "Cober"
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.Assimp}",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.ENTT}",
 	}
 
 	libdirs 
@@ -135,7 +138,8 @@ project "CoberEditor"
 	{
 		"Cober/include",
 		"Cober/src",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.ENTT}"
 	}
 
 	links 

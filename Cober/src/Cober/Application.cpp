@@ -71,7 +71,6 @@ namespace Cober {
 
 			// Frame rate
 			if (timeInSeconds >= 1.0f) {
-				std::cout << frames << std::endl;
 				timestep.SetFrames(frames);
 				frames = 0;
 				timeInSeconds = 0;

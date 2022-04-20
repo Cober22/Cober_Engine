@@ -2,7 +2,6 @@
 
 #include <Engine.h>
 
-using namespace Cober;
 using namespace glm;
 
 namespace Cober {
@@ -27,9 +26,12 @@ namespace Cober {
 		PerspectiveCamera PerspCamera;
 		OrthographicCamera OrthoCamera;
 		Ref<Framebuffer> m_Framebuffer;
+		Ref<Scene> m_ActiveScene;
 		uint32_t frames;
 
 		bool perspective = true;
+		// Entities
+		entt::entity m_SquareEntity;
 		// Textures
 		Ref<Texture2D> catTexture;
 		Ref<Texture2D> checkerboardTexture;

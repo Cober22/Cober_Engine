@@ -25,3 +25,9 @@
 [submodule "Cober/include/assimpde"]
 	path = Cober/include/assimpde
 	url = https://github.com/assimp/assimp
+[submodule "libraries/entt"]
+	path = libraries/entt
+	url = https://github.com/skypjack/entt
+[submodule "libraries/Bullet"]
+	path = libraries/Bullet
+	url = https://github.com/bulletphysics/bullet3

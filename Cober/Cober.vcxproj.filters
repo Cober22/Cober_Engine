@@ -1457,6 +1457,7 @@
     </ClInclude>
     <ClInclude Include="src\Cober\Scene\Scene.h" />
     <ClInclude Include="src\Cober\Scene\Components.h" />
+    <ClInclude Include="src\Cober\Scene\Entity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\stb_image\stb_image.cpp">
@@ -1562,6 +1563,5 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\Scene\Scene.cpp" />
-    <ClCompile Include="src\Cober\Scene\Components.cpp" />
   </ItemGroup>
 </Project>

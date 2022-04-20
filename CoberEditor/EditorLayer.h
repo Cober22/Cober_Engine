@@ -31,7 +31,7 @@ namespace Cober {
 
 		bool perspective = true;
 		// Entities
-		entt::entity m_SquareEntity;
+		Entity m_SquareEntity;
 		// Textures
 		Ref<Texture2D> catTexture;
 		Ref<Texture2D> checkerboardTexture;

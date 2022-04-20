@@ -37,6 +37,7 @@
 // [---- SCENE----]
 #include "Cober/Scene/Scene.h"
 #include "Cober/Scene/Components.h"
+#include "Cober/Scene/Entity.h"
 
 
 // [---- UI ----]

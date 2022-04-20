@@ -607,6 +607,7 @@
     <ClInclude Include="src\Cober\Renderer\Texture.h" />
     <ClInclude Include="src\Cober\Renderer\VertexArray.h" />
     <ClInclude Include="src\Cober\Scene\Components.h" />
+    <ClInclude Include="src\Cober\Scene\Entity.h" />
     <ClInclude Include="src\Cober\Scene\Scene.h" />
     <ClInclude Include="src\Cober\Timestep.h" />
     <ClInclude Include="src\Cober\Window.h" />
@@ -645,7 +646,6 @@
     <ClCompile Include="src\Cober\Renderer\SubTexture2D.cpp" />
     <ClCompile Include="src\Cober\Renderer\Texture.cpp" />
     <ClCompile Include="src\Cober\Renderer\VertexArray.cpp" />
-    <ClCompile Include="src\Cober\Scene\Components.cpp" />
     <ClCompile Include="src\Cober\Scene\Scene.cpp" />
     <ClCompile Include="src\Cober\Window.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp" />

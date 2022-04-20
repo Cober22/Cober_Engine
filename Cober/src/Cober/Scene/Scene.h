@@ -5,19 +5,22 @@
 
 namespace Cober {
 
-	// TODO: Abstract Entt
+	class Entity;
+
 	class Scene {
 
 	public:
 		Scene();
 		~Scene();
 
-		entt::entity CreateEntity();
+		Entity CreateEntity(const std::string& name = std::string());
 		entt::registry& Reg() { return m_Registry; }
 
 		void OnUpdate(Timestep ts);
 
 	private:
 		entt::registry m_Registry;
+
+		friend class Entity;
 	};
 }

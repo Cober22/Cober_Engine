@@ -11,7 +11,6 @@ namespace Cober {
 
 	public:
 		Scene();
-		~Scene();
 
 		Entity CreateEntity(const std::string& name = std::string());
 

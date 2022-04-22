@@ -66,9 +66,10 @@ namespace Cober {
 	{
 		CB_PROFILE_FUNCTION();
 
-		//basicShader->Bind();
-		//basicShader->SetMat4("u_Projection", camera.GetProjection());
-		//basicShader->SetMat4("u_View", glm::inverse(transform));
+		basicShader->Bind();
+		basicShader->SetVec3("u_ViewPos", cameraPosition);
+		basicShader->SetVec3("material.diffuse", { 1.0f, 1.0f, 1.0f });
+		basicShader->SetFloat("material.shininess", 32.0f);
 
 		primitive.quad->GetShader()->Bind();
 		primitive.quad->GetShader()->SetMat4("u_Projection", camera.GetProjection());

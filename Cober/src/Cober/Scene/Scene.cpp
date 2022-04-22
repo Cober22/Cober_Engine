@@ -7,41 +7,11 @@
 
 #include "Entity.h"
 
-namespace Cober {
-
-	static void DoMath(const glm::mat4& transform) {
-
-	}
-
-	static void OnTransformConstruct(entt::registry& registry, entt::entity entity) {
-
-	}
+namespace Cober {	
 
 	Scene::Scene()
 	{
-#if ENTT_EXAMPLE_CODE
-		entt::entity entity = m_Registry.create();
-		m_Registry.emplace<TransformComponent>(entity, glm::mat4(1.0f));
 
-		m_Registry.on_construct<TransformComponent>().connect<&OnTransformConstruct>();
-		
-		// Get and Entity with the given Component
-		if (m_Registry.any_of<TransformComponent>(entity))	//	m_Registry.all_of<TransformComponent>(entity)
-			TransformComponent& transform = m_Registry.get<TransformComponent>(entity);
-		
-		// Iterate through entities with TransformComponent
-		auto view = m_Registry.view<TransformComponent>();
-		for (auto entity : view)
-			TransformComponent& transform = m_Registry.get<TransformComponent>(entity);
-
-		auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-		for (auto entity : group) 
-			auto& [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-#endif
-	}
-
-	Scene::~Scene()
-	{
 	}
 
 	Entity Scene::CreateEntity(const std::string& name) {
@@ -55,14 +25,26 @@ namespace Cober {
 
 	void Scene::OnUpdate(Timestep ts) {
 
+		// Update scripts
+		{
+			m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
+			{	// TODO: Move to ScenePlay
+				if (!nsc.Instance) {
+					nsc.Instance = nsc.InstantiateScript();
+					nsc.Instance->m_Entity = Entity{ entity, this };
+					nsc.Instance->OnCreate();
+				}
+				nsc.Instance->OnUpdate(ts);
+			});
+		}
+
 		// Render sprites
 		Camera* mainCamera = nullptr;
 		glm::mat4* cameraTransform = nullptr;
 		{
 			auto view = m_Registry.view<TransformComponent, CameraComponent>();
 			for (auto entity : view) {
-				auto& [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
-
+				auto [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
 				if (camera.Primary) {
 					mainCamera = &camera.Camera;
 					cameraTransform = &transform.Transform;
@@ -77,7 +59,7 @@ namespace Cober {
 			Renderer::BeginScene(mainCamera->GetProjection(), *cameraTransform);
 			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
 			for (auto entity : group) {
-				auto& [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
 				Renderer::DrawQuad(transform, sprite.Color);
 			}
 			Renderer::EndScene;
@@ -91,12 +73,10 @@ namespace Cober {
 
 		// Resize our non-FixedAspectRatio cameras
 		auto view = m_Registry.view<CameraComponent>();
-		for (auto entity : view)
-		{
+		for (auto entity : view) {
 			auto& cameraComponent = view.get<CameraComponent>(entity);
 			if (!cameraComponent.FixedAspectRatio)
 				cameraComponent.Camera.SetViewportSize(width, height);
 		}
-
 	}
 }

@@ -29,9 +29,11 @@ namespace Cober {
 		Ref<Scene> m_ActiveScene;
 		uint32_t frames;
 
-		bool perspective = true;
 		// Entities
 		Entity m_SquareEntity;
+		Entity m_FirstCamera;
+		Entity m_SecondCamera;
+		bool m_PrimaryCamera = true;
 		// Textures
 		Ref<Texture2D> catTexture;
 		Ref<Texture2D> checkerboardTexture;

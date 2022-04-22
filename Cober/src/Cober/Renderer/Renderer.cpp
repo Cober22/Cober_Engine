@@ -62,6 +62,23 @@ namespace Cober {
 		basicShader->SetFloat("material.shininess", 32.0f);
 	}
 
+	void Renderer::BeginScene(const Camera& camera, const glm::mat4 transform)
+	{
+		CB_PROFILE_FUNCTION();
+
+		//basicShader->Bind();
+		//basicShader->SetMat4("u_Projection", camera.GetProjection());
+		//basicShader->SetMat4("u_View", glm::inverse(transform));
+
+		primitive.quad->GetShader()->Bind();
+		primitive.quad->GetShader()->SetMat4("u_Projection", camera.GetProjection());
+		primitive.quad->GetShader()->SetMat4("u_View", glm::inverse(transform));
+
+		primitive.quad->indexCount = 0;
+		primitive.quad->attributes = baseQuadAttributes;
+		primitive.quad->textureSlotIndex = 1;
+	}
+
 	void Renderer::BeginScene(OrthographicCamera& camera)
 	{
 		CB_PROFILE_FUNCTION();

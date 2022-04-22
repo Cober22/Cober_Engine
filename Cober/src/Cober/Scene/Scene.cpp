@@ -1,10 +1,11 @@
 #include "pch.h"
 #include "Scene.h"
 #include "Components.h"
-#include "Entity.h"
 #include "Cober/Renderer/Renderer.h"
 
 #include <glm/glm.hpp> 
+
+#include "Entity.h"
 
 namespace Cober {
 
@@ -54,13 +55,48 @@ namespace Cober {
 
 	void Scene::OnUpdate(Timestep ts) {
 
-		// Iterate through entities with TransformComponent
-		auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-		for (auto entity : group) {
+		// Render sprites
+		Camera* mainCamera = nullptr;
+		glm::mat4* cameraTransform = nullptr;
+		{
+			auto view = m_Registry.view<TransformComponent, CameraComponent>();
+			for (auto entity : view) {
+				auto& [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
 
-			auto& [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-			Renderer::DrawQuad(transform, sprite.Color);
+				if (camera.Primary) {
+					mainCamera = &camera.Camera;
+					cameraTransform = &transform.Transform;
+					break;
+				}
+			}
+		}
+
+		if (mainCamera) 
+		{
+			// Iterate through entities with TransformComponent
+			Renderer::BeginScene(mainCamera->GetProjection(), *cameraTransform);
+			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+			for (auto entity : group) {
+				auto& [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+				Renderer::DrawQuad(transform, sprite.Color);
+			}
+			Renderer::EndScene;
 		}
 	}
 
+	void Scene::OnViewportResize(uint32_t width, uint32_t height)
+	{
+		m_ViewportWidth = width;
+		m_ViewportHeight = height;
+
+		// Resize our non-FixedAspectRatio cameras
+		auto view = m_Registry.view<CameraComponent>();
+		for (auto entity : view)
+		{
+			auto& cameraComponent = view.get<CameraComponent>(entity);
+			if (!cameraComponent.FixedAspectRatio)
+				cameraComponent.Camera.SetViewportSize(width, height);
+		}
+
+	}
 }

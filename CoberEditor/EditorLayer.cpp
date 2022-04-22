@@ -89,6 +89,11 @@ namespace Cober {
 		// Entity
 		m_SquareEntity = m_ActiveScene->CreateEntity("Square");
 		m_SquareEntity.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
+
+		m_FirstCamera = m_ActiveScene->CreateEntity("Camera Perspective Entity");
+		m_FirstCamera.AddComponent<CameraComponent>();
+		m_SecondCamera = m_ActiveScene->CreateEntity("Camera Orthographic Entity");
+		m_SecondCamera.AddComponent<CameraComponent>();
 	}
 
 
@@ -110,6 +115,7 @@ namespace Cober {
 		{
 			m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 			PerspCamera.Resize(m_ViewportSize.x, m_ViewportSize.y);
+			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		}
 
 		// Camera Update
@@ -118,10 +124,10 @@ namespace Cober {
 			
 			if (m_ViewportFocused) {
 
-				if (perspective)
+				//if (perspective)
 					PerspCamera.OnUpdate(ts);
-				else
-					OrthoCamera.OnUpdate(ts);
+				//else
+					//OrthoCamera.OnUpdate(ts);
 			}
 
 			//m_ActiveScene->OnUpdate(ts);
@@ -133,10 +139,10 @@ namespace Cober {
 			Renderer::ResetStats();
 			m_Framebuffer->Bind();
 
-			if (perspective)
+			//if (perspective)
 				Renderer::BeginScene(PerspCamera);
-			else
-				Renderer::BeginScene(OrthoCamera);
+			//else
+				//Renderer::BeginScene(OrthoCamera);
 
 			m_ActiveScene->OnUpdate(ts);
 
@@ -249,6 +255,26 @@ namespace Cober {
 			auto& squareColor = m_SquareEntity.GetComponent<SpriteRendererComponent>().Color;
 			ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
 		}
+		
+		ImGui::DragFloat3("Camera Transform",
+			glm::value_ptr(m_FirstCamera.GetComponent<TransformComponent>().Transform[3]));
+		if (ImGui::Checkbox("Camera A", &m_PrimaryCamera))
+		{
+			m_FirstCamera.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
+			m_SecondCamera.GetComponent<CameraComponent>().Primary = !m_PrimaryCamera;
+		}
+		
+		{
+			auto& camera = m_SecondCamera.GetComponent<CameraComponent>().Camera;
+			CameraType projectionType = m_SecondCamera.GetComponent<CameraComponent>().GetCameraType();
+			if (projectionType == Orthographic) {
+				float orthoSize = camera.GetOrthographicSize();
+				if (ImGui::DragFloat("Second Camera Ortho Size", &orthoSize))
+					camera.SetOrthographicSize(orthoSize);
+			}
+			//else if (projectionType = CameraType.Perspective) {
+			//}
+		}
 
 		ImGui::End();
 
@@ -271,12 +297,12 @@ namespace Cober {
 
 	void EditorLayer::OnEvent(Event& event)
 	{
-		if (Input::IsKeyPressed(KEY_0))
-			perspective = perspective == true ? false : true;
-		
-		if (perspective)
+		//if (Input::IsKeyPressed(KEY_0))
+		//	perspective = perspective == true ? false : true;
+		//
+		//if (perspective)
 			PerspCamera.OnEvent(event);
-		else
-			OrthoCamera.OnEvent(event);
+		//else
+		//	OrthoCamera.OnEvent(event);
 	}
 }

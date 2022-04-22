@@ -1458,6 +1458,8 @@
     <ClInclude Include="src\Cober\Scene\Scene.h" />
     <ClInclude Include="src\Cober\Scene\Components.h" />
     <ClInclude Include="src\Cober\Scene\Entity.h" />
+    <ClInclude Include="src\Cober\Renderer\Camera\Camera.h" />
+    <ClInclude Include="src\Cober\Renderer\Camera\SceneCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\stb_image\stb_image.cpp">
@@ -1563,5 +1565,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\Scene\Scene.cpp" />
+    <ClCompile Include="src\Cober\Renderer\Camera\SceneCamera.cpp" />
   </ItemGroup>
 </Project>

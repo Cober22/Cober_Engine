@@ -11,6 +11,8 @@
 #include "Cober/Events/Input.h"
 #include "Cober/Events/Codes/KeyCodes.h"
 #include "Cober/Events/MouseEvents.h"
+#include "Camera.h"
+
 
 namespace Cober {
 
@@ -19,7 +21,7 @@ namespace Cober {
 	public:
 		CameraController() {};
 		void LookAt(glm::vec3 position, glm::vec3 target, glm::vec3 upAxis);
-		void RecalculateMatrix();
+		void RecalculateMatrix(); 
 
 		virtual void OnUpdate(Timestep ts) = 0;
 		virtual void OnEvent(Event& event) = 0;
@@ -32,7 +34,6 @@ namespace Cober {
 		virtual bool OnMouseMotion(MouseMovedEvent& event) = 0;
 		virtual bool OnMouseScrolled(MouseScrolledEvent& event) = 0;
 		virtual bool OnWindowResized(WindowResizeEvent& event) = 0;
-	public:
 		virtual const glm::mat4& GetViewMatrix() const = 0;
 		virtual const glm::mat4& GetProjectionMatrix() const = 0;
 		virtual const glm::mat4& GetModelMatrix() const = 0;
@@ -40,7 +41,7 @@ namespace Cober {
 		// Camera Matrix
 		glm::mat4 c_VMatrix;
 		glm::mat4 c_PMatrix;
-		glm::mat4 c_MMatrix;	// Perspective
+		glm::mat4 c_MMatrix;
 
 		//Camera Attributes
 		glm::vec3 c_position = { 0.0f, 0.0f, 3.0f };
@@ -50,7 +51,7 @@ namespace Cober {
 		// Camera Axis
 		glm::vec3 c_rightAxis = glm::normalize(glm::cross({ 0.0f, 1.0f, 0.0f }, c_direction));
 		glm::vec3 c_upAxis = { 0.0f, 1.0f, 0.0f };//glm::cross(c_direction, c_rightAxis);
-		glm::vec3 c_eye;
+		glm::vec3 c_eye = {0.0f, 0.0f, 0.0f};
 	protected:	// Orthographic
 		float c_zoomLevel = 5.0f;
 		float c_OrthoRotation = 0.0f;

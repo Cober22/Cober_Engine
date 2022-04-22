@@ -7,7 +7,7 @@
 
 namespace Cober {
 
-	class OrthographicCamera : public CameraController
+	class OrthographicCamera : CameraController
 	{
 	public:
 		OrthographicCamera(glm::vec2 aspectRatio);
@@ -25,9 +25,13 @@ namespace Cober {
 		void SetPosition(glm::vec3& position) { c_position = position; }
 		glm::vec3& GetDirection() { return c_direction; }
 		void SetDirection(glm::vec3& direction) { c_direction = direction; }
-	public:
+	private:
 		bool OnMouseMotion(MouseMovedEvent& event) override;
 		bool OnMouseScrolled(MouseScrolledEvent& event) override;
 		bool OnWindowResized(WindowResizeEvent& event) override;
+	private:
+		float c_zoomLevel = 5.0f;
+		float c_OrthoRotation = 0.0f;
+		float c_OrthoTraslationSpeed = 1.0f, c_OrthoRotationSpeed = 10.0f;
 	};
 }

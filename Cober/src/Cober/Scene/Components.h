@@ -2,7 +2,18 @@
 
 #include <glm/glm.hpp>
 
+#include "Cober/Renderer/Camera/SceneCamera.h"
+
 namespace Cober {
+	
+	static enum CameraType {
+		Perspective,
+		Orthographic,
+		FirstPerson,
+		TopDown,
+		RPG,
+		ActionRPG
+	};
 
 	struct TransformComponent {
 
@@ -35,5 +46,18 @@ namespace Cober {
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;
 		SpriteRendererComponent(const glm::vec4& color)
 			: Color(color) {}
+	};
+	
+	struct CameraComponent {
+
+		SceneCamera Camera;
+		CameraType cameraType = Orthographic;
+		bool Primary = true;
+		bool FixedAspectRatio = false;
+
+		CameraType GetCameraType() { return cameraType; }
+		void SetCameraType(CameraType type) { cameraType = type; }
+		CameraComponent() = default;
+		CameraComponent(const CameraComponent&) = default;
 	};
 }

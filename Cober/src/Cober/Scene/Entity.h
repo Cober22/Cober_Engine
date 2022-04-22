@@ -38,6 +38,6 @@ namespace Cober {
 		operator bool() const { return m_EntityHandle != entt::null; }
 	private:
 		entt::entity m_EntityHandle = entt::null;
-		Scene* m_Scene;
+		Scene* m_Scene = nullptr;
 	};
 }

@@ -37,7 +37,7 @@ namespace Cober {
 			int success = glfwInit();
 			CB_ASSERT(success, "Could not initialize GLFW!");
 		}
-		glfwWindowHint(GLFW_SAMPLES, 4);
+		//glfwWindowHint(GLFW_SAMPLES, 4);	// For future Antialiasing
 
 		// Init WINDOW
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
@@ -46,7 +46,6 @@ namespace Cober {
 		// Init Window CONTEXT
 		m_Context = GraphicsContext::Create(m_Window);
 		m_Context->Init();
-		
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);

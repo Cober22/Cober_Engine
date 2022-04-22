@@ -7,6 +7,7 @@
 #include "Cober/Renderer/Lighting.h"
 #include "Cober/Renderer/Primitives/Primitives.h"
 #include "Cober/Renderer/Primitives/Mesh.h"
+#include "Cober/Renderer/Camera/Camera.h"
 #include "SubTexture2D.h"
 #include "Texture.h"
 
@@ -46,6 +47,7 @@ namespace Cober {
 		static void Init();
 		static void OnWindowResize(uint32_t width, uint32_t height);
 		
+		static void BeginScene(const Camera& camera, const glm::mat4 transform);
 		static void BeginScene(OrthographicCamera& camera);
 		static void BeginScene(PerspectiveCamera& camera);
 		static void UploadShaderToFrustum(const Ref<Shader> shader, const glm::mat4 projection, const glm::mat4 view, const glm::mat4 model);

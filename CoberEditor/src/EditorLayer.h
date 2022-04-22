@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Engine.h>
+#include "Panels/SceneHierarchyPanel.h"
 
 using namespace glm;
 
@@ -22,6 +23,9 @@ namespace Cober {
 		void OnUpdate(Timestep ts) override;
 		virtual void OnImGuiRender() override;
 		void OnEvent(Event& event) override;
+	private:
+		// Panels
+		SceneHierarchyPanel m_SceneHierarchyPanel;
 	private:
 		PerspectiveCamera PerspCamera;
 		OrthographicCamera OrthoCamera;

@@ -123,6 +123,7 @@ namespace Cober {
 
 		m_FirstCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
 
@@ -265,6 +266,8 @@ namespace Cober {
 
 			ImGui::EndMenuBar();
 		}
+
+		m_SceneHierarchyPanel.OnImGuiRender();
 
 		ImGui::Begin("Settings");
 		auto stats = Renderer::GetStats();

@@ -87,8 +87,11 @@ namespace Cober {
 		m_ActiveScene = CreateRef<Scene>();
 
 		// Entity
-		m_SquareEntity = m_ActiveScene->CreateEntity("Square");
-		m_SquareEntity.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
+		auto greenSquare = m_ActiveScene->CreateEntity("Green Square");
+		greenSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
+		m_SquareEntity = greenSquare;
+		auto redSquare = m_ActiveScene->CreateEntity("Red Square");
+		redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
 
 		m_FirstCamera = m_ActiveScene->CreateEntity("Camera Perspective Entity");
 		m_FirstCamera.AddComponent<CameraComponent>();
@@ -280,13 +283,13 @@ namespace Cober {
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 		ImGui::Text("Frames: %d", frames);
 		
-		if (m_SquareEntity) { 
-			ImGui::Separator();
-			auto& tag = m_SquareEntity.GetComponent<TagComponent>().Tag;
-			ImGui::Text("%s", tag.c_str());
-			auto& squareColor = m_SquareEntity.GetComponent<SpriteRendererComponent>().Color;
-			ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
-		}
+		//if (m_SquareEntity) { 
+		//	ImGui::Separator();
+		//	auto& tag = m_SquareEntity.GetComponent<TagComponent>().Tag;
+		//	ImGui::Text("%s", tag.c_str());
+		//	auto& squareColor = m_SquareEntity.GetComponent<SpriteRendererComponent>().Color;
+		//	ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
+		//}
 		
 		ImGui::DragFloat3("Camera Transform",
 			glm::value_ptr(m_FirstCamera.GetComponent<TransformComponent>().Transform[3]));
@@ -298,8 +301,8 @@ namespace Cober {
 		
 		{
 			auto& camera = m_SecondCamera.GetComponent<CameraComponent>().Camera;
-			CameraType projectionType = m_SecondCamera.GetComponent<CameraComponent>().GetCameraType();
-			if (projectionType == Orthographic) {
+			SceneCamera::CameraType projectionType = m_SecondCamera.GetComponent<CameraComponent>().Camera.GetProjectionType();
+			if (projectionType == SceneCamera::CameraType::Orthographic) {
 				float orthoSize = camera.GetOrthographicSize();
 				if (ImGui::DragFloat("Second Camera Ortho Size", &orthoSize))
 					camera.SetOrthographicSize(orthoSize);

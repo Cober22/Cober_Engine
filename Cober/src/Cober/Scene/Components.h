@@ -7,15 +7,6 @@
 
 namespace Cober {
 	
-	static enum CameraType {
-		Perspective,
-		Orthographic,
-		FirstPerson,
-		TopDown,
-		RPG,
-		ActionRPG
-	};
-
 	struct TransformComponent {
 
 		glm::mat4 Transform = glm::mat4(1.0f);
@@ -52,12 +43,9 @@ namespace Cober {
 	struct CameraComponent {
 
 		SceneCamera Camera;
-		CameraType cameraType = Orthographic;
 		bool Primary = true;
 		bool FixedAspectRatio = false;
 
-		CameraType GetCameraType() { return cameraType; }
-		void SetCameraType(CameraType type) { cameraType = type; }
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
 	};

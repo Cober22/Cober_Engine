@@ -98,15 +98,15 @@ namespace Cober {
 		// Native Scripting Example
 		class CameraController : public ScriptableEntity {
 		public:
-			void OnCreate() {
+			virtual void OnCreate() override {
 				// Test if OnCreate works well with different cameras 
 				auto& transform = GetComponent<TransformComponent>().Transform;
 				transform[3][0] = rand() % 10 - 5.0f;
 			}
-			void OnDestroy() {
+			virtual void OnDestroy() override {
 
 			}
-			void OnUpdate(Timestep ts) {
+			virtual void OnUpdate(Timestep ts) override {
 
 				auto& transform = GetComponent<TransformComponent>().Transform;
 				float speed = 5.0f;

@@ -58,6 +58,9 @@
     <Filter Include="src\Cober\Renderer\Primitives">
       <UniqueIdentifier>{E8DB27FA-54F4-0E24-1DA1-9EBD8978A3BD}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Cober\Scene">
+      <UniqueIdentifier>{0413E033-709E-4DF8-79AF-D0ECE5B9A9F8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Platforms">
       <UniqueIdentifier>{B40E5C85-20CF-D7BB-E909-213955891C98}</UniqueIdentifier>
     </Filter>
@@ -1377,6 +1380,9 @@
     <ClInclude Include="src\Cober\Renderer\Buffer.h">
       <Filter>src\Cober\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\Camera\Camera.h">
+      <Filter>src\Cober\Renderer\Camera</Filter>
+    </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Camera\CameraController.h">
       <Filter>src\Cober\Renderer\Camera</Filter>
     </ClInclude>
@@ -1384,6 +1390,9 @@
       <Filter>src\Cober\Renderer\Camera</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Camera\PerspectiveCamera.h">
+      <Filter>src\Cober\Renderer\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\Camera\SceneCamera.h">
       <Filter>src\Cober\Renderer\Camera</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Framebuffer.h">
@@ -1418,6 +1427,15 @@
     </ClInclude>
     <ClInclude Include="src\Cober\Renderer\VertexArray.h">
       <Filter>src\Cober\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Scene\Components.h">
+      <Filter>src\Cober\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Scene\Entity.h">
+      <Filter>src\Cober\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Scene\Scene.h">
+      <Filter>src\Cober\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Timestep.h">
       <Filter>src\Cober</Filter>
@@ -1455,11 +1473,6 @@
     <ClInclude Include="src\pch.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Scene\Scene.h" />
-    <ClInclude Include="src\Cober\Scene\Components.h" />
-    <ClInclude Include="src\Cober\Scene\Entity.h" />
-    <ClInclude Include="src\Cober\Renderer\Camera\Camera.h" />
-    <ClInclude Include="src\Cober\Renderer\Camera\SceneCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\stb_image\stb_image.cpp">
@@ -1498,6 +1511,9 @@
     <ClCompile Include="src\Cober\Renderer\Camera\PerspectiveCamera.cpp">
       <Filter>src\Cober\Renderer\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="src\Cober\Renderer\Camera\SceneCamera.cpp">
+      <Filter>src\Cober\Renderer\Camera</Filter>
+    </ClCompile>
     <ClCompile Include="src\Cober\Renderer\Framebuffer.cpp">
       <Filter>src\Cober\Renderer</Filter>
     </ClCompile>
@@ -1530,6 +1546,9 @@
     </ClCompile>
     <ClCompile Include="src\Cober\Renderer\VertexArray.cpp">
       <Filter>src\Cober\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Scene\Scene.cpp">
+      <Filter>src\Cober\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\Window.cpp">
       <Filter>src\Cober</Filter>
@@ -1564,7 +1583,5 @@
     <ClCompile Include="src\pch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cober\Scene\Scene.cpp" />
-    <ClCompile Include="src\Cober\Renderer\Camera\SceneCamera.cpp" />
   </ItemGroup>
 </Project>

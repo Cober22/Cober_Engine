@@ -2,6 +2,7 @@
 
 // [---- CORE ----]
 #include "Cober/Application.h"
+#include "Cober/Math.h"
 #include "Cober/Layers/Layer.h"
 // ----- Log & Stats
 #include "Cober/Log.h"

@@ -34,3 +34,6 @@
 [submodule "libraries/yaml"]
 	path = libraries/yaml
 	url = https://github.com/thecherno/yaml-cpp
+[submodule "Cober/include/ImGuizmo"]
+	path = Cober/include/ImGuizmo
+	url = https://github.com/thecherno/imguizmo

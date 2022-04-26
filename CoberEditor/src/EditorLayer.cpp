@@ -1,10 +1,11 @@
 #include "EditorLayer.h"
-//#include "ImGui/imgui.h"
 
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "Cober/Scene/SceneSerializer.h"
+
+#include "ImGuizmo/ImGuizmo.h"
 
 namespace Cober {
 
@@ -200,7 +201,7 @@ namespace Cober {
 			Renderer::DrawSpotLights(spotLights, true);
 		
 			//MODELS
-			Renderer::DrawModel(gridModel, glm::vec3(0.0f, -3.0f, 0.0f), glm::vec3(0.5f));
+			//Renderer::DrawModel(gridModel, glm::vec3(0.0f, -3.0f, 0.0f), glm::vec3(0.5f));
 			//Renderer::DrawModel(arenaModel);
 
 			Renderer::DrawQuad({ 10.0, 10.0, -7.0f }, { 1.0f, 1.0f }, glm::vec4(1.0f, 0.0f, 1.0f, 1.0f));
@@ -321,17 +322,69 @@ namespace Cober {
 			
 		m_ViewportFocused = ImGui::IsWindowFocused();
 		m_ViewportHovered = ImGui::IsWindowHovered();
-		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
+		if (!ImGui::IsAnyItemActive())
+			Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused && !m_ViewportHovered);
+		else
+			Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
 
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 
 		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
 		ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+
+		// Gizmos
+		Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity();
+
+		if (selectedEntity && m_GizmoType != -1) {
+			ImGuizmo::SetOrthographic(false);
+			ImGuizmo::SetDrawlist();
+			
+			float windowWidth = (float)ImGui::GetWindowWidth();
+			float windowHeight = (float)ImGui::GetWindowHeight();
+			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
+
+			// Camera
+			auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
+			if (cameraEntity) {
+				const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
+				const glm::mat4& cameraProjection =  camera.GetProjection();
+				glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+				
+				// Entity transform
+				auto& tc = selectedEntity.GetComponent<TransformComponent>();
+				glm::mat4 transform = tc.GetTransform();
+
+				// Snapping
+				bool snap = Input::IsKeyPressed(Key::LeftControl);
+				float snapValue = 0.5f;	// Snap to 0.5m for translation/scale
+				// Snap to 45 degrees for rotation
+				if (m_GizmoType == ImGuizmo::OPERATION::ROTATE)
+					snapValue = 45.0f;
+
+				float snapValues[3] = { snapValue, snapValue, snapValue };
+
+				ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), 
+									 (ImGuizmo::OPERATION)m_GizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform),
+									 nullptr, snap ? snapValues : nullptr);
+
+				if (ImGuizmo::IsUsing()) {
+
+					glm::vec3 translation, rotation, scale;
+					DecomposeTransform(transform, translation, rotation, scale);
+
+					glm::vec3 deltaRotation = rotation - tc.Rotation;
+					tc.Translation = translation;
+					tc.Rotation += deltaRotation;
+					tc.Scale = scale;
+				}
+			}
+		}
+
 		ImGui::End();
 		ImGui::PopStyleVar();
+	
 		ImGui::End();
-
 	}
 
 	void EditorLayer::OnEvent(Event& event)
@@ -356,20 +409,30 @@ namespace Cober {
 		bool shift = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
 		
 		switch (event.GetKeyCode()) {
-		case Key::N:
-			if (control)
-				NewScene();
-			break;
-		case Key::O:
-			if (control)
-				OpenFile();
-			break;
-		case Key::S:
-			if (control && shift)
-				SaveSceneAs();
-			else if (control)
-				SaveScene();
-			break;
+			case Key::N:
+				if (control)
+					NewScene();
+				break;
+			case Key::O:
+				if (control)
+					OpenFile();
+				break;
+			case Key::S:
+				if (control && shift)
+					SaveSceneAs();
+				else if (control)
+					SaveScene();
+				break;
+
+			// Gizmos
+			case Key::Q: m_GizmoType = -1;	
+				break;			  
+			case Key::W: m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+				break;			  
+			case Key::E: m_GizmoType = ImGuizmo::OPERATION::ROTATE;
+				break;			  
+			case Key::R: m_GizmoType = ImGuizmo::OPERATION::SCALE;
+				break;
 		}
 	}
 

@@ -34,6 +34,7 @@ namespace Cober {
 	private:
 		// Panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
+		int m_GizmoType = -1;
 	private:
 		// create a file browser instance
 		ImGui::FileBrowser mFileDialog;

@@ -7,6 +7,9 @@
     <Filter Include="include\ENTT">
       <UniqueIdentifier>{F379C869-DFDC-570E-8862-90C474A42391}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\ImGuizmo">
+      <UniqueIdentifier>{09AC1C94-F5A4-3BE6-1ED7-206B0A2F1BF2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="include\glm">
       <UniqueIdentifier>{58D6C031-C48B-3927-4D80-33FEB934302B}</UniqueIdentifier>
     </Filter>
@@ -74,6 +77,9 @@
   <ItemGroup>
     <ClInclude Include="include\ENTT\entt.hpp">
       <Filter>include\ENTT</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ImGuizmo\ImGuizmo.h">
+      <Filter>include\ImGuizmo</Filter>
     </ClInclude>
     <ClInclude Include="include\glm\glm\common.hpp">
       <Filter>include\glm\glm</Filter>
@@ -1356,6 +1362,9 @@
     <ClInclude Include="src\Cober\Events\MouseEvents.h">
       <Filter>src\Cober\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\ImGui\ImFileBrowser.h">
+      <Filter>src\Cober\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="src\Cober\ImGui\ImGuiLayer.h">
       <Filter>src\Cober\ImGui</Filter>
     </ClInclude>
@@ -1476,9 +1485,12 @@
     <ClInclude Include="src\pch.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\ImGui\ImFileBrowser.h" />
+    <ClInclude Include="src\Cober\Math.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\ImGuizmo\ImGuizmo.cpp">
+      <Filter>include\ImGuizmo</Filter>
+    </ClCompile>
     <ClCompile Include="include\stb_image\stb_image.cpp">
       <Filter>include\stb_image</Filter>
     </ClCompile>
@@ -1590,5 +1602,6 @@
     <ClCompile Include="src\pch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Cober\Math.cpp" />
   </ItemGroup>
 </Project>

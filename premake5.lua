@@ -20,6 +20,7 @@ IncludeDir = {}
 IncludeDir["Glew"] = "Cober/include/Glew"
 IncludeDir["glm"] = "Cober/include/glm"
 IncludeDir["ImGui"] = "Cober/include/ImGui"
+IncludeDir["ImGuizmo"] = "Cober/include/ImGuizmo"
 IncludeDir["stb_image"] = "Cober/include/stb_image"
 IncludeDir["Assimp"] = "Cober/include/assimp"
 IncludeDir["GLFW"] = "Cober/include/GLFW"
@@ -53,7 +54,9 @@ project "Cober"
 		"%{prj.name}/include/stb_image/**.cpp",
 		"%{prj.name}/include/glm/glm/**.hpp",
 		"%{prj.name}/include/glm/glm/**.inl",
-		"%{prj.name}/include/ENTT/**.hpp"
+		"%{prj.name}/include/ENTT/**.hpp",
+		"%{prj.name}/include/ImGuizmo/ImGuizmo.h",
+		"%{prj.name}/include/ImGuizmo/ImGuizmo.cpp"
 	}
 	
 	defines 
@@ -72,7 +75,8 @@ project "Cober"
 		"%{IncludeDir.Assimp}",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.ENTT}",
-		"%{IncludeDir.yaml}"
+		"%{IncludeDir.yaml}",
+		"%{IncludeDir.ImGuizmo}"
 	}
 
 	libdirs 
@@ -94,6 +98,9 @@ project "Cober"
 	{
 		"{COPY} ..\\%{prj.name}\\lib\\assimp-vc142-mt.dll/ ..\\bin\\" .. outputdir .. "\\CoberEditor"
 	}
+
+	filter "files:Cober/include/ImGuizmo/**.cpp"
+	flags { "NoPCH" }
 
 	filter "system:windows"
 		systemversion "latest"

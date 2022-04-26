@@ -1,6 +1,8 @@
 #pragma once
 
-#include "Camera.h"
+#include "Cober/Renderer/Camera/Camera.h"
+
+#include <glm/glm.hpp>
 
 namespace Cober {
 

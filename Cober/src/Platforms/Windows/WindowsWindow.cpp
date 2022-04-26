@@ -6,6 +6,7 @@
 
 namespace Cober {
 
+	//float Window::s_HighDPIScaleFactor = 1.0f;
 	static uint8_t s_GLFWWindowCount = 0;
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)
@@ -38,6 +39,17 @@ namespace Cober {
 			CB_ASSERT(success, "Could not initialize GLFW!");
 		}
 		//glfwWindowHint(GLFW_SAMPLES, 4);	// For future Antialiasing
+
+		/* // For HDPI Monitors
+		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+		float xscale, yscale;
+		glfwGetMonitorContentScale(monitor, &xscale, &yscale);
+
+		if (xscale > 1.0f || yscale > 1.0f)
+		{
+			s_HighDPIScaleFactor = xscale;
+			glfwWindowHint(GLFW_SCALE_TO_MONITOR, GLFW_TRUE);
+		}*/
 
 		// Init WINDOW
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);

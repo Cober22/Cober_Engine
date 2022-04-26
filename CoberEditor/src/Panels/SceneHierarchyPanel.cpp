@@ -9,14 +9,16 @@
 namespace Cober {
 
 	SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& context) {
+		
 		SetContext(context);
 	}
 
 	void SceneHierarchyPanel::SetContext(const Ref<Scene>& context) {
-
+		
 		m_Context = context;
-
+		m_SelectionContext = {};
 	}
+
 	void SceneHierarchyPanel::OnImGuiRender() {
 
 		ImGui::Begin("Scene Hierarchy");

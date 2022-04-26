@@ -15,8 +15,8 @@ namespace Cober {
 		bool FullScreen;
 
 		WindowProps(const std::string& title = "Cober Engine",
-			uint32_t width = 1600,
-			uint32_t height = 900,
+			uint32_t width = 1280,
+			uint32_t height = 720,
 			bool fullscreen = false)
 			: Title(title), Width(width), Height(height), FullScreen(fullscreen)
 		{
@@ -46,5 +46,7 @@ namespace Cober {
 		virtual GLFWwindow* GetNativeWindow() const = 0;
 
 		static Scope<Window> Create(const WindowProps& props = WindowProps());
+	public:
+		//static float s_HighDPIScaleFactor;
 	};
 }

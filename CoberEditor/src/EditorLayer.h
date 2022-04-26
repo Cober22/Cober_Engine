@@ -2,6 +2,7 @@
 
 #include <Engine.h>
 #include "Panels/SceneHierarchyPanel.h"
+#include "Cober/Scene/SceneSerializer.h"
 
 using namespace glm;
 
@@ -24,8 +25,20 @@ namespace Cober {
 		virtual void OnImGuiRender() override;
 		void OnEvent(Event& event) override;
 	private:
+		bool OnKeyPressed(KeyPressedEvent& event);
+
+		void NewScene();
+		void OpenFile();
+		void SaveSceneAs();
+		void SaveScene();
+	private:
 		// Panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
+	private:
+		// create a file browser instance
+		ImGui::FileBrowser mFileDialog;
+		std::string mFilePath;
+		bool mFileSelected = false;
 	private:
 		PerspectiveCamera PerspCamera;
 		OrthographicCamera OrthoCamera;

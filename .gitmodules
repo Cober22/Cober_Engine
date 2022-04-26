@@ -31,3 +31,6 @@
 [submodule "libraries/Bullet"]
 	path = libraries/Bullet
 	url = https://github.com/bulletphysics/bullet3
+[submodule "libraries/yaml"]
+	path = libraries/yaml
+	url = https://github.com/thecherno/yaml-cpp

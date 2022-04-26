@@ -3,8 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm//gtc/matrix_transform.hpp>
 
-
-#include "Cober/Renderer/Camera/SceneCamera.h"
+#include "Cober/Scene/SceneCamera.h"
 #include "Cober/Scene/Entity.h"
 
 namespace Cober {

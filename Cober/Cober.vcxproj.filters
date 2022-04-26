@@ -1392,9 +1392,6 @@
     <ClInclude Include="src\Cober\Renderer\Camera\PerspectiveCamera.h">
       <Filter>src\Cober\Renderer\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Renderer\Camera\SceneCamera.h">
-      <Filter>src\Cober\Renderer\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Framebuffer.h">
       <Filter>src\Cober\Renderer</Filter>
     </ClInclude>
@@ -1437,6 +1434,12 @@
     <ClInclude Include="src\Cober\Scene\Scene.h">
       <Filter>src\Cober\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\Scene\SceneCamera.h">
+      <Filter>src\Cober\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Scene\SceneSerializer.h">
+      <Filter>src\Cober\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\Cober\Timestep.h">
       <Filter>src\Cober</Filter>
     </ClInclude>
@@ -1473,6 +1476,7 @@
     <ClInclude Include="src\pch.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\ImGui\ImFileBrowser.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\stb_image\stb_image.cpp">
@@ -1511,9 +1515,6 @@
     <ClCompile Include="src\Cober\Renderer\Camera\PerspectiveCamera.cpp">
       <Filter>src\Cober\Renderer\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\Camera\SceneCamera.cpp">
-      <Filter>src\Cober\Renderer\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="src\Cober\Renderer\Framebuffer.cpp">
       <Filter>src\Cober\Renderer</Filter>
     </ClCompile>
@@ -1548,6 +1549,12 @@
       <Filter>src\Cober\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\Scene\Scene.cpp">
+      <Filter>src\Cober\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Scene\SceneCamera.cpp">
+      <Filter>src\Cober\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Scene\SceneSerializer.cpp">
       <Filter>src\Cober\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\Window.cpp">

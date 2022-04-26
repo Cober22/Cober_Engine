@@ -24,9 +24,11 @@ IncludeDir["stb_image"] = "Cober/include/stb_image"
 IncludeDir["Assimp"] = "Cober/include/assimp"
 IncludeDir["GLFW"] = "Cober/include/GLFW"
 IncludeDir["ENTT"] = "Cober/include/ENTT"
+IncludeDir["yaml"] = "Cober/include/yaml/include"
 
 group "Dependencies"
 	include "Cober/include/ImGui"
+	include "Cober/include/yaml"
 group ""
 
 project "Cober"
@@ -70,6 +72,7 @@ project "Cober"
 		"%{IncludeDir.Assimp}",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.ENTT}",
+		"%{IncludeDir.yaml}"
 	}
 
 	libdirs 
@@ -83,7 +86,8 @@ project "Cober"
 		"glew32s",
 		"ImGui",
 		"glfw3_mt",
-		"assimp-vc142-mt"
+		"assimp-vc142-mt",
+		"yaml-cpp"
 	}
 
 	postbuildcommands
@@ -100,22 +104,23 @@ project "Cober"
 			"CB_PLATFORM_WINDOWS",
 			"CB_BUILD_DLL",
 			"IMGUI_IMPL_OPENGL_LOADER_CUSTOM=<SDL_opengl.h>",
-			"GL_GLEXT_PROTOTYPES=1"
+			"GL_GLEXT_PROTOTYPES=1",
+			"YAML_CPP_STATIC_DEFINE"
 		}
 
 	filter "configurations:Debug"
 		defines "CB_DEBUG"
-		-- buildoptions "/MDd"
+		--buildoptions "/MDd"
 		symbols "on"
 
 	filter "configurations:Release"
 		defines "CB_RELEASE"
-		-- buildoptions "/MD"
+		--buildoptions "/MD"
 		optimize "on"
 
 	filter "configurations:Dist"
 		defines "CB_DIST"
-		-- buildoptions "/MD"
+		--buildoptions "/MD"
 		optimize "on"
 
 project "CoberEditor"

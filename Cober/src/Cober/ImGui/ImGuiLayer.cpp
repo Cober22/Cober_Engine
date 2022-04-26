@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "ImGuiLayer.h"
 
-#include "imgui.h"
 #include "backends/imgui_impl_opengl3.h"
 #include "backends/imgui_impl_glfw.h"
 
@@ -32,13 +31,17 @@ namespace Cober {
 
 		/*io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;*/
+		Application& app = Application::Get();
+		window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
 
-		io.Fonts->AddFontFromFileTTF("Assets/Fonts/OpenSans/OpenSans/OpenSans-Bold.ttf", 18.0f);
-		io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/Fonts/OpenSans/OpenSans/OpenSans-Regular.ttf", 18.0f);
+		float fontPixelSize = /*Window::s_HighDPIScaleFactor * */18.0f;
+		io.Fonts->AddFontFromFileTTF("Assets/Fonts/OpenSans/OpenSans/OpenSans-Bold.ttf", fontPixelSize);
+		io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/Fonts/OpenSans/OpenSans/OpenSans-Regular.ttf", fontPixelSize);
 		
 		ImGui::StyleColorsDark();
 
 		ImGuiStyle& style = ImGui::GetStyle();
+		//style.ScaleAllSizes(Window::s_HighDPIScaleFactor);
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
 
 			style.WindowRounding = 0.0f;
@@ -47,9 +50,7 @@ namespace Cober {
 
 		SetDarkThemeColors();
 
-		Application& app = Application::Get();
-		//window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
-		ImGui_ImplGlfw_InitForOpenGL(app.GetWindow().GetNativeWindow(), true);
+		ImGui_ImplGlfw_InitForOpenGL((GLFWwindow*)window, true);
 		ImGui_ImplOpenGL3_Init("#version 460");
 	}
 

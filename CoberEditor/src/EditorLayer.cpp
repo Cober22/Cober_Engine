@@ -1,8 +1,10 @@
 #include "EditorLayer.h"
-#include "ImGui/imgui.h"
+//#include "ImGui/imgui.h"
 
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
+#include "Cober/Scene/SceneSerializer.h"
 
 namespace Cober {
 
@@ -86,6 +88,7 @@ namespace Cober {
 		// Scene
 		m_ActiveScene = CreateRef<Scene>();
 
+#if 0
 		// Entity
 		auto greenSquare = m_ActiveScene->CreateEntity("Green Square");
 		greenSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
@@ -127,7 +130,11 @@ namespace Cober {
 
 		m_FirstCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+
+#endif
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+		SceneSerializer serializer(m_ActiveScene);
+		//serializer.Serialize("Assets/Scenes/ExampleScene.cober");
 	}
 
 
@@ -251,14 +258,14 @@ namespace Cober {
 		// DockSpace
 		ImGuiIO& io = ImGui::GetIO();
 		ImGuiStyle& style = ImGui::GetStyle();
-		float minWinSize = style.WindowMinSize.x;
+		float minWinSizeX = style.WindowMinSize.x;
 		style.WindowMinSize.x = 300.0f;
 		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 		{
 			ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
 			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
 		}
-		style.WindowMinSize.x = minWinSize;
+		style.WindowMinSize.x = minWinSizeX;
 
 		if (ImGui::BeginMenuBar())
 		{
@@ -267,12 +274,32 @@ namespace Cober {
 				// Disabling fullscreen would allow the window to be moved to the front of other windows, 
 				// which we can't undo at the moment without finer window depth/z control.
 				//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
+				
+				if (ImGui::MenuItem("New", "Ctrl+N"))
+					NewScene();
+
+				if (ImGui::MenuItem("Load...", "Ctrl+O"))
+					OpenFile();
+
+				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
+					SaveSceneAs();
+
+				if (ImGui::MenuItem("Save", "Ctrl+S"))
+					SaveSceneAs();
 
 				if (ImGui::MenuItem("Exit")) Application::Get().Close();
 				ImGui::EndMenu();
 			}
-
 			ImGui::EndMenuBar();
+		}
+
+		mFileDialog.Display();
+		if (mFileDialog.HasSelected()) {
+			auto file_path = mFileDialog.GetSelected().string();
+			mFilePath = file_path;
+			//mCurrentFile = file_path.substr(file_path.find_last_of("/\\") + 1);
+			mFileSelected = true;
+			mFileDialog.ClearSelected();
 		}
 
 		m_SceneHierarchyPanel.OnImGuiRender();
@@ -304,6 +331,7 @@ namespace Cober {
 		ImGui::End();
 		ImGui::PopStyleVar();
 		ImGui::End();
+
 	}
 
 	void EditorLayer::OnEvent(Event& event)
@@ -312,8 +340,68 @@ namespace Cober {
 		//	perspective = perspective == true ? false : true;
 		//
 		//if (perspective)
-			PerspCamera.OnEvent(event);
+		PerspCamera.OnEvent(event);
+		EventDispatcher dispatcher(event);
+		dispatcher.Dispatch<KeyPressedEvent>(CB_BIND_EVENT(EditorLayer::OnKeyPressed));
 		//else
 		//	OrthoCamera.OnEvent(event);
+	}
+
+	bool EditorLayer::OnKeyPressed(KeyPressedEvent& event) {
+
+		if (event.GetRepeatCount() > 0)
+			return false;
+
+		bool control = Input::IsKeyPressed(Key::LeftControl) || Input::IsKeyPressed(Key::RightControl);
+		bool shift = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
+		
+		switch (event.GetKeyCode()) {
+		case Key::N:
+			if (control)
+				NewScene();
+			break;
+		case Key::O:
+			if (control)
+				OpenFile();
+			break;
+		case Key::S:
+			if (control && shift)
+				SaveSceneAs();
+			else if (control)
+				SaveScene();
+			break;
+		}
+	}
+
+	void EditorLayer::NewScene() {
+		m_ActiveScene = CreateRef<Scene>();
+		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+	}
+	void EditorLayer::OpenFile() {
+		mFileDialog.Open();
+		if (mFileSelected) {
+			NewScene();
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Deserialize(mFilePath);
+			mFileSelected = false;
+		}
+	}
+	void EditorLayer::SaveSceneAs() {
+		mFileDialog.Open();
+		if (mFileSelected) {
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Serialize(mFilePath);
+			mFileSelected = false;
+		}
+	}
+	void EditorLayer::SaveScene() {
+		if (!mFilePath.empty()) {
+			std::string extension = mFilePath.substr(mFilePath.find_last_of("."));
+			if (extension == ".cober") {
+				SceneSerializer serializer(m_ActiveScene);
+				serializer.Serialize(mFilePath);
+			}
+		}
 	}
 }

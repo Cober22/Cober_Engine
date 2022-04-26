@@ -76,8 +76,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;CB_PLATFORM_WINDOWS;CB_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_CUSTOM=&lt;SDL_opengl.h&gt;;GL_GLEXT_PROTOTYPES=1;CB_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;include;include\Glew;include\glm;include\ImGui;include\stb_image;include\assimp;include\GLFW;include\ENTT;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;CB_PLATFORM_WINDOWS;CB_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_CUSTOM=&lt;SDL_opengl.h&gt;;GL_GLEXT_PROTOTYPES=1;YAML_CPP_STATIC_DEFINE;CB_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;include;include\Glew;include\glm;include\ImGui;include\stb_image;include\assimp;include\GLFW;include\ENTT;include\yaml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -102,8 +102,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;CB_PLATFORM_WINDOWS;CB_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_CUSTOM=&lt;SDL_opengl.h&gt;;GL_GLEXT_PROTOTYPES=1;CB_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;include;include\Glew;include\glm;include\ImGui;include\stb_image;include\assimp;include\GLFW;include\ENTT;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;CB_PLATFORM_WINDOWS;CB_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_CUSTOM=&lt;SDL_opengl.h&gt;;GL_GLEXT_PROTOTYPES=1;YAML_CPP_STATIC_DEFINE;CB_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;include;include\Glew;include\glm;include\ImGui;include\stb_image;include\assimp;include\GLFW;include\ENTT;include\yaml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -131,8 +131,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;CB_PLATFORM_WINDOWS;CB_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_CUSTOM=&lt;SDL_opengl.h&gt;;GL_GLEXT_PROTOTYPES=1;CB_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;include;include\Glew;include\glm;include\ImGui;include\stb_image;include\assimp;include\GLFW;include\ENTT;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;CB_PLATFORM_WINDOWS;CB_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_CUSTOM=&lt;SDL_opengl.h&gt;;GL_GLEXT_PROTOTYPES=1;YAML_CPP_STATIC_DEFINE;CB_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;include;include\Glew;include\glm;include\ImGui;include\stb_image;include\assimp;include\GLFW;include\ENTT;include\yaml\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -584,6 +584,7 @@
     <ClInclude Include="src\Cober\Events\Input.h" />
     <ClInclude Include="src\Cober\Events\KeyEvents.h" />
     <ClInclude Include="src\Cober\Events\MouseEvents.h" />
+    <ClInclude Include="src\Cober\ImGui\ImFileBrowser.h" />
     <ClInclude Include="src\Cober\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Cober\Instrumentator.h" />
     <ClInclude Include="src\Cober\Layers\Layer.h" />
@@ -596,7 +597,6 @@
     <ClInclude Include="src\Cober\Renderer\Camera\CameraController.h" />
     <ClInclude Include="src\Cober\Renderer\Camera\OrthographicCamera.h" />
     <ClInclude Include="src\Cober\Renderer\Camera\PerspectiveCamera.h" />
-    <ClInclude Include="src\Cober\Renderer\Camera\SceneCamera.h" />
     <ClInclude Include="src\Cober\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Cober\Renderer\Lighting.h" />
@@ -611,6 +611,8 @@
     <ClInclude Include="src\Cober\Scene\Components.h" />
     <ClInclude Include="src\Cober\Scene\Entity.h" />
     <ClInclude Include="src\Cober\Scene\Scene.h" />
+    <ClInclude Include="src\Cober\Scene\SceneCamera.h" />
+    <ClInclude Include="src\Cober\Scene\SceneSerializer.h" />
     <ClInclude Include="src\Cober\Timestep.h" />
     <ClInclude Include="src\Cober\Window.h" />
     <ClInclude Include="src\Engine.h" />
@@ -637,7 +639,6 @@
     <ClCompile Include="src\Cober\Renderer\Camera\CameraController.cpp" />
     <ClCompile Include="src\Cober\Renderer\Camera\OrthographicCamera.cpp" />
     <ClCompile Include="src\Cober\Renderer\Camera\PerspectiveCamera.cpp" />
-    <ClCompile Include="src\Cober\Renderer\Camera\SceneCamera.cpp" />
     <ClCompile Include="src\Cober\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\Cober\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Cober\Renderer\Primitives\Cube.cpp" />
@@ -650,6 +651,8 @@
     <ClCompile Include="src\Cober\Renderer\Texture.cpp" />
     <ClCompile Include="src\Cober\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Cober\Scene\Scene.cpp" />
+    <ClCompile Include="src\Cober\Scene\SceneCamera.cpp" />
+    <ClCompile Include="src\Cober\Scene\SceneSerializer.cpp" />
     <ClCompile Include="src\Cober\Window.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp" />
@@ -667,6 +670,9 @@
   <ItemGroup>
     <ProjectReference Include="include\ImGui\ImGui.vcxproj">
       <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    </ProjectReference>
+    <ProjectReference Include="include\yaml\yaml-cpp.vcxproj">
+      <Project>{88F1A057-74BE-FB62-9DD7-E90A890331F1}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

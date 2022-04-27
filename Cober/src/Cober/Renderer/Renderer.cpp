@@ -22,7 +22,7 @@ namespace Cober {
 
 		primitive.cube = CreateRef<Cube>();
 		primitive.lightCube = CreateRef<LightCube>();
-		
+
 		basicShader = Shader::Create("Assets/Shaders/Primitive.glsl");
 		basicShader->Bind();
 		basicShader->SetInt("material.diffuse", 0);
@@ -56,7 +56,7 @@ namespace Cober {
 	void SetupBasicPrimitiveShader() {
 		
 		basicShader->Bind();
-		basicShader->SetVec3("u_ViewPos", cameraPosition);
+		//basicShader->SetVec3("u_ViewPos", cameraPosition);
 		// Material properties
 		basicShader->SetVec3("material.diffuse", { 1.0f, 1.0f, 1.0f });
 		basicShader->SetFloat("material.shininess", 32.0f);
@@ -66,10 +66,46 @@ namespace Cober {
 	{
 		CB_PROFILE_FUNCTION();
 
+		//cameraPosition = camera.GetPosition();
+
+		SetupBasicPrimitiveShader();
+		basicShader->Bind();
+		basicShader->SetMat4("u_Projection", camera.GetProjection());
+		basicShader->SetMat4("u_View", glm::inverse(transform));
+		
+		lightCubeShader->Bind();
+		lightCubeShader->SetMat4("u_Projection", camera.GetProjection());
+		lightCubeShader->SetMat4("u_View", glm::inverse(transform));
+		
 		primitive.quad->GetShader()->Bind();
 		primitive.quad->GetShader()->SetMat4("u_Projection", camera.GetProjection());
 		primitive.quad->GetShader()->SetMat4("u_View", glm::inverse(transform));
 
+		// Start Batch
+		primitive.quad->indexCount = 0;
+		primitive.quad->attributes = baseQuadAttributes;
+		primitive.quad->textureSlotIndex = 1;
+	}
+
+	void Renderer::BeginScene(const EditorCamera& camera) {
+
+		CB_PROFILE_FUNCTION();
+		//cameraPosition = camera.GetPosition();
+
+		SetupBasicPrimitiveShader();
+		basicShader->Bind();
+		basicShader->SetMat4("u_Projection", camera.GetProjectionMatrix());
+		basicShader->SetMat4("u_View", camera.GetViewMatrix());
+
+		lightCubeShader->Bind();
+		lightCubeShader->SetMat4("u_Projection", camera.GetProjectionMatrix());
+		lightCubeShader->SetMat4("u_View", camera.GetViewMatrix());
+
+		primitive.quad->GetShader()->Bind();
+		primitive.quad->GetShader()->SetMat4("u_Projection", camera.GetProjectionMatrix());
+		primitive.quad->GetShader()->SetMat4("u_View", camera.GetViewMatrix());
+		
+		// Start Batch
 		primitive.quad->indexCount = 0;
 		primitive.quad->attributes = baseQuadAttributes;
 		primitive.quad->textureSlotIndex = 1;
@@ -157,6 +193,8 @@ namespace Cober {
 		basicShader->Bind();
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, size.z });
 		basicShader->SetMat4("u_Model", transform);
+		basicShader->SetMat3("u_Normal", glm::transpose(glm::inverse(transform)));
+
 		model->Render();
 	}
 
@@ -171,7 +209,6 @@ namespace Cober {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 		DrawQuad(transform, color);
-		stats.QuadCount++;
 	}
 	void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor)
 	{	//  NOT Rotation - YES Texture
@@ -183,7 +220,6 @@ namespace Cober {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 		DrawQuad(transform, texture, color, tilingFactor);
-		stats.QuadCount++;
 	}
 	void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
 		DrawQuad({ position.x, position.y, 0.0f }, size, subtexture, color, tilingFactor);
@@ -194,67 +230,61 @@ namespace Cober {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 		DrawQuad(transform, subtexture, color, tilingFactor);
-		stats.QuadCount++;
 	}
 	void Renderer::DrawQuad(const glm::mat4& transform, const glm::vec4& color) {
 		primitive.quad->Draw(transform, color);
+		stats.QuadCount++;
 	}
 	void Renderer::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor) {
 		primitive.quad->Draw(transform, texture, color, tilingFactor);
+		stats.QuadCount++;
 	}
 	void Renderer::DrawQuad(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
 		primitive.quad->Draw(transform, subtexture, color, tilingFactor);
+		stats.QuadCount++;
 	}
 
-	void Renderer::DrawRotatedQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const glm::vec4& color)
-	{	// NOT Rotation - YES Texture
+	void Renderer::DrawRotatedQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const glm::vec4& color) {
 		DrawRotatedQuad({ position.x, position.y, 0.0f }, 0, size, color);
 	}
-	void Renderer::DrawRotatedQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color)
-	{
+	void Renderer::DrawRotatedQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color) {
 		primitive.quad->GetShader()->Bind();
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 		DrawRotatedQuad(transform, color);
-		stats.QuadCount++;
 	}
-	void Renderer::DrawRotatedQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor)
-	{	// YES Rotation - YES Texture
+	void Renderer::DrawRotatedQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor) {
 		DrawRotatedQuad({ position.x, position.y, 0.0f }, rotation, size, texture, color, tilingFactor);
 	}
 	void Renderer::DrawRotatedQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor) {
-
 		primitive.quad->GetShader()->Bind();
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 		DrawRotatedQuad(transform, texture, color, tilingFactor);
-		stats.QuadCount++;
 	}
 	void Renderer::DrawRotatedQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
 		DrawRotatedQuad({ position.x, position.y, 0.0f }, rotation, size, subtexture, color, tilingFactor);
 	}
 	void Renderer::DrawRotatedQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
-	
 		primitive.quad->GetShader()->Bind();
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 		DrawRotatedQuad(transform, subtexture, color, tilingFactor);
-		stats.QuadCount++;
 	}
 	void Renderer::DrawRotatedQuad(const glm::mat4& transform, const glm::vec4& color) {
-		
 		primitive.quad->Draw(transform, color);
+		stats.QuadCount++;
 	}
 	void Renderer::DrawRotatedQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor) {
-		
 		primitive.quad->Draw(transform, texture, color, tilingFactor);
+		stats.QuadCount++;
 	}
 	void Renderer::DrawRotatedQuad(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
-		
 		primitive.quad->Draw(transform, subtexture, color, tilingFactor);
+		stats.QuadCount++;
 	}
 
 
@@ -382,15 +412,9 @@ namespace Cober {
 
 		int i = 0;
 		for each (Ref<SpotLight> light in spotLight) {
-			if (drawCube && i != 0)
+			if (drawCube)
 				Renderer::DrawLightCube(light->Position, glm::vec3(0.5f), light->Color);
 			
-			basicShader->Bind();
-			BindSpotLight(	basicShader, i,
-							light->Direction, light->Position, light->Color,
-							light->CutOff, light->OuterCutOff,
-							light->AmbientIntensity, light->DiffuseIntensity,
-							light->Attenuation.Linear, light->Attenuation.Exp);
 			primitive.quad->GetShader()->Bind();
 			BindSpotLight(	primitive.quad->GetShader(), i,
 							light->Direction, light->Position, light->Color,
@@ -398,6 +422,14 @@ namespace Cober {
 							light->AmbientIntensity, light->DiffuseIntensity,
 							light->Attenuation.Linear, light->Attenuation.Exp);
 			i++;
+
+			// Spotlight as a Flashlight
+			//basicShader->Bind();
+			//BindSpotLight(	basicShader, i,
+			//				light->Direction, light->Position, light->Color,
+			//				light->CutOff, light->OuterCutOff,
+			//				light->AmbientIntensity, light->DiffuseIntensity,
+			//				light->Attenuation.Linear, light->Attenuation.Exp);
 		}
 		basicShader->SetInt("NUM_SPOT_LIGHTS", spotLight.size());
 	}

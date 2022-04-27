@@ -29,7 +29,7 @@ namespace Cober {
 		m_Registry.destroy(entity);
 	}
 
-	void Scene::OnUpdate(Timestep ts) {
+	void Scene::OnUpdateRuntime(Timestep ts) {
 
 		// Update scripts
 		{
@@ -70,6 +70,19 @@ namespace Cober {
 			}
 			Renderer::EndScene;
 		}
+	}
+
+	void Scene::OnUpdateEditor(Timestep ts, EditorCamera& camera) {
+
+		// Iterate through entities with TransformComponent
+		Renderer::BeginScene(camera);
+		auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+		for (auto entity : group) {
+			auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+			Renderer::DrawQuad(transform.GetTransform(), sprite.Color);
+		}
+		// Uncomment when lights are entities
+		//Renderer::EndScene;
 	}
 
 	void Scene::OnViewportResize(uint32_t width, uint32_t height)

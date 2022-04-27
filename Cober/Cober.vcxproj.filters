@@ -1486,6 +1486,7 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Math.h" />
+    <ClInclude Include="src\Cober\Renderer\Camera\EditorCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\ImGuizmo\ImGuizmo.cpp">
@@ -1603,5 +1604,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\Math.cpp" />
+    <ClCompile Include="src\Cober\Renderer\Camera\EditorCamera.cpp" />
   </ItemGroup>
 </Project>

@@ -24,7 +24,7 @@ namespace Cober {
 			{ ShaderDataType::Float2, "a_TexCoord"	},
 			{ ShaderDataType::Int,	  "a_TexIndex"	},
 			{ ShaderDataType::Float,  "a_TilingFactor" },
-			{ ShaderDataType::Float3,  "a_Normal" },
+			{ ShaderDataType::Float3, "a_Normal"	},
 			});
 		VAO->AddVertexBuffer(VBO);
 
@@ -151,5 +151,8 @@ namespace Cober {
 			attributes++;
 		}
 		indexCount += 6;
+
+		shader->SetMat4("u_Model", glm::mat4(1.0f));
+		shader->SetMat3("u_Normal", glm::transpose(glm::inverse(glm::mat4(1.0f))));
 	}
 }

@@ -3,6 +3,7 @@
 #include <Engine.h>
 #include "Panels/SceneHierarchyPanel.h"
 #include "Cober/Scene/SceneSerializer.h"
+#include "Cober/Renderer/Camera/EditorCamera.h"
 
 using namespace glm;
 
@@ -34,6 +35,7 @@ namespace Cober {
 	private:
 		// Panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
+		EditorCamera m_EditorCamera;
 		int m_GizmoType = -1;
 	private:
 		// create a file browser instance

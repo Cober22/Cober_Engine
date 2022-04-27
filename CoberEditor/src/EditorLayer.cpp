@@ -38,20 +38,21 @@ namespace Cober {
 			pointLights.push_back(pointLight);
 		}
 		// ----------- SPOT Lights
+		// FlashLight
+		//Ref<SpotLight> flashLight = CreateRef<SpotLight>(
+		//	PerspCamera.GetDirection(),	// Camera Direction 
+		//	PerspCamera.GetPosition(),	// Camera Position
+		//	glm::vec3(1.0f, 1.0f, 0.0f),// Color
+		//	8.0f,	// -----------------   CutOff	
+		//	10.0f,	// -----------------   OuterCutOff
+		//	0.1f,	// -----------------   Ambient Intensity
+		//	0.8f,	// -----------------   Diffuse Intensity
+		//	0.09f,	// -----------------   Attenuation Linear
+		//	0.032f);// -----------------   Attenuation Exponencial
+		//spotLights.push_back(flashLight);
 		Ref<SpotLight> spotLight = CreateRef<SpotLight>(
-			PerspCamera.GetDirection(),	// Camera Direction 
-			PerspCamera.GetPosition(),	// Camera Position
-			glm::vec3(1.0f, 1.0f, 0.0f),// Color
-			8.0f,	// -----------------   CutOff	
-			10.0f,	// -----------------   OuterCutOff
-			0.1f,	// -----------------   Ambient Intensity
-			0.8f,	// -----------------   Diffuse Intensity
-			0.09f,	// -----------------   Attenuation Linear
-			0.032f);// -----------------   Attenuation Exponencial
-		spotLights.push_back(spotLight);
-		Ref<SpotLight> spotLight2 = CreateRef<SpotLight>(
-			glm::vec3(-0.035, -0.95, -0.71),	// Camera Direction 
-			glm::vec3(5.0f, 8.0f, 2.0f),	// Camera Position
+			glm::vec3(-0.035, -0.95, -0.71),// Camera Direction 
+			glm::vec3(5.0f, 8.0f, 2.0f),// Camera Position
 			glm::vec3(1.0f, 0.0f, 0.0f),// Color
 			15.0f,	// -----------------   CutOff	
 			20.0f,	// -----------------   OuterCutOff
@@ -59,7 +60,7 @@ namespace Cober {
 			1.0f,	// -----------------   Diffuse Intensity
 			0.009f,	// -----------------   Attenuation Linear
 			0.0032f);// ----------------   Attenuation Exponencial
-		spotLights.push_back(spotLight2);
+		spotLights.push_back(spotLight);
 
 		// Create Textures
 		// -----------
@@ -88,6 +89,7 @@ namespace Cober {
 
 		// Scene
 		m_ActiveScene = CreateRef<Scene>();
+		m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
 
 #if 0
 		// Entity
@@ -157,6 +159,7 @@ namespace Cober {
 		{
 			m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 			PerspCamera.Resize(m_ViewportSize.x, m_ViewportSize.y);
+			m_EditorCamera.SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		}
 
@@ -167,10 +170,11 @@ namespace Cober {
 			if (m_ViewportFocused) {
 
 				//if (perspective)
-					PerspCamera.OnUpdate(ts);
+					//PerspCamera.OnUpdate(ts);
 				//else
 					//OrthoCamera.OnUpdate(ts);
 			}
+			m_EditorCamera.OnUpdate(ts);
 
 			//m_ActiveScene->OnUpdate(ts);
 		}
@@ -179,38 +183,42 @@ namespace Cober {
 		{
 			CB_PROFILE_SCOPE("Render Draw");
 			Renderer::ResetStats();
+
 			m_Framebuffer->Bind();
 
 			//if (perspective)
-				Renderer::BeginScene(PerspCamera);
+				// Renderer::BeginScene(PerspCamera);
 			//else
 				//Renderer::BeginScene(OrthoCamera);
-
-			m_ActiveScene->OnUpdate(ts);
-
-			//CUBES!
+				
+			// Update Scene
+			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+			
+			// CUBES!	// MOVE TO ENTITIES
 			for (unsigned int i = 0; i < std::size(cubePositions); i++)
 				Renderer::DrawCube(cubePositions[i], glm::vec3(1.0f), woodContainer, steelBorderContainer, { 1.0f, 1.0f, 1.0f });// cubeColors[color]);
 		
-			//LIGHTS!
+			// LIGHTS!	// MOVE TO ENTITIES
 			Renderer::DrawDirectionalLight(dirLight, true);
 			Renderer::DrawPointLights(pointLights, true);
-			//
-			spotLights[0]->SetDirection(PerspCamera.GetDirection());
-			spotLights[0]->SetPosition(PerspCamera.GetPosition());
+			// FlashLight
+			//spotLights[0]->SetDirection(PerspCamera.GetDirection());
+			//spotLights[0]->SetPosition(PerspCamera.GetPosition());
 			Renderer::DrawSpotLights(spotLights, true);
 		
-			//MODELS
-			//Renderer::DrawModel(gridModel, glm::vec3(0.0f, -3.0f, 0.0f), glm::vec3(0.5f));
-			//Renderer::DrawModel(arenaModel);
+			// MODELS	// MOVE TO ENTITIES
+			Renderer::DrawModel(gridModel, glm::vec3(0.0f, -3.0f, 0.0f), glm::vec3(0.5f));
+			// Renderer::DrawModel(arenaModel);
 
-			Renderer::DrawQuad({ 10.0, 10.0, -7.0f }, { 1.0f, 1.0f }, glm::vec4(1.0f, 0.0f, 1.0f, 1.0f));
+			// QUADS		// MOVE TO ENTITIES
 			Renderer::DrawRotatedQuad({ 10.0, 5.0, -7.0f}, 45.0f, { 1.0f, 1.0f });
 			Renderer::DrawQuad({ 4.0, 5.0, -2.0f }, { 3.5f, 3.5f }, catTexture);
 			Renderer::DrawRotatedQuad({ -4.0, 0.0, -15.0f }, 0.0f, { 1.0f, 2.0f }, bridgeTexture);
 			Renderer::DrawRotatedQuad({ -10.0, 0.0, -2.0f }, 75.0f, { 2.0f, 2.0f }, catTexture);
+			Renderer::DrawQuad({ 10.0, 10.0, -7.0f }, { 1.0f, 1.0f }, glm::vec4(1.0f, 0.0f, 1.0f, 1.0f));
 
-			Renderer::EndScene();
+			Renderer::EndScene();	// Delete when all geometry are entities
+			
 			m_Framebuffer->Unbind();
 		}
 	}
@@ -345,39 +353,41 @@ namespace Cober {
 			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
 
 			// Camera
-			auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
-			if (cameraEntity) {
-				const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
-				const glm::mat4& cameraProjection =  camera.GetProjection();
-				glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
-				
-				// Entity transform
-				auto& tc = selectedEntity.GetComponent<TransformComponent>();
-				glm::mat4 transform = tc.GetTransform();
+			// auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
+			// const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
+			// const glm::mat4& cameraProjection =  camera.GetProjection();
+			// glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
 
-				// Snapping
-				bool snap = Input::IsKeyPressed(Key::LeftControl);
-				float snapValue = 0.5f;	// Snap to 0.5m for translation/scale
-				// Snap to 45 degrees for rotation
-				if (m_GizmoType == ImGuizmo::OPERATION::ROTATE)
-					snapValue = 45.0f;
+			// Editor Camera
+			const glm::mat4& cameraProjection = m_EditorCamera.GetProjection();
+			glm::mat4 cameraView = m_EditorCamera.GetViewMatrix();;
+			
+			// Entity transform
+			auto& tc = selectedEntity.GetComponent<TransformComponent>();
+			glm::mat4 transform = tc.GetTransform();
 
-				float snapValues[3] = { snapValue, snapValue, snapValue };
+			// Snapping
+			bool snap = Input::IsKeyPressed(Key::LeftControl);
+			float snapValue = 0.5f;	// Snap to 0.5m for translation/scale
+			// Snap to 45 degrees for rotation
+			if (m_GizmoType == ImGuizmo::OPERATION::ROTATE)
+				snapValue = 45.0f;
 
-				ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), 
-									 (ImGuizmo::OPERATION)m_GizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform),
-									 nullptr, snap ? snapValues : nullptr);
+			float snapValues[3] = { snapValue, snapValue, snapValue };
 
-				if (ImGuizmo::IsUsing()) {
+			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), 
+								 (ImGuizmo::OPERATION)m_GizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform),
+								 nullptr, snap ? snapValues : nullptr);
 
-					glm::vec3 translation, rotation, scale;
-					DecomposeTransform(transform, translation, rotation, scale);
+			if (ImGuizmo::IsUsing()) {
 
-					glm::vec3 deltaRotation = rotation - tc.Rotation;
-					tc.Translation = translation;
-					tc.Rotation += deltaRotation;
-					tc.Scale = scale;
-				}
+				glm::vec3 translation, rotation, scale;
+				DecomposeTransform(transform, translation, rotation, scale);
+
+				glm::vec3 deltaRotation = rotation - tc.Rotation;
+				tc.Translation = translation;
+				tc.Rotation += deltaRotation;
+				tc.Scale = scale;
 			}
 		}
 
@@ -394,6 +404,8 @@ namespace Cober {
 		//
 		//if (perspective)
 		PerspCamera.OnEvent(event);
+		m_EditorCamera.OnEvent(event);
+
 		EventDispatcher dispatcher(event);
 		dispatcher.Dispatch<KeyPressedEvent>(CB_BIND_EVENT(EditorLayer::OnKeyPressed));
 		//else

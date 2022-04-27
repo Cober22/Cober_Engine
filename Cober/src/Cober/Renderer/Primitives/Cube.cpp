@@ -13,6 +13,7 @@ namespace Cober {
 	void Cube::Draw(const glm::vec3& position, const glm::vec3& size, Ref<Shader> shader) {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, size.z });
 		shader->SetMat4("u_Model", transform);
+		shader->SetMat3("u_Normal", glm::transpose(glm::inverse(transform)));
 
 		VAO->Bind();
 		RenderCommand::DrawIndexed(VAO);

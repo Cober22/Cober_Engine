@@ -27,6 +27,7 @@ namespace Cober {
 		void OnEvent(Event& event) override;
 	private:
 		bool OnKeyPressed(KeyPressedEvent& event);
+		bool OnMouseButtonPressed(MouseButtonPressedEvent& event);
 
 		void NewScene();
 		void OpenFile();

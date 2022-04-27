@@ -40,7 +40,7 @@ void main()
 #type fragment
 #version 460 core
 layout(location = 0) out vec4 fragmentColor;
-layout(location = 1) out vec4 fragmentColor2;
+layout(location = 1) out int fragmentColor2;
 
 struct DirLight {
 	vec3 direction;
@@ -121,7 +121,7 @@ void main()
 	}
 
     fragmentColor = result;
-	fragmentColor2 = vec4(0.9, 0.2, 0.3, 1.0);
+	fragmentColor2 = 50;
 }
 
 vec4 CalculateDirLight(DirLight light, vec3 normal, vec4 texture) {

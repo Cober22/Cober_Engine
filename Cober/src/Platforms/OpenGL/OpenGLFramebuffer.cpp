@@ -52,10 +52,21 @@ namespace Cober {
 		}
 
 		static bool IsDepthFormat(FramebufferTextureFormat format) {
+			
 			switch (format) {
 				case FramebufferTextureFormat::DEPTH24STENCIL8: return true;
 			}
 			return false;
+		}
+
+		static GLenum CoberTextureFormatToGL(FramebufferTextureFormat format) {
+			
+			switch (format) {
+				case FramebufferTextureFormat::RGBA8:		return GL_RGBA8;
+				case FramebufferTextureFormat::RED_INTEGER:	return GL_RED_INTEGER;
+			}
+			CB_ASSERT(false);
+			return 0;
 		}
 	}
 
@@ -108,10 +119,12 @@ namespace Cober {
 				switch (m_ColorAttachmentSpecification[i].TextureFormat)
 				{
 					case FramebufferTextureFormat::RGBA8:
-						Utils::AttachColorTexture(m_ColorAttachment[i], m_Specification.Samples, GL_RGBA8, GL_RGBA, m_Specification.Width, m_Specification.Height, i);
+						Utils::AttachColorTexture(m_ColorAttachment[i], m_Specification.Samples, GL_RGBA8, GL_RGBA, 
+							m_Specification.Width, m_Specification.Height, i);
 						break;
 					case FramebufferTextureFormat::RED_INTEGER:
-						Utils::AttachColorTexture(m_ColorAttachment[i], m_Specification.Samples, GL_R32I, GL_RED_INTEGER, m_Specification.Width, m_Specification.Height, i);
+						Utils::AttachColorTexture(m_ColorAttachment[i], m_Specification.Samples, GL_R32I, GL_RED_INTEGER, 
+							m_Specification.Width, m_Specification.Height, i);
 						break;
 				}
 			}
@@ -147,7 +160,6 @@ namespace Cober {
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
 		glViewport(0, 0, m_Specification.Width, m_Specification.Height);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	void OpenGLFramebuffer::Unbind()
@@ -171,5 +183,15 @@ namespace Cober {
 		int pixelData;
 		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
 		return pixelData;
+	}
+
+	void OpenGLFramebuffer::ClearAttachment(uint32_t attachmentIndex, int value)
+	{
+		CB_ASSERT(attachmentIndex < m_ColorAttachment.size());
+		
+		auto& spec = m_ColorAttachmentSpecification[attachmentIndex];
+
+		glClearTexImage(m_ColorAttachment[attachmentIndex], 0, 
+			Utils::CoberTextureFormatToGL(spec.TextureFormat), GL_INT, &value);
 	}
 }

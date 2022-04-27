@@ -186,11 +186,14 @@ namespace Cober {
 			Renderer::ResetStats();
 
 			m_Framebuffer->Bind();
+			//RenderCommand::SetClearColor({ 0.02f, 0.008f, 0.05f, 1.0f });	// DARK BLUE
+			//RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+			RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
+			//RenderCommand::SetClearColor({ 0.8f, 0.35f, 0.35f, 1.0f });
+			RenderCommand::Clear();
 
-			//if (perspective)
-				// Renderer::BeginScene(PerspCamera);
-			//else
-				//Renderer::BeginScene(OrthoCamera);
+			// Clear our entity ID attachment to -1
+			m_Framebuffer->ClearAttachment(1, -1);
 				
 			// Update Scene
 			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
@@ -211,7 +214,7 @@ namespace Cober {
 			Renderer::DrawModel(gridModel, glm::vec3(0.0f, -3.0f, 0.0f), glm::vec3(0.5f));
 			// Renderer::DrawModel(arenaModel);
 
-			// QUADS		// MOVE TO ENTITIES
+			// QUADS	// MOVE TO ENTITIES
 			Renderer::DrawRotatedQuad({ 10.0, 5.0, -7.0f}, 45.0f, { 1.0f, 1.0f });
 			Renderer::DrawQuad({ 4.0, 5.0, -2.0f }, { 3.5f, 3.5f }, catTexture);
 			Renderer::DrawRotatedQuad({ -4.0, 0.0, -15.0f }, 0.0f, { 1.0f, 2.0f }, bridgeTexture);
@@ -228,7 +231,7 @@ namespace Cober {
 			int mouseX = (int)mx;
 			int mouseY = (int)my;
 			
-			if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)	{
+			if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y) {
 				int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
 				std::cout << pixelData << std::endl;
 			}
@@ -297,7 +300,6 @@ namespace Cober {
 				// Disabling fullscreen would allow the window to be moved to the front of other windows, 
 				// which we can't undo at the moment without finer window depth/z control.
 				//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
-
 				if (ImGui::MenuItem("New", "Ctrl+N"))
 					NewScene();
 
@@ -425,17 +427,11 @@ namespace Cober {
 
 	void EditorLayer::OnEvent(Event& event)
 	{
-		//if (Input::IsKeyPressed(KEY_0))
-		//	perspective = perspective == true ? false : true;
-		//
-		//if (perspective)
 		PerspCamera.OnEvent(event);
 		m_EditorCamera.OnEvent(event);
 
 		EventDispatcher dispatcher(event);
 		dispatcher.Dispatch<KeyPressedEvent>(CB_BIND_EVENT(EditorLayer::OnKeyPressed));
-		//else
-		//	OrthoCamera.OnEvent(event);
 	}
 
 	bool EditorLayer::OnKeyPressed(KeyPressedEvent& event) {

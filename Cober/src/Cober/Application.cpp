@@ -81,14 +81,6 @@ namespace Cober {
 			if (!w_Minimized)
 			{
 				{
-					CB_PROFILE_SCOPE("Render Prep");
-					//RenderCommand::SetClearColor({ 0.02f, 0.008f, 0.05f, 1.0f });	// DARK BLUE
-					//RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
-					RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
-					//RenderCommand::SetClearColor({ 0.8f, 0.35f, 0.35f, 1.0f });
-					RenderCommand::Clear();
-				}
-				{
 					CB_PROFILE_SCOPE("LayerStack OnUpdate");
 
 					for (Layer* layer : m_LayerStack)

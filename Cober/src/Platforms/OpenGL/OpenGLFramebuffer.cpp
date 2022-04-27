@@ -119,12 +119,10 @@ namespace Cober {
 				switch (m_ColorAttachmentSpecification[i].TextureFormat)
 				{
 					case FramebufferTextureFormat::RGBA8:
-						Utils::AttachColorTexture(m_ColorAttachment[i], m_Specification.Samples, GL_RGBA8, GL_RGBA, 
-							m_Specification.Width, m_Specification.Height, i);
+						Utils::AttachColorTexture(m_ColorAttachment[i], m_Specification.Samples, GL_RGBA8, GL_RGBA, m_Specification.Width, m_Specification.Height, i);
 						break;
 					case FramebufferTextureFormat::RED_INTEGER:
-						Utils::AttachColorTexture(m_ColorAttachment[i], m_Specification.Samples, GL_R32I, GL_RED_INTEGER, 
-							m_Specification.Width, m_Specification.Height, i);
+						Utils::AttachColorTexture(m_ColorAttachment[i], m_Specification.Samples, GL_R32I, GL_RED_INTEGER, m_Specification.Width, m_Specification.Height, i);
 						break;
 				}
 			}

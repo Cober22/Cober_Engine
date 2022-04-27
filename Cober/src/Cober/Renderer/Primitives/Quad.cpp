@@ -19,12 +19,13 @@ namespace Cober {
 		// [---------- VERTEX BUFFER ----------]
 		VBO = VertexBuffer::Create(maxVertices * sizeof(Attributes));
 		VBO->SetLayout({
-			{ ShaderDataType::Float3, "a_Position"	},
-			{ ShaderDataType::Float4, "a_Color"		},
-			{ ShaderDataType::Float2, "a_TexCoord"	},
-			{ ShaderDataType::Int,	  "a_TexIndex"	},
-			{ ShaderDataType::Float,  "a_TilingFactor" },
-			{ ShaderDataType::Float3, "a_Normal"	},
+			{ ShaderDataType::Float3, "a_Position"		},
+			{ ShaderDataType::Float4, "a_Color"			},
+			{ ShaderDataType::Float2, "a_TexCoord"		},
+			{ ShaderDataType::Float,  "a_TexIndex"		},
+			{ ShaderDataType::Float,  "a_TilingFactor"	},
+			{ ShaderDataType::Float3, "a_Normal"		},
+			{ ShaderDataType::Int,	  "a_EntityID"		}
 			});
 		VAO->AddVertexBuffer(VBO);
 
@@ -139,7 +140,18 @@ namespace Cober {
 		SetAttributes(transform, color, textureIndex, textureCoords, tilingFactor);
 	}
 
-	void Quad::SetAttributes(const glm::mat4& transform, const glm::vec4& color, int textureIndex, const glm::vec2* textureCoords, float tilingFactor) {
+	void Quad::Draw(const glm::mat4& transform, const glm::vec4& color, int entityID) {
+
+		const int textureIndex = 0; // White Texture
+		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+
+		if (indexCount >= maxIndices)
+			Renderer::FlushAndReset();
+
+		SetAttributes(transform, color, textureIndex, textureCoords, 1.0f, entityID);
+	}
+
+	void Quad::SetAttributes(const glm::mat4& transform, const glm::vec4& color, int textureIndex, const glm::vec2* textureCoords, float tilingFactor, int entityID) {
 
 		for (size_t i = 0; i < vertexCount; i++) {
 			attributes->Position = transform * vertexPositions[i];
@@ -148,6 +160,7 @@ namespace Cober {
 			attributes->TexIndex = textureIndex;
 			attributes->TilingFactor = tilingFactor;
 			attributes->Normal = glm::vec3(0.0f, 0.0f, 1.0f);
+			attributes->EntityID = entityID;
 			attributes++;
 		}
 		indexCount += 6;

@@ -66,7 +66,7 @@ namespace Cober {
 			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
 			for (auto entity : group) {
 				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-				Renderer::DrawQuad(transform.GetTransform(), sprite.Color);
+				Renderer::DrawSprite(transform.GetTransform(), sprite, (int)entity);
 			}
 			Renderer::EndScene;
 		}
@@ -79,7 +79,7 @@ namespace Cober {
 		auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
 		for (auto entity : group) {
 			auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-			Renderer::DrawQuad(transform.GetTransform(), sprite.Color);
+			Renderer::DrawSprite(transform.GetTransform(), sprite, (int)entity);
 		}
 		// Uncomment when lights are entities
 		//Renderer::EndScene;

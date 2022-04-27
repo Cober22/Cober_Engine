@@ -287,6 +287,10 @@ namespace Cober {
 		stats.QuadCount++;
 	}
 
+	void Renderer::DrawSprite(const glm::mat4& transform, SpriteRendererComponent& src, int entityID) {
+		primitive.quad->Draw(transform, src.Color, entityID);
+	}
+
 
 	// [-------------------- CUBE --------------------]
 	void Renderer::DrawCube(const glm::vec2& position, const glm::vec3& size, const glm::vec3& color)

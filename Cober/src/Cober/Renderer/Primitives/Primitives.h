@@ -12,7 +12,8 @@ namespace Cober {
 		void Quad::Draw(const glm::mat4& transform, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
 		void Quad::Draw(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
 		void Quad::Draw(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
-		
+		void Quad::Draw(const glm::mat4& transform, const glm::vec4& color, int entityID);
+
 		void Init();
 		// Functions
 		Ref<VertexBuffer> GetVBO() { return VBO; }
@@ -33,13 +34,16 @@ namespace Cober {
 			glm::vec3 Position;
 			glm::vec4 Color;
 			glm::vec2 TexCoord;
-			int TexIndex;
+			float TexIndex;
 			float TilingFactor;
 			glm::vec3 Normal;
+
+			// Editor-only
+			int EntityID;
 		};
 		Attributes* attributes = nullptr;
 	private:
-		void SetAttributes(const glm::mat4& transform, const glm::vec4& color, int textureIndex, const glm::vec2* textureCoords, float tilingFactor);
+		void SetAttributes(const glm::mat4& transform, const glm::vec4& color, int textureIndex, const glm::vec2* textureCoords, float tilingFactor, int entityID = -1);
 
 		// Buffer Objects
 		Ref<VertexBuffer> VBO;

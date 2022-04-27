@@ -233,9 +233,8 @@ namespace Cober {
 			
 			if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y) {
 				int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
-				std::cout << pixelData << std::endl;
+				m_HoveredEntity = pixelData == -1 ? Entity() : Entity((entt::entity)pixelData, m_ActiveScene.get());
 			}
-
 			m_Framebuffer->Unbind();
 		}
 	}
@@ -330,6 +329,12 @@ namespace Cober {
 		m_SceneHierarchyPanel.OnImGuiRender();
 
 		ImGui::Begin("Settings");
+
+		std::string name = "None";
+		if (m_HoveredEntity && m_HoveredEntity.HasComponent<TagComponent>())
+			name = m_HoveredEntity.GetComponent<TagComponent>().Tag;
+		ImGui::Text("Hovered Entity: %s", name.c_str());
+
 		auto stats = Renderer::GetStats();
 		ImGui::Text("Renderer Stats:");
 		ImGui::Text("Draw Calls: %d", stats.DrawCalls);

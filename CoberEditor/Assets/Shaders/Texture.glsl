@@ -8,11 +8,13 @@ layout(location = 2) in vec2 a_TexCoord;
 layout(location = 3) in float a_TexIndex;
 layout(location = 4) in float a_TilingFactor;
 layout(location = 5) in vec3 a_Normal;
+layout(location = 6) in int a_EntityID;
 
 out vec4 v_Color;
 out vec2 v_TexCoord;
 flat out float v_TexIndex;
 out float v_TilingFactor;
+out flat int v_EntityID;
 
 out vec3 v_FragPos;
 out vec3 v_Normal;
@@ -29,7 +31,8 @@ void main()
 	v_TexIndex = a_TexIndex;
 	v_TilingFactor = a_TilingFactor;
 	v_Normal = u_Normal * a_Normal;
-	
+	v_EntityID = a_EntityID;
+
 	v_FragPos = vec3(u_Model * vec4(a_Position, 1.0));
 	gl_Position = u_Projection * u_View * vec4(v_FragPos, 1.0);
 	//gl_Position = u_Projection * u_View * vec4(a_Position, 1.0);
@@ -88,6 +91,7 @@ in vec4 v_Color;
 in vec2 v_TexCoord;
 flat in float v_TexIndex;
 in float v_TilingFactor;
+in flat int v_EntityID;
 
 uniform sampler2D u_Textures[32];
 
@@ -121,7 +125,7 @@ void main()
 	}
 
     fragmentColor = result;
-	fragmentColor2 = 50;
+	fragmentColor2 = v_EntityID;
 }
 
 vec4 CalculateDirLight(DirLight light, vec3 normal, vec4 texture) {

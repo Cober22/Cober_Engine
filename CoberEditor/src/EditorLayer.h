@@ -53,6 +53,7 @@ namespace Cober {
 		Entity m_SquareEntity;
 		Entity m_FirstCamera;
 		Entity m_SecondCamera;
+		Entity m_HoveredEntity;
 		bool m_PrimaryCamera = true;
 		// Textures
 		Ref<Texture2D> catTexture;

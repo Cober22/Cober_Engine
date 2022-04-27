@@ -5,6 +5,7 @@
 #include "Camera/PerspectiveCamera.h"
 #include "Camera/Camera.h"
 #include "Camera/EditorCamera.h"
+#include "Cober/Scene/Components.h"
 
 #include "Lighting.h"
 #include "Primitives/Primitives.h"
@@ -75,7 +76,6 @@ namespace Cober {
 		static void DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
 		static void DrawQuad(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
 
-
 		static void DrawRotatedQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const glm::vec4& color = glm::vec4(1.0f));
 		static void DrawRotatedQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color = glm::vec4(1.0f));
 		static void DrawRotatedQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
@@ -86,6 +86,8 @@ namespace Cober {
 		static void DrawRotatedQuad(const glm::mat4& transform, const glm::vec4& color = glm::vec4(1.0f));
 		static void DrawRotatedQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
 		static void DrawRotatedQuad(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f);
+
+		static void DrawSprite(const glm::mat4& transform, SpriteRendererComponent& src, int entityID = -1);
 
 		static void DrawCube(const glm::vec2& position, const glm::vec3& size, const glm::vec3& color);
 		static void DrawCube(const glm::vec3& position, const glm::vec3& size, const glm::vec3& color);

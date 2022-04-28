@@ -94,6 +94,9 @@ namespace Cober {
 		// Scene
 		m_ActiveScene = CreateRef<Scene>();
 		m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
+		m_IconPlay = Texture2D::Create("Assets/Icons/IconPlay.png");
+		m_IconStop = Texture2D::Create("Assets/Icons/IconStop.png");
+
 
 #if 0
 		// Entity
@@ -169,37 +172,36 @@ namespace Cober {
 
 		// Camera Update
 		{
-			CB_PROFILE_SCOPE("CameraController::OnUpdate");
-			
-			if (m_ViewportFocused) {
-
-				//if (perspective)
-					//PerspCamera.OnUpdate(ts);
-				//else
-					//OrthoCamera.OnUpdate(ts);
-			}
-			m_EditorCamera.OnUpdate(ts);
-
-			//m_ActiveScene->OnUpdate(ts);
-		}
-
-		// Update
-		{
 			CB_PROFILE_SCOPE("Render Draw");
 			Renderer::ResetStats();
-
 			m_Framebuffer->Bind();
+
 			//RenderCommand::SetClearColor({ 0.02f, 0.008f, 0.05f, 1.0f });	// DARK BLUE
 			//RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 			RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
 			//RenderCommand::SetClearColor({ 0.8f, 0.35f, 0.35f, 1.0f });
 			RenderCommand::Clear();
-
 			// Clear our entity ID attachment to -1
 			m_Framebuffer->ClearAttachment(1, -1);
-				
+
 			// Update Scene
 			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+			switch (m_SceneState)
+			{
+				case GameState::EDIT:
+				{
+					//if (m_ViewportFocused)
+						//m_CameraController.OnUpdate(ts);
+					m_EditorCamera.OnUpdate(ts);
+					m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+					break;
+				}
+				case GameState::PLAY:
+				{
+					m_ActiveScene->OnUpdateRuntime(ts);
+					break;
+				}
+			}
 			
 			// CUBES!	// MOVE TO ENTITIES
 			for (unsigned int i = 0; i < std::size(cubePositions); i++)
@@ -432,7 +434,37 @@ namespace Cober {
 
 		ImGui::End();
 		ImGui::PopStyleVar();
+
+		UI_Toolbar();
 	
+		ImGui::End();
+	}
+
+	void EditorLayer::UI_Toolbar() {
+
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 2));
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, ImVec2(0, 0));
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+		auto& colors = ImGui::GetStyle().Colors;
+		const auto& buttonHovered = colors[ImGuiCol_ButtonHovered];
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(buttonHovered.x, buttonHovered.y, buttonHovered.z, 0.5f));
+		const auto& buttonActive = colors[ImGuiCol_ButtonActive];
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(buttonActive.x, buttonActive.y, buttonActive.z, 0.5f));
+
+		ImGui::Begin("##toolbar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+
+		float size = ImGui::GetWindowHeight() - 4.0f;
+		Ref<Texture2D> icon = m_SceneState == GameState::EDIT ? m_IconPlay : m_IconStop;
+		ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
+		if (ImGui::ImageButton((ImTextureID)icon->GetRendererID(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0))
+		{
+			if (m_SceneState == GameState::EDIT)
+				OnScenePlay();
+			else if (m_SceneState == GameState::PLAY)
+				OnSceneStop();
+		}
+		ImGui::PopStyleVar(2);
+		ImGui::PopStyleColor(3);
 		ImGui::End();
 	}
 
@@ -531,5 +563,12 @@ namespace Cober {
 				serializer.Serialize(mFilePath);
 			}
 		}
+	}
+
+	void EditorLayer::OnScenePlay()	{
+		m_SceneState = GameState::PLAY;
+	}
+	void EditorLayer::OnSceneStop() {
+		m_SceneState = GameState::EDIT;
 	}
 }

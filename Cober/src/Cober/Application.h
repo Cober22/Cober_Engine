@@ -10,7 +10,7 @@
 
 namespace Cober {
 
-	enum class GameState { PLAY, EXIT };
+	enum class GameState { PLAY, EDIT, EXIT };
 
 	class Application
 	{

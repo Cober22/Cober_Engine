@@ -36,6 +36,12 @@ namespace Cober {
 		void OpenFile(const std::filesystem::path& path);
 		void SaveSceneAs();
 		void SaveScene();
+
+		void OnScenePlay();
+		void OnSceneStop();
+
+		// UI Panels
+		void UI_Toolbar();
 	private:
 		// Panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
@@ -53,6 +59,10 @@ namespace Cober {
 		Ref<Framebuffer> m_Framebuffer;
 		Ref<Scene> m_ActiveScene;
 		uint32_t frames;
+
+		GameState m_SceneState = GameState::EDIT;
+		Ref<Texture2D> m_IconPlay;
+		Ref<Texture2D> m_IconStop;
 
 		// Entities
 		Entity m_SquareEntity;

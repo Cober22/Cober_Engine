@@ -68,7 +68,7 @@ namespace Cober {
 				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
 				Renderer::DrawSprite(transform.GetTransform(), sprite, (int)entity);
 			}
-			Renderer::EndScene();
+			//Renderer::EndScene();
 		}
 	}
 

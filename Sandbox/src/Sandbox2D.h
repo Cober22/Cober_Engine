@@ -17,13 +17,13 @@ public:
 
 	virtual void OnAttach() override;
 	virtual void OnDetach() override;
-	virtual void OnImGuiRender() override;
 
 	void OnUpdate(Timestep ts) override;
-	//void OnEvent(SDL_Event& e) override;
+	void OnEvent(Event& event) override;
 private:
 	PerspectiveCamera PerspCamera;
 	OrthographicCamera OrthoCamera;
+	Ref<Scene> m_ActiveScene;
 
 	bool perspective = true;
 	// Textures

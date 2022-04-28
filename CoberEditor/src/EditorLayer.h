@@ -2,6 +2,8 @@
 
 #include <Engine.h>
 #include "Panels/SceneHierarchyPanel.h"
+#include "Panels/ContentBrowserPanel.h"
+
 #include "Cober/Scene/SceneSerializer.h"
 #include "Cober/Renderer/Camera/EditorCamera.h"
 
@@ -36,6 +38,7 @@ namespace Cober {
 	private:
 		// Panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
+		ContentBrowserPanel m_ContentBrowserPanel;
 		EditorCamera m_EditorCamera;
 		int m_GizmoType = -1;
 	private:

@@ -193,14 +193,16 @@ project "Sandbox"
 	files 
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/include/ENTT/**.hpp"
 	}
 
 	includedirs
 	{
 		"Cober/include",
 		"Cober/src",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.ENTT}"
 	}
 
 	links 

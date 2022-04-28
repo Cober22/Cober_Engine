@@ -597,9 +597,9 @@
     <ClInclude Include="src\Cober\Renderer\Buffer.h" />
     <ClInclude Include="src\Cober\Renderer\Camera\Camera.h" />
     <ClInclude Include="src\Cober\Renderer\Camera\CameraController.h" />
+    <ClInclude Include="src\Cober\Renderer\Camera\EditorCamera.h" />
     <ClInclude Include="src\Cober\Renderer\Camera\OrthographicCamera.h" />
     <ClInclude Include="src\Cober\Renderer\Camera\PerspectiveCamera.h" />
-    <ClInclude Include="src\Cober\Renderer\Camera\EditorCamera.h" />
     <ClInclude Include="src\Cober\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Cober\Renderer\Lighting.h" />
@@ -644,9 +644,9 @@
     <ClCompile Include="src\Cober\Renderer\API\RendererAPI.cpp" />
     <ClCompile Include="src\Cober\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Cober\Renderer\Camera\CameraController.cpp" />
+    <ClCompile Include="src\Cober\Renderer\Camera\EditorCamera.cpp" />
     <ClCompile Include="src\Cober\Renderer\Camera\OrthographicCamera.cpp" />
     <ClCompile Include="src\Cober\Renderer\Camera\PerspectiveCamera.cpp" />
-    <ClCompile Include="src\Cober\Renderer\Camera\EditorCamera.cpp" />
     <ClCompile Include="src\Cober\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\Cober\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Cober\Renderer\Primitives\Cube.cpp" />

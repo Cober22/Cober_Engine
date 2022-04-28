@@ -5,31 +5,26 @@
 
 #include "Sandbox2D.h"
 
-class ExampleLayer : public Cober::Layer
-{
-public:
-	ExampleLayer()
-		: Layer("Example")
-	{
-
-	}
-
-	void OnUpdate(Cober::Timestep ts) override
-	{
-
-	}
-
-	void OnImGuiRender() override 
-	{
-
-	}
-
-	void OnEvent(SDL_Event& event) override
-	{
-	}
-
-private:
-};
+//class ExampleLayer : public Cober::Layer
+//{
+//public:
+//	ExampleLayer()
+//		: Layer("Example")
+//	{
+//
+//	}
+//
+//	void OnUpdate(Cober::Timestep ts) override
+//	{
+//
+//	}
+//
+//	void OnEvent(Event& event) override
+//	{
+//	}
+//
+//private:
+//};
 
 class Sandbox : public Cober::Application {
 

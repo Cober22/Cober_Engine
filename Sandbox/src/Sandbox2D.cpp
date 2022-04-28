@@ -73,6 +73,8 @@ void Sandbox2D::OnAttach()
 	//
 	gridModel->LoadMesh("Assets/Models/thegrid/GRID.obj");
 	arenaModel->LoadMesh("Assets/Models/thegridFBX/GRID.fbx");
+
+	m_ActiveScene = CreateRef<Scene>();
 }
 
 void Sandbox2D::OnDetach()
@@ -106,7 +108,10 @@ void Sandbox2D::OnUpdate( Timestep ts)
 	
 	{
 		CB_PROFILE_SCOPE("Render Draw");
-		if (perspective)
+
+		m_ActiveScene->OnUpdateRuntime(ts);
+
+		/*if (perspective)
 			Renderer::BeginScene(PerspCamera);
 		else
 			Renderer::BeginScene(OrthoCamera);
@@ -132,40 +137,13 @@ void Sandbox2D::OnUpdate( Timestep ts)
 		Renderer::DrawQuad({ 4.0, 5.0, -2.0f }, { 3.5f, 3.5f }, catTexture);
 		Renderer::DrawRotatedQuad({ -4.0, 0.0, -15.0f }, 0.0f, { 1.0f, 2.0f }, bridgeTexture);
 		Renderer::DrawRotatedQuad({ -10.0, 0.0, -2.0f }, 75.0f, { 2.0f, 2.0f }, catTexture);
-
-		Renderer::EndScene();
+		
+		Renderer::EndScene(); 
+		*/
 	}
 }
 
-void Sandbox2D::OnImGuiRender()
+void Sandbox2D::OnEvent(Event& event)
 {
-	CB_PROFILE_FUNCTION();
 
-	ImGui::Begin("Settings");
-
-	//auto stats = Renderer::GetStats();
-	//ImGui::Text("Renderer2D Stats:");
-	//ImGui::Text("Draw Calls: %d", stats.DrawCalls);
-	//ImGui::Text("Quads: %d", stats.QuadCount);
-	//ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
-	//ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
-
-	//ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
-
-	//uint32_t textureID = catTexture->GetRendererID();
-	//ImGui::Image((void*)textureID, ImVec2{ 256.0f, 256.0f });
-	ImGui::End();
-
-}
-
-void Sandbox2D::OnEvent(SDL_Event& e)
-{
-	const Uint8* keystate = SDL_GetKeyboardState(NULL);
-	if (keystate[SDL_SCANCODE_0] && e.type == SDL_KEYDOWN)
-		perspective = perspective == true ? false : true;
-	
-	if (perspective)
-		PerspCamera.OnEvent(e);
-	else
-		OrthoCamera.OnEvent(e);
 }

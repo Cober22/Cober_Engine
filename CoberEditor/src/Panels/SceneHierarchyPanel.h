@@ -5,6 +5,8 @@
 #include "Cober/Scene/Scene.h"
 #include "Cober/Scene/Entity.h"
 
+#include <filesystem>
+
 namespace Cober {
 
 	class SceneHierarchyPanel

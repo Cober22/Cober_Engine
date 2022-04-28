@@ -288,7 +288,10 @@ namespace Cober {
 	}
 
 	void Renderer::DrawSprite(const glm::mat4& transform, SpriteRendererComponent& src, int entityID) {
-		primitive.quad->Draw(transform, src.Color, entityID);
+		if (src.Texture)
+			primitive.quad->Draw(transform, src.Texture, src.Color, src.TilingFactor, entityID);
+		else
+			primitive.quad->Draw(transform, src.Color, entityID);
 	}
 
 

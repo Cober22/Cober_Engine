@@ -25,6 +25,7 @@ namespace Cober {
 		dirLight = CreateRef<DirectionalLight>(
 			glm::vec3(-0.2f, -1.0f, -0.3f),	// ---	Direction 
 			glm::vec3(0.45f, 0.1f, 0.6f),	//----------------	Color
+			//glm::vec3(1.0f, 1.0f, 1.0f),	//----------------	Color
 			0.25f, // -----------------------------  Ambient Intensity
 			0.3f); // -----------------------------  Diffuse Intensity
 

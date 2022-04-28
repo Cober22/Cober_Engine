@@ -68,7 +68,7 @@ namespace Cober {
 		vertexPositions[2] = {  1.0f,  1.0f, 0.0f, 1.0f };
 		vertexPositions[3] = { -1.0f,  1.0f, 0.0f, 1.0f };
 	}
-	void Quad::Draw(const glm::mat4& transform, const glm::vec4& color, float tilingFactor) {
+	void Quad::Draw(const glm::mat4& transform, const glm::vec4& color, float tilingFactor, int entityID) {
 		
 		const int textureIndex = 0; // White Texture
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
@@ -76,10 +76,10 @@ namespace Cober {
 		if (indexCount >= maxIndices)
 			Renderer::FlushAndReset();
 
-		SetAttributes(transform, color, textureIndex, textureCoords, tilingFactor);
+		SetAttributes(transform, color, textureIndex, textureCoords, tilingFactor, entityID);
 	}
 	
-	void Quad::Draw(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor) {
+	void Quad::Draw(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor, int entityID) {
 
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
 
@@ -105,10 +105,10 @@ namespace Cober {
 			textureSlotIndex++;
 		}
 
-		SetAttributes(transform, color, textureIndex, textureCoords, tilingFactor);
+		SetAttributes(transform, color, textureIndex, textureCoords, tilingFactor, entityID);
 	}
 
-	void Quad::Draw(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor) {
+	void Quad::Draw(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor, int entityID) {
 		
 		// For loading Sprite Sheets...
 		// ............................
@@ -137,7 +137,7 @@ namespace Cober {
 			textureSlotIndex++;
 		}
 
-		SetAttributes(transform, color, textureIndex, textureCoords, tilingFactor);
+		SetAttributes(transform, color, textureIndex, textureCoords, tilingFactor, entityID);
 	}
 
 	void Quad::Draw(const glm::mat4& transform, const glm::vec4& color, int entityID) {

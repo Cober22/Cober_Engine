@@ -1,35 +1,12 @@
 #include <Engine.h>
 #include <Cober/EntryPoint.h>
 
-#include "ImGui/imgui.h"
-
 #include "Sandbox2D.h"
-
-//class ExampleLayer : public Cober::Layer
-//{
-//public:
-//	ExampleLayer()
-//		: Layer("Example")
-//	{
-//
-//	}
-//
-//	void OnUpdate(Cober::Timestep ts) override
-//	{
-//
-//	}
-//
-//	void OnEvent(Event& event) override
-//	{
-//	}
-//
-//private:
-//};
 
 class Sandbox : public Cober::Application {
 
 public:
-	Sandbox() 
+	Sandbox()
 	{
 		PushLayer(new Sandbox2D());
 	}

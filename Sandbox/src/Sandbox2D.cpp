@@ -5,12 +5,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 Sandbox2D::Sandbox2D()
-	: Layer("Sandbox2D"), OrthoCamera({ 1280.0f, 720.0f }), PerspCamera(45.0f, { 1280.0f, 720.0f }, 0.1f, 500.0f)
+	: Layer("Sandbox2D")//, OrthoCamera({ 1280.0f, 720.0f }), PerspCamera(45.0f, { 1280.0f, 720.0f }, 0.1f, 500.0f)
 {
 }
 
 void Sandbox2D::OnAttach()
 {
+	/*
 	// Create Lights
 	// -----------
 	// ----------- DIRECTIONAL Light
@@ -19,7 +20,6 @@ void Sandbox2D::OnAttach()
 		glm::vec3(0.45f, 0.1f, 0.6f),	//----------------	Color
 		0.1f, // -----------------------------  Ambient Intensity
 		0.3f);// -----------------------------  Diffuse Intensity
-
 	// ----------- POINT Lights
 	for (unsigned int i = 0; i < std::size(pLightPos); i++) {
 		Ref<PointLight> pointLight = CreateRef<PointLight>(
@@ -54,27 +54,31 @@ void Sandbox2D::OnAttach()
 		0.009f,	// -----------------   Attenuation Linear
 		0.0032f);// ----------------   Attenuation Exponencial
 	spotLights.push_back(spotLight2);
-
+	*
+	
 	// Create Textures
 	// -----------
-	steelBorderContainer =  Texture2D::Create("Assets/Textures/SteelBorderContainer.png");
-	woodContainer = Texture2D::Create("Assets/Textures/GridObscure.png");
-	//woodContainer =  Texture2D::Create("Assets/Textures/WoodenContainer.png");
-	/*catTexture = Texture2D::Create("Assets/Textures/BlendTest.png");*/
-	catTexture = Texture2D::Create("Assets/Textures/BlendTest.png");
-	baseAtlas = Texture2D::Create("Assets/Textures/BaseAtlas.png");
-	bridgeTexture = SubTexture2D::CreateFromCoords(baseAtlas, { 3, 4 }, { 128, 128 }, {1, 2});
-	//checkerboardTexture = Texture2D::Create("Assets/Textures/Checkerboard.png");
-
-	// Load models
-	// -----------
-	gridModel = CreateRef<Mesh>();
-	arenaModel = CreateRef<Mesh>();
+	//steelBorderContainer =  Texture2D::Create("Assets/Textures/SteelBorderContainer.png");
+	//woodContainer = Texture2D::Create("Assets/Textures/GridObscure.png");
+	////woodContainer =  Texture2D::Create("Assets/Textures/WoodenContainer.png");
+	///*catTexture = Texture2D::Create("Assets/Textures/BlendTest.png");*/
+	//catTexture = Texture2D::Create("Assets/Textures/BlendTest.png");
+	//baseAtlas = Texture2D::Create("Assets/Textures/BaseAtlas.png");
+	//bridgeTexture = SubTexture2D::CreateFromCoords(baseAtlas, { 3, 4 }, { 128, 128 }, {1, 2});
+	////checkerboardTexture = Texture2D::Create("Assets/Textures/Checkerboard.png");
 	//
-	gridModel->LoadMesh("Assets/Models/thegrid/GRID.obj");
-	arenaModel->LoadMesh("Assets/Models/thegridFBX/GRID.fbx");
-
+	//// Load models
+	//// -----------
+	//gridModel = CreateRef<Mesh>();
+	//arenaModel = CreateRef<Mesh>();
+	////
+	//gridModel->LoadMesh("Assets/Models/thegrid/GRID.obj");
+	//arenaModel->LoadMesh("Assets/Models/thegridFBX/GRID.fbx");
+	
 	m_ActiveScene = CreateRef<Scene>();
+
+	SceneSerializer serializer(m_ActiveScene);
+	serializer.Deserialize("Assets/Scenes/ExampleScene.cober");
 }
 
 void Sandbox2D::OnDetach()
@@ -89,10 +93,11 @@ void Sandbox2D::OnUpdate( Timestep ts)
 	// Update
 	{
 		CB_PROFILE_SCOPE("CameraController::OnUpdate");
-		if (perspective)
-			PerspCamera.OnUpdate(ts);
-		else
-			OrthoCamera.OnUpdate(ts);
+		//if (perspective)
+			//PerspCamera.OnUpdate(ts);
+		//else
+			//OrthoCamera.OnUpdate(ts);
+		m_ActiveScene->OnViewportResize((uint32_t)1280, (uint32_t)720);
 	}
 
 	// Render
@@ -109,13 +114,13 @@ void Sandbox2D::OnUpdate( Timestep ts)
 	{
 		CB_PROFILE_SCOPE("Render Draw");
 
+		//if (perspective)
+			//Renderer::BeginScene(PerspCamera);
+		//else
+		//	Renderer::BeginScene(OrthoCamera);
+
 		m_ActiveScene->OnUpdateRuntime(ts);
-
-		/*if (perspective)
-			Renderer::BeginScene(PerspCamera);
-		else
-			Renderer::BeginScene(OrthoCamera);
-
+		/*
 		//CUBES!
 		for (unsigned int i = 0; i < std::size(cubePositions); i++)
 			Renderer::DrawCube(cubePositions[i], glm::vec3(1.0f), woodContainer, steelBorderContainer, { 1.0f, 1.0f, 1.0f });// cubeColors[color]);

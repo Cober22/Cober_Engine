@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Engine.h>
+#include "Cober/Scene/SceneSerializer.h"
 
 using namespace Cober;
 using namespace glm;
@@ -21,8 +22,8 @@ public:
 	void OnUpdate(Timestep ts) override;
 	void OnEvent(Event& event) override;
 private:
-	PerspectiveCamera PerspCamera;
-	OrthographicCamera OrthoCamera;
+	//PerspectiveCamera PerspCamera;
+	//OrthographicCamera OrthoCamera;
 	Ref<Scene> m_ActiveScene;
 
 	bool perspective = true;

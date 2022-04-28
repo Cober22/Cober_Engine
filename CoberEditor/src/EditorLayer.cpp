@@ -138,7 +138,7 @@ namespace Cober {
 #endif
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 		SceneSerializer serializer(m_ActiveScene);
-		//serializer.Serialize("Assets/Scenes/ExampleScene.cober");
+		//serializer.Deserialize("Assets/Scenes/ExampleScene.cober");
 	}
 
 

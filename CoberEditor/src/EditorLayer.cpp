@@ -9,6 +9,8 @@
 
 namespace Cober {
 
+	extern const std::filesystem::path g_AssetPath;
+
 	EditorLayer::EditorLayer()
 		: Layer("Editor"), OrthoCamera({ 1280.0f, 720.0f }), PerspCamera(45.0f, { 1280.0f, 720.0f }, 0.1f, 500.0f)
 	{
@@ -370,6 +372,14 @@ namespace Cober {
 		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID(0);
 		ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 
+		if (ImGui::BeginDragDropTarget()) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM")) {
+				const wchar_t* path = (const wchar_t*)payload->Data;
+				OpenFile(std::filesystem::path(g_AssetPath) / path);
+			}
+			ImGui::EndDragDropTarget();
+		}
+
 		// Gizmos
 		Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity();
 
@@ -495,12 +505,14 @@ namespace Cober {
 	}
 	void EditorLayer::OpenFile() {
 		mFileDialog.Open();
-		if (mFileSelected) {
-			NewScene();
-			SceneSerializer serializer(m_ActiveScene);
-			serializer.Deserialize(mFilePath);
-			mFileSelected = false;
-		}
+		if (mFileSelected)
+			OpenFile(mFilePath);
+	}
+	void EditorLayer::OpenFile(const std::filesystem::path& path) {
+		NewScene();
+		SceneSerializer serializer(m_ActiveScene);
+		serializer.Deserialize(path.string());
+		mFileSelected = false;
 	}
 	void EditorLayer::SaveSceneAs() {
 		mFileDialog.Open();

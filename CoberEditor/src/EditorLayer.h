@@ -33,6 +33,7 @@ namespace Cober {
 
 		void NewScene();
 		void OpenFile();
+		void OpenFile(const std::filesystem::path& path);
 		void SaveSceneAs();
 		void SaveScene();
 	private:

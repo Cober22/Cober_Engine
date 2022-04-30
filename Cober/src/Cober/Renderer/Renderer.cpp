@@ -62,7 +62,7 @@ namespace Cober {
 		basicShader->SetFloat("material.shininess", 32.0f);
 	}
 
-	void Renderer::BeginScene(const Camera& camera, const glm::mat4 transform)
+	void Renderer::BeginScene(const Camera& camera, const glm::mat4& transform)
 	{
 		CB_PROFILE_FUNCTION();
 

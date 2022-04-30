@@ -1,7 +1,5 @@
 #pragma once
 
-// Memory Leaks
-#define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
 
@@ -21,6 +19,7 @@
 
 #include "Cober/Log.h"
 #include "Cober/Instrumentator.h"
+
 
 #define GLFW_INCLUDE_NONE
 #include <Glew/glew.h>

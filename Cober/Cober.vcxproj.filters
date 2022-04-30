@@ -7,6 +7,9 @@
     <Filter Include="include\ENTT">
       <UniqueIdentifier>{F379C869-DFDC-570E-8862-90C474A42391}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\Fmod">
+      <UniqueIdentifier>{BE8DC969-AAF0-580E-5376-91C43FB82491}</UniqueIdentifier>
+    </Filter>
     <Filter Include="include\ImGuizmo">
       <UniqueIdentifier>{09AC1C94-F5A4-3BE6-1ED7-206B0A2F1BF2}</UniqueIdentifier>
     </Filter>
@@ -77,6 +80,9 @@
   <ItemGroup>
     <ClInclude Include="include\ENTT\entt.hpp">
       <Filter>include\ENTT</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Fmod\fmod.hpp">
+      <Filter>include\Fmod</Filter>
     </ClInclude>
     <ClInclude Include="include\ImGuizmo\ImGuizmo.h">
       <Filter>include\ImGuizmo</Filter>
@@ -1461,6 +1467,9 @@
     <ClInclude Include="src\Cober\Window.h">
       <Filter>src\Cober</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\checkML.h">
+      <Filter>src\Cober</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -1491,6 +1500,7 @@
     <ClInclude Include="src\pch.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\Sound\AudioManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\ImGuizmo\ImGuizmo.cpp">

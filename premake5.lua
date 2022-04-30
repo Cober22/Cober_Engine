@@ -26,6 +26,8 @@ IncludeDir["Assimp"] = "Cober/include/assimp"
 IncludeDir["GLFW"] = "Cober/include/GLFW"
 IncludeDir["ENTT"] = "Cober/include/ENTT"
 IncludeDir["yaml"] = "Cober/include/yaml/include"
+IncludeDir["Bullet"] = "Cober/include/Bullet"
+IncludeDir["Fmod"] = "Cober/include/Fmod"
 
 group "Dependencies"
 	include "Cober/include/ImGui"
@@ -56,7 +58,8 @@ project "Cober"
 		"%{prj.name}/include/glm/glm/**.inl",
 		"%{prj.name}/include/ENTT/**.hpp",
 		"%{prj.name}/include/ImGuizmo/ImGuizmo.h",
-		"%{prj.name}/include/ImGuizmo/ImGuizmo.cpp"
+		"%{prj.name}/include/ImGuizmo/ImGuizmo.cpp",
+		"%{prj.name}/include/Fmod/*.hpp"
 	}
 	
 	defines 
@@ -76,12 +79,16 @@ project "Cober"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.ENTT}",
 		"%{IncludeDir.yaml}",
-		"%{IncludeDir.ImGuizmo}"
+		"%{IncludeDir.ImGuizmo}",
+		"%{IncludeDir.Bullet}",
+		"%{IncludeDir.Fmod}"
 	}
 
 	libdirs 
 	{
-		"%{prj.name}/lib"
+		"%{prj.name}/lib",
+		"%{prj.name}/lib/Bullet",
+		"%{prj.name}/lib/Fmod"
 	}
 
 	links 

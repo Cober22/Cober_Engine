@@ -61,14 +61,13 @@ namespace Cober {
 
 		if (mainCamera) 
 		{
-			// Iterate through entities with TransformComponent
 			Renderer::BeginScene(*mainCamera, cameraTransform);
 			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
 			for (auto entity : group) {
 				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
 				Renderer::DrawSprite(transform.GetTransform(), sprite, (int)entity);
 			}
-			//Renderer::EndScene();
+			// Renderer::EndScene();
 		}
 	}
 
@@ -82,7 +81,7 @@ namespace Cober {
 			Renderer::DrawSprite(transform.GetTransform(), sprite, (int)entity);
 		}
 		// Uncomment when lights are entities
-		//Renderer::EndScene;
+		// Renderer::EndScene;
 	}
 
 	void Scene::OnViewportResize(uint32_t width, uint32_t height)
@@ -94,8 +93,8 @@ namespace Cober {
 		auto view = m_Registry.view<CameraComponent>();
 		for (auto entity : view) {
 			auto& cameraComponent = view.get<CameraComponent>(entity);
-			if (!cameraComponent.FixedAspectRatio)
-				cameraComponent.Camera.SetViewportSize(width, height);
+			//if (!cameraComponent.FixedAspectRatio)
+			cameraComponent.Camera.SetViewportSize(width, height);
 		}
 	}
 

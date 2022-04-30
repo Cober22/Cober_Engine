@@ -144,7 +144,7 @@ namespace Cober {
 #endif
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 		SceneSerializer serializer(m_ActiveScene);
-		//serializer.Deserialize("Assets/Scenes/ExampleScene.cober");
+		serializer.Deserialize("Assets/Scenes/ExampleScene.cober");
 	}
 
 
@@ -165,7 +165,7 @@ namespace Cober {
 			(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
 		{
 			m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-			PerspCamera.Resize(m_ViewportSize.x, m_ViewportSize.y);
+			//PerspCamera.Resize(m_ViewportSize.x, m_ViewportSize.y);
 			m_EditorCamera.SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		}

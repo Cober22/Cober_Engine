@@ -143,8 +143,8 @@ void Sandbox2D::OnUpdate( Timestep ts)
 		Renderer::DrawRotatedQuad({ -4.0, 0.0, -15.0f }, 0.0f, { 1.0f, 2.0f }, bridgeTexture);
 		Renderer::DrawRotatedQuad({ -10.0, 0.0, -2.0f }, 75.0f, { 2.0f, 2.0f }, catTexture);
 		
-		Renderer::EndScene(); 
 		*/
+		Renderer::EndScene(); 
 	}
 }
 

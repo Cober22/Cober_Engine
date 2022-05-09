@@ -30,6 +30,14 @@ namespace Cober {
 			//	* glm::rotate(glm::mat4(1.0f), Rotation.z, { 0, 0, 1 });
 			return glm::translate(glm::mat4(1.0f), Translation) * rotation * glm::scale(glm::mat4(1.0f), Scale);
 		}
+		glm::vec3 GetTranslation() const { return Translation; }
+		void SetTranslation(glm::vec3 translation)	{ Translation = translation; }
+
+		glm::vec3 GetRotation() const { return Rotation; }
+		void SetRotation(glm::vec3 rotation)  { Rotation = rotation; }
+
+		glm::vec3 GetScale() const { return Scale; }
+		void SetScale(glm::vec3 scale)	{ Scale = scale; }
 	};
 
 	struct TagComponent {
@@ -76,5 +84,37 @@ namespace Cober {
 			InstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); };
 			DestroyScript = [](NativeScriptComponent* nsc) { delete nsc->Instance; nsc->Instance = nullptr; };
 		}
+	};
+	
+	// Physics
+	struct Rigidbody3DComponent {
+
+		enum class BodyType { Static = 0, Kinematic, Dynamic };
+		BodyType Type = BodyType::Static;
+		bool FixedRotation = false;
+
+		// Storage for runtime
+		btRigidBody* RuntimeBody;
+
+		Rigidbody3DComponent() = default;
+		Rigidbody3DComponent(const Rigidbody3DComponent&) = default;
+	};
+
+	struct BoxCollider3DComponent {
+
+		glm::vec3 Offset = { 0.0f, 0.0f, 0.0f };
+		glm::vec3 Size = { 0.5f, 0.5f, 0.5f };
+
+		float Density = 1.0f;
+		float Friction = 0.5f;
+		float Restitution = 0.0f;
+		float RestitutionThreshold = 0.5f;
+
+		// Storage for runtime
+		void* RuntimeFixture = nullptr;
+		btCollisionShape* Shape = nullptr;
+
+		BoxCollider3DComponent() = default;
+		BoxCollider3DComponent(const BoxCollider3DComponent&) = default;
 	};
 }

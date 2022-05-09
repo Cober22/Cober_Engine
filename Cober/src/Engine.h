@@ -31,8 +31,8 @@
 
 // [---- CAMERA ----]
 #include "Cober/Renderer/Camera/CameraController.h"
-#include "Cober/Renderer/Camera/OrthographicCamera.h"
-#include "Cober/Renderer/Camera/PerspectiveCamera.h"
+//#include "Cober/Renderer/Camera/OrthographicCamera.h"
+//#include "Cober/Renderer/Camera/PerspectiveCamera.h"
 
 
 // [---- SCENE----]

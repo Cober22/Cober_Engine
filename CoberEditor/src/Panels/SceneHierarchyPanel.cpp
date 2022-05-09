@@ -206,13 +206,29 @@ namespace Cober {
 
 		if (ImGui::BeginPopup("AddComponent")) {
 
-			if (ImGui::MenuItem("Camera")) {
-				m_SelectionContext.AddComponent<CameraComponent>();
-				ImGui::CloseCurrentPopup();
+			if (!m_SelectionContext.HasComponent<CameraComponent>()) {
+				if (ImGui::MenuItem("Camera")) {
+					m_SelectionContext.AddComponent<CameraComponent>();
+					ImGui::CloseCurrentPopup();
+				}
 			}
-			if (ImGui::MenuItem("Sprite Renderer")) {
-				m_SelectionContext.AddComponent<SpriteRendererComponent>();
-				ImGui::CloseCurrentPopup();
+			if (!m_SelectionContext.HasComponent<SpriteRendererComponent>()) {
+				if (ImGui::MenuItem("Sprite Renderer")) {
+					m_SelectionContext.AddComponent<SpriteRendererComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+			}
+			if (!m_SelectionContext.HasComponent<Rigidbody3DComponent>()) {
+				if (ImGui::MenuItem("Rigidbody 3D")) {
+					m_SelectionContext.AddComponent<Rigidbody3DComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+			}
+			if (!m_SelectionContext.HasComponent<BoxCollider3DComponent>()) {
+				if (ImGui::MenuItem("Box Collider 3D")) {
+					m_SelectionContext.AddComponent<BoxCollider3DComponent>();
+					ImGui::CloseCurrentPopup();
+				}
 			}
 			ImGui::EndPopup();
 		}
@@ -304,6 +320,39 @@ namespace Cober {
 				ImGui::EndDragDropTarget();
 			}
 			ImGui::DragFloat("Tiling Factor", &component.TilingFactor, 0.1f, 0.0f, 100.0f);
+		});
+
+		DrawComponent<Rigidbody3DComponent>("Rigidbody 3D", entity, [](auto& component)
+		{
+			const char* bodyTypeStrings[] = { "Static", "Kinematic", "Dynamic" };
+			const char* currentBodyTypeTypeString = bodyTypeStrings[(int)component.Type];
+			if (ImGui::BeginCombo("Body Type", currentBodyTypeTypeString)) {
+
+				for (int i = 0; i < 3; i++) {
+					bool isSelected = currentBodyTypeTypeString == bodyTypeStrings[i];
+					if (ImGui::Selectable(bodyTypeStrings[i], isSelected)) {
+						currentBodyTypeTypeString = bodyTypeStrings[i];
+						component.Type = (Rigidbody3DComponent::BodyType)i;
+					}
+
+					if (isSelected)
+						ImGui::SetItemDefaultFocus();
+				}
+
+				ImGui::EndCombo();
+			}
+
+			ImGui::Checkbox("Fixed Rotation", &component.FixedRotation);
+		});
+
+		DrawComponent<BoxCollider3DComponent>("Box Collider 3D", entity, [](auto& component)
+		{
+			ImGui::DragFloat3("Offset", glm::value_ptr(component.Offset));
+			ImGui::DragFloat3("Size", glm::value_ptr(component.Size));
+			ImGui::DragFloat("Density", &component.Density, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("Friction", &component.Friction, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("Restitution", &component.Restitution, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("Restitution Threshold", &component.RestitutionThreshold, 0.01f, 0.0f);
 		});
 	}
 }

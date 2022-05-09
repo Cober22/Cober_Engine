@@ -59,7 +59,13 @@ project "Cober"
 		"%{prj.name}/include/ENTT/**.hpp",
 		"%{prj.name}/include/ImGuizmo/ImGuizmo.h",
 		"%{prj.name}/include/ImGuizmo/ImGuizmo.cpp",
-		"%{prj.name}/include/Fmod/*.hpp"
+		"%{prj.name}/include/Fmod/**.hpp",
+		"%{prj.name}/include/Bullet/BulletCollision/**.h",
+		"%{prj.name}/include/Bullet/BulletCollision/**.cpp",
+		"%{prj.name}/include/Bullet/BulletDynamics/**.h",
+		"%{prj.name}/include/Bullet/BulletDynamics/**.cpp",
+		"%{prj.name}/include/Bullet/LinearMath/**.h",
+		"%{prj.name}/include/Bullet/LinearMath/**.cpp"
 	}
 	
 	defines 
@@ -107,6 +113,9 @@ project "Cober"
 	}
 
 	filter "files:Cober/include/ImGuizmo/**.cpp"
+	flags { "NoPCH" }
+
+	filter "files:Cober/include/Bullet/**.cpp"
 	flags { "NoPCH" }
 
 	filter "system:windows"

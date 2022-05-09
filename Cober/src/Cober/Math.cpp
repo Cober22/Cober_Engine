@@ -6,13 +6,12 @@
 
 namespace Cober {
 
+	using namespace glm;
+	using T = float;
+
 	bool DecomposeTransform(const glm::mat4& transform, glm::vec3& translation, glm::vec3& rotation, glm::vec3& scale)
 	{
 		// From glm::decompose in matrix_decompose.inl
-
-		using namespace glm;
-		using T = float;
-
 		mat4 LocalMatrix(transform);
 
 		// Normalize the matrix.
@@ -63,6 +62,36 @@ namespace Cober {
 			}
 		}
 #endif
+
+		rotation.y = asin(-Row[0][2]);
+		if (cos(rotation.y) != 0) {
+			rotation.x = atan2(Row[1][2], Row[2][2]);
+			rotation.z = atan2(Row[0][1], Row[0][0]);
+		}
+		else {
+			rotation.x = atan2(-Row[2][0], Row[1][1]);
+			rotation.z = 0;
+		}
+
+		return true;
+	}
+
+	bool DecomposeTransform(btTransform& transform, glm::vec3& translation, glm::vec3& rotation) {
+
+		btVector3 pos = transform.getOrigin();
+		translation = glm::vec3(pos.getX(), pos.getY(), pos.getZ());
+
+		btMatrix3x3 rot = transform.getBasis();
+		vec3 Row[3];
+
+		// Now get scale and shear.
+		for (length_t i = 0; i < 3; ++i)
+			for (length_t j = 0; j < 3; ++j)
+				Row[i][j] = rot[i][j];
+
+		Row[0] = detail::scale(Row[0], static_cast<T>(1));
+		Row[1] = detail::scale(Row[1], static_cast<T>(1));
+		Row[2] = detail::scale(Row[2], static_cast<T>(1));
 
 		rotation.y = asin(-Row[0][2]);
 		if (cos(rotation.y) != 0) {

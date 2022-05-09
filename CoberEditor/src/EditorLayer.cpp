@@ -24,9 +24,9 @@ namespace Cober {
 		// ----------- DIRECTIONAL Light
 		dirLight = CreateRef<DirectionalLight>(
 			glm::vec3(-0.2f, -1.0f, -0.3f),	// ---	Direction 
-			glm::vec3(0.45f, 0.1f, 0.6f),	//----------------	Color
-			//glm::vec3(1.0f, 1.0f, 1.0f),	//----------------	Color
-			0.25f, // -----------------------------  Ambient Intensity
+			//glm::vec3(0.45f, 0.1f, 0.6f),	//----------------	Color
+			glm::vec3(1.0f, 1.0f, 1.0f),	//----------------	Color
+			0.225f, // -----------------------------  Ambient Intensity
 			0.3f); // -----------------------------  Diffuse Intensity
 
 		// ----------- POINT Lights
@@ -181,11 +181,12 @@ namespace Cober {
 			RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
 			//RenderCommand::SetClearColor({ 0.8f, 0.35f, 0.35f, 1.0f });
 			RenderCommand::Clear();
+
 			// Clear our entity ID attachment to -1
 			m_Framebuffer->ClearAttachment(1, -1);
 
 			// Update Scene
-			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+			//m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 			switch (m_SceneState)
 			{
 				case GameState::EDIT:
@@ -566,9 +567,11 @@ namespace Cober {
 	}
 
 	void EditorLayer::OnScenePlay()	{
+		m_ActiveScene->OnRuntimeStart();
 		m_SceneState = GameState::PLAY;
 	}
 	void EditorLayer::OnSceneStop() {
+		m_ActiveScene->OnRuntimeStop();
 		m_SceneState = GameState::EDIT;
 	}
 }

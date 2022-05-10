@@ -32,6 +32,7 @@ namespace Cober {
 		bool OnMouseButtonPressed(MouseButtonPressedEvent& event);
 
 		void NewScene();
+		void OpenFileDialog(const std::filesystem::path& path);
 		void OpenFile();
 		void OpenFile(const std::filesystem::path& path);
 		void SaveSceneAs();
@@ -54,7 +55,8 @@ namespace Cober {
 		// create a file browser instance
 		ImGui::FileBrowser mFileDialog;
 		std::string mFilePath;
-		bool mFileSelected = false;
+		enum MenuOptions { OPEN = 0, SAVE_AS };
+		MenuOptions mMenuFileOption;
 	private:
 		PerspectiveCamera PerspCamera;
 		OrthographicCamera OrthoCamera;

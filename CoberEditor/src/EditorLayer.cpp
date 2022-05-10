@@ -98,7 +98,6 @@ namespace Cober {
 		m_IconPlay = Texture2D::Create("Assets/Icons/IconPlay.png");
 		m_IconStop = Texture2D::Create("Assets/Icons/IconStop.png");
 
-
 #if 0
 		// Entity
 		auto greenSquare = m_ActiveScene->CreateEntity("Green Square");
@@ -144,8 +143,8 @@ namespace Cober {
 
 #endif
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
-		SceneSerializer serializer(m_ActiveScene);
-		serializer.Deserialize("Assets/Scenes/ExampleScene.cober");
+		//SceneSerializer serializer(m_ActiveScene);
+		//serializer.Deserialize("Assets/Scenes/ExampleScene.cober");
 	}
 
 
@@ -324,7 +323,7 @@ namespace Cober {
 			if (ImGui::BeginMenu("Edit"))
 			{
 				ImGui::Checkbox("Guizmo Local", &guizmoLocal);
-				guizmoMode = guizmoLocal == true ? ImGuizmo::LOCAL : ImGuizmo::WORLD;
+				guizmoMode = guizmoLocal ? ImGuizmo::LOCAL : ImGuizmo::WORLD;
 			
 				ImGui::EndMenu();
 			}
@@ -336,7 +335,8 @@ namespace Cober {
 			auto file_path = mFileDialog.GetSelected().string();
 			mFilePath = file_path;
 			//mCurrentFile = file_path.substr(file_path.find_last_of("/\\") + 1);
-			mFileSelected = true;
+			OpenFileDialog(mFilePath);
+	
 			mFileDialog.ClearSelected();
 		}
 
@@ -532,7 +532,7 @@ namespace Cober {
 	}
 
 	bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& event) {
-
+	
 		if (event.GetMouseButton() == Mouse::ButtonLeft)
 			if (m_ViewportHovered && !ImGuizmo::IsOver() && !Input::IsKeyPressed(Key::LeftAlt))	// Mouse picking
 				m_SceneHierarchyPanel.SetSelectedEntity(m_HoveredEntity);
@@ -545,24 +545,29 @@ namespace Cober {
 		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
-	void EditorLayer::OpenFile() {
-		mFileDialog.Open();
-		if (mFileSelected)
-			OpenFile(mFilePath);
+
+	void EditorLayer::OpenFileDialog(const std::filesystem::path& path) {
+		if (mMenuFileOption == MenuOptions::OPEN)
+			OpenFile(path);
+		else if (mMenuFileOption == MenuOptions::SAVE_AS) {
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Serialize(path.string()); 
+		}
 	}
+	void EditorLayer::OpenFile() {
+		mMenuFileOption = MenuOptions::OPEN;
+		mFileDialog.Open();
+	}
+
 	void EditorLayer::OpenFile(const std::filesystem::path& path) {
 		NewScene();
 		SceneSerializer serializer(m_ActiveScene);
 		serializer.Deserialize(path.string());
-		mFileSelected = false;
 	}
+	
 	void EditorLayer::SaveSceneAs() {
+		mMenuFileOption = MenuOptions::SAVE_AS;
 		mFileDialog.Open();
-		if (mFileSelected) {
-			SceneSerializer serializer(m_ActiveScene);
-			serializer.Serialize(mFilePath);
-			mFileSelected = false;
-		}
 	}
 	void EditorLayer::SaveScene() {
 		if (!mFilePath.empty()) {

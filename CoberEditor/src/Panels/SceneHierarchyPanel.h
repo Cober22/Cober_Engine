@@ -13,6 +13,7 @@ namespace Cober {
 	{
 	public:
 		SceneHierarchyPanel() = default;
+		~SceneHierarchyPanel();
 		SceneHierarchyPanel(const Ref<Scene>& scene);
 
 		void SetContext(const Ref<Scene>& scene);

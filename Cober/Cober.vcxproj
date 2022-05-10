@@ -852,7 +852,7 @@
     <ClInclude Include="src\Cober\Sound\AudioManager.h" />
     <ClInclude Include="src\Cober\Timestep.h" />
     <ClInclude Include="src\Cober\Window.h" />
-    <ClInclude Include="src\Cober\checkML.h" />
+    <ClInclude Include="src\checkML.h" />
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLContext.h" />

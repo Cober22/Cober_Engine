@@ -2217,7 +2217,7 @@
     <ClInclude Include="src\Cober\Window.h">
       <Filter>src\Cober</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\checkML.h">
+    <ClInclude Include="src\checkML.h">
       <Filter>src\Cober</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine.h">

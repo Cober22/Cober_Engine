@@ -48,6 +48,8 @@ namespace Cober {
 		ContentBrowserPanel m_ContentBrowserPanel;
 		EditorCamera m_EditorCamera;
 		int m_GizmoType = -1;
+		int guizmoMode;
+		bool guizmoLocal;
 	private:
 		// create a file browser instance
 		ImGui::FileBrowser mFileDialog;

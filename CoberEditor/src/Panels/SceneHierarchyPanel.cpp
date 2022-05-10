@@ -6,6 +6,7 @@
 #include <ImGui/imgui.h>
 #include <ImGui/imgui_internal.h>
 
+#include "checkML.h"
 namespace Cober {
 
 	extern const std::filesystem::path g_AssetPath;
@@ -13,6 +14,10 @@ namespace Cober {
 	SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& context) {
 		
 		SetContext(context);
+	}
+
+	SceneHierarchyPanel::~SceneHierarchyPanel() {
+	
 	}
 
 	void SceneHierarchyPanel::SetContext(const Ref<Scene>& context) {

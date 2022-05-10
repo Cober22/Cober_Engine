@@ -7,6 +7,7 @@
 
 #include "ImGuizmo/ImGuizmo.h"
 
+#include "checkML.h"
 namespace Cober {
 
 	extern const std::filesystem::path g_AssetPath;
@@ -320,6 +321,13 @@ namespace Cober {
 				if (ImGui::MenuItem("Exit")) Application::Get().Close();
 				ImGui::EndMenu();
 			}
+			if (ImGui::BeginMenu("Edit"))
+			{
+				ImGui::Checkbox("Guizmo Local", &guizmoLocal);
+				guizmoMode = guizmoLocal == true ? ImGuizmo::LOCAL : ImGuizmo::WORLD;
+			
+				ImGui::EndMenu();
+			}
 			ImGui::EndMenuBar();
 		}
 
@@ -418,7 +426,7 @@ namespace Cober {
 			float snapValues[3] = { snapValue, snapValue, snapValue };
 
 			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), 
-								 (ImGuizmo::OPERATION)m_GizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform),
+								 (ImGuizmo::OPERATION)m_GizmoType, (ImGuizmo::MODE)guizmoMode, glm::value_ptr(transform),
 								 nullptr, snap ? snapValues : nullptr);
 
 			if (ImGuizmo::IsUsing()) {

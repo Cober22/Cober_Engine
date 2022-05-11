@@ -27,11 +27,13 @@ IncludeDir["GLFW"] = "Cober/include/GLFW"
 IncludeDir["ENTT"] = "Cober/include/ENTT"
 IncludeDir["yaml"] = "Cober/include/yaml/include"
 IncludeDir["Bullet"] = "Cober/include/Bullet"
+IncludeDir["Box2D"] = "Cober/include/box2dd/include"
 IncludeDir["Fmod"] = "Cober/include/Fmod"
 
 group "Dependencies"
 	include "Cober/include/ImGui"
 	include "Cober/include/yaml"
+	include "Cober/include/box2dd"
 group ""
 
 project "Cober"
@@ -65,7 +67,8 @@ project "Cober"
 		"%{prj.name}/include/Bullet/BulletDynamics/**.h",
 		"%{prj.name}/include/Bullet/BulletDynamics/**.cpp",
 		"%{prj.name}/include/Bullet/LinearMath/**.h",
-		"%{prj.name}/include/Bullet/LinearMath/**.cpp"
+		"%{prj.name}/include/Bullet/LinearMath/**.cpp",
+		"%{prj.name}/include/box2dd/include/box2d/**.h",
 	}
 	
 	defines 
@@ -87,6 +90,7 @@ project "Cober"
 		"%{IncludeDir.yaml}",
 		"%{IncludeDir.ImGuizmo}",
 		"%{IncludeDir.Bullet}",
+		"%{IncludeDir.Box2D}",
 		"%{IncludeDir.Fmod}"
 	}
 
@@ -104,7 +108,8 @@ project "Cober"
 		"ImGui",
 		"glfw3_mt",
 		"assimp-vc142-mt",
-		"yaml-cpp"
+		"yaml-cpp",
+		"Box2D"
 	}
 
 	postbuildcommands

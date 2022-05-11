@@ -1,10 +1,10 @@
 #include "checkML.h"
 #include "pch.h"
+
 #include "Scene.h"
 #include "Components.h"
 #include "Entity.h"
 #include "Cober/Renderer/Renderer.h"
-
 #include "Cober/Math.h"
 
 #include <glm/glm.hpp> 
@@ -35,78 +35,109 @@ namespace Cober {
 	}
 
 	void Scene::OnRuntimeStart() {
+		// 3D WORLD
+		if (World3D) {
 
-		m_PhysicBroadphase = new btDbvtBroadphase();
-		m_PhysicConfig = new btDefaultCollisionConfiguration();
-		m_PhysicDispatcher = new btCollisionDispatcher(m_PhysicConfig);
-		m_PhysicSolver = new btSequentialImpulseConstraintSolver();
-		m_PhysicWorld = new btDiscreteDynamicsWorld(m_PhysicDispatcher, m_PhysicBroadphase, m_PhysicSolver, m_PhysicConfig);
+			m_PhysicBroadphase = new btDbvtBroadphase();
+			m_PhysicConfig = new btDefaultCollisionConfiguration();
+			m_PhysicDispatcher = new btCollisionDispatcher(m_PhysicConfig);
+			m_PhysicSolver = new btSequentialImpulseConstraintSolver();
+			m_PhysicWorld = new btDiscreteDynamicsWorld(m_PhysicDispatcher, m_PhysicBroadphase, m_PhysicSolver, m_PhysicConfig);
 
-		STEP_TIME = 1.0f / ITERATIONS_PER_SECOND;
-		m_PhysicWorld->setGravity(btVector3(0, -9.8, 0));
+			STEP_TIME = 1.0f / ITERATIONS_PER_SECOND;
+			m_PhysicWorld->setGravity(btVector3(0, -9.8, 0));
 
-		auto view = m_Registry.view<Rigidbody3DComponent>();
-		for (auto e : view) {
-			Entity entity = { e, this };
-			auto& transform = entity.GetComponent<TransformComponent>();
-			auto& rb3d = entity.GetComponent<Rigidbody3DComponent>();
+			auto view = m_Registry.view<Rigidbody3DComponent>();
+			for (auto e : view) {
+				Entity entity = { e, this };
+				auto& transform = entity.GetComponent<TransformComponent>();
+				auto& rb3d = entity.GetComponent<Rigidbody3DComponent>();
 
-			// SHAPE
-			BoxCollider3DComponent bc3d;
-			if (entity.HasComponent<BoxCollider3DComponent>()) {
-				bc3d = entity.GetComponent<BoxCollider3DComponent>();
-				bc3d.Size = transform.GetScale();
-				bc3d.Shape =  new btBoxShape(btVector3(bc3d.Size.x, bc3d.Size.y, bc3d.Size.z));
-			}
+				// SHAPE
+				BoxCollider3DComponent bc3d;
+				if (entity.HasComponent<BoxCollider3DComponent>()) {
+					bc3d = entity.GetComponent<BoxCollider3DComponent>();
+					//bc3d.Size = transform.GetScale();
+					bc3d.Shape =  new btBoxShape(btVector3(bc3d.Size.x * transform.Scale.x, bc3d.Size.y * transform.Scale.y, bc3d.Size.z * transform.Scale.z));
+				}
 
-			// MOTION TYPE
-			btQuaternion rotation;
-			rotation.setEulerZYX(transform.Rotation.z, transform.Rotation.y, transform.Rotation.x);
-			btVector3 position = btVector3(transform.Translation.x, transform.Translation.y, transform.Translation.z);
+				btQuaternion rotation;
+				rotation.setEulerZYX(transform.Rotation.z, transform.Rotation.y, transform.Rotation.x);
+				btVector3 position = btVector3(transform.Translation.x, transform.Translation.y, transform.Translation.z);
+				btDefaultMotionState* motion = new btDefaultMotionState(btTransform(rotation, position));
 
-			btDefaultMotionState* motion = new btDefaultMotionState(btTransform(rotation, position));
+				btScalar bodyMass = bc3d.Density;
+				btVector3 bodyIntertia;
+				bc3d.Shape->calculateLocalInertia(bodyMass, bodyIntertia);
 
-			// 4
-			btScalar bodyMass = bc3d.Density;
-			btVector3 bodyIntertia;
-			bc3d.Shape->calculateLocalInertia(bodyMass, bodyIntertia);
-			
-			// 5
-			btRigidBody::btRigidBodyConstructionInfo bodyInfo(bodyMass, motion, bc3d.Shape, bodyIntertia);
+				btRigidBody::btRigidBodyConstructionInfo bodyInfo(bodyMass, motion, bc3d.Shape, bodyIntertia);
+				bodyInfo.m_mass = bc3d.Density;
+				bodyInfo.m_restitution = bc3d.Restitution;
+				bodyInfo.m_friction = bc3d.Friction;
+				btCollisionObject::CollisionFlags collisionFlag;
+				switch (int(rb3d.Type)) {
+					case 0: collisionFlag = btCollisionObject::CF_STATIC_OBJECT;	bodyInfo.m_mass = 0; break;
+					case 1: collisionFlag = btCollisionObject::CF_KINEMATIC_OBJECT; bodyInfo.m_mass = 0; break;
+					case 2: collisionFlag = btCollisionObject::CF_DYNAMIC_OBJECT; break;
+				}
 
-			// 6
-			bodyInfo.m_mass = bc3d.Density;
-			bodyInfo.m_restitution = bc3d.Restitution;
-			bodyInfo.m_friction = bc3d.Friction;
-			btCollisionObject::CollisionFlags collisionFlag;
-			switch (int(rb3d.Type)) {
-				case 0: collisionFlag = btCollisionObject::CF_STATIC_OBJECT;	bodyInfo.m_mass = 0; break;
-				case 1: collisionFlag = btCollisionObject::CF_KINEMATIC_OBJECT; bodyInfo.m_mass = 0; break;
-				case 2: collisionFlag = btCollisionObject::CF_DYNAMIC_OBJECT; break;
-			}
-
-			// 7
-			rb3d.RuntimeBody = new btRigidBody(bodyInfo);
-			rb3d.RuntimeBody->setCollisionFlags(collisionFlag);
-
-			// 8
-			rb3d.RuntimeBody->setUserPointer(rb3d.RuntimeBody);
-			//rb3d.RuntimeBody->setSleepingThresholds(DEFAULT_LINEAR_SLEEPING_THRESHOLD, DEFAULT_ANGULAR_SLEEPING_THRESHOLD);
-
-			// 9
-			rb3d.RuntimeBody->setLinearFactor(btVector3(1, 1, 0));
-
+				rb3d.RuntimeBody = new btRigidBody(bodyInfo);
+				rb3d.RuntimeBody->setCollisionFlags(collisionFlag);
+				rb3d.RuntimeBody->setUserPointer(rb3d.RuntimeBody);
+				//rb3d.RuntimeBody->setSleepingThresholds(DEFAULT_LINEAR_SLEEPING_THRESHOLD, DEFAULT_ANGULAR_SLEEPING_THRESHOLD);
+				rb3d.RuntimeBody->setLinearFactor(btVector3(1, 1, 0));
 	
-			m_PhysicWorld->addRigidBody(rb3d.RuntimeBody);
+				m_PhysicWorld->addRigidBody(rb3d.RuntimeBody);
+			}
+		}
+		else {	// 2D WORLD
+			m_Physics2DWorld = new b2World({ 0.0f, -9.8f });
+			auto view = m_Registry.view<Rigidbody2DComponent>();
+			for (auto e : view) {
+				Entity entity = { e, this };
+				auto& transform = entity.GetComponent<TransformComponent>();
+				auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
+
+				b2BodyDef bodyDef;
+				bodyDef.type = (b2BodyType)rb2d.Type;
+				bodyDef.position.Set(transform.Translation.x, transform.Translation.y);
+				bodyDef.angle = transform.Rotation.z;
+
+				b2Body* body = m_Physics2DWorld->CreateBody(&bodyDef);
+				body->SetFixedRotation(rb2d.FixedRotation);
+				rb2d.RuntimeBody = body;
+
+				if (entity.HasComponent<BoxCollider2DComponent>()) {
+					auto& bc2d = entity.GetComponent<BoxCollider2DComponent>();
+
+					b2PolygonShape boxShape;
+					boxShape.SetAsBox(bc2d.Size.x * transform.Scale.x, bc2d.Size.y * transform.Scale.y);
+
+					b2FixtureDef fixtureDef;
+					fixtureDef.shape = &boxShape;
+					fixtureDef.density = bc2d.Density;
+					fixtureDef.friction = bc2d.Friction;
+					fixtureDef.restitution = bc2d.Restitution;
+					fixtureDef.restitutionThreshold = bc2d.RestitutionThreshold;
+					body->CreateFixture(&fixtureDef);
+				}
+			}
 		}
 	}
 
 	void Scene::OnRuntimeStop() {
-		delete m_PhysicWorld;
-		delete m_PhysicConfig;
-		delete m_PhysicSolver;
-		delete m_PhysicDispatcher;
-		delete m_PhysicBroadphase;
+
+		if (World3D) {
+			delete m_PhysicWorld;
+			delete m_PhysicConfig;
+			delete m_PhysicSolver;
+			delete m_PhysicDispatcher;
+			delete m_PhysicBroadphase;
+		}
+		else {
+			delete m_Physics2DWorld;
+			m_Physics2DWorld = nullptr;
+		}
 	}
 
 	void Scene::OnUpdateRuntime(Timestep ts) {
@@ -124,9 +155,11 @@ namespace Cober {
 			});
 		}
 
-		// Physics
-		{
+		// Physics 3D
+		if (World3D) {
+			m_PhysicWorld->stepSimulation(ts);
 			auto view = m_Registry.view<Rigidbody3DComponent>();
+			// Retrieve transform from Box2D
 			for (auto e : view) {
 				Entity entity = { e, this };
 				auto& transform = entity.GetComponent<TransformComponent>();
@@ -139,12 +172,30 @@ namespace Cober {
 					auto pos = rb3d.RuntimeBody->getCenterOfMassPosition();
 					btScalar yaw, pitch, roll;
 					rb3d.RuntimeBody->getCenterOfMassTransform().getRotation().getEulerZYX(yaw, pitch, roll);
-					
+				
 					transform.SetTranslation(glm::vec3(pos.getX(), pos.getY(), pos.getZ()));
 					transform.SetRotation(glm::vec3(roll, pitch, yaw));
 				}
-			};
-			m_PhysicWorld->stepSimulation(ts);
+			}
+		}
+		else {	// 2D WORLD
+			const int32_t velocityIterations = 6;
+			const int32_t positionIterations = 2;
+			m_Physics2DWorld->Step(ts, velocityIterations, positionIterations);
+
+			// Retrieve transform from Box2D
+			auto view = m_Registry.view<Rigidbody2DComponent>();
+			for (auto e : view) {
+				Entity entity = { e, this };
+				auto& transform = entity.GetComponent<TransformComponent>();
+				auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
+
+				b2Body* body = (b2Body*)rb2d.RuntimeBody;
+				const auto& position = body->GetPosition();
+				transform.Translation.x = position.x;
+				transform.Translation.y = position.y;
+				transform.Rotation.z = body->GetAngle();
+			}
 		}
 
 		// Render sprites
@@ -218,12 +269,10 @@ namespace Cober {
 
 	template<>
 	void Scene::OnComponentAdded<TransformComponent>(Entity entity, TransformComponent& component) {
-		
 	}
 	
 	template<>
 	void Scene::OnComponentAdded<TagComponent>(Entity entity, TagComponent& component) {
-
 	}
 
 	template<>
@@ -233,21 +282,26 @@ namespace Cober {
 	
 	template<>
 	void Scene::OnComponentAdded<SpriteRendererComponent>(Entity entity, SpriteRendererComponent& component) {
-	
 	}
 	
 	template<>
 	void Scene::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent& component) {
-
 	}
 
 	template<>
 	void Scene::OnComponentAdded<Rigidbody3DComponent>(Entity entity, Rigidbody3DComponent& component) {
-
 	}
 
 	template<>
 	void Scene::OnComponentAdded<BoxCollider3DComponent>(Entity entity, BoxCollider3DComponent& component) {
+		//component.Size = entity.GetComponent<TransformComponent>().GetScale();
+	}
 
+	template<>
+	void Scene::OnComponentAdded<Rigidbody2DComponent>(Entity entity, Rigidbody2DComponent& component) {
+	}
+
+	template<>
+	void Scene::OnComponentAdded<BoxCollider2DComponent>(Entity entity, BoxCollider2DComponent& component) {
 	}
 }

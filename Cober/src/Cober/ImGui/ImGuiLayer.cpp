@@ -36,8 +36,9 @@ namespace Cober {
 		window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
 
 		float fontPixelSize = /*Window::s_HighDPIScaleFactor * */18.0f;
-		io.Fonts->AddFontFromFileTTF("Assets/Fonts/OpenSans/OpenSans/OpenSans-Bold.ttf", fontPixelSize);
-		io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/Fonts/OpenSans/OpenSans/OpenSans-Regular.ttf", fontPixelSize);
+		io.Fonts->AddFontFromFileTTF("Assets/Fonts/Roboto-Medium.ttf", fontPixelSize);
+		io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/Fonts/DroidSans.ttf", fontPixelSize);
+
 		
 		ImGui::StyleColorsDark();
 

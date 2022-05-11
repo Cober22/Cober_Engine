@@ -2,32 +2,14 @@ Scene: Untitled
 Entities:
   - Entity: 123243
     TagComponent:
-      Tag: GreenQuad
-    TransformComponent:
-      Translation: [0, -2.25916624, 0]
-      Rotation: [-1.57079637, 0, 0]
-      Scale: [4.84217024, 4.19381237, 9.56764984]
-    SpriteRendererComponent:
-      Color: [0.169884086, 1, 0, 1]
-  - Entity: 123243
-    TagComponent:
-      Tag: RedQuad
-    TransformComponent:
-      Translation: [0, 1.20857882, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    SpriteRendererComponent:
-      Color: [1, 0, 0, 1]
-  - Entity: 123243
-    TagComponent:
       Tag: Camera
     TransformComponent:
-      Translation: [0, 0, 0]
+      Translation: [0, 6.15517998, 20.4749718]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     CameraComponent:
       Camera:
-        CameraType: 1
+        CameraType: 0
         PerspectiveFOV: 0.785398185
         PerspectiveNear: 0.00999999978
         PerspectiveFar: 1000
@@ -36,3 +18,21 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
+  - Entity: 123243
+    TagComponent:
+      Tag: Red_Quad
+    TransformComponent:
+      Translation: [-8.77341255e-10, 5.06139326, 0]
+      Rotation: [-0.000661037338, -7.80117776e-11, 1.60032798e-09]
+      Scale: [1, 0.999999523, 0.00999999233]
+    SpriteRendererComponent:
+      Color: [1, 0, 0, 1]
+  - Entity: 123243
+    TagComponent:
+      Tag: Green_Quad
+    TransformComponent:
+      Translation: [-0.171408296, -2.23442173, 0]
+      Rotation: [-1.55665302, 0, 0]
+      Scale: [5, 5, 0.00999999978]
+    SpriteRendererComponent:
+      Color: [0.169884086, 1, 0, 1]

@@ -4,8 +4,15 @@
 #include "Cober/Renderer/Camera/EditorCamera.h"
 #include "entt.hpp"
 
+// Bullet
 #include "Bullet/btBulletDynamicsCommon.h"
-//#include "Bullet/BulletCollision/CollisionShapes/btBoxShape.h"
+// Box2D
+#include "box2dd/include/box2d/b2_world.h"
+#include "box2dd/include/box2d/b2_body.h"
+#include "box2dd/include/box2d/b2_fixture.h"
+#include "box2dd/include/box2d/b2_polygon_shape.h"
+
+class b2World;
 
 class btDynamicsWorld;
 class btCollisionConfiguration;
@@ -32,6 +39,7 @@ namespace Cober {
 		void OnUpdateRuntime(Timestep ts);
 		void OnUpdateEditor(Timestep ts, EditorCamera& camera);
 		void OnViewportResize(uint32_t width, uint32_t height);
+		bool GetWorldType() { return World3D; }
 
 		Entity GetPrimaryCameraEntity();
 	private:
@@ -40,13 +48,16 @@ namespace Cober {
 	private:
 		entt::registry m_Registry;
 		uint32_t m_ViewportWidth = 1280, m_ViewportHeight = 720;
-	
+		bool World3D = false;
+
 		// Physics
 		btDynamicsWorld* m_PhysicWorld = nullptr;
 		btCollisionConfiguration* m_PhysicConfig = nullptr;
 		btDispatcher* m_PhysicDispatcher = nullptr;
 		btBroadphaseInterface* m_PhysicBroadphase = nullptr;
 		btConstraintSolver* m_PhysicSolver = nullptr;
+
+		b2World* m_Physics2DWorld = nullptr;
 
 		int ITERATIONS_PER_SECOND = 60;
 		float STEP_TIME;

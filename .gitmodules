@@ -37,3 +37,9 @@
 [submodule "Cober/include/ImGuizmo"]
 	path = Cober/include/ImGuizmo
 	url = https://github.com/thecherno/imguizmo
+[submodule "Cober/include/Box2D/box2d"]
+	path = Cober/include/Box2D/box2d
+	url = https://github.com/erincatto/box2d
+[submodule "Cober/include/box2dd"]
+	path = Cober/include/box2dd
+	url = https://github.com/thecherno/box2d

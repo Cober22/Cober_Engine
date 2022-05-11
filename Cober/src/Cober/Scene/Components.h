@@ -100,6 +100,19 @@ namespace Cober {
 		Rigidbody3DComponent(const Rigidbody3DComponent&) = default;
 	};
 
+	struct Rigidbody2DComponent {
+
+		enum class BodyType { Static = 0, Kinematic, Dynamic };
+		BodyType Type = BodyType::Static;
+		bool FixedRotation = false;
+
+		// Storage for runtime
+		void* RuntimeBody;
+
+		Rigidbody2DComponent() = default;
+		Rigidbody2DComponent(const Rigidbody2DComponent&) = default;
+	};
+
 	struct BoxCollider3DComponent {
 
 		glm::vec3 Offset = { 0.0f, 0.0f, 0.0f };
@@ -116,5 +129,23 @@ namespace Cober {
 
 		BoxCollider3DComponent() = default;
 		BoxCollider3DComponent(const BoxCollider3DComponent&) = default;
+	};
+
+	struct BoxCollider2DComponent {
+
+		glm::vec2 Offset = { 0.0f, 0.0f };
+		glm::vec2 Size = { 0.5f, 0.5f };
+
+		// Make a physics material maybe
+		float Density = 1.0f;
+		float Friction = 0.5f;
+		float Restitution = 0.0f;
+		float RestitutionThreshold = 0.5f;
+
+		// Storage for runtime
+		void* RuntimeFixture = nullptr;
+
+		BoxCollider2DComponent() = default;
+		BoxCollider2DComponent(const BoxCollider2DComponent&) = default;
 	};
 }

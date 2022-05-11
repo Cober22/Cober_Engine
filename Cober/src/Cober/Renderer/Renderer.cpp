@@ -293,6 +293,7 @@ namespace Cober {
 			primitive.quad->Draw(transform, src.Texture, src.Color, src.TilingFactor, entityID);
 		else
 			primitive.quad->Draw(transform, src.Color, entityID);
+		stats.QuadCount++;
 	}
 
 

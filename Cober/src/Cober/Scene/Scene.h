@@ -48,7 +48,7 @@ namespace Cober {
 	private:
 		entt::registry m_Registry;
 		uint32_t m_ViewportWidth = 1280, m_ViewportHeight = 720;
-		bool World3D = false;
+		bool World3D = true;
 
 		// Physics
 		btDynamicsWorld* m_PhysicWorld = nullptr;

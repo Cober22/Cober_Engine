@@ -22,17 +22,37 @@ Entities:
     TagComponent:
       Tag: Red_Quad
     TransformComponent:
-      Translation: [-8.77341255e-10, 5.06139326, 0]
-      Rotation: [-0.000661037338, -7.80117776e-11, 1.60032798e-09]
-      Scale: [1, 0.999999523, 0.00999999233]
+      Translation: [0.00219701976, 5.39963675, 0]
+      Rotation: [2.49423493e-07, 3.16874389e-06, 7.87676697e-07]
+      Scale: [1, 0.999999344, 1]
     SpriteRendererComponent:
       Color: [1, 0, 0, 1]
+    Rigidbody3DComponent:
+      BodyType: Dynamic
+      FixedRotation: false
+    BoxCollider3DComponent:
+      Offset: [0, 0, 0]
+      Size: [1, 1, 1]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0
+      RestitutionThreshold: 0.5
   - Entity: 123243
     TagComponent:
       Tag: Green_Quad
     TransformComponent:
-      Translation: [-0.171408296, -2.23442173, 0]
-      Rotation: [-1.55665302, 0, 0]
-      Scale: [5, 5, 0.00999999978]
+      Translation: [0, -0.975913405, 0]
+      Rotation: [0, -0, 0]
+      Scale: [5, 2, 0.999996006]
     SpriteRendererComponent:
-      Color: [0.169884086, 1, 0, 1]
+      Color: [0, 0.017863512, 1, 1]
+    Rigidbody3DComponent:
+      BodyType: Static
+      FixedRotation: false
+    BoxCollider3DComponent:
+      Offset: [0, 0, 0]
+      Size: [1, 1, 1]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0
+      RestitutionThreshold: 0.5

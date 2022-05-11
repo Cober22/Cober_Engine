@@ -27,7 +27,7 @@ namespace Cober {
 			glm::vec3(-0.2f, -1.0f, -0.3f),	// ---	Direction 
 			//glm::vec3(0.45f, 0.1f, 0.6f),	//----------------	Color
 			glm::vec3(1.0f, 1.0f, 1.0f),	//----------------	Color
-			0.225f, // -----------------------------  Ambient Intensity
+			0.8f, // -----------------------------  Ambient Intensity
 			0.3f); // -----------------------------  Diffuse Intensity
 
 		// ----------- POINT Lights
@@ -176,9 +176,9 @@ namespace Cober {
 			Renderer::ResetStats();
 			m_Framebuffer->Bind();
 
-			//RenderCommand::SetClearColor({ 0.02f, 0.008f, 0.05f, 1.0f });	// DARK BLUE
+			RenderCommand::SetClearColor({ 0.02f, 0.008f, 0.05f, 1.0f });	// DARK BLUE
 			//RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
-			RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
+			//RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
 			//RenderCommand::SetClearColor({ 0.8f, 0.35f, 0.35f, 1.0f });
 			RenderCommand::Clear();
 
@@ -203,19 +203,20 @@ namespace Cober {
 					break;
 				}
 			}
-			
-			// CUBES!	// MOVE TO ENTITIES
-			for (unsigned int i = 0; i < std::size(cubePositions); i++)
-				Renderer::DrawCube(cubePositions[i], glm::vec3(1.0f), woodContainer, steelBorderContainer, { 1.0f, 1.0f, 1.0f });// cubeColors[color]);
 		
 			// LIGHTS!	// MOVE TO ENTITIES
-			Renderer::DrawDirectionalLight(dirLight, true);
+			Renderer::DrawDirectionalLight(dirLight, false);
+			/*
 			Renderer::DrawPointLights(pointLights, true);
 			// FlashLight
 			//spotLights[0]->SetDirection(PerspCamera.GetDirection());
 			//spotLights[0]->SetPosition(PerspCamera.GetPosition());
 			Renderer::DrawSpotLights(spotLights, true);
 		
+			// CUBES!	// MOVE TO ENTITIES
+			for (unsigned int i = 0; i < std::size(cubePositions); i++)
+				Renderer::DrawCube(cubePositions[i], glm::vec3(1.0f), woodContainer, steelBorderContainer, { 1.0f, 1.0f, 1.0f });// cubeColors[color]);
+
 			// MODELS	// MOVE TO ENTITIES
 			Renderer::DrawModel(gridModel, glm::vec3(0.0f, -3.0f, 0.0f), glm::vec3(0.5f));
 			// Renderer::DrawModel(arenaModel);
@@ -226,7 +227,7 @@ namespace Cober {
 			Renderer::DrawRotatedQuad({ -4.0, 0.0, -15.0f }, 0.0f, { 1.0f, 2.0f }, bridgeTexture);
 			Renderer::DrawRotatedQuad({ -10.0, 0.0, -2.0f }, 75.0f, { 2.0f, 2.0f }, catTexture);
 			Renderer::DrawQuad({ 10.0, 10.0, -7.0f }, { 1.0f, 1.0f }, glm::vec4(1.0f, 0.0f, 1.0f, 1.0f));
-
+			*/
 			Renderer::EndScene();	// Delete when all geometry are entities
 
 			auto[mx, my] = ImGui::GetMousePos();

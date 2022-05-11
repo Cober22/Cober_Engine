@@ -355,7 +355,7 @@ namespace Cober {
 					bool isSelected = currentBodyTypeString == bodyTypeStrings[i];
 					if (ImGui::Selectable(bodyTypeStrings[i], isSelected)) {
 						currentBodyTypeString = bodyTypeStrings[i];
-						component.Type = (Rigidbody3DComponent::BodyType)i;
+						component.Type = (BodyType)i;
 					}
 
 					if (isSelected)
@@ -388,7 +388,7 @@ namespace Cober {
 						bool isSelected = currentBodyTypeString == bodyTypeStrings[i];
 						if (ImGui::Selectable(bodyTypeStrings[i], isSelected)) {
 							currentBodyTypeString = bodyTypeStrings[i];
-							component.Type = (Rigidbody2DComponent::BodyType)i;
+							component.Type = (BodyType)i;
 						}
 
 						if (isSelected)

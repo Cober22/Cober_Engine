@@ -87,9 +87,9 @@ namespace Cober {
 	};
 	
 	// Physics
+	enum class BodyType { Static = 0, Kinematic, Dynamic };
+	
 	struct Rigidbody3DComponent {
-
-		enum class BodyType { Static = 0, Kinematic, Dynamic };
 		BodyType Type = BodyType::Static;
 		bool FixedRotation = false;
 
@@ -101,8 +101,6 @@ namespace Cober {
 	};
 
 	struct Rigidbody2DComponent {
-
-		enum class BodyType { Static = 0, Kinematic, Dynamic };
 		BodyType Type = BodyType::Static;
 		bool FixedRotation = false;
 
@@ -114,9 +112,8 @@ namespace Cober {
 	};
 
 	struct BoxCollider3DComponent {
-
 		glm::vec3 Offset = { 0.0f, 0.0f, 0.0f };
-		glm::vec3 Size = { 0.5f, 0.5f, 0.5f };
+		glm::vec3 Size = { 1.0f, 1.0f, 1.0f };
 
 		float Density = 1.0f;
 		float Friction = 0.5f;
@@ -132,9 +129,8 @@ namespace Cober {
 	};
 
 	struct BoxCollider2DComponent {
-
 		glm::vec2 Offset = { 0.0f, 0.0f };
-		glm::vec2 Size = { 0.5f, 0.5f };
+		glm::vec2 Size = { 1.0f, 1.0f };
 
 		// Make a physics material maybe
 		float Density = 1.0f;

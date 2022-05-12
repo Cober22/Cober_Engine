@@ -40,6 +40,7 @@ namespace Cober {
 
 		void OnScenePlay();
 		void OnSceneStop();
+		void DuplicateSelectedEntity();
 
 		// UI Panels
 		void UI_Toolbar();
@@ -51,6 +52,7 @@ namespace Cober {
 		int m_GizmoType = -1;
 		int guizmoMode;
 		bool guizmoLocal;
+		bool WorldType;
 	private:
 		// create a file browser instance
 		ImGui::FileBrowser mFileDialog;
@@ -62,6 +64,7 @@ namespace Cober {
 		OrthographicCamera OrthoCamera;
 		Ref<Framebuffer> m_Framebuffer;
 		Ref<Scene> m_ActiveScene;
+		Ref<Scene> m_EditorScene, m_RuntimeScene;
 		uint32_t frames;
 
 		GameState m_SceneState = GameState::EDIT;

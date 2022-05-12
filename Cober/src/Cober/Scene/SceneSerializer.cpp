@@ -127,8 +127,10 @@ namespace Cober {
 
 	static void SerializeEntity(YAML::Emitter& out, Entity entity) 
 	{
+		CB_ASSERT(entity.HasComponent<IDComponent>());
+
 		out << YAML::BeginMap;	// Entity
-		out << YAML::Key << "Entity" << YAML::Value << "123243";	// TODO: Entity ID goes here
+		out << YAML::Key << "Entity" << YAML::Value << entity.GetUUID();
 
 		if (entity.HasComponent<TagComponent>()) {
 			out << YAML::Key << "TagComponent";
@@ -285,12 +287,15 @@ namespace Cober {
 			for (auto entity : entities)
 			{
 				uint64_t uuid = entity["Entity"].as<uint64_t>();
+
 				auto tagComponent = entity["TagComponent"];
 				std::string name;
 				if (tagComponent)
 					name = tagComponent["Tag"].as<std::string>();
+
 				std::cout << "Deserializing entity with ID: " << uuid << std::endl;
 
+				//Entity deserializedEntity = m_Scene->CreateEntityWithUUID(uuid, name);
 				Entity deserializedEntity = m_Scene->CreateEntity(name);
 
 				auto transformComponent = entity["TransformComponent"];

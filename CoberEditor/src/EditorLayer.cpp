@@ -93,8 +93,10 @@ namespace Cober {
 		m_Framebuffer = Framebuffer::Create(fbSpec);
 
 		// Scene
-		m_ActiveScene = CreateRef<Scene>();
-		m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
+		m_EditorScene = CreateRef<Scene>();
+		m_ActiveScene = m_EditorScene;
+		//m_ActiveScene = CreateRef<Scene>();
+		//m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
 		m_IconPlay = Texture2D::Create("Assets/Icons/IconPlay.png");
 		m_IconStop = Texture2D::Create("Assets/Icons/IconStop.png");
 
@@ -323,8 +325,11 @@ namespace Cober {
 			}
 			if (ImGui::BeginMenu("Edit"))
 			{
-				ImGui::Checkbox("Guizmo Local", &guizmoLocal);
-				guizmoMode = guizmoLocal ? ImGuizmo::LOCAL : ImGuizmo::WORLD;
+				if (ImGui::Checkbox("Guizmo Local", &guizmoLocal))
+					guizmoMode = guizmoLocal ? ImGuizmo::LOCAL : ImGuizmo::WORLD;
+
+				if (ImGui::Checkbox("3D World", &WorldType))
+					m_EditorScene->SetWorldType(WorldType);
 			
 				ImGui::EndMenu();
 			}
@@ -388,6 +393,7 @@ namespace Cober {
 		if (ImGui::BeginDragDropTarget()) {
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM")) {
 				const wchar_t* path = (const wchar_t*)payload->Data;
+				mFilePath = (std::filesystem::path(g_AssetPath) / path).string();
 				OpenFile(std::filesystem::path(g_AssetPath) / path);
 			}
 			ImGui::EndDragDropTarget();
@@ -511,6 +517,10 @@ namespace Cober {
 				else if (control)
 					SaveScene();
 				break;
+			case Key::D:
+				if (control)
+					DuplicateSelectedEntity();
+				break;
 
 			// Gizmos
 			case Key::Q: 
@@ -561,9 +571,21 @@ namespace Cober {
 	}
 
 	void EditorLayer::OpenFile(const std::filesystem::path& path) {
-		NewScene();
-		SceneSerializer serializer(m_ActiveScene);
-		serializer.Deserialize(path.string());
+		if (m_SceneState != GameState::EDIT)
+			OnSceneStop();
+
+		if (path.extension().string() != ".cober")
+			return;
+
+		Ref<Scene> newScene = CreateRef<Scene>();
+		SceneSerializer serializer(newScene);
+		if (serializer.Deserialize(path.string()))
+		{
+			m_EditorScene = newScene;
+			m_ActiveScene = m_EditorScene;
+			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+		}
 	}
 	
 	void EditorLayer::SaveSceneAs() {
@@ -581,11 +603,25 @@ namespace Cober {
 	}
 
 	void EditorLayer::OnScenePlay()	{
-		m_ActiveScene->OnRuntimeStart();
 		m_SceneState = GameState::PLAY;
+		// Make a copy of the Editor scene
+		m_RuntimeScene = Scene::Copy(m_EditorScene);
+		m_ActiveScene = m_RuntimeScene;
+		m_ActiveScene->OnRuntimeStart();
 	}
 	void EditorLayer::OnSceneStop() {
-		m_ActiveScene->OnRuntimeStop();
 		m_SceneState = GameState::EDIT;
+		m_ActiveScene = m_EditorScene;
+		m_RuntimeScene = nullptr;
+		m_ActiveScene->OnRuntimeStop();
+	}
+
+	void EditorLayer::DuplicateSelectedEntity() {
+		if (m_SceneState != GameState::EDIT)
+			return;
+
+		Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity();
+		if (selectedEntity)
+			m_EditorScene->DuplicateEntity(selectedEntity);
 	}
 }

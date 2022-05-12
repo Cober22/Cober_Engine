@@ -891,6 +891,7 @@
     <ClInclude Include="src\Cober\Scene\SceneSerializer.h" />
     <ClInclude Include="src\Cober\Sound\AudioManager.h" />
     <ClInclude Include="src\Cober\Timestep.h" />
+    <ClInclude Include="src\Cober\UUID.h" />
     <ClInclude Include="src\Cober\Window.h" />
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h" />
@@ -1395,6 +1396,7 @@
     <ClCompile Include="src\Cober\Scene\Scene.cpp" />
     <ClCompile Include="src\Cober\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Cober\Scene\SceneSerializer.cpp" />
+    <ClCompile Include="src\Cober\UUID.cpp" />
     <ClCompile Include="src\Cober\Window.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp" />

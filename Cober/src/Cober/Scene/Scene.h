@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Cober/Timestep.h"
+#include "Cober/UUID.h"
 #include "Cober/Renderer/Camera/EditorCamera.h"
 #include "entt.hpp"
 
@@ -14,6 +15,7 @@
 
 class b2World;
 
+class btRigidBody;
 class btDynamicsWorld;
 class btCollisionConfiguration;
 class btDispatcher;
@@ -31,6 +33,7 @@ namespace Cober {
 		~Scene();
 
 		Entity CreateEntity(const std::string& name = std::string());
+		Entity CreateEntityWithUUID(UUID uuid, const std::string& name = std::string());
 		void DestroyEntity(Entity entity);
 
 		void OnRuntimeStart();
@@ -40,8 +43,12 @@ namespace Cober {
 		void OnUpdateEditor(Timestep ts, EditorCamera& camera);
 		void OnViewportResize(uint32_t width, uint32_t height);
 		bool GetWorldType() { return World3D; }
+		void SetWorldType(bool worldType) { World3D = worldType; }
 
 		Entity GetPrimaryCameraEntity();
+
+		void DuplicateEntity(Entity entity);
+		static Ref<Scene> Copy(Ref<Scene> scene);
 	private:
 		template<typename T>
 		void OnComponentAdded(Entity entity, T& component);

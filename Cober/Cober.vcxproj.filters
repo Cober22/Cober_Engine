@@ -2379,6 +2379,7 @@
     <ClInclude Include="src\pch.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\UUID.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\Bullet\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp">
@@ -2960,5 +2961,6 @@
     <ClCompile Include="src\pch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Cober\UUID.cpp" />
   </ItemGroup>
 </Project>

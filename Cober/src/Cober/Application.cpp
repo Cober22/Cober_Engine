@@ -104,22 +104,15 @@ namespace Cober {
 
 	void Application::ProcessInputs() {
 		
-		if (Input::IsKeyPressedOne(KEY_M)) {
-			m_CursorMode = m_CursorMode == true ? false : true;
-			if (m_CursorMode)
-				glfwSetInputMode(_window->GetNativeWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-			else
-				glfwSetInputMode(_window->GetNativeWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-		}
 		if (Input::IsKeyPressedOne(KEY_ESCAPE))
 			_gameState = GameState::EXIT;
-		if (Input::IsKeyPressedOne(KEY_F)) {
-			w_Maximized = w_Maximized == true ? false : true;
-			if (w_Maximized)
-				glfwMaximizeWindow(_window->GetNativeWindow());
-			else
-				glfwRestoreWindow(_window->GetNativeWindow());
-		}
+		//if (Input::IsKeyPressedOne(KEY_F)) {
+		//	w_Maximized = w_Maximized == true ? false : true;
+		//	if (w_Maximized)
+		//		glfwMaximizeWindow(_window->GetNativeWindow());
+		//	else
+		//		glfwRestoreWindow(_window->GetNativeWindow());
+		//}
 	}
 
 	bool Application::OnWindowClose(WindowCloseEvent& event)

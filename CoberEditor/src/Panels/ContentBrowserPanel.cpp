@@ -19,7 +19,7 @@ namespace Cober {
 	void ContentBrowserPanel::OnImGuiRender()
 	{
 		ImGui::Begin("Content Browser");
-
+		
 		if (m_CurrentDirectory != std::filesystem::path(g_AssetPath))
 			if (ImGui::Button("<-"))
 				m_CurrentDirectory = m_CurrentDirectory.parent_path();
@@ -34,8 +34,12 @@ namespace Cober {
 		if (columnCount < 1)
 			columnCount = 1;
 
+		ImGui::Columns(1);
+		ImGui::SliderFloat("Thumbnail Size", &thumbnailSize, 16, 85);
+		ImGui::SliderFloat("Padding", &padding, 0, 32);
+
 		ImGui::Columns(columnCount, 0, false);
-		
+
 		for (auto& directoryEntry : std::filesystem::directory_iterator(m_CurrentDirectory)) {
 			const auto& path = directoryEntry.path();
 			auto relativePath = std::filesystem::relative(path, g_AssetPath);
@@ -62,10 +66,7 @@ namespace Cober {
 			ImGui::NextColumn();
 			ImGui::PopID();
 		}
-		ImGui::Columns(1);
-		ImGui::SliderFloat("Thumbnail Size", &thumbnailSize, 16, 512);
-		ImGui::SliderFloat("Padding", &padding, 0, 32);
-
+	
 		ImGui::End();
 	}
 }

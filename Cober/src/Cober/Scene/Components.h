@@ -1,16 +1,28 @@
 #pragma once
 
+#include "Cober/UUID.h"
+//#include "Entity.h"
+#include "Cober/Renderer/Texture.h"
+#include "SceneCamera.h"
+
 #include <glm/glm.hpp>
 #include <glm//gtc/matrix_transform.hpp>
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/quaternion.hpp>
 
-#include "SceneCamera.h"
-#include "Entity.h"
-#include "Cober/Renderer/Texture.h"
+// Forward declaration
+class btRigidBody;
+class btCollisionShape;
 
 namespace Cober {
+
+	struct IDComponent {
+		UUID ID;
+
+		IDComponent() = default;
+		IDComponent(const IDComponent&) = default;
+	};
 	
 	struct TransformComponent {
 
@@ -72,6 +84,8 @@ namespace Cober {
 		CameraComponent(const CameraComponent&) = default;
 	};
 
+	// Forward declaration
+	class ScriptableEntity;
 	struct NativeScriptComponent {
 
 		ScriptableEntity* Instance = nullptr;

@@ -51,6 +51,8 @@ namespace Cober {
 			s_HighDPIScaleFactor = xscale;
 			glfwWindowHint(GLFW_SCALE_TO_MONITOR, GLFW_TRUE);
 		}*/
+		// Quit title bar
+		//glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
 
 		// Init WINDOW
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);

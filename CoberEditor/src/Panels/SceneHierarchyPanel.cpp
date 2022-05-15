@@ -223,7 +223,12 @@ namespace Cober {
 					ImGui::CloseCurrentPopup();
 				}
 			}
-			
+			if (!m_SelectionContext.HasComponent<CircleRendererComponent>()) {
+				if (ImGui::MenuItem("Circle Renderer")) {
+					m_SelectionContext.AddComponent<CircleRendererComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+			}
 			// 3D WORLD
 			if (m_Context->GetWorldType()) {
 				if (!m_SelectionContext.HasComponent<Rigidbody3DComponent>()) {
@@ -345,6 +350,13 @@ namespace Cober {
 			ImGui::DragFloat("Tiling Factor", &component.TilingFactor, 0.1f, 0.0f, 100.0f);
 		});
 
+		DrawComponent<CircleRendererComponent>("Box Collider 3D", entity, [](auto& component)
+			{
+				ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
+				ImGui::DragFloat("Thickess", &component.Thickness, 0.025f, 0.0f, 1.0f);
+				ImGui::DragFloat("Fade", &component.Fade, 0.00025f, 0.0f, 1.0f);
+			});
+
 		DrawComponent<Rigidbody3DComponent>("Rigidbody 3D", entity, [](auto& component)
 		{
 			const char* bodyTypeStrings[] = { "Static", "Kinematic", "Dynamic" };
@@ -368,16 +380,6 @@ namespace Cober {
 			ImGui::Checkbox("Fixed Rotation", &component.FixedRotation);
 		});
 
-		DrawComponent<BoxCollider3DComponent>("Box Collider 3D", entity, [](auto& component)
-		{
-			ImGui::DragFloat3("Offset", glm::value_ptr(component.Offset));
-			ImGui::DragFloat3("Size", glm::value_ptr(component.Size));
-			ImGui::DragFloat("Density", &component.Density, 0.01f, 0.0f, 1.0f);
-			ImGui::DragFloat("Friction", &component.Friction, 0.01f, 0.0f, 1.0f);
-			ImGui::DragFloat("Restitution", &component.Restitution, 0.01f, 0.0f, 1.0f);
-			ImGui::DragFloat("Restitution Threshold", &component.RestitutionThreshold, 0.01f, 0.0f);
-		});
-
 		DrawComponent<Rigidbody2DComponent>("Rigidbody 2D", entity, [](auto& component)
 			{
 				const char* bodyTypeStrings[] = { "Static", "Kinematic", "Dynamic" };
@@ -399,6 +401,16 @@ namespace Cober {
 				}
 
 				ImGui::Checkbox("Fixed Rotation", &component.FixedRotation);
+			});
+
+		DrawComponent<BoxCollider3DComponent>("Box Collider 3D", entity, [](auto& component)
+			{
+				ImGui::DragFloat3("Offset", glm::value_ptr(component.Offset));
+				ImGui::DragFloat3("Size", glm::value_ptr(component.Size));
+				ImGui::DragFloat("Density", &component.Density, 0.01f, 0.0f, 1.0f);
+				ImGui::DragFloat("Friction", &component.Friction, 0.01f, 0.0f, 1.0f);
+				ImGui::DragFloat("Restitution", &component.Restitution, 0.01f, 0.0f, 1.0f);
+				ImGui::DragFloat("Restitution Threshold", &component.RestitutionThreshold, 0.01f, 0.0f);
 			});
 
 		DrawComponent<BoxCollider2DComponent>("Box Collider 2D", entity, [](auto& component)

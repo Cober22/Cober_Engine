@@ -1,4 +1,3 @@
-#include "checkML.h"
 #include "pch.h"
 
 #include "Application.h"
@@ -106,6 +105,7 @@ namespace Cober {
 		
 		if (Input::IsKeyPressedOne(KEY_ESCAPE))
 			_gameState = GameState::EXIT;
+
 		//if (Input::IsKeyPressedOne(KEY_F)) {
 		//	w_Maximized = w_Maximized == true ? false : true;
 		//	if (w_Maximized)

@@ -1,6 +1,4 @@
 #pragma once
-#include "pch.h"
-
 #include "Cober/Core.h"
 #include "Cober/Events/EventManager.h"
 

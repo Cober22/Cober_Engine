@@ -252,6 +252,8 @@ namespace Cober {
 	{
 		CB_PROFILE_FUNCTION();
 
+		//ImGui::ShowDemoWindow();
+
 		// Note: Switch this to true to enable dockspace
 		static bool dockspaceOpen = true;
 		static bool opt_fullscreen_persistant = true;
@@ -600,6 +602,8 @@ namespace Cober {
 				serializer.Serialize(mFilePath);
 			}
 		}
+		else
+			SaveSceneAs();
 	}
 
 	void EditorLayer::OnScenePlay()	{

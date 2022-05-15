@@ -1,6 +1,63 @@
 Scene: Untitled
 Entities:
-  - Entity: 5211884512152557469
+  - Entity: 5939464297120622883
+    TagComponent:
+      Tag: RightWall
+    TransformComponent:
+      Translation: [9, 9, 0]
+      Rotation: [0, 0, 1.57079637]
+      Scale: [9.99994469, 0.999996483, 1]
+    SpriteRendererComponent:
+      Color: [0.0277723446, 0.272017062, 0.799227834, 1]
+    Rigidbody2DComponent:
+      BodyType: Static
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [1, 1]
+      Density: 1
+      Friction: 0
+      Restitution: 1
+      RestitutionThreshold: 0.5
+  - Entity: 6026582847345106412
+    TagComponent:
+      Tag: LeftWall
+    TransformComponent:
+      Translation: [-9, 9.00000095, 0]
+      Rotation: [0, 0, 1.57079637]
+      Scale: [9.99988365, 0.999992669, 1]
+    SpriteRendererComponent:
+      Color: [0.0277723446, 0.272017062, 0.799227834, 1]
+    Rigidbody2DComponent:
+      BodyType: Static
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [1, 1]
+      Density: 1
+      Friction: 0
+      Restitution: 1
+      RestitutionThreshold: 0.5
+  - Entity: 16787294075372346059
+    TagComponent:
+      Tag: Ceiling
+    TransformComponent:
+      Translation: [0, 18, 0]
+      Rotation: [0, 0, 0]
+      Scale: [10, 1, 1]
+    SpriteRendererComponent:
+      Color: [0.0277723446, 0.272017062, 0.799227834, 1]
+    Rigidbody2DComponent:
+      BodyType: Static
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [1, 1]
+      Density: 1
+      Friction: 0
+      Restitution: 1
+      RestitutionThreshold: 0.5
+  - Entity: 12528093282817742600
     TagComponent:
       Tag: RedQuad
     TransformComponent:
@@ -16,10 +73,10 @@ Entities:
       Offset: [0, 0]
       Size: [1, 1]
       Density: 1
-      Friction: 0.5
-      Restitution: 0
+      Friction: 0
+      Restitution: 1
       RestitutionThreshold: 0.5
-  - Entity: 15637950810614953691
+  - Entity: 5882818865195113801
     TagComponent:
       Tag: GreenQuad
     TransformComponent:
@@ -35,16 +92,16 @@ Entities:
       Offset: [0, 0]
       Size: [1, 1]
       Density: 1
-      Friction: 0.5
-      Restitution: 0
+      Friction: 0
+      Restitution: 1
       RestitutionThreshold: 0.5
-  - Entity: 2775601081940218962
+  - Entity: 877658016976155171
     TagComponent:
       Tag: Floor
     TransformComponent:
-      Translation: [0, -2.9069736, 0]
+      Translation: [0, 0, 0]
       Rotation: [0, 0, 0]
-      Scale: [7.43954325, 1, 1]
+      Scale: [10, 1, 1]
     SpriteRendererComponent:
       Color: [0.0277723446, 0.272017062, 0.799227834, 1]
     Rigidbody2DComponent:
@@ -54,20 +111,20 @@ Entities:
       Offset: [0, 0]
       Size: [1, 1]
       Density: 1
-      Friction: 0.5
-      Restitution: 0
+      Friction: 0
+      Restitution: 1
       RestitutionThreshold: 0.5
-  - Entity: 14225547330634101200
+  - Entity: 13542688405005138029
     TagComponent:
       Tag: Camera
     TransformComponent:
-      Translation: [0, 3.53738165, 23.6333771]
+      Translation: [0, 9, 23.6333771]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     CameraComponent:
       Camera:
         CameraType: 0
-        PerspectiveFOV: 0.785398185
+        PerspectiveFOV: 1.13446403
         PerspectiveNear: 0.00999999978
         PerspectiveFar: 1000
         OrthographicSize: 10

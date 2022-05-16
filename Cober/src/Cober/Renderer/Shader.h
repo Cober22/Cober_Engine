@@ -10,28 +10,52 @@ namespace Cober {
 	class Shader {
 
 	public:
-		virtual ~Shader() = default;
+		Shader(const std::string& filePath);
+		Shader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
+		~Shader() { glDeleteProgram(m_RendererID); };
 
-		virtual void Bind() const = 0;
-		virtual void Unbind() const = 0;
+		void Bind() const { glUseProgram(m_RendererID); };
+		void Unbind() const { glUseProgram(0); };
 
-		virtual void SetInt(const std::string& name, int value) = 0;
-		virtual void SetIntArray(const std::string& name, int* values, uint32_t count) = 0;
-		virtual void SetFloat(const std::string& name, float value) = 0;
-		virtual void SetFloat3(const std::string& name, const glm::vec3& value) = 0;
-		virtual void SetFloat4(const std::string& name, const glm::vec4& value) = 0;
-		virtual void SetVec2(const std::string& name, const glm::vec2& value) = 0;
-		virtual void SetVec3(const std::string& name, const glm::vec3& value) = 0;
-		virtual void SetVec4(const std::string& name, const glm::vec4& value) = 0;
-		virtual void SetMat3(const std::string& name, const glm::mat3& value) = 0;
-		virtual void SetMat4(const std::string& name, const glm::mat4& value) = 0;
+		void SetInt(const std::string& name, int value);
+		void SetIntArray(const std::string& name, int* values, uint32_t count);
+		void SetFloat(const std::string& name, float value);
+		void SetFloat3(const std::string& name, const glm::vec3& value);
+		void SetFloat4(const std::string& name, const glm::vec4& value);
+		void SetVec2(const std::string& name, const glm::vec2& value);
+		void SetVec3(const std::string& name, const glm::vec3& value);
+		void SetVec4(const std::string& name, const glm::vec4& value);
+		void SetMat3(const std::string& name, const glm::mat3& value);
+		void SetMat4(const std::string& name, const glm::mat4& value);
 
-		virtual const std::string& GetName() const = 0;
-		virtual const uint32_t GetID() const = 0;
+		const std::string& GetName() const;
+		const uint32_t GetID() const;
 
-		static Ref<Shader> Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
-		static Ref<Shader> Create(const std::string& filePath);
+		static Ref<Shader> Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc) { return CreateRef<Shader>(name, vertexSrc, fragmentSrc); };
+		static Ref<Shader> Create(const std::string& filePath) { return CreateRef<Shader>(filePath); };
+
+		void UploadUniformBool(const std::string& name, bool value);
+
+		void UploadUniformInt(const std::string& name, int value);
+		void UploadUniformIntArray(const std::string& name, int* values, uint32_t count);
+		void UploadUniformFloat(const std::string& name, float value);
+		void UploadUniformFloat2(const std::string& name, const glm::vec2& value);
+		void UploadUniformFloat3(const std::string& name, const glm::vec3& value);
+		void UploadUniformFloat4(const std::string& name, const glm::vec4& value);
+		void UploadUniformVec2(const std::string& name, const glm::vec2& value);
+		void UploadUniformVec3(const std::string& name, const glm::vec3& value);
+		void UploadUniformVec4(const std::string& name, const glm::vec4& value);
+		void UploadUniformMat3(const std::string& name, const glm::mat3& matrix);
+		void UploadUniformMat4(const std::string& name, const glm::mat4& matrix);
+	private:
+		std::string ReadFile(const std::string& filePath);
+		std::unordered_map<GLenum, std::string> PreProcess(const std::string& source);
+		void Compile(const std::unordered_map<GLenum, std::string>& shaderSources);
+	private:
+		uint32_t m_RendererID = 0;
+		std::string m_Name;
 	};
+
 
 	class ShaderLibrary 
 	{

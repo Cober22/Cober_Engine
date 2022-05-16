@@ -1,4 +1,3 @@
-#include "checkML.h"
 #include "pch.h"
 #include "Renderer.h"
 
@@ -8,7 +7,6 @@ namespace Cober {
 	Ref<Shader> lightCubeShader;
 	Ref<Shader> modelShader;
 	Ref<Shader> textureShader;
-
 
 	glm::vec3 cameraPosition;
 	glm::vec3 cameraDirection;
@@ -111,7 +109,8 @@ namespace Cober {
 		primitive.quad->attributes = baseQuadAttributes;
 		primitive.quad->textureSlotIndex = 1;
 	}
-
+	
+	/*
 	void Renderer::BeginScene(OrthographicCamera& camera)
 	{
 		CB_PROFILE_FUNCTION();
@@ -150,6 +149,7 @@ namespace Cober {
 		primitive.quad->attributes = baseQuadAttributes;
 		primitive.quad->textureSlotIndex = 1;
 	}
+	*/
 
 	void Renderer::Shutdown() 
 	{

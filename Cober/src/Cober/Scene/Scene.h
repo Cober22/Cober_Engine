@@ -1,17 +1,17 @@
 #pragma once
 
-#include "Cober/Timestep.h"
-#include "Cober/UUID.h"
+#include "Cober/Core/Timestep.h"
+#include "Cober/Core/UUID.h"
 #include "Cober/Renderer/Camera/EditorCamera.h"
 #include "entt.hpp"
 
 // Bullet
 #include "Bullet/btBulletDynamicsCommon.h"
 // Box2D
-#include "box2dd/include/box2d/b2_world.h"
-#include "box2dd/include/box2d/b2_body.h"
-#include "box2dd/include/box2d/b2_fixture.h"
-#include "box2dd/include/box2d/b2_polygon_shape.h"
+#include "Box2D/include/box2d/b2_world.h"
+#include "Box2D/include/box2d/b2_body.h"
+#include "Box2D/include/box2d/b2_fixture.h"
+#include "Box2D/include/box2d/b2_polygon_shape.h"
 
 class b2World;
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Cober/Core.h"
-#include "Cober/Timestep.h"
+#include "Cober/Core/Core.h"
+#include "Cober/Core/Timestep.h"
 #include "Cober/Events/EventManager.h"
 
 namespace Cober {

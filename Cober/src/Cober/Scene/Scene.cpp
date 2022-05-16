@@ -4,7 +4,7 @@
 #include "Scene.h"
 #include "Components.h"
 #include "Cober/Renderer/Renderer.h"
-#include "Cober/Math.h"
+#include "Cober/Core/Math.h"
 
 #include <glm/glm.hpp> 
 

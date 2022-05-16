@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Camera.h"
-#include "Cober/Timestep.h"
+#include "Cober/Core/Timestep.h"
 #include "Cober/Events/EventManager.h"
 #include "Cober/Events/MouseEvents.h"
 

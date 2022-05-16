@@ -1,5 +1,5 @@
 #include <Engine.h>
-#include <Cober/EntryPoint.h>
+#include <Cober/Core/EntryPoint.h>
 
 #include "EditorLayer.h"
 

@@ -24,6 +24,7 @@ namespace Cober {
 
 		void BlockEvents(bool block) { m_BlockEvents = block; }
 		void SetDarkThemeColors();
+		static void PlayModeColor(bool playMode);
 	private:
 		bool m_BlockEvents = true;
 		float m_Time = 0.0f;

@@ -60,8 +60,8 @@ namespace Cober {
 		enum MenuOptions { OPEN = 0, SAVE_AS };
 		MenuOptions mMenuFileOption;
 	private:
-		PerspectiveCamera PerspCamera;
-		OrthographicCamera OrthoCamera;
+		//PerspectiveCamera PerspCamera;
+		//OrthographicCamera OrthoCamera;
 		Ref<Framebuffer> m_Framebuffer;
 		Ref<Scene> m_ActiveScene;
 		Ref<Scene> m_EditorScene, m_RuntimeScene;

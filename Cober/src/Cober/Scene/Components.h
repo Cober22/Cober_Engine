@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Cober/UUID.h"
+#include "Cober/Core/UUID.h"
 //#include "Entity.h"
 #include "Cober/Renderer/Texture.h"
 #include "SceneCamera.h"

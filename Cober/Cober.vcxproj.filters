@@ -4,6 +4,15 @@
     <Filter Include="include">
       <UniqueIdentifier>{89AF369E-F58E-B539-FEA6-40106A051C9B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\Box2D">
+      <UniqueIdentifier>{571CB4A2-C3DC-2FD9-8C17-7956F89674B5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Box2D\include">
+      <UniqueIdentifier>{CAAAE743-3617-A33E-FF0A-3B9C6B36C5A6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Box2D\include\box2d">
+      <UniqueIdentifier>{98D4C1B3-04E2-EF99-8DC8-EB84F9D4BB50}</UniqueIdentifier>
+    </Filter>
     <Filter Include="include\Bullet">
       <UniqueIdentifier>{20A19EF9-0C6F-92FF-F502-0326E16F6E64}</UniqueIdentifier>
     </Filter>
@@ -60,15 +69,6 @@
     </Filter>
     <Filter Include="include\ImGuizmo">
       <UniqueIdentifier>{09AC1C94-F5A4-3BE6-1ED7-206B0A2F1BF2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\box2dd">
-      <UniqueIdentifier>{DBBFDC43-C78D-D049-B021-41709C8EACAE}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\box2dd\include">
-      <UniqueIdentifier>{4E922DD9-3A8C-562B-23F9-EC3B0F92BC97}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\box2dd\include\box2d">
-      <UniqueIdentifier>{1C4FA0E6-080A-9092-B1C1-08DD9D5BDA22}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\glm">
       <UniqueIdentifier>{58D6C031-C48B-3927-4D80-33FEB934302B}</UniqueIdentifier>
@@ -138,6 +138,126 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Box2D\include\box2d\b2_api.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_block_allocator.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_body.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_broad_phase.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_chain_shape.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_circle_shape.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_collision.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_common.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_contact.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_contact_manager.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_distance.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_distance_joint.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_draw.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_dynamic_tree.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_edge_shape.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_fixture.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_friction_joint.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_gear_joint.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_growable_stack.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_joint.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_math.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_motor_joint.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_mouse_joint.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_polygon_shape.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_prismatic_joint.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_pulley_joint.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_revolute_joint.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_rope.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_settings.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_shape.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_stack_allocator.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_time_of_impact.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_time_step.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_timer.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_types.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_weld_joint.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_wheel_joint.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_world.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\b2_world_callbacks.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Box2D\include\box2d\box2d.h">
+      <Filter>include\Box2D\include\box2d</Filter>
+    </ClInclude>
     <ClInclude Include="include\Bullet\BulletCollision\BroadphaseCollision\btAxisSweep3.h">
       <Filter>include\Bullet\BulletCollision\BroadphaseCollision</Filter>
     </ClInclude>
@@ -842,126 +962,6 @@
     </ClInclude>
     <ClInclude Include="include\ImGuizmo\ImGuizmo.h">
       <Filter>include\ImGuizmo</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_api.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_block_allocator.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_body.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_broad_phase.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_chain_shape.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_circle_shape.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_collision.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_common.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_contact.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_contact_manager.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_distance.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_distance_joint.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_draw.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_dynamic_tree.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_edge_shape.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_fixture.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_friction_joint.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_gear_joint.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_growable_stack.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_joint.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_math.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_motor_joint.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_mouse_joint.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_polygon_shape.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_prismatic_joint.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_pulley_joint.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_revolute_joint.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_rope.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_settings.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_shape.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_stack_allocator.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_time_of_impact.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_time_step.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_timer.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_types.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_weld_joint.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_wheel_joint.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_world.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\b2_world_callbacks.h">
-      <Filter>include\box2dd\include\box2d</Filter>
-    </ClInclude>
-    <ClInclude Include="include\box2dd\include\box2d\box2d.h">
-      <Filter>include\box2dd\include\box2d</Filter>
     </ClInclude>
     <ClInclude Include="include\glm\glm\common.hpp">
       <Filter>include\glm\glm</Filter>
@@ -2211,13 +2211,13 @@
     <ClInclude Include="include\stb_image\stb_image.h">
       <Filter>include\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Application.h">
+    <ClInclude Include="src\Cober\Core\Application.h">
       <Filter>src\Cober</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Core.h">
+    <ClInclude Include="src\Cober\Core\Core.h">
       <Filter>src\Cober</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\EntryPoint.h">
+    <ClInclude Include="src\Cober\Core\EntryPoint.h">
       <Filter>src\Cober</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Events\ApplicationEvents.h">
@@ -2250,7 +2250,7 @@
     <ClInclude Include="src\Cober\ImGui\ImGuiLayer.h">
       <Filter>src\Cober\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Instrumentator.h">
+    <ClInclude Include="src\Cober\Core\Instrumentator.h">
       <Filter>src\Cober</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Layers\Layer.h">
@@ -2259,16 +2259,13 @@
     <ClInclude Include="src\Cober\Layers\LayerStack.h">
       <Filter>src\Cober\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Log.h">
+    <ClInclude Include="src\Cober\Core\Log.h">
       <Filter>src\Cober</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Math.h">
+    <ClInclude Include="src\Cober\Core\Math.h">
       <Filter>src\Cober</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Renderer\API\RenderCommand.h">
-      <Filter>src\Cober\Renderer\API</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cober\Renderer\API\RendererAPI.h">
+    <ClInclude Include="src\Cober\Renderer\RenderCommand.h">
       <Filter>src\Cober\Renderer\API</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Buffer.h">
@@ -2283,16 +2280,7 @@
     <ClInclude Include="src\Cober\Renderer\Camera\EditorCamera.h">
       <Filter>src\Cober\Renderer\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Renderer\Camera\OrthographicCamera.h">
-      <Filter>src\Cober\Renderer\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cober\Renderer\Camera\PerspectiveCamera.h">
-      <Filter>src\Cober\Renderer\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Framebuffer.h">
-      <Filter>src\Cober\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cober\Renderer\GraphicsContext.h">
       <Filter>src\Cober\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Lighting.h">
@@ -2311,9 +2299,6 @@
       <Filter>src\Cober\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Shader.h">
-      <Filter>src\Cober\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cober\Renderer\SubTexture2D.h">
       <Filter>src\Cober\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Texture.h">
@@ -2340,46 +2325,22 @@
     <ClInclude Include="src\Cober\Sound\AudioManager.h">
       <Filter>src\Cober\Sound</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Timestep.h">
+    <ClInclude Include="src\Cober\Core\Timestep.h">
       <Filter>src\Cober</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Window.h">
+    <ClInclude Include="src\Cober\Core\UUID.h">
+      <Filter>src\Cober</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Core\Window.h">
       <Filter>src\Cober</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h">
-      <Filter>src\Platforms\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLContext.h">
-      <Filter>src\Platforms\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLFramebuffer.h">
-      <Filter>src\Platforms\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLRendererAPI.h">
-      <Filter>src\Platforms\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLShader.h">
-      <Filter>src\Platforms\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLTexture2D.h">
-      <Filter>src\Platforms\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLVertexArray.h">
-      <Filter>src\Platforms\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platforms\Windows\WindowsWindow.h">
-      <Filter>src\Platforms\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="src\checkML.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\pch.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\UUID.h" />
+    <ClInclude Include="src\Cober\Renderer\GraphicsContext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\Bullet\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp">
@@ -2847,7 +2808,7 @@
     <ClCompile Include="include\stb_image\stb_image.cpp">
       <Filter>include\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cober\Application.cpp">
+    <ClCompile Include="src\Cober\Core\Application.cpp">
       <Filter>src\Cober</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\ImGui\ImGuiBuild.cpp">
@@ -2862,35 +2823,14 @@
     <ClCompile Include="src\Cober\Layers\LayerStack.cpp">
       <Filter>src\Cober\Layers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cober\Math.cpp">
+    <ClCompile Include="src\Cober\Core\Math.cpp">
       <Filter>src\Cober</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\API\RenderCommand.cpp">
-      <Filter>src\Cober\Renderer\API</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\API\RendererAPI.cpp">
-      <Filter>src\Cober\Renderer\API</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\Buffer.cpp">
-      <Filter>src\Cober\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\Renderer\Camera\CameraController.cpp">
       <Filter>src\Cober\Renderer\Camera</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\Renderer\Camera\EditorCamera.cpp">
       <Filter>src\Cober\Renderer\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\Camera\OrthographicCamera.cpp">
-      <Filter>src\Cober\Renderer\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\Camera\PerspectiveCamera.cpp">
-      <Filter>src\Cober\Renderer\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\Framebuffer.cpp">
-      <Filter>src\Cober\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\GraphicsContext.cpp">
-      <Filter>src\Cober\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\Renderer\Primitives\Cube.cpp">
       <Filter>src\Cober\Renderer\Primitives</Filter>
@@ -2910,15 +2850,6 @@
     <ClCompile Include="src\Cober\Renderer\Shader.cpp">
       <Filter>src\Cober\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\SubTexture2D.cpp">
-      <Filter>src\Cober\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\Texture.cpp">
-      <Filter>src\Cober\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\Renderer\VertexArray.cpp">
-      <Filter>src\Cober\Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="src\Cober\Scene\Scene.cpp">
       <Filter>src\Cober\Scene</Filter>
     </ClCompile>
@@ -2928,39 +2859,14 @@
     <ClCompile Include="src\Cober\Scene\SceneSerializer.cpp">
       <Filter>src\Cober\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cober\Window.cpp">
+    <ClCompile Include="src\Cober\Core\UUID.cpp">
       <Filter>src\Cober</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp">
-      <Filter>src\Platforms\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp">
-      <Filter>src\Platforms\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLFramebuffer.cpp">
-      <Filter>src\Platforms\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLRendererAPI.cpp">
-      <Filter>src\Platforms\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLShader.cpp">
-      <Filter>src\Platforms\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLTexture2D.cpp">
-      <Filter>src\Platforms\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLVertexArray.cpp">
-      <Filter>src\Platforms\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platforms\Windows\WindowsInput.cpp">
-      <Filter>src\Platforms\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platforms\Windows\WindowsWindow.cpp">
+    <ClCompile Include="src\Cober\Core\WindowInputs.cpp">
       <Filter>src\Platforms\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cober\UUID.cpp" />
   </ItemGroup>
 </Project>

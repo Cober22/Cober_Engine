@@ -1,6 +1,6 @@
 Scene: Untitled
 Entities:
-  - Entity: 5939464297120622883
+  - Entity: 1905482564667337292
     TagComponent:
       Tag: RightWall
     TransformComponent:
@@ -8,7 +8,7 @@ Entities:
       Rotation: [0, 0, 1.57079637]
       Scale: [9.99994469, 0.999996483, 1]
     SpriteRendererComponent:
-      Color: [0.0277723446, 0.272017062, 0.799227834, 1]
+      Color: [0.911196887, 0.362544417, 0.070362702, 1]
     Rigidbody2DComponent:
       BodyType: Static
       FixedRotation: false
@@ -19,7 +19,7 @@ Entities:
       Friction: 0
       Restitution: 1
       RestitutionThreshold: 0.5
-  - Entity: 6026582847345106412
+  - Entity: 3446622380817274548
     TagComponent:
       Tag: LeftWall
     TransformComponent:
@@ -27,7 +27,7 @@ Entities:
       Rotation: [0, 0, 1.57079637]
       Scale: [9.99988365, 0.999992669, 1]
     SpriteRendererComponent:
-      Color: [0.0277723446, 0.272017062, 0.799227834, 1]
+      Color: [0.909803927, 0.360784322, 0.0705882385, 1]
     Rigidbody2DComponent:
       BodyType: Static
       FixedRotation: false
@@ -38,7 +38,7 @@ Entities:
       Friction: 0
       Restitution: 1
       RestitutionThreshold: 0.5
-  - Entity: 16787294075372346059
+  - Entity: 11245449607365087178
     TagComponent:
       Tag: Ceiling
     TransformComponent:
@@ -46,7 +46,7 @@ Entities:
       Rotation: [0, 0, 0]
       Scale: [10, 1, 1]
     SpriteRendererComponent:
-      Color: [0.0277723446, 0.272017062, 0.799227834, 1]
+      Color: [0.909803927, 0.360784322, 0.0705882385, 1]
     Rigidbody2DComponent:
       BodyType: Static
       FixedRotation: false
@@ -57,7 +57,7 @@ Entities:
       Friction: 0
       Restitution: 1
       RestitutionThreshold: 0.5
-  - Entity: 12528093282817742600
+  - Entity: 8320276800540782806
     TagComponent:
       Tag: RedQuad
     TransformComponent:
@@ -65,7 +65,7 @@ Entities:
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
-      Color: [1, 0, 0, 1]
+      Color: [0.756756783, 0.113951795, 0.113951795, 1]
     Rigidbody2DComponent:
       BodyType: Dynamic
       FixedRotation: false
@@ -76,15 +76,15 @@ Entities:
       Friction: 0
       Restitution: 1
       RestitutionThreshold: 0.5
-  - Entity: 5882818865195113801
+  - Entity: 7422790522903170641
     TagComponent:
-      Tag: GreenQuad
+      Tag: BlueQuad
     TransformComponent:
       Translation: [1.38095093, 8.47147083, 0]
       Rotation: [0, 0, -0.672681689]
       Scale: [0.999999404, 0.999999404, 1]
     SpriteRendererComponent:
-      Color: [0.419183612, 0.733590722, 0.0821394995, 1]
+      Color: [0.172090486, 0.357239842, 0.857142866, 1]
     Rigidbody2DComponent:
       BodyType: Dynamic
       FixedRotation: false
@@ -95,7 +95,7 @@ Entities:
       Friction: 0
       Restitution: 1
       RestitutionThreshold: 0.5
-  - Entity: 877658016976155171
+  - Entity: 11074744755627406916
     TagComponent:
       Tag: Floor
     TransformComponent:
@@ -103,7 +103,7 @@ Entities:
       Rotation: [0, 0, 0]
       Scale: [10, 1, 1]
     SpriteRendererComponent:
-      Color: [0.0277723446, 0.272017062, 0.799227834, 1]
+      Color: [0.909803927, 0.360784322, 0.0705882385, 1]
     Rigidbody2DComponent:
       BodyType: Static
       FixedRotation: false
@@ -114,7 +114,7 @@ Entities:
       Friction: 0
       Restitution: 1
       RestitutionThreshold: 0.5
-  - Entity: 13542688405005138029
+  - Entity: 17496796043787590591
     TagComponent:
       Tag: Camera
     TransformComponent:

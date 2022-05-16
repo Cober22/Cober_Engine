@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Cober/Core.h"
-#include "Cober/Log.h"
+#include "Cober/Core/Core.h"
+#include "Cober/Core/Log.h"
 #include "Cober/Scene/Scene.h"
 #include "Cober/Scene/Entity.h"
 

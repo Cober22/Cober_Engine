@@ -7,13 +7,12 @@
 
 #include "ImGuizmo/ImGuizmo.h"
 
-#include "checkML.h"
 namespace Cober {
 
 	extern const std::filesystem::path g_AssetPath;
 
 	EditorLayer::EditorLayer()
-		: Layer("Editor"), OrthoCamera({ 1280.0f, 720.0f }), PerspCamera(45.0f, { 1280.0f, 720.0f }, 0.1f, 500.0f)
+		: Layer("Editor")//, OrthoCamera({ 1280.0f, 720.0f }), PerspCamera(45.0f, { 1280.0f, 720.0f }, 0.1f, 500.0f)
 	{
 	}
 
@@ -176,6 +175,7 @@ namespace Cober {
 		{
 			CB_PROFILE_SCOPE("Render Draw");
 			Renderer::ResetStats();
+			//auto& colors = ImGui::GetStyle().Colors;
 			m_Framebuffer->Bind();
 
 			RenderCommand::SetClearColor({ 0.05f, 0.03f, 0.08f, 1.0f });	// DARK BLUE
@@ -189,18 +189,21 @@ namespace Cober {
 
 			// Update Scene
 			//m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+
+			
 			switch (m_SceneState)
 			{
 				case GameState::EDIT:
 				{
-					//if (m_ViewportFocused)
-						//m_CameraController.OnUpdate(ts);
+					//colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.000f, 0.000f, 0.000f, 0.586f);
 					m_EditorCamera.OnUpdate(ts);
 					m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+
 					break;
 				}
 				case GameState::PLAY:
-				{
+				{	
+					//colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.000f, 0.000f, 0.000f, 0.586f);
 					m_ActiveScene->OnUpdateRuntime(ts);
 					break;
 				}
@@ -488,7 +491,7 @@ namespace Cober {
 
 	void EditorLayer::OnEvent(Event& event)
 	{
-		PerspCamera.OnEvent(event);
+		//PerspCamera.OnEvent(event);
 		m_EditorCamera.OnEvent(event);
 
 		EventDispatcher dispatcher(event);

@@ -17,8 +17,8 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "Cober/Log.h"
-#include "Cober/Instrumentator.h"
+#include "Cober/Core/Log.h"
+#include "Cober/Core/Instrumentator.h"
 
 
 #define GLFW_INCLUDE_NONE

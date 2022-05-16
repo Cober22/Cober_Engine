@@ -1,11 +1,10 @@
-#include "checkML.h"
 #include "pch.h"
 #include "ImGuiLayer.h"
 
 #include "backends/imgui_impl_opengl3.h"
 #include "backends/imgui_impl_glfw.h"
 
-#include "Cober/Application.h"
+#include "Cober/Core/Application.h"
 
 namespace Cober {
 
@@ -69,27 +68,6 @@ namespace Cober {
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		// Create the docking environment
-		//ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar |
-		//	ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
-		//	ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus |
-		//	ImGuiWindowFlags_NoBackground;
-
-		//ImGuiViewport* viewport = ImGui::GetMainViewport();
-		//ImGui::SetNextWindowPos(viewport->Pos);
-		//ImGui::SetNextWindowSize(viewport->Size);
-		//ImGui::SetNextWindowViewport(viewport->ID);
-
-		//ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-		//ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-		//ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-		//ImGui::Begin("InvisibleWindow", nullptr, windowFlags);
-		//ImGui::PopStyleVar(3);
-
-		//// DockSpace
-		//ImGuiID dockSpaceId = ImGui::GetID("InvisibleWindowDockSpace");
-		//ImGui::DockSpace(dockSpaceId, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
-		//
 		//ImGui::End();
 	}
 
@@ -130,8 +108,8 @@ namespace Cober {
 		colors[ImGuiCol_TextDisabled] = ImVec4(0.500f, 0.500f, 0.500f, 1.000f);
 		colors[ImGuiCol_WindowBg] = ImVec4(0.180f, 0.180f, 0.180f, 1.000f);
 		colors[ImGuiCol_ChildBg] = ImVec4(0.280f, 0.280f, 0.280f, 0.000f);
-		colors[ImGuiCol_PopupBg] = ImVec4(0.313f, 0.313f, 0.313f, 1.000f);
-		colors[ImGuiCol_Border] = ImVec4(0.266f, 0.266f, 0.266f, 1.000f);
+		colors[ImGuiCol_PopupBg] = ImVec4(0.15f, 0.15f, 0.15f, 1.000f);
+		colors[ImGuiCol_Border] = ImVec4(0.266f, 0.266f, 0.266f, 0.000f);
 		colors[ImGuiCol_BorderShadow] = ImVec4(0.000f, 0.000f, 0.000f, 0.000f);
 		colors[ImGuiCol_FrameBg] = ImVec4(0.160f, 0.160f, 0.160f, 1.000f);
 		colors[ImGuiCol_FrameBgHovered] = ImVec4(0.200f, 0.200f, 0.200f, 1.000f);
@@ -148,13 +126,13 @@ namespace Cober {
 		colors[ImGuiCol_SliderGrab] = ImVec4(0.391f, 0.391f, 0.391f, 1.000f);
 		colors[ImGuiCol_SliderGrabActive] = ImVec4(1.000f, 0.391f, 0.000f, 1.000f);
 		colors[ImGuiCol_Button] = ImVec4(1.000f, 1.000f, 1.000f, 0.000f);
-		colors[ImGuiCol_ButtonHovered] = ImVec4(1.000f, 1.000f, 1.000f, 0.156f);
-		colors[ImGuiCol_ButtonActive] = ImVec4(1.000f, 1.000f, 1.000f, 0.391f);
+		colors[ImGuiCol_ButtonHovered] = ImVec4(0.5f, 0.5f, 0.5f, 0.5f);
+		colors[ImGuiCol_ButtonActive] = ImVec4(0.5f, 0.5, 0.5f, 0.4f);
 		colors[ImGuiCol_Header] = ImVec4(0.313f, 0.313f, 0.313f, 1.000f);
 		colors[ImGuiCol_HeaderHovered] = ImVec4(0.469f, 0.469f, 0.469f, 1.000f);
 		colors[ImGuiCol_HeaderActive] = ImVec4(0.469f, 0.469f, 0.469f, 1.000f);
 		colors[ImGuiCol_Separator] = colors[ImGuiCol_Border];
-		colors[ImGuiCol_SeparatorHovered] = ImVec4(0.391f, 0.391f, 0.391f, 1.000f);
+		colors[ImGuiCol_SeparatorHovered] = ImVec4(1.000f, 0.391f, 0.000f, 1.000f);
 		colors[ImGuiCol_SeparatorActive] = ImVec4(1.000f, 0.391f, 0.000f, 1.000f);
 		colors[ImGuiCol_ResizeGrip] = ImVec4(1.000f, 1.000f, 1.000f, 0.250f);
 		colors[ImGuiCol_ResizeGripHovered] = ImVec4(1.000f, 1.000f, 1.000f, 0.670f);
@@ -175,6 +153,7 @@ namespace Cober {
 		colors[ImGuiCol_NavHighlight] = ImVec4(1.000f, 0.391f, 0.000f, 1.000f);
 		colors[ImGuiCol_NavWindowingHighlight] = ImVec4(1.000f, 0.391f, 0.000f, 1.000f);
 		colors[ImGuiCol_NavWindowingDimBg] = ImVec4(0.000f, 0.000f, 0.000f, 0.586f);
+
 		colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.000f, 0.000f, 0.000f, 0.586f);
 
 		style->ChildRounding = 4.0f;

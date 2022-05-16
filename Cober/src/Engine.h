@@ -1,13 +1,13 @@
 #pragma once
 
 // [---- CORE ----]
-#include "Cober/Application.h"
-#include "Cober/Math.h"
+#include "Cober/Core/Application.h"
+#include "Cober/Core/Math.h"
 #include "Cober/Layers/Layer.h"
 // ----- Log & Stats
-#include "Cober/Log.h"
+#include "Cober/Core/Log.h"
 // ----- Delta Time
-#include "Cober/Timestep.h"
+#include "Cober/Core/Timestep.h"
 
 
 // [---- INPUT SYSTEM ----]
@@ -17,13 +17,12 @@
 
 // [---- RENDERER ----]
 #include "Cober/Renderer/Renderer.h"
-#include "Cober/Renderer/API/RenderCommand.h"
+#include "Cober/Renderer/RenderCommand.h"
 
 #include "Cober/Renderer/Buffer.h"
 #include "Cober/Renderer/Shader.h"
 #include "Cober/Renderer/VertexArray.h"
 #include "Cober/Renderer/Texture.h"
-#include "Cober/Renderer/SubTexture2D.h"
 #include "Cober/Renderer/Lighting.h"
 #include "Cober/Renderer/Framebuffer.h"
 #include "Cober/Renderer/Primitives/Mesh.h"

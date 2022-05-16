@@ -1,8 +1,6 @@
 #pragma once
-#include "API/RenderCommand.h"
+#include "RenderCommand.h"
 
-#include "Camera/OrthographicCamera.h"
-#include "Camera/PerspectiveCamera.h"
 #include "Camera/Camera.h"
 #include "Camera/EditorCamera.h"
 #include "Cober/Scene/Components.h"
@@ -10,8 +8,6 @@
 #include "Lighting.h"
 #include "Primitives/Primitives.h"
 #include "Primitives/Mesh.h"
-#include "SubTexture2D.h"
-#include "SubTexture2D.h"
 #include "Texture.h"
 
 
@@ -52,8 +48,8 @@ namespace Cober {
 		
 		static void BeginScene(const Camera& camera, const glm::mat4& transform);
 		static void BeginScene(const EditorCamera& camera);
-		static void BeginScene(OrthographicCamera& camera);
-		static void BeginScene(PerspectiveCamera& camera);
+		//static void BeginScene(OrthographicCamera& camera);
+		//static void BeginScene(PerspectiveCamera& camera);
 
 		static void UploadShaderToFrustum(const Ref<Shader> shader, const glm::mat4 projection, const glm::mat4 view, const glm::mat4 model);
 		static void EndScene();
@@ -62,8 +58,6 @@ namespace Cober {
 		static void Flush();
 		static void FlushAndReset();
 		
-		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
-
 		// Primitives
 		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color = glm::vec4(1.0f));
 		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color = glm::vec4(1.0f));

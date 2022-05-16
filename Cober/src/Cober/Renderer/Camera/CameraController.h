@@ -1,18 +1,18 @@
 #pragma once
 
-#include "Cober/Timestep.h"
-#include "Cober/Application.h"
-#include "Cober/Window.h"
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-
 #include "Cober/Events/EventManager.h"
 #include "Cober/Events/Input.h"
 #include "Cober/Events/Codes/KeyCodes.h"
 #include "Cober/Events/MouseEvents.h"
+
+#include "Cober/Core/Timestep.h"
+#include "Cober/Core/Application.h"
+#include "Cober/Core/Window.h"
+
 #include "Camera.h"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace Cober {
 

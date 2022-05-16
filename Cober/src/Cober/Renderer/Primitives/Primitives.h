@@ -1,7 +1,6 @@
 #pragma once
 #include "Cober/Renderer/VertexArray.h"
 #include "Cober/Renderer/Texture.h"
-#include "Cober/Renderer/SubTexture2D.h"
 #include "Cober/Renderer/Shader.h"
 
 namespace Cober {

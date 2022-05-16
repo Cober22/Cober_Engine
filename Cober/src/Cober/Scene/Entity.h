@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Scene.h"
-#include "Cober/UUID.h"
+#include "Cober/Core/UUID.h"
 #include "Components.h"
 
 #include "ENTT/entt.hpp"

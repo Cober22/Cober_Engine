@@ -101,31 +101,70 @@ namespace Cober {
 	class VertexBuffer {
 
 	public:
-		virtual ~VertexBuffer() {}
+		VertexBuffer(uint32_t size) {
+			glCreateBuffers(1, &m_RendererID);
+			glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+			glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
+		};
+		VertexBuffer(float* vertices, uint32_t size) {
+			glCreateBuffers(1, &m_RendererID);
+			glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+			glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+		};
+		~VertexBuffer() { glDeleteBuffers(1, &m_RendererID); };
 
-		virtual void Bind() const = 0;
-		virtual void Unbind() const = 0;
+		void Bind() const {
+			glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+		};
+		void Unbind() const { glBindBuffer(GL_ARRAY_BUFFER, 0); };
 
-		virtual void SetData(const void* data, uint32_t size) = 0;
+		void SetData(const void* data, uint32_t size) {
+			glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+			glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
+		};
 
-		virtual const BufferLayout& GetLayout() const = 0;
-		virtual void SetLayout(const BufferLayout& layout) = 0;
-		virtual const uint32_t& GetBufferID() const = 0;
+		const BufferLayout& GetLayout() const { return m_Layout; };
+		void SetLayout(const BufferLayout& layout) { m_Layout = layout; };
+		const uint32_t& GetBufferID() const { return m_RendererID; };
 
-		static Ref<VertexBuffer> Create(uint32_t size);
-		static Ref<VertexBuffer> Create(float* vertices, uint32_t size);
+		static Ref<VertexBuffer> Create(uint32_t size)	{ 
+			Ref<VertexBuffer> VBO = CreateRef<VertexBuffer>(size); 
+			return VBO; 
+		};
+		static Ref<VertexBuffer> Create(float* vertices, uint32_t size) { 
+			Ref<VertexBuffer> VBO = CreateRef<VertexBuffer>(vertices, size);
+			return VBO; 
+		};
+	private:
+		Ref<VertexBuffer> VBO;
+		uint32_t m_RendererID;
+		BufferLayout m_Layout;
 	};
 
 	class IndexBuffer {
 
 	public:
-		virtual ~IndexBuffer() {}
+		IndexBuffer(uint32_t* indices, uint32_t count)
+			: m_Count(count)
+		{
+			glCreateBuffers(1, &m_RendererID);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
+		};
 
-		virtual void Bind() const = 0;
-		virtual void Unbind() const = 0;
+		~IndexBuffer() { glDeleteBuffers(1, &m_RendererID); };
 
-		virtual uint32_t GetCount() const = 0;
+		void Bind() const { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID); };
+		void Unbind() const { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); };
 
-		static Ref<IndexBuffer> Create(uint32_t* indices, uint32_t size);
+		uint32_t GetCount() const { return m_Count; };
+
+		static Ref<IndexBuffer> Create(uint32_t* indices, uint32_t count) {
+			Ref<IndexBuffer> IBO = CreateRef<IndexBuffer>(indices, count);
+			return IBO;
+		};
+	private:
+		uint32_t m_RendererID;
+		uint32_t m_Count;
 	};
 }

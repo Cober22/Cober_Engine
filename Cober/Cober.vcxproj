@@ -77,7 +77,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;CB_PLATFORM_WINDOWS;CB_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_CUSTOM=&lt;SDL_opengl.h&gt;;GL_GLEXT_PROTOTYPES=1;YAML_CPP_STATIC_DEFINE;CB_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;include;include\Glew;include\glm;include\ImGui;include\stb_image;include\assimp;include\GLFW;include\ENTT;include\yaml\include;include\ImGuizmo;include\Bullet;include\box2dd\include;include\Fmod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;include;include\Glew;include\glm;include\ImGui;include\stb_image;include\assimp;include\GLFW;include\ENTT;include\yaml\include;include\ImGuizmo;include\Bullet;include\Box2D\include;include\Fmod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -103,7 +103,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;CB_PLATFORM_WINDOWS;CB_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_CUSTOM=&lt;SDL_opengl.h&gt;;GL_GLEXT_PROTOTYPES=1;YAML_CPP_STATIC_DEFINE;CB_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;include;include\Glew;include\glm;include\ImGui;include\stb_image;include\assimp;include\GLFW;include\ENTT;include\yaml\include;include\ImGuizmo;include\Bullet;include\box2dd\include;include\Fmod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;include;include\Glew;include\glm;include\ImGui;include\stb_image;include\assimp;include\GLFW;include\ENTT;include\yaml\include;include\ImGuizmo;include\Bullet;include\Box2D\include;include\Fmod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -132,7 +132,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;CB_PLATFORM_WINDOWS;CB_BUILD_DLL;IMGUI_IMPL_OPENGL_LOADER_CUSTOM=&lt;SDL_opengl.h&gt;;GL_GLEXT_PROTOTYPES=1;YAML_CPP_STATIC_DEFINE;CB_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;include;include\Glew;include\glm;include\ImGui;include\stb_image;include\assimp;include\GLFW;include\ENTT;include\yaml\include;include\ImGuizmo;include\Bullet;include\box2dd\include;include\Fmod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;include;include\Glew;include\glm;include\ImGui;include\stb_image;include\assimp;include\GLFW;include\ENTT;include\yaml\include;include\ImGuizmo;include\Bullet;include\Box2D\include;include\Fmod;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -156,6 +156,46 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\Box2D\include\box2d\b2_api.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_block_allocator.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_body.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_broad_phase.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_chain_shape.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_circle_shape.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_collision.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_common.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_contact.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_contact_manager.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_distance.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_distance_joint.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_draw.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_dynamic_tree.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_edge_shape.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_fixture.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_friction_joint.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_gear_joint.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_growable_stack.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_joint.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_math.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_motor_joint.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_mouse_joint.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_polygon_shape.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_prismatic_joint.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_pulley_joint.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_revolute_joint.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_rope.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_settings.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_shape.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_stack_allocator.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_time_of_impact.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_time_step.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_timer.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_types.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_weld_joint.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_wheel_joint.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_world.h" />
+    <ClInclude Include="include\Box2D\include\box2d\b2_world_callbacks.h" />
+    <ClInclude Include="include\Box2D\include\box2d\box2d.h" />
     <ClInclude Include="include\Bullet\BulletCollision\BroadphaseCollision\btAxisSweep3.h" />
     <ClInclude Include="include\Bullet\BulletCollision\BroadphaseCollision\btAxisSweep3Internal.h" />
     <ClInclude Include="include\Bullet\BulletCollision\BroadphaseCollision\btBroadphaseInterface.h" />
@@ -391,46 +431,6 @@
     <ClInclude Include="include\ENTT\entt.hpp" />
     <ClInclude Include="include\Fmod\fmod.hpp" />
     <ClInclude Include="include\ImGuizmo\ImGuizmo.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_api.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_block_allocator.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_body.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_broad_phase.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_chain_shape.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_circle_shape.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_collision.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_common.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_contact.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_contact_manager.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_distance.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_distance_joint.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_draw.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_dynamic_tree.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_edge_shape.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_fixture.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_friction_joint.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_gear_joint.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_growable_stack.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_joint.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_math.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_motor_joint.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_mouse_joint.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_polygon_shape.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_prismatic_joint.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_pulley_joint.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_revolute_joint.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_rope.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_settings.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_shape.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_stack_allocator.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_time_of_impact.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_time_step.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_timer.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_types.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_weld_joint.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_wheel_joint.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_world.h" />
-    <ClInclude Include="include\box2dd\include\box2d\b2_world_callbacks.h" />
-    <ClInclude Include="include\box2dd\include\box2d\box2d.h" />
     <ClInclude Include="include\glm\glm\common.hpp" />
     <ClInclude Include="include\glm\glm\detail\_features.hpp" />
     <ClInclude Include="include\glm\glm\detail\_fixes.hpp" />
@@ -847,9 +847,9 @@
     <ClInclude Include="include\glm\glm\vec4.hpp" />
     <ClInclude Include="include\glm\glm\vector_relational.hpp" />
     <ClInclude Include="include\stb_image\stb_image.h" />
-    <ClInclude Include="src\Cober\Application.h" />
-    <ClInclude Include="src\Cober\Core.h" />
-    <ClInclude Include="src\Cober\EntryPoint.h" />
+    <ClInclude Include="src\Cober\Core\Application.h" />
+    <ClInclude Include="src\Cober\Core\Core.h" />
+    <ClInclude Include="src\Cober\Core\EntryPoint.h" />
     <ClInclude Include="src\Cober\Events\ApplicationEvents.h" />
     <ClInclude Include="src\Cober\Events\Codes\ControllerCodes.h" />
     <ClInclude Include="src\Cober\Events\Codes\KeyCodes.h" />
@@ -860,19 +860,16 @@
     <ClInclude Include="src\Cober\Events\MouseEvents.h" />
     <ClInclude Include="src\Cober\ImGui\ImFileBrowser.h" />
     <ClInclude Include="src\Cober\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\Cober\Instrumentator.h" />
+    <ClInclude Include="src\Cober\Core\Instrumentator.h" />
     <ClInclude Include="src\Cober\Layers\Layer.h" />
     <ClInclude Include="src\Cober\Layers\LayerStack.h" />
-    <ClInclude Include="src\Cober\Log.h" />
-    <ClInclude Include="src\Cober\Math.h" />
-    <ClInclude Include="src\Cober\Renderer\API\RenderCommand.h" />
-    <ClInclude Include="src\Cober\Renderer\API\RendererAPI.h" />
+    <ClInclude Include="src\Cober\Core\Log.h" />
+    <ClInclude Include="src\Cober\Core\Math.h" />
+    <ClInclude Include="src\Cober\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Cober\Renderer\Buffer.h" />
     <ClInclude Include="src\Cober\Renderer\Camera\Camera.h" />
     <ClInclude Include="src\Cober\Renderer\Camera\CameraController.h" />
     <ClInclude Include="src\Cober\Renderer\Camera\EditorCamera.h" />
-    <ClInclude Include="src\Cober\Renderer\Camera\OrthographicCamera.h" />
-    <ClInclude Include="src\Cober\Renderer\Camera\PerspectiveCamera.h" />
     <ClInclude Include="src\Cober\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Cober\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Cober\Renderer\Lighting.h" />
@@ -881,7 +878,6 @@
     <ClInclude Include="src\Cober\Renderer\Primitives\Primitives.h" />
     <ClInclude Include="src\Cober\Renderer\Renderer.h" />
     <ClInclude Include="src\Cober\Renderer\Shader.h" />
-    <ClInclude Include="src\Cober\Renderer\SubTexture2D.h" />
     <ClInclude Include="src\Cober\Renderer\Texture.h" />
     <ClInclude Include="src\Cober\Renderer\VertexArray.h" />
     <ClInclude Include="src\Cober\Scene\Components.h" />
@@ -890,19 +886,10 @@
     <ClInclude Include="src\Cober\Scene\SceneCamera.h" />
     <ClInclude Include="src\Cober\Scene\SceneSerializer.h" />
     <ClInclude Include="src\Cober\Sound\AudioManager.h" />
-    <ClInclude Include="src\Cober\Timestep.h" />
-    <ClInclude Include="src\Cober\UUID.h" />
-    <ClInclude Include="src\Cober\Window.h" />
+    <ClInclude Include="src\Cober\Core\Timestep.h" />
+    <ClInclude Include="src\Cober\Core\UUID.h" />
+    <ClInclude Include="src\Cober\Core\Window.h" />
     <ClInclude Include="src\Engine.h" />
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLBuffer.h" />
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLContext.h" />
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLFramebuffer.h" />
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLRendererAPI.h" />
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLShader.h" />
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLTexture2D.h" />
-    <ClInclude Include="src\Platforms\OpenGL\OpenGLVertexArray.h" />
-    <ClInclude Include="src\Platforms\Windows\WindowsWindow.h" />
-    <ClInclude Include="src\checkML.h" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -1369,44 +1356,25 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="include\stb_image\stb_image.cpp" />
-    <ClCompile Include="src\Cober\Application.cpp" />
+    <ClCompile Include="src\Cober\Core\Application.cpp" />
     <ClCompile Include="src\Cober\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Cober\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Cober\Layers\Layer.cpp" />
     <ClCompile Include="src\Cober\Layers\LayerStack.cpp" />
-    <ClCompile Include="src\Cober\Math.cpp" />
-    <ClCompile Include="src\Cober\Renderer\API\RenderCommand.cpp" />
-    <ClCompile Include="src\Cober\Renderer\API\RendererAPI.cpp" />
-    <ClCompile Include="src\Cober\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Cober\Core\Math.cpp" />
     <ClCompile Include="src\Cober\Renderer\Camera\CameraController.cpp" />
     <ClCompile Include="src\Cober\Renderer\Camera\EditorCamera.cpp" />
-    <ClCompile Include="src\Cober\Renderer\Camera\OrthographicCamera.cpp" />
-    <ClCompile Include="src\Cober\Renderer\Camera\PerspectiveCamera.cpp" />
-    <ClCompile Include="src\Cober\Renderer\Framebuffer.cpp" />
-    <ClCompile Include="src\Cober\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Cober\Renderer\Primitives\Cube.cpp" />
     <ClCompile Include="src\Cober\Renderer\Primitives\LightCube.cpp" />
     <ClCompile Include="src\Cober\Renderer\Primitives\Mesh.cpp" />
     <ClCompile Include="src\Cober\Renderer\Primitives\Quad.cpp" />
     <ClCompile Include="src\Cober\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Cober\Renderer\Shader.cpp" />
-    <ClCompile Include="src\Cober\Renderer\SubTexture2D.cpp" />
-    <ClCompile Include="src\Cober\Renderer\Texture.cpp" />
-    <ClCompile Include="src\Cober\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Cober\Scene\Scene.cpp" />
     <ClCompile Include="src\Cober\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Cober\Scene\SceneSerializer.cpp" />
-    <ClCompile Include="src\Cober\UUID.cpp" />
-    <ClCompile Include="src\Cober\Window.cpp" />
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLBuffer.cpp" />
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLContext.cpp" />
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLFramebuffer.cpp" />
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLRendererAPI.cpp" />
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLShader.cpp" />
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLTexture2D.cpp" />
-    <ClCompile Include="src\Platforms\OpenGL\OpenGLVertexArray.cpp" />
-    <ClCompile Include="src\Platforms\Windows\WindowsInput.cpp" />
-    <ClCompile Include="src\Platforms\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\Cober\Core\UUID.cpp" />
+    <ClCompile Include="src\Cober\Core\WindowInputs.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -1418,7 +1386,7 @@
     <ProjectReference Include="include\yaml\yaml-cpp.vcxproj">
       <Project>{88F1A057-74BE-FB62-9DD7-E90A890331F1}</Project>
     </ProjectReference>
-    <ProjectReference Include="include\box2dd\Box2D.vcxproj">
+    <ProjectReference Include="include\Box2D\Box2D.vcxproj">
       <Project>{A434E80C-1049-10BE-D9CA-B31D459E0CEF}</Project>
     </ProjectReference>
   </ItemGroup>

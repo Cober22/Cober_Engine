@@ -97,6 +97,9 @@
     <Filter Include="src\Cober">
       <UniqueIdentifier>{A704B7B2-136F-6B29-5CAD-1CCFC856497E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Cober\Core">
+      <UniqueIdentifier>{5F29C0DA-4BF7-B3E0-348B-240720F88F45}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Cober\Events">
       <UniqueIdentifier>{AB0E9290-9707-B1E2-C039-9667AC9190EE}</UniqueIdentifier>
     </Filter>
@@ -112,9 +115,6 @@
     <Filter Include="src\Cober\Renderer">
       <UniqueIdentifier>{2D744BF4-1958-0C4A-82B8-069D6EBBF6CB}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Cober\Renderer\API">
-      <UniqueIdentifier>{96A72E58-82A1-57AA-6B0E-EEBA57A7BD16}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Cober\Renderer\Camera">
       <UniqueIdentifier>{05F446F3-71B6-7A7D-BA66-090A2668535B}</UniqueIdentifier>
     </Filter>
@@ -126,15 +126,6 @@
     </Filter>
     <Filter Include="src\Cober\Sound">
       <UniqueIdentifier>{9FEBE633-0B77-54F8-1488-D7EC8092B0F8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Platforms">
-      <UniqueIdentifier>{B40E5C85-20CF-D7BB-E909-213955891C98}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Platforms\OpenGL">
-      <UniqueIdentifier>{68A52600-5434-B0C9-FD52-C4C4E9C0C06F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Platforms\Windows">
-      <UniqueIdentifier>{EE2C175D-5A99-D257-238D-6AB58FB8F4BF}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2212,13 +2203,31 @@
       <Filter>include\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Core\Application.h">
-      <Filter>src\Cober</Filter>
+      <Filter>src\Cober\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Core\Core.h">
-      <Filter>src\Cober</Filter>
+      <Filter>src\Cober\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Core\EntryPoint.h">
-      <Filter>src\Cober</Filter>
+      <Filter>src\Cober\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Core\Instrumentator.h">
+      <Filter>src\Cober\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Core\Log.h">
+      <Filter>src\Cober\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Core\Math.h">
+      <Filter>src\Cober\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Core\Timestep.h">
+      <Filter>src\Cober\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Core\UUID.h">
+      <Filter>src\Cober\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Core\Window.h">
+      <Filter>src\Cober\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Events\ApplicationEvents.h">
       <Filter>src\Cober\Events</Filter>
@@ -2250,23 +2259,11 @@
     <ClInclude Include="src\Cober\ImGui\ImGuiLayer.h">
       <Filter>src\Cober\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Core\Instrumentator.h">
-      <Filter>src\Cober</Filter>
-    </ClInclude>
     <ClInclude Include="src\Cober\Layers\Layer.h">
       <Filter>src\Cober\Layers</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Layers\LayerStack.h">
       <Filter>src\Cober\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cober\Core\Log.h">
-      <Filter>src\Cober</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cober\Core\Math.h">
-      <Filter>src\Cober</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cober\Renderer\RenderCommand.h">
-      <Filter>src\Cober\Renderer\API</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Buffer.h">
       <Filter>src\Cober\Renderer</Filter>
@@ -2283,6 +2280,9 @@
     <ClInclude Include="src\Cober\Renderer\Framebuffer.h">
       <Filter>src\Cober\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\GraphicsContext.h">
+      <Filter>src\Cober\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Lighting.h">
       <Filter>src\Cober\Renderer</Filter>
     </ClInclude>
@@ -2294,6 +2294,9 @@
     </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Primitives\Primitives.h">
       <Filter>src\Cober\Renderer\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cober\Renderer\RenderCommand.h">
+      <Filter>src\Cober\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Cober\Renderer\Renderer.h">
       <Filter>src\Cober\Renderer</Filter>
@@ -2325,22 +2328,12 @@
     <ClInclude Include="src\Cober\Sound\AudioManager.h">
       <Filter>src\Cober\Sound</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Core\Timestep.h">
-      <Filter>src\Cober</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cober\Core\UUID.h">
-      <Filter>src\Cober</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cober\Core\Window.h">
-      <Filter>src\Cober</Filter>
-    </ClInclude>
     <ClInclude Include="src\Engine.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cober\Renderer\GraphicsContext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\Bullet\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp">
@@ -2809,7 +2802,16 @@
       <Filter>include\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\Core\Application.cpp">
-      <Filter>src\Cober</Filter>
+      <Filter>src\Cober\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Core\Math.cpp">
+      <Filter>src\Cober\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Core\UUID.cpp">
+      <Filter>src\Cober\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cober\Core\WindowInputs.cpp">
+      <Filter>src\Cober\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\ImGui\ImGuiBuild.cpp">
       <Filter>src\Cober\ImGui</Filter>
@@ -2822,9 +2824,6 @@
     </ClCompile>
     <ClCompile Include="src\Cober\Layers\LayerStack.cpp">
       <Filter>src\Cober\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\Core\Math.cpp">
-      <Filter>src\Cober</Filter>
     </ClCompile>
     <ClCompile Include="src\Cober\Renderer\Camera\CameraController.cpp">
       <Filter>src\Cober\Renderer\Camera</Filter>
@@ -2859,11 +2858,8 @@
     <ClCompile Include="src\Cober\Scene\SceneSerializer.cpp">
       <Filter>src\Cober\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cober\Core\UUID.cpp">
-      <Filter>src\Cober</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cober\Core\WindowInputs.cpp">
-      <Filter>src\Platforms\Windows</Filter>
+    <ClCompile Include="src\Cober\Sound\AudioManager.cpp">
+      <Filter>src\Cober\Sound</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp">
       <Filter>src</Filter>

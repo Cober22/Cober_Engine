@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Scene.h"
-#include "Cober/Core/UUID.h"
-#include "Components.h"
+//#include "Cober/Core/UUID.h"
+//#include "Components.h"
 
-#include "ENTT/entt.hpp"
+#include "entt.hpp"
 
 namespace Cober {
 
@@ -52,8 +52,10 @@ namespace Cober {
 		operator entt::entity() const { return m_EntityHandle; }
 		operator uint32_t() const { return (uint32_t)m_EntityHandle; }
 
+
 		UUID GetUUID() { return GetComponent<IDComponent>().ID; }
 		const std::string& GetName() { return GetComponent<TagComponent>().Tag; }
+		Scene* GetScene() { return m_Scene; }
 
 		bool operator==(const Entity& other) const {
 			return m_EntityHandle == other.m_EntityHandle && m_Scene == other.m_Scene;
@@ -70,10 +72,36 @@ namespace Cober {
 		virtual ~ScriptableEntity() {};
 		template<typename T>
 		T& GetComponent() { return m_Entity.GetComponent<T>();	}
+		Entity GetEntity() { return m_Entity; }
+
+		std::string ReadScript(const std::string& path) {
+			std::string result;
+			std::ifstream in(path, std::ios::in | std::ios::binary);
+			if (in)
+			{
+				in.seekg(0, std::ios::end);
+				result.resize(in.tellg());
+				in.seekg(0, std::ios::beg);
+				in.read(&result[0], result.size());
+				in.close();
+			}
+			else
+				CB_LogError(LOG_APP, "Could not read the script");
+
+			return result;
+		}
 	protected:
 		virtual void OnCreate() {};
 		virtual void OnDestroy() {};
 		virtual void OnUpdate(Timestep ts) {};
+		Entity Find(std::string name) {
+			if (m_Entity) {
+				std::list Entities = GetEntity().GetScene()->GetEntitiesOnScene();
+				for (auto e : Entities)
+					if (e.GetName() == name)
+						return e;
+			}
+		}
 	private:
 		Entity m_Entity;
 		friend class Scene;

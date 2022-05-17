@@ -21,6 +21,9 @@ namespace Cober {
 		void OnImGuiRender();
 		Entity GetSelectedEntity() const { return m_SelectionContext; }
 		void SetSelectedEntity(Entity entity);
+
+		template<typename T>
+		void AddIfHasComponent(std::string name);
 	private:
 		void DrawEntityNode(Entity entity);
 		void DrawComponents(Entity entity);

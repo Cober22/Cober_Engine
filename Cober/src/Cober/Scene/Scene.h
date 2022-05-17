@@ -3,6 +3,7 @@
 #include "Cober/Core/Timestep.h"
 #include "Cober/Core/UUID.h"
 #include "Cober/Renderer/Camera/EditorCamera.h"
+#include "Components.h"
 #include "entt.hpp"
 
 // Bullet
@@ -44,6 +45,7 @@ namespace Cober {
 		void OnViewportResize(uint32_t width, uint32_t height);
 		bool GetWorldType() { return World3D; }
 		void SetWorldType(bool worldType) { World3D = worldType; }
+		std::list<Entity> GetEntitiesOnScene() { return enttOnScene; };
 
 		Entity GetPrimaryCameraEntity();
 
@@ -54,6 +56,7 @@ namespace Cober {
 		void OnComponentAdded(Entity entity, T& component);
 	private:
 		entt::registry m_Registry;
+		std::list<Entity> enttOnScene;
 		uint32_t m_ViewportWidth = 1280, m_ViewportHeight = 720;
 		bool World3D = true;
 

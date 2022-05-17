@@ -187,6 +187,32 @@ namespace Cober {
 			out << YAML::EndMap;	// SpriteRendererComponent
 		}
 
+		if (entity.HasComponent<AudioComponent>()) {
+			out << YAML::Key << "AudioComponent";
+			out << YAML::BeginMap;	// AudioComponent;
+
+			auto& audioComponent = entity.GetComponent<AudioComponent>();
+			out << YAML::Key << "NumObj" << YAML::Value << audioComponent.numObj;
+			out << YAML::Key <<"Position"<< YAML::Value << audioComponent.pos;
+			out << YAML::Key <<"Velocity"<< YAML::Value << audioComponent.vel;
+			out << YAML::Key << "Route"  << YAML::Value << audioComponent.audioRoute;
+
+			out << YAML::EndMap;	// AudioComponent
+		}
+
+		if (entity.HasComponent<AudioListenerComponent>()) {
+			out << YAML::Key << "AudioListenerComponent";
+			out << YAML::BeginMap;	// AudioListenerComponent;
+
+			auto& audioListenerComponent = entity.GetComponent<AudioListenerComponent>();
+			out << YAML::Key << "Forward"<< YAML::Value << audioListenerComponent.forward;
+			out << YAML::Key << "Up"	 << YAML::Value << audioListenerComponent.up;
+			out << YAML::Key <<"Position"<< YAML::Value << audioListenerComponent.pos;
+			out << YAML::Key <<"Velocity"<< YAML::Value << audioListenerComponent.vel;
+
+			out << YAML::EndMap;	// AudioListenerComponent
+		}
+
 		if (entity.HasComponent<Rigidbody3DComponent>()) {
 			out << YAML::Key << "Rigidbody3DComponent";
 			out << YAML::BeginMap;	// Rigidbody3DComponent;
@@ -333,6 +359,26 @@ namespace Cober {
 				{
 					auto& src = deserializedEntity.AddComponent<SpriteRendererComponent>();
 					src.Color = spriteRendererComponent["Color"].as<glm::vec4>();
+				}
+
+				auto audioComponent = entity["AudioComponent"];
+				if (audioComponent)
+				{
+					auto& audio = deserializedEntity.AddComponent<AudioComponent>();
+					audio.numObj = audioComponent["NumObj"].as<int>();
+					audio.pos	= audioComponent["Position"].as<glm::vec3>();
+					audio.vel	= audioComponent["Velocity"].as<glm::vec3>();
+					audio.audioRoute = audioComponent["Route"].as<std::string>();
+				}
+
+				auto audioListenerComponent = entity["AudioListenerComponent"];
+				if (audioListenerComponent)
+				{
+					auto& audio = deserializedEntity.AddComponent<AudioListenerComponent>();
+					audio.forward = audioListenerComponent["Forward"].as<glm::vec3>();
+					audio.up = audioListenerComponent["Up"].as<glm::vec3>();
+					audio.pos = audioListenerComponent["Position"].as<glm::vec3>();
+					audio.vel = audioListenerComponent["Velocity"].as<glm::vec3>();
 				}
 
 				auto rigidbody3DComponent = entity["Rigidbody3DComponent"];

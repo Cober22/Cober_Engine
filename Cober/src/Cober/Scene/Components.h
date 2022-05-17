@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Cober/Core/UUID.h"
-//#include "Entity.h"
+#include "Cober/Sound/AudioManager.h"
 #include "Cober/Renderer/Texture.h"
 #include "SceneCamera.h"
 
@@ -108,6 +108,44 @@ namespace Cober {
 			InstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); };
 			DestroyScript = [](NativeScriptComponent* nsc) { delete nsc->Instance; nsc->Instance = nullptr; };
 		}
+	};
+
+	struct AudioComponent {
+
+		bool ReceiveEvent(Event& event) { return false; }
+		
+		void PlayMusic(std::string path, int channel) {
+			AudioManager::GetInstance()->PlayMusic(path.c_str(), channel, true);
+		}
+		void PlayMusic(std::string path) {
+			AudioManager::GetInstance()->PlayMusic(path.c_str(), numObj, true);
+		}
+
+		void RemoveEmisor() {
+			AudioManager::GetInstance()->RemoveEmisor(numObj);
+			numObj = -1;
+		}
+
+		int numObj;
+		glm::vec3 pos;
+		glm::vec3 vel;
+		std::string audioRoute;
+
+		AudioComponent() = default;
+		AudioComponent(const AudioComponent&) = default;
+	};
+
+	struct AudioListenerComponent {
+
+		bool ReceiveEvent(Event& event) { return false; }
+
+		glm::vec3 forward;
+		glm::vec3 up;
+		glm::vec3 pos;
+		glm::vec3 vel;
+
+		AudioListenerComponent() = default;
+		AudioListenerComponent(const AudioListenerComponent&) = default;
 	};
 	
 	// Physics

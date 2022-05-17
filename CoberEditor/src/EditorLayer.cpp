@@ -12,7 +12,7 @@ namespace Cober {
 	extern const std::filesystem::path g_AssetPath;
 
 	EditorLayer::EditorLayer()
-		: Layer("Editor")//, OrthoCamera({ 1280.0f, 720.0f }), PerspCamera(45.0f, { 1280.0f, 720.0f }, 0.1f, 500.0f)
+		: Layer("Editor")
 	{
 	}
 
@@ -104,7 +104,7 @@ namespace Cober {
 		auto greenSquare = m_ActiveScene->CreateEntity("Green Square");
 		greenSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
 		m_SquareEntity = greenSquare;
-		auto redSquare = m_ActiveScene->CreateEntity("Red Square");
+		auto redSquare = m_ActiveScene->CreateEntity("RedQuad");
 		redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
 
 		m_FirstCamera = m_ActiveScene->CreateEntity("Camera Perspective Entity");
@@ -112,7 +112,11 @@ namespace Cober {
 		m_SecondCamera = m_ActiveScene->CreateEntity("Camera Orthographic Entity");
 		m_SecondCamera.AddComponent<CameraComponent>();
 		m_SecondCamera.GetComponent<CameraComponent>().Primary = false;
+		auto redSquare = m_ActiveScene->CreateEntity("RedQuad");
+		redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
 
+		m_FirstCamera = m_ActiveScene->CreateEntity("Camera Perspective Entity");
+		m_FirstCamera.AddComponent<CameraComponent>();
 		// Native Scripting Example
 		class CameraController : public ScriptableEntity {
 		public:
@@ -120,11 +124,14 @@ namespace Cober {
 				// Test if OnCreate works well with different cameras 
 				auto& translation = GetComponent<TransformComponent>().Translation;
 				translation.x = rand() % 10 - 5.0f;
+
+				redQuad = Find("RedQuad");
 			}
 			virtual void OnDestroy() override {
 
 			}
 			virtual void OnUpdate(Timestep ts) override {
+				
 
 				auto& translation = GetComponent<TransformComponent>().Translation;
 				float speed = 5.0f;
@@ -136,13 +143,25 @@ namespace Cober {
 						translation.y += speed * ts;
 					if (Input::IsKeyPressed(KeyCode::S))
 						translation.y -= speed * ts;
+					if (Input::IsKeyPressed(KeyCode::Q))
+						if (redQuad)
+							redQuad.GetComponent<TransformComponent>().Rotation.z += 5.0f;
 			}
+		private:
+			Entity redQuad;
 		};
 
 		m_FirstCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-
+		//m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 #endif
+		auto redSquare = m_ActiveScene->CreateEntity("RedQuad");
+		redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
+
+		m_FirstCamera = m_ActiveScene->CreateEntity("Camera Perspective Entity");
+		m_FirstCamera.AddComponent<CameraComponent>();
+
+		AudioManager::SetupInstance();
+
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 		//SceneSerializer serializer(m_ActiveScene);
 		//serializer.Deserialize("Assets/Scenes/ExampleScene.cober");
@@ -507,44 +526,45 @@ namespace Cober {
 		bool control = Input::IsKeyPressed(Key::LeftControl) || Input::IsKeyPressed(Key::RightControl);
 		bool shift = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
 		
-		switch (event.GetKeyCode()) {
-			case Key::N:
-				if (control)
-					NewScene();
-				break;
-			case Key::O:
-				if (control)
-					OpenFile();
-				break;
-			case Key::S:
-				if (control && shift)
-					SaveSceneAs();
-				else if (control)
-					SaveScene();
-				break;
-			case Key::D:
-				if (control)
-					DuplicateSelectedEntity();
-				break;
+		if (m_SceneState == GameState::EDIT)
+			switch (event.GetKeyCode()) {
+				case Key::N:
+					if (control)
+						NewScene();
+					break;
+				case Key::O:
+					if (control)
+						OpenFile();
+					break;
+				case Key::S:
+					if (control && shift)
+						SaveSceneAs();
+					else if (control)
+						SaveScene();
+					break;
+				case Key::D:
+					if (control)
+						DuplicateSelectedEntity();
+					break;
 
-			// Gizmos
-			case Key::Q: 
-				if (!ImGuizmo::IsUsing())
-					m_GizmoType = -1;
-				break;			  
-			case Key::W: 
-				if (!ImGuizmo::IsUsing())
-					m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
-				break;			  
-			case Key::E: 
-				if (!ImGuizmo::IsUsing())
-					m_GizmoType = ImGuizmo::OPERATION::ROTATE;
-				break;			  
-			case Key::R: 
-				if (!ImGuizmo::IsUsing())
-					m_GizmoType = ImGuizmo::OPERATION::SCALE;
-				break;
-		}
+				// Gizmos
+				case Key::Q: 
+					if (!ImGuizmo::IsUsing())
+						m_GizmoType = -1;
+					break;			  
+				case Key::W: 
+					if (!ImGuizmo::IsUsing())
+						m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+					break;			  
+				case Key::E: 
+					if (!ImGuizmo::IsUsing())
+						m_GizmoType = ImGuizmo::OPERATION::ROTATE;
+					break;			  
+				case Key::R: 
+					if (!ImGuizmo::IsUsing())
+						m_GizmoType = ImGuizmo::OPERATION::SCALE;
+					break;
+			}
 	}
 
 	bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& event) {

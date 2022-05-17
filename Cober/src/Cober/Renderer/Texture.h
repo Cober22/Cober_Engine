@@ -48,8 +48,9 @@ namespace Cober {
 			stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
 			if (!data) {
 				const char* reason = "[unknown reason]";
-				if (stbi_failure_reason())
-					printf("Cannot load image %s: '%s'.\n", path.c_str(), stbi_failure_reason());
+				CB_ASSERT(stbi_failure_reason(), "Cannot load image %s: '%s'.\n", path.c_str(), stbi_failure_reason())
+				//if (stbi_failure_reason())
+				//	printf("Cannot load image %s: '%s'.\n", path.c_str(), stbi_failure_reason());
 				std::exit(-1);
 			}
 

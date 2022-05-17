@@ -109,7 +109,10 @@ project "Cober"
 		"glfw3_mt",
 		"assimp-vc142-mt",
 		"yaml-cpp",
-		"Box2D"
+		"Box2D",
+		"fmodL_vc",
+		"fmod_vc",
+
 	}
 
 	postbuildcommands

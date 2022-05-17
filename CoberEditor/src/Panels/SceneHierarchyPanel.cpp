@@ -41,7 +41,8 @@ namespace Cober {
 		// Right-click on blank space
 		if (ImGui::BeginPopupContextWindow(0, 1, false)) {
 			if (ImGui::MenuItem("Create Empty Entity"))
-				m_Context->CreateEntity("Empty Entity");
+				Entity newEntity = m_Context->CreateEntity("Empty Entity");
+
 			ImGui::EndPopup();
 		}
 
@@ -188,6 +189,16 @@ namespace Cober {
 		}
 	}
 
+	template<typename T>
+	void SceneHierarchyPanel::AddIfHasComponent(std::string name) {
+		if (!m_SelectionContext.HasComponent<T>()) {
+			if (ImGui::MenuItem(name.c_str())) {
+				m_SelectionContext.AddComponent<T>();
+				ImGui::CloseCurrentPopup();
+			}
+		}
+	}
+
 	void SceneHierarchyPanel::DrawComponents(Entity entity)
 	{
 		if (entity.HasComponent<TagComponent>()) {
@@ -210,6 +221,22 @@ namespace Cober {
 
 		if (ImGui::BeginPopup("AddComponent")) {
 
+			AddIfHasComponent<CameraComponent>("Camera Component");
+			AddIfHasComponent<SpriteRendererComponent>("Sprite Renderer Component");
+			AddIfHasComponent<CircleRendererComponent>("Circle Renderer Component");
+			AddIfHasComponent<NativeScriptComponent>("Native Script Component");
+			AddIfHasComponent<AudioComponent>("Audio Component");
+			AddIfHasComponent<AudioListenerComponent>("Audio Listener Component");
+
+			if (m_Context->GetWorldType()) {
+				AddIfHasComponent<Rigidbody3DComponent>("Rigidbody 3D Component");
+				AddIfHasComponent<BoxCollider3DComponent>("BoxCollider 3D Component");
+			}
+			else {
+				AddIfHasComponent<Rigidbody2DComponent>("Rigidbody 2D Component");
+				AddIfHasComponent<BoxCollider2DComponent>("BoxCollider 2D Component");
+			}
+			/*
 			if (!m_SelectionContext.HasComponent<CameraComponent>()) {
 				if (ImGui::MenuItem("Camera")) {
 					m_SelectionContext.AddComponent<CameraComponent>();
@@ -228,6 +255,27 @@ namespace Cober {
 					ImGui::CloseCurrentPopup();
 				}
 			}
+			if (!m_SelectionContext.HasComponent<NativeScriptComponent>()) {
+				if (ImGui::MenuItem("Native Script Component")) {
+					m_SelectionContext.AddComponent<NativeScriptComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+			}
+
+			if (!m_SelectionContext.HasComponent<AudioComponent>()) {
+				if (ImGui::MenuItem("Audio Component")) {
+					m_SelectionContext.AddComponent<AudioComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+			}
+
+			if (!m_SelectionContext.HasComponent<AudioListenerComponent>()) {
+				if (ImGui::MenuItem("Audio Listener Component")) {
+					m_SelectionContext.AddComponent<AudioListenerComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+			}
+
 			// 3D WORLD
 			if (m_Context->GetWorldType()) {
 				if (!m_SelectionContext.HasComponent<Rigidbody3DComponent>()) {
@@ -257,6 +305,7 @@ namespace Cober {
 					}
 				}
 			}
+			*/
 			ImGui::EndPopup();
 		}
 		ImGui::PopItemWidth();
@@ -348,13 +397,55 @@ namespace Cober {
 			}
 			ImGui::DragFloat("Tiling Factor", &component.TilingFactor, 0.1f, 0.0f, 100.0f);
 		});
+		
+		DrawComponent<NativeScriptComponent>("Native Script", entity, [](auto& component)
+		{
+			ImGui::Button("Script", ImVec2(100.0f, 0.0f));
+			if (ImGui::BeginDragDropTarget()) {
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM")) {
+					const wchar_t* path = (const wchar_t*)payload->Data;
+					std::filesystem::path scriptPath = std::filesystem::path(g_AssetPath) / path;
+					//std::ofstream filePath;
+					//filePath.open(path);
+					//template<typename T>
+					//component.Bind<T>();
+				}
+				ImGui::EndDragDropTarget();
+			}
+		});
 
 		DrawComponent<CircleRendererComponent>("Box Collider 3D", entity, [](auto& component)
-			{
-				ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
-				ImGui::DragFloat("Thickess", &component.Thickness, 0.025f, 0.0f, 1.0f);
-				ImGui::DragFloat("Fade", &component.Fade, 0.00025f, 0.0f, 1.0f);
-			});
+		{
+			ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
+			ImGui::DragFloat("Thickess", &component.Thickness, 0.025f, 0.0f, 1.0f);
+			ImGui::DragFloat("Fade", &component.Fade, 0.00025f, 0.0f, 1.0f);
+		});
+
+		DrawComponent<AudioComponent>("Audio", entity, [](auto& component)
+		{
+			ImGui::DragInt("Num Object", &component.numObj, -1);
+			DrawVec3Control("Position", component.pos, 0.0f);
+			DrawVec3Control("Velocity", component.vel, 0.0f);
+			ImGui::Button("Audio", ImVec2(100.0f, 0.0f));
+			if (ImGui::BeginDragDropTarget()) {
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM")) {
+					const wchar_t* path = (const wchar_t*)payload->Data;
+					std::filesystem::path audioPath = std::filesystem::path(g_AssetPath) / path;
+					component.audioRoute = audioPath.string();
+				}
+				ImGui::EndDragDropTarget();
+			}
+		});
+
+		DrawComponent<AudioListenerComponent>("Audio Listener", entity, [](auto& component)
+		{
+			//Entity entity{ entity , m_Context };
+			DrawVec3Control("Forward", component.forward, 0.0f);
+			DrawVec3Control("Up", component.up, 0.0f);
+			DrawVec3Control("Pos", component.pos, 0.0f);
+			DrawVec3Control("Vel", component.vel, 0.0f);
+			//DrawVec3Control("Pos", component.pos, entity.GetComponent<TransformComponent>().GetTranslation());
+		});
 
 		DrawComponent<Rigidbody3DComponent>("Rigidbody 3D", entity, [](auto& component)
 		{
@@ -380,46 +471,46 @@ namespace Cober {
 		});
 
 		DrawComponent<Rigidbody2DComponent>("Rigidbody 2D", entity, [](auto& component)
-			{
-				const char* bodyTypeStrings[] = { "Static", "Kinematic", "Dynamic" };
-				const char* currentBodyTypeString = bodyTypeStrings[(int)component.Type];
-				if (ImGui::BeginCombo("Body Type", currentBodyTypeString)) {
+		{
+			const char* bodyTypeStrings[] = { "Static", "Kinematic", "Dynamic" };
+			const char* currentBodyTypeString = bodyTypeStrings[(int)component.Type];
+			if (ImGui::BeginCombo("Body Type", currentBodyTypeString)) {
 
-					for (int i = 0; i < 3; i++) {
-						bool isSelected = currentBodyTypeString == bodyTypeStrings[i];
-						if (ImGui::Selectable(bodyTypeStrings[i], isSelected)) {
-							currentBodyTypeString = bodyTypeStrings[i];
-							component.Type = (BodyType)i;
-						}
-
-						if (isSelected)
-							ImGui::SetItemDefaultFocus();
+				for (int i = 0; i < 3; i++) {
+					bool isSelected = currentBodyTypeString == bodyTypeStrings[i];
+					if (ImGui::Selectable(bodyTypeStrings[i], isSelected)) {
+						currentBodyTypeString = bodyTypeStrings[i];
+						component.Type = (BodyType)i;
 					}
 
-					ImGui::EndCombo();
+					if (isSelected)
+						ImGui::SetItemDefaultFocus();
 				}
 
-				ImGui::Checkbox("Fixed Rotation", &component.FixedRotation);
-			});
+				ImGui::EndCombo();
+			}
+
+			ImGui::Checkbox("Fixed Rotation", &component.FixedRotation);
+		});
 
 		DrawComponent<BoxCollider3DComponent>("Box Collider 3D", entity, [](auto& component)
-			{
-				ImGui::DragFloat3("Offset", glm::value_ptr(component.Offset));
-				ImGui::DragFloat3("Size", glm::value_ptr(component.Size));
-				ImGui::DragFloat("Density", &component.Density, 0.01f, 0.0f, 1.0f);
-				ImGui::DragFloat("Friction", &component.Friction, 0.01f, 0.0f, 1.0f);
-				ImGui::DragFloat("Restitution", &component.Restitution, 0.01f, 0.0f, 1.0f);
-				ImGui::DragFloat("Restitution Threshold", &component.RestitutionThreshold, 0.01f, 0.0f);
-			});
+		{
+			ImGui::DragFloat3("Offset", glm::value_ptr(component.Offset));
+			ImGui::DragFloat3("Size", glm::value_ptr(component.Size));
+			ImGui::DragFloat("Density", &component.Density, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("Friction", &component.Friction, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("Restitution", &component.Restitution, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("Restitution Threshold", &component.RestitutionThreshold, 0.01f, 0.0f);
+		});
 
 		DrawComponent<BoxCollider2DComponent>("Box Collider 2D", entity, [](auto& component)
-			{
-				ImGui::DragFloat2("Offset", glm::value_ptr(component.Offset));
-				ImGui::DragFloat2("Size", glm::value_ptr(component.Size));
-				ImGui::DragFloat("Density", &component.Density, 0.01f, 0.0f, 1.0f);
-				ImGui::DragFloat("Friction", &component.Friction, 0.01f, 0.0f, 1.0f);
-				ImGui::DragFloat("Restitution", &component.Restitution, 0.01f, 0.0f, 1.0f);
-				ImGui::DragFloat("Restitution Threshold", &component.RestitutionThreshold, 0.01f, 0.0f);
-			});
+		{
+			ImGui::DragFloat2("Offset", glm::value_ptr(component.Offset));
+			ImGui::DragFloat2("Size", glm::value_ptr(component.Size));
+			ImGui::DragFloat("Density", &component.Density, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("Friction", &component.Friction, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("Restitution", &component.Restitution, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("Restitution Threshold", &component.RestitutionThreshold, 0.01f, 0.0f);
+		});
 	}
 }

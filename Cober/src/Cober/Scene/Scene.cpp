@@ -1,4 +1,3 @@
-#include "checkML.h"
 #include "pch.h"
 
 #include "Scene.h"
@@ -68,6 +67,8 @@ namespace Cober {
 		CopyComponent<SpriteRendererComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<CameraComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<NativeScriptComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+		CopyComponent<AudioComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+		CopyComponent<AudioListenerComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<Rigidbody3DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<BoxCollider3DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<Rigidbody2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
@@ -88,15 +89,27 @@ namespace Cober {
 		entity.AddComponent<TransformComponent>();	
 		auto& tag = entity.AddComponent<TagComponent>();
 		tag.Tag = name.empty() ? "Entity" : name;
+		enttOnScene.push_back(entity);
 		return entity;
 	}
 
 	void Scene::DestroyEntity(Entity entity) {
 
+		enttOnScene.remove(entity);
 		m_Registry.destroy(entity);
 	}
 
 	void Scene::OnRuntimeStart() {
+		
+		// Audio
+		auto view = m_Registry.view<AudioComponent>();
+		for (auto e : view) {
+			Entity entity = { e, this };
+			auto& audio = entity.GetComponent<AudioComponent>();
+			AudioManager::GetInstance()->SetVolume(100, 0);
+			AudioManager::GetInstance()->PlayMusic(audio.audioRoute.c_str(), 0, true);
+		}
+
 		// 3D WORLD
 		if (World3D) {
 
@@ -120,7 +133,7 @@ namespace Cober {
 				if (entity.HasComponent<BoxCollider3DComponent>()) {
 					bc3d = entity.GetComponent<BoxCollider3DComponent>();
 					//bc3d.Size = transform.GetScale();
-					bc3d.Shape =  new btBoxShape(btVector3(bc3d.Size.x * transform.Scale.x, bc3d.Size.y * transform.Scale.y, bc3d.Size.z * transform.Scale.z));
+					bc3d.Shape = new btBoxShape(btVector3(bc3d.Size.x * transform.Scale.x, bc3d.Size.y * transform.Scale.y, bc3d.Size.z * transform.Scale.z));
 				}
 
 				btQuaternion rotation;
@@ -138,9 +151,9 @@ namespace Cober {
 				bodyInfo.m_friction = bc3d.Friction;
 				btCollisionObject::CollisionFlags collisionFlag;
 				switch (int(rb3d.Type)) {
-					case 0: collisionFlag = btCollisionObject::CF_STATIC_OBJECT;	bodyInfo.m_mass = 0; break;
-					case 1: collisionFlag = btCollisionObject::CF_KINEMATIC_OBJECT; bodyInfo.m_mass = 0; break;
-					case 2: collisionFlag = btCollisionObject::CF_DYNAMIC_OBJECT; break;
+				case 0: collisionFlag = btCollisionObject::CF_STATIC_OBJECT;	bodyInfo.m_mass = 0; break;
+				case 1: collisionFlag = btCollisionObject::CF_KINEMATIC_OBJECT; bodyInfo.m_mass = 0; break;
+				case 2: collisionFlag = btCollisionObject::CF_DYNAMIC_OBJECT; break;
 				}
 
 				rb3d.RuntimeBody = new btRigidBody(bodyInfo);
@@ -148,7 +161,7 @@ namespace Cober {
 				rb3d.RuntimeBody->setUserPointer(rb3d.RuntimeBody);
 				//rb3d.RuntimeBody->setSleepingThresholds(DEFAULT_LINEAR_SLEEPING_THRESHOLD, DEFAULT_ANGULAR_SLEEPING_THRESHOLD);
 				rb3d.RuntimeBody->setLinearFactor(btVector3(1, 1, 0));
-	
+
 				m_PhysicWorld->addRigidBody(rb3d.RuntimeBody);
 			}
 		}
@@ -186,6 +199,7 @@ namespace Cober {
 			}
 		}
 	}
+	
 
 	void Scene::OnRuntimeStop() {
 
@@ -200,6 +214,7 @@ namespace Cober {
 			delete m_Physics2DWorld;
 			m_Physics2DWorld = nullptr;
 		}
+		enttOnScene.clear();
 	}
 
 	void Scene::OnUpdateRuntime(Timestep ts) {
@@ -214,6 +229,32 @@ namespace Cober {
 					nsc.Instance->OnCreate();
 				}
 				nsc.Instance->OnUpdate(ts);
+			});
+		}
+
+		// DEBUG
+		bool debug = AudioManager::GetInstance()->IsPlayingChannel(0);
+		std::cout << debug << std::endl;
+
+		// Audio
+		{
+			m_Registry.view<AudioComponent>().each([=](auto entity, auto& audio)
+			{	
+				Entity ent{ entity, this };
+				audio.pos = ent.GetComponent<TransformComponent>().GetTranslation();
+				audio.vel = glm::vec3(0.0f);
+
+				AudioManager::GetInstance()->UpdateSound(audio.pos, audio.vel, audio.numObj, audio.numObj);
+			});
+			m_Registry.view<AudioListenerComponent>().each([=](auto entity, auto& audio)
+			{
+				Entity ent{ entity, this };
+				audio.pos = ent.GetComponent<TransformComponent>().GetTranslation();
+				//forward = -1 * ent.GetComponent<CameraComponent>().Camera.Direction;
+				//up = ent.GetComponent<CameraComponent>().Camera.Up;
+				audio.vel = glm::vec3(0.0f);
+
+				AudioManager::GetInstance()->UpdateListener(audio.pos, audio.vel, audio.forward, audio.up);
 			});
 		}
 		
@@ -293,7 +334,7 @@ namespace Cober {
 	}
 
 	void Scene::OnUpdateEditor(Timestep ts, EditorCamera& camera) {
-
+		
 		// Iterate through entities with TransformComponent
 		Renderer::BeginScene(camera);
 		auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
@@ -336,6 +377,8 @@ namespace Cober {
 		CopyComponentIfExists<SpriteRendererComponent>(newEntity, entity);
 		CopyComponentIfExists<CameraComponent>(newEntity, entity);
 		CopyComponentIfExists<NativeScriptComponent>(newEntity, entity);
+		CopyComponentIfExists<AudioComponent>(newEntity, entity);
+		CopyComponentIfExists<AudioListenerComponent>(newEntity, entity);
 		CopyComponentIfExists<Rigidbody3DComponent>(newEntity, entity);
 		CopyComponentIfExists<BoxCollider3DComponent>(newEntity, entity);
 		CopyComponentIfExists<Rigidbody2DComponent>(newEntity, entity);
@@ -361,6 +404,7 @@ namespace Cober {
 
 	template<>
 	void Scene::OnComponentAdded<CameraComponent>(Entity entity, CameraComponent& component) {
+
 		if (m_ViewportWidth > 0 && m_ViewportHeight > 0)
 			component.Camera.SetViewportSize(m_ViewportWidth, m_ViewportHeight);
 	}
@@ -372,9 +416,22 @@ namespace Cober {
 	template<>
 	void Scene::OnComponentAdded<CircleRendererComponent>(Entity entity, CircleRendererComponent& component) {
 	}
-	
+
 	template<>
 	void Scene::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent& component) {
+	}
+
+	template<>
+	void Scene::OnComponentAdded<AudioComponent>(Entity entity, AudioComponent& component) {
+
+		component.numObj = AudioManager::GetInstance()->AddEmisor(component.pos, component.vel);
+		AudioManager::GetInstance()->UpdateSound(component.pos, component.vel, component.numObj, component.numObj);
+	}
+
+	template<>
+	void Scene::OnComponentAdded<AudioListenerComponent>(Entity entity, AudioListenerComponent& component) {
+
+		AudioManager::GetInstance()->UpdateListener(component.pos, component.vel, component.forward, component.up);
 	}
 
 	template<>

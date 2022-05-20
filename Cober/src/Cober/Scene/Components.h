@@ -3,6 +3,10 @@
 #include "Cober/Core/UUID.h"
 #include "Cober/Sound/AudioManager.h"
 #include "Cober/Renderer/Texture.h"
+#include "Cober/Renderer/Primitives/Mesh.h"
+#include "Cober/Renderer/Primitives/Primitives.h"
+#include "Cober/Renderer/Lighting.h"
+#include "Cober/Renderer/Shader.h"
 #include "SceneCamera.h"
 
 #include <glm/glm.hpp>
@@ -17,6 +21,9 @@ class btCollisionShape;
 
 namespace Cober {
 
+
+	// [-----------------------------]
+	// [----------- CORE ------------]
 	struct IDComponent {
 		UUID ID;
 
@@ -62,6 +69,20 @@ namespace Cober {
 			: Tag(tag) {}
 	};
 
+	// [-----------------------------]
+	// [---------- CAMERA -----------]
+	struct CameraComponent {
+
+		SceneCamera Camera;
+		bool Primary = true;
+		bool FixedAspectRatio = false;
+
+		CameraComponent() = default;
+		CameraComponent(const CameraComponent&) = default;
+	};
+
+	// [-----------------------------]
+	// [---------- TEXTURES ---------]
 	struct SpriteRendererComponent {
 
 		glm::vec4 Color = glm::vec4(1.0f);
@@ -74,16 +95,6 @@ namespace Cober {
 			: Color(color) {}
 	};
 	
-	struct CameraComponent {
-
-		SceneCamera Camera;
-		bool Primary = true;
-		bool FixedAspectRatio = false;
-
-		CameraComponent() = default;
-		CameraComponent(const CameraComponent&) = default;
-	};
-
 	struct CircleRendererComponent {
 
 		glm::vec4 Color = glm::vec4(1.0f);
@@ -94,7 +105,52 @@ namespace Cober {
 		CircleRendererComponent(const CircleRendererComponent&) = default;
 	};
 
-	// Forward declaration
+	// [-----------------------------]
+	// [---------- MESHES -----------]
+	struct CubeMeshComponent {
+
+		Ref<Cube> cube;
+
+		CubeMeshComponent() = default;
+		CubeMeshComponent(const CubeMeshComponent&) = default;
+	};
+
+	enum class LightType { Directional = 0, Point, Spot };
+	struct LightComponent {
+
+		LightType lightType;
+
+		LightComponent() = default;
+		LightComponent(const LightComponent&) = default;
+	};
+
+	struct MeshComponent {
+
+		Ref<Mesh> mesh;
+
+		MeshComponent() = default;
+		MeshComponent(const MeshComponent&) = default;
+	};
+
+	struct SphereMeshComponent {
+
+		SphereMeshComponent() = default;
+		SphereMeshComponent(const SphereMeshComponent&) = default;
+	};
+
+	// [-----------------------------]
+	// [--------- MATEIRAL ----------]
+	struct MaterialComponent {
+
+		Ref<Shader> shader;
+		std::string shaderRoute;
+
+		MaterialComponent() = default;
+		MaterialComponent(const MaterialComponent&) = default;
+	};
+
+	// [-----------------------------]
+	// [---------- SCRIPTS ----------]
 	class ScriptableEntity;
 	struct NativeScriptComponent {
 
@@ -110,6 +166,8 @@ namespace Cober {
 		}
 	};
 
+	// [-----------------------------]
+	// [----------- AUDIO -----------]
 	struct AudioComponent {
 
 		bool ReceiveEvent(Event& event) { return false; }
@@ -148,7 +206,8 @@ namespace Cober {
 		AudioListenerComponent(const AudioListenerComponent&) = default;
 	};
 	
-	// Physics
+	// [-----------------------------]
+	// [---------- PHYSICS ----------]
 	enum class BodyType { Static = 0, Kinematic, Dynamic };
 	
 	struct Rigidbody3DComponent {
@@ -206,4 +265,15 @@ namespace Cober {
 		BoxCollider2DComponent() = default;
 		BoxCollider2DComponent(const BoxCollider2DComponent&) = default;
 	};
+
+
+	// [-----------------------------]
+	// [------------ AI -------------]
+
+
+
+
+
+	// [-----------------------------]
+	// [---------- TERRAIN ----------]
 }

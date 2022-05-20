@@ -33,9 +33,14 @@ namespace Cober {
 		Scene();
 		~Scene();
 
-		Entity CreateEntity(const std::string& name = std::string());
+		//template<typename Component>
+		//Entity CreateEntity(const std::string& name = std::string());
+
+		Entity CreateEmptyEntity(const std::string& name = std::string());
 		Entity CreateEntityWithUUID(UUID uuid, const std::string& name = std::string());
+
 		void DestroyEntity(Entity entity);
+		void RenderSceneEntities();
 
 		void OnRuntimeStart();
 		void OnRuntimeStop();

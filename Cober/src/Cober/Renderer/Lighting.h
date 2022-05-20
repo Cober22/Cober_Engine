@@ -15,14 +15,17 @@ namespace Cober {
 		float Linear;
 		float Exp;
 
-		LightAttenuation();
+		LightAttenuation() {}
 		LightAttenuation(float a, float b, float c)
 			: Constant(a), Linear(b), Exp(c) {}
 	};
 
 	struct DirectionalLight {
-		glm::vec3 Direction, Color;
-		float AmbientIntensity, DiffuseIntensity;
+		glm::vec3 Direction = glm::vec3(0.0f, 0.0f, 1.0f);
+		glm::vec3 Color = glm::vec3(1.0f);
+		float AmbientIntensity = 1.0f;
+		float DiffuseIntensity = 1.0f;
+		bool Source = false;
 		
 		DirectionalLight() {}
 		DirectionalLight(const glm::vec3& direction, const glm::vec3& color, 
@@ -32,9 +35,12 @@ namespace Cober {
 	};
 
 	struct PointLight {
-		glm::vec3 Position, Color;
-		float AmbientIntensity, DiffuseIntensity;
-		LightAttenuation Attenuation;
+		glm::vec3 Position = glm::vec3(0.0f);
+		glm::vec3 Color = glm::vec3(1.0f);
+		float AmbientIntensity = 1.0f;
+		float DiffuseIntensity = 1.0f;
+		LightAttenuation Attenuation{1.0f, 10.0f, 20.0f};
+		bool Source = false;
 
 		PointLight() {}
 		PointLight(	const glm::vec3& position, const glm::vec3& color, 
@@ -48,10 +54,15 @@ namespace Cober {
 	};
 
 	struct SpotLight {
-		glm::vec3 Direction, Position, Color;
-		float CutOff, OuterCutOff;
-		float AmbientIntensity, DiffuseIntensity;
-		LightAttenuation Attenuation;
+		glm::vec3 Direction = glm::vec3(0.0f, 0.0f, 1.0f);
+		glm::vec3 Position = glm::vec3(0.0f);
+		glm::vec3 Color = glm::vec3(1.0f);
+		float CutOff = 10.0f;
+		float OuterCutOff = 20.0f;
+		float AmbientIntensity = 1.0f;
+		float DiffuseIntensity = 1.0f;
+		LightAttenuation Attenuation{ 1.0f, 10.0f, 20.0f };
+		bool Source = false;
 
 		SpotLight() {}
 		SpotLight(	const glm::vec3 & direction, const glm::vec3 & position, const glm::vec3 & color, 

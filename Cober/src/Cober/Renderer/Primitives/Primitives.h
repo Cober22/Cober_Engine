@@ -8,10 +8,10 @@ namespace Cober {
 	class Quad {
 	public:
 		Quad();
-		void Quad::Draw(const glm::mat4& transform, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f, int entityID = -1);
-		void Quad::Draw(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f, int entityID = -1);
-		void Quad::Draw(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f, int entityID = -1);
-		void Quad::Draw(const glm::mat4& transform, const glm::vec4& color, int entityID);
+		void Quad::Draw(const glm::mat4& transform, Ref<Shader> shader, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f, int entityID = -1);
+		void Quad::Draw(const glm::mat4& transform, const Ref<Texture2D>& texture, Ref<Shader> shader, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f, int entityID = -1);
+		void Quad::Draw(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture, Ref<Shader> shader, const glm::vec4& color = glm::vec4(1.0f), float tilingFactor = 1.0f, int entityID = -1);
+		void Quad::Draw(const glm::mat4& transform, const glm::vec4& color, Ref<Shader> shader, int entityID);
 
 		void Init();
 		// Functions
@@ -59,6 +59,7 @@ namespace Cober {
 	public:
 		Cube();
 		void Draw(const glm::vec3& position, const glm::vec3& size, Ref<Shader> shader);
+		void Draw(const glm::vec3& position, const glm::vec3& size, const glm::vec3& color);
 		void Init();
 		Ref<VertexArray> GetVAO() { return VAO; }
 		Ref<Texture> GetTexture() { return WhiteTexture; }
@@ -131,15 +132,18 @@ namespace Cober {
 	class LightCube {
 	public:
 		LightCube();
-		void Draw(const glm::vec3& position, const glm::vec3& size, Ref<Shader> shader);
+		void Draw(const glm::vec3& position, const glm::vec3& size, const glm::vec3& color = glm::vec3(1.0f));
 		void Init();
 		Ref<VertexArray> GetVAO() { return VAO; }
 		Ref<Texture> GetTexture() { return WhiteTexture; }
+		Ref<Shader> GetShader() { return shader; }
+		void SetShader(Ref<Shader> Shader) { shader = Shader; }
 
 	private:
 		// Primitive Attributes
 		Ref<VertexArray> VAO;
 		Ref<Texture2D> WhiteTexture;
+		Ref<Shader> shader;
 
 		// Data
 		float vertices[2 * 3 * 4] = {

@@ -19,6 +19,7 @@ namespace Cober {
 	void EditorLayer::OnAttach()
 	{
 		CB_PROFILE_FUNCTION();
+		/*
 		// Create Lights
 		// -----------
 		// ----------- DIRECTIONAL Light
@@ -71,18 +72,18 @@ namespace Cober {
 		woodContainer = Texture2D::Create("Assets/Textures/GridObscure.png");
 		//woodContainer =  Texture2D::Create("Assets/Textures/WoodenContainer.png");
 		/*catTexture = Texture2D::Create("Assets/Textures/BlendTest.png");*/
-		catTexture = Texture2D::Create("Assets/Textures/BlendTest.png");
-		baseAtlas = Texture2D::Create("Assets/Textures/BaseAtlas.png");
-		bridgeTexture = SubTexture2D::CreateFromCoords(baseAtlas, { 3, 4 }, { 128, 128 }, {1, 2});
+		//catTexture = Texture2D::Create("Assets/Textures/BlendTest.png");
+		//baseAtlas = Texture2D::Create("Assets/Textures/BaseAtlas.png");
+		//bridgeTexture = SubTexture2D::CreateFromCoords(baseAtlas, { 3, 4 }, { 128, 128 }, {1, 2});
 		//checkerboardTexture = Texture2D::Create("Assets/Textures/Checkerboard.png");
 
 		// Load models
 		// -----------
-		gridModel = CreateRef<Mesh>();
-		arenaModel = CreateRef<Mesh>();
+		//gridModel = CreateRef<Mesh>();
+		//arenaModel = CreateRef<Mesh>();
 		//
-		gridModel->LoadMesh("Assets/Models/thegrid/GRID.obj");
-		arenaModel->LoadMesh("Assets/Models/thegridFBX/GRID.fbx");
+		//gridModel->LoadMesh("Assets/Models/thegrid/GRID.obj");
+		//arenaModel->LoadMesh("Assets/Models/thegridFBX/GRID.fbx");
 
 		// Framebuffer
 		FramebufferSpecification fbSpec;
@@ -91,14 +92,20 @@ namespace Cober {
 		fbSpec.Height = 720;
 		m_Framebuffer = Framebuffer::Create(fbSpec);
 
+		// Renderer
+		//Renderer::Init();
+
 		// Scene
 		m_EditorScene = CreateRef<Scene>();
 		m_ActiveScene = m_EditorScene;
-		//m_ActiveScene = CreateRef<Scene>();
-		//m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
+
 		m_IconPlay = Texture2D::Create("Assets/Icons/IconPlay.png");
 		m_IconStop = Texture2D::Create("Assets/Icons/IconStop.png");
 
+		// Audio
+		AudioManager::SetupInstance();
+
+		// SCRIPT TEST
 #if 0
 		// Entity
 		auto greenSquare = m_ActiveScene->CreateEntity("Green Square");
@@ -154,17 +161,15 @@ namespace Cober {
 		m_FirstCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 		//m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 #endif
-		auto redSquare = m_ActiveScene->CreateEntity("RedQuad");
-		redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
 
-		m_FirstCamera = m_ActiveScene->CreateEntity("Camera Perspective Entity");
+		// TEST
+		auto redSquare = m_ActiveScene->CreateEmptyEntity("RedQuad");
+		redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 0.0f, 0.0f, 1.0f });
+
+		m_FirstCamera = m_ActiveScene->CreateEmptyEntity("Camera Perspective Entity");
 		m_FirstCamera.AddComponent<CameraComponent>();
 
-		AudioManager::SetupInstance();
-
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
-		//SceneSerializer serializer(m_ActiveScene);
-		//serializer.Deserialize("Assets/Scenes/ExampleScene.cober");
 	}
 
 
@@ -229,7 +234,7 @@ namespace Cober {
 			}
 		
 			// LIGHTS!	// MOVE TO ENTITIES
-			Renderer::DrawDirectionalLight(dirLight, false);
+			//Renderer::DrawDirectionalLight(dirLight, false);
 			/*
 			Renderer::DrawPointLights(pointLights, true);
 			// FlashLight

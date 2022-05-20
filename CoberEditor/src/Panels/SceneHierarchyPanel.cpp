@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "SceneHierarchyPanel.h"
 #include "Cober/Scene/Components.h"
+#include "Cober/Renderer/Renderer.h"
+#include "Cober/Renderer/Lighting.h"
 
 #include <glm/gtc/type_ptr.hpp>
 #include <ImGui/imgui.h>
@@ -40,9 +42,48 @@ namespace Cober {
 
 		// Right-click on blank space
 		if (ImGui::BeginPopupContextWindow(0, 1, false)) {
-			if (ImGui::MenuItem("Create Empty Entity"))
-				Entity newEntity = m_Context->CreateEntity("Empty Entity");
-
+			if (ImGui::Selectable("Empty Entity"))
+				Entity newEntity = m_Context->CreateEmptyEntity("Empty Entity");
+			if (!m_Context->World3D) {
+				if (ImGui::Selectable("Quad")) {
+					Entity newEntity = m_Context->CreateEmptyEntity("Quad");
+					newEntity.AddComponent<SpriteRendererComponent>();
+				}
+				if (ImGui::Selectable("Circle")) {
+					Entity newEntity = m_Context->CreateEmptyEntity("Circle");
+					newEntity.AddComponent<CircleRendererComponent>();
+				}
+			}
+			else if (m_Context->World3D) {
+				if (ImGui::Selectable("Cube")) {
+					Entity newEntity = m_Context->CreateEmptyEntity("Cube");
+					newEntity.AddComponent<CubeMeshComponent>();
+				}
+				if (ImGui::Selectable("Mesh")) {
+					Entity newEntity = m_Context->CreateEmptyEntity("Mesh");
+					newEntity.AddComponent<MeshComponent>();
+				}
+				//if (ImGui::Selectable("Sphere")) {
+				//	Entity newEntity = m_Context->CreateEmptyEntity("Sphere");
+				//	newEntity.AddComponent<SphereMeshComponent>();
+				//}
+			}
+			if (ImGui::Selectable("LightCube")) {
+				Entity newEntity = m_Context->CreateEmptyEntity("Light Cube");
+				newEntity.AddComponent<LightComponent>();
+			}
+			if (ImGui::Selectable("DirectionalLight")) {
+				Entity newEntity = m_Context->CreateEmptyEntity("Direcitional Light");
+				newEntity.AddComponent<DirectionalLight>();
+			}
+			if (ImGui::Selectable("PointLight")) {
+				Entity newEntity = m_Context->CreateEmptyEntity("Point Light");
+				newEntity.AddComponent<PointLight>();
+			}
+			if (ImGui::Selectable("SpotLight")) {
+				Entity newEntity = m_Context->CreateEmptyEntity("Spot Light");
+				newEntity.AddComponent<SpotLight>();
+			}
 			ImGui::EndPopup();
 		}
 
@@ -184,8 +225,9 @@ namespace Cober {
 				ImGui::TreePop();
 			}
 
-			if (removeComponent)
+			if (removeComponent) {
 				entity.RemoveComponent<T>();
+			}
 		}
 	}
 
@@ -198,6 +240,15 @@ namespace Cober {
 			}
 		}
 	}
+
+	//void RemoveLight(Entity entity) {
+	//	if (entity.HasComponent<DirectionalLight>())
+	//		entity.RemoveComponent<DirectionalLight>();
+	//	if (entity.HasComponent<PointLight>())
+	//		entity.RemoveComponent<DirectionalLight>();
+	//	if (entity.HasComponent<SpotLight>())
+	//		entity.RemoveComponent<DirectionalLight>();
+	//};
 
 	void SceneHierarchyPanel::DrawComponents(Entity entity)
 	{
@@ -222,11 +273,23 @@ namespace Cober {
 		if (ImGui::BeginPopup("AddComponent")) {
 
 			AddIfHasComponent<CameraComponent>("Camera Component");
+
 			AddIfHasComponent<SpriteRendererComponent>("Sprite Renderer Component");
 			AddIfHasComponent<CircleRendererComponent>("Circle Renderer Component");
-			AddIfHasComponent<NativeScriptComponent>("Native Script Component");
+
+			AddIfHasComponent<CubeMeshComponent>("Cube Mesh Component");
+			AddIfHasComponent<MeshComponent>("Mesh Component");
+			//AddIfHasComponent<SphereMeshComponent>("Sphere Mesh Component");
+
+			AddIfHasComponent<LightComponent>("Light Component");
+			AddIfHasComponent<DirectionalLight>("DirectionalLight Component");
+			AddIfHasComponent<PointLight>("PointLight Component");
+			AddIfHasComponent<SpotLight>("SpotLight Component");
+
 			AddIfHasComponent<AudioComponent>("Audio Component");
 			AddIfHasComponent<AudioListenerComponent>("Audio Listener Component");
+			AddIfHasComponent<NativeScriptComponent>("Native Script Component");
+			AddIfHasComponent<MaterialComponent>("Material Component");
 
 			if (m_Context->GetWorldType()) {
 				AddIfHasComponent<Rigidbody3DComponent>("Rigidbody 3D Component");
@@ -236,76 +299,7 @@ namespace Cober {
 				AddIfHasComponent<Rigidbody2DComponent>("Rigidbody 2D Component");
 				AddIfHasComponent<BoxCollider2DComponent>("BoxCollider 2D Component");
 			}
-			/*
-			if (!m_SelectionContext.HasComponent<CameraComponent>()) {
-				if (ImGui::MenuItem("Camera")) {
-					m_SelectionContext.AddComponent<CameraComponent>();
-					ImGui::CloseCurrentPopup();
-				}
-			}
-			if (!m_SelectionContext.HasComponent<SpriteRendererComponent>()) {
-				if (ImGui::MenuItem("Sprite Renderer")) {
-					m_SelectionContext.AddComponent<SpriteRendererComponent>();
-					ImGui::CloseCurrentPopup();
-				}
-			}
-			if (!m_SelectionContext.HasComponent<CircleRendererComponent>()) {
-				if (ImGui::MenuItem("Circle Renderer")) {
-					m_SelectionContext.AddComponent<CircleRendererComponent>();
-					ImGui::CloseCurrentPopup();
-				}
-			}
-			if (!m_SelectionContext.HasComponent<NativeScriptComponent>()) {
-				if (ImGui::MenuItem("Native Script Component")) {
-					m_SelectionContext.AddComponent<NativeScriptComponent>();
-					ImGui::CloseCurrentPopup();
-				}
-			}
 
-			if (!m_SelectionContext.HasComponent<AudioComponent>()) {
-				if (ImGui::MenuItem("Audio Component")) {
-					m_SelectionContext.AddComponent<AudioComponent>();
-					ImGui::CloseCurrentPopup();
-				}
-			}
-
-			if (!m_SelectionContext.HasComponent<AudioListenerComponent>()) {
-				if (ImGui::MenuItem("Audio Listener Component")) {
-					m_SelectionContext.AddComponent<AudioListenerComponent>();
-					ImGui::CloseCurrentPopup();
-				}
-			}
-
-			// 3D WORLD
-			if (m_Context->GetWorldType()) {
-				if (!m_SelectionContext.HasComponent<Rigidbody3DComponent>()) {
-					if (ImGui::MenuItem("Rigidbody 3D")) {
-						m_SelectionContext.AddComponent<Rigidbody3DComponent>();
-						ImGui::CloseCurrentPopup();
-					}
-				}
-				if (!m_SelectionContext.HasComponent<BoxCollider3DComponent>()) {
-					if (ImGui::MenuItem("Box Collider 3D")) {
-						m_SelectionContext.AddComponent<BoxCollider3DComponent>();
-						ImGui::CloseCurrentPopup();
-					}
-				}
-			}	
-			else {	// 2D WORLD
-				if (!m_SelectionContext.HasComponent<Rigidbody2DComponent>()) {
-					if (ImGui::MenuItem("Rigidbody 2D")) {
-						m_SelectionContext.AddComponent<Rigidbody2DComponent>();
-						ImGui::CloseCurrentPopup();
-					}
-				}
-				if (!m_SelectionContext.HasComponent<BoxCollider2DComponent>()) {
-					if (ImGui::MenuItem("Box Collider 2D")) {
-						m_SelectionContext.AddComponent<BoxCollider2DComponent>();
-						ImGui::CloseCurrentPopup();
-					}
-				}
-			}
-			*/
 			ImGui::EndPopup();
 		}
 		ImGui::PopItemWidth();
@@ -398,28 +392,96 @@ namespace Cober {
 			ImGui::DragFloat("Tiling Factor", &component.TilingFactor, 0.1f, 0.0f, 100.0f);
 		});
 		
-		DrawComponent<NativeScriptComponent>("Native Script", entity, [](auto& component)
-		{
-			ImGui::Button("Script", ImVec2(100.0f, 0.0f));
-			if (ImGui::BeginDragDropTarget()) {
-				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM")) {
-					const wchar_t* path = (const wchar_t*)payload->Data;
-					std::filesystem::path scriptPath = std::filesystem::path(g_AssetPath) / path;
-					//std::ofstream filePath;
-					//filePath.open(path);
-					//template<typename T>
-					//component.Bind<T>();
-				}
-				ImGui::EndDragDropTarget();
-			}
-		});
-
-		DrawComponent<CircleRendererComponent>("Box Collider 3D", entity, [](auto& component)
+		DrawComponent<CircleRendererComponent>("Circle Renderer", entity, [](auto& component)
 		{
 			ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
 			ImGui::DragFloat("Thickess", &component.Thickness, 0.025f, 0.0f, 1.0f);
 			ImGui::DragFloat("Fade", &component.Fade, 0.00025f, 0.0f, 1.0f);
 		});
+
+		DrawComponent<CubeMeshComponent>("Cube Mesh Renderer", entity, [](auto& component)
+		{
+		});
+
+
+		DrawComponent<LightComponent>("Light Source", entity, [](auto& component)
+		{
+			/*if (ImGui::TreeNode("Light Type")) {
+				ImGui::Selectable("Directional") {
+					component.lightType = LightType::Directional;
+					RemoveLight(entity);
+					entity.AddComponent<DirectionalLight>();
+				}
+				ImGui::Selectable("Point") {
+					component.lightType = LightType::Point;
+					RemoveLight(entity);
+					entity.AddComponent<PointLight>();
+				}
+				ImGui::Selectable("Spot") {
+					component.lightType = LightType::Spot;
+					RemoveLight(entity);
+					entity.AddComponent<SpotLight>();
+				}
+				ImGui::TreePop();
+			}*/
+		});
+
+		DrawComponent<DirectionalLight>("Directional Light", entity, [](auto& component)
+		{
+			ImGui::Checkbox("Draw Source", &component.Source);
+			DrawVec3Control("Direction", component.Direction);
+			ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));;
+			ImGui::DragFloat("Ambient", &component.AmbientIntensity, 1.0f, 0.0f, 1.0f);
+			ImGui::DragFloat("Diffuse", &component.DiffuseIntensity, 1.0f, 0.0f, 1.0f);
+		});
+
+		DrawComponent<PointLight>("Point Light", entity, [](auto& component)
+		{
+			ImGui::Checkbox("Draw Source", &component.Source);
+			DrawVec3Control("Position", component.Position, 0.0f);
+			ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
+			ImGui::DragFloat("Ambient", &component.AmbientIntensity, 1.0f, 0.0f, 1.0f);
+			ImGui::DragFloat("Diffuse", &component.DiffuseIntensity, 1.0f, 0.0f, 1.0f);
+
+			ImGui::DragFloat("Constant Att.", &component.Attenuation.Constant, 1.0f, 0.0f, 1.0f);
+			ImGui::DragFloat("Linear Att.", &component.Attenuation.Linear, 0.0f, 0.0f, 1.0f);
+			ImGui::DragFloat("Exponential Att.", &component.Attenuation.Exp, 0.0f, 0.0f, 1.0f);
+		});
+
+		DrawComponent<SpotLight>("Spot Light", entity, [](auto& component)
+		{
+			ImGui::Checkbox("Draw Source", &component.Source);
+			DrawVec3Control("Direction", component.Direction, 0.0f);
+			DrawVec3Control("Position", component.Position, 0.0f);
+			ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
+			ImGui::DragFloat("Ambient", &component.AmbientIntensity, 1.0f, 0.0f, 1.0f);
+			ImGui::DragFloat("Diffuse", &component.DiffuseIntensity, 1.0f, 0.0f, 1.0f);
+			ImGui::DragFloat("Ambient", &component.CutOff, 1.0f, 0.0f, 1.0f);
+			ImGui::DragFloat("Diffuse", &component.OuterCutOff, 1.0f, 0.0f, 1.0f);
+
+			ImGui::DragFloat("Constant Att.", &component.Attenuation.Constant, 1.0f, 0.0f, 1.0f);
+			ImGui::DragFloat("Linear Att.", &component.Attenuation.Linear, 0.0f, 0.0f, 1.0f);
+			ImGui::DragFloat("Exponential Att.", &component.Attenuation.Exp, 0.0f, 0.0f, 1.0f);
+		});
+
+		DrawComponent<MeshComponent>("Mesh Renderer", entity, [](auto& component)
+		{
+			ImGui::Button("Mesh", ImVec2(100.0f, 0.0f));
+			if (ImGui::BeginDragDropTarget()) {
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM")) {
+					const wchar_t* path = (const wchar_t*)payload->Data;
+					std::filesystem::path meshPath = std::filesystem::path(g_AssetPath) / path;
+					component.mesh = CreateRef<Mesh>();
+					component.mesh->LoadMesh(meshPath.string());
+				}
+				ImGui::EndDragDropTarget();
+			}
+		});
+
+		//DrawComponent<SphereMeshComponent>("Sphere Mesh Renderer", entity, [](auto& component)
+		//{
+		//	// TODO
+		//});
 
 		DrawComponent<AudioComponent>("Audio", entity, [](auto& component)
 		{
@@ -446,6 +508,22 @@ namespace Cober {
 			DrawVec3Control("Vel", component.vel, 0.0f);
 			//DrawVec3Control("Pos", component.pos, entity.GetComponent<TransformComponent>().GetTranslation());
 		});
+
+		DrawComponent<NativeScriptComponent>("Native Script", entity, [](auto& component)
+			{
+				ImGui::Button("Script", ImVec2(100.0f, 0.0f));
+				if (ImGui::BeginDragDropTarget()) {
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM")) {
+						const wchar_t* path = (const wchar_t*)payload->Data;
+						std::filesystem::path scriptPath = std::filesystem::path(g_AssetPath) / path;
+						//std::ofstream filePath;
+						//filePath.open(path);
+						//template<typename T>
+						//component.Bind<T>();
+					}
+					ImGui::EndDragDropTarget();
+				}
+			});
 
 		DrawComponent<Rigidbody3DComponent>("Rigidbody 3D", entity, [](auto& component)
 		{
@@ -511,6 +589,27 @@ namespace Cober {
 			ImGui::DragFloat("Friction", &component.Friction, 0.01f, 0.0f, 1.0f);
 			ImGui::DragFloat("Restitution", &component.Restitution, 0.01f, 0.0f, 1.0f);
 			ImGui::DragFloat("Restitution Threshold", &component.RestitutionThreshold, 0.01f, 0.0f);
+		});
+
+		DrawComponent<MaterialComponent>("Material", entity, [](auto& component)
+		{
+			ImGui::Button("Shader", ImVec2(100.0f, 0.0f));
+			if (ImGui::BeginDragDropTarget()) {
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM")) {
+					const wchar_t* path = (const wchar_t*)payload->Data;
+					std::filesystem::path shaderPath = std::filesystem::path(g_AssetPath) / path;
+					component.shader = CreateRef<Shader>(shaderPath.string());
+					component.shaderRoute = shaderPath.string();
+
+					Ref<MaterialComponent> material = CreateRef<MaterialComponent>();
+					material->shader = component.shader;
+					//material->shader->Bind();
+					Renderer::primitive.materials.push_back(material);
+				}
+				ImGui::EndDragDropTarget();
+			}
+
+			// Read uniform variables
 		});
 	}
 }

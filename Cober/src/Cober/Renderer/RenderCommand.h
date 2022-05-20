@@ -16,13 +16,12 @@ namespace Cober {
 		{
 			glEnable(GL_BLEND);
 			glEnable(GL_DEPTH_TEST);
-			glEnable(GL_MULTISAMPLE);
-			glEnable(GL_ALPHA_TEST);
+			//glEnable(GL_MULTISAMPLE);
+			//glEnable(GL_ALPHA_TEST);
+			//glAlphaFunc(GL_GREATER, 0.5F);
 
-			glAlphaFunc(GL_GREATER, 0.5F);
-
-			//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glBlendFunc(GL_ONE, GL_ZERO);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			//glBlendFunc(GL_ONE, GL_ZERO);
 		}
 
 		static void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) { glViewport(x, y, width, height);	}

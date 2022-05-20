@@ -1,4 +1,3 @@
-#include "checkML.h"
 #include "pch.h"
 #include "SceneSerializer.h"
 #include "Components.h"
@@ -322,7 +321,7 @@ namespace Cober {
 				std::cout << "Deserializing entity with ID: " << uuid << std::endl;
 
 				//Entity deserializedEntity = m_Scene->CreateEntityWithUUID(uuid, name);
-				Entity deserializedEntity = m_Scene->CreateEntity(name);
+				Entity deserializedEntity = m_Scene->CreateEmptyEntity(name);
 
 				auto transformComponent = entity["TransformComponent"];
 				if (transformComponent)

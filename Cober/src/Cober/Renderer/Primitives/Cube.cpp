@@ -18,6 +18,9 @@ namespace Cober {
 		VAO->Bind();
 		RenderCommand::DrawIndexed(VAO);
 	}
+	void Cube::Draw(const glm::vec3& position, const glm::vec3& size, const glm::vec3& color) {
+
+	}
 
 	void Cube::Init() {
 		VAO = VertexArray::Create();

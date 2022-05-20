@@ -68,8 +68,15 @@ namespace Cober {
 		vertexPositions[2] = {  1.0f,  1.0f, 0.0f, 1.0f };
 		vertexPositions[3] = { -1.0f,  1.0f, 0.0f, 1.0f };
 	}
-	void Quad::Draw(const glm::mat4& transform, const glm::vec4& color, float tilingFactor, int entityID) {
+	void Quad::Draw(const glm::mat4& transform, Ref<Shader> customShader, const glm::vec4& color, float tilingFactor, int entityID) {
 		
+		if (customShader) {
+			customShader->Bind();
+			shader = customShader;
+		}
+		else
+			shader->Bind();
+
 		const int textureIndex = 0; // White Texture
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
 
@@ -79,7 +86,14 @@ namespace Cober {
 		SetAttributes(transform, color, textureIndex, textureCoords, tilingFactor, entityID);
 	}
 	
-	void Quad::Draw(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec4& color, float tilingFactor, int entityID) {
+	void Quad::Draw(const glm::mat4& transform, const Ref<Texture2D>& texture, Ref<Shader> customShader, const glm::vec4& color, float tilingFactor, int entityID) {
+
+		if (customShader) {
+			customShader->Bind();
+			shader = customShader;
+		}
+		else
+			shader->Bind();
 
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
 
@@ -108,8 +122,15 @@ namespace Cober {
 		SetAttributes(transform, color, textureIndex, textureCoords, tilingFactor, entityID);
 	}
 
-	void Quad::Draw(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture, const glm::vec4& color, float tilingFactor, int entityID) {
+	void Quad::Draw(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture, Ref<Shader> customShader, const glm::vec4& color, float tilingFactor, int entityID) {
 		
+		if (customShader) {
+			customShader->Bind();
+			shader = customShader;
+		}
+		else
+			shader->Bind();
+
 		// For loading Sprite Sheets...
 		// ............................
 		const glm::vec2* textureCoords = subtexture->GetTexCoords();
@@ -140,7 +161,14 @@ namespace Cober {
 		SetAttributes(transform, color, textureIndex, textureCoords, tilingFactor, entityID);
 	}
 
-	void Quad::Draw(const glm::mat4& transform, const glm::vec4& color, int entityID) {
+	void Quad::Draw(const glm::mat4& transform, const glm::vec4& color, Ref<Shader> customShader, int entityID) {
+
+		if (customShader) {
+			customShader->Bind();
+			shader = customShader;
+		}
+		else
+			shader->Bind();
 
 		const int textureIndex = 0; // White Texture
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };

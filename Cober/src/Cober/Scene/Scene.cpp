@@ -65,19 +65,34 @@ namespace Cober {
 		// Copy components (except IDComponent and TagComponent)
 		CopyComponent<TransformComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<SpriteRendererComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+
 		CopyComponent<CameraComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+
+		CopyComponent<CubeMeshComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+		CopyComponent<MeshComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+		//CopyComponent<SphereMeshComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+
+		CopyComponent<LightComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+		CopyComponent<DirectionalLight>(dstSceneRegistry, srcSceneRegistry, enttMap);
+		CopyComponent<PointLight>(dstSceneRegistry, srcSceneRegistry, enttMap);
+		CopyComponent<SpotLight>(dstSceneRegistry, srcSceneRegistry, enttMap);
+
 		CopyComponent<NativeScriptComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+
 		CopyComponent<AudioComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<AudioListenerComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+
 		CopyComponent<Rigidbody3DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<BoxCollider3DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<Rigidbody2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<BoxCollider2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 
+		CopyComponent<MaterialComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+
 		return newScene;
 	}
 
-	Entity Scene::CreateEntity(const std::string& name) {
+	Entity Scene::CreateEmptyEntity(const std::string& name) {
 
 		return CreateEntityWithUUID(UUID(), name);
 	}
@@ -232,10 +247,6 @@ namespace Cober {
 			});
 		}
 
-		// DEBUG
-		bool debug = AudioManager::GetInstance()->IsPlayingChannel(0);
-		std::cout << debug << std::endl;
-
 		// Audio
 		{
 			m_Registry.view<AudioComponent>().each([=](auto entity, auto& audio)
@@ -324,11 +335,8 @@ namespace Cober {
 		if (mainCamera) 
 		{
 			Renderer::BeginScene(*mainCamera, cameraTransform);
-			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-			for (auto entity : group) {
-				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-				Renderer::DrawSprite(transform.GetTransform(), sprite, (int)entity);
-			}
+
+			RenderSceneEntities();
 			// Renderer::EndScene();
 		}
 	}
@@ -337,13 +345,112 @@ namespace Cober {
 		
 		// Iterate through entities with TransformComponent
 		Renderer::BeginScene(camera);
-		auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-		for (auto entity : group) {
-			auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-			Renderer::DrawSprite(transform.GetTransform(), sprite, (int)entity);
-		}
-		// Uncomment when lights are entities
+	
+		RenderSceneEntities();
+
 		// Renderer::EndScene;
+	}
+
+
+	void Scene::RenderSceneEntities() {
+
+
+		auto sprites = m_Registry.view<TransformComponent, SpriteRendererComponent>();
+		for (auto e : sprites) {
+			Entity entity{ e, this };
+			auto [transform, sprite] = sprites.get<TransformComponent, SpriteRendererComponent>(entity);
+			if (entity.HasComponent<MaterialComponent>())
+				Renderer::DrawSprite(transform.GetTransform(), sprite, entity.GetComponent<MaterialComponent>().shader, (int)entity);
+			//else
+			//	Renderer::DrawSprite(transform.GetTransform(), sprite, (int)entity);
+		}
+		
+		// TODO
+		//m_Registry.view<TransformComponent, CircleRendererComponent>().each([](auto& transform, auto& circle) {
+		//	Renderer::DrawCircle(transform.GetTranslation(), circle, material.shader);
+		//});
+
+		// LIGHTS
+		//m_Registry.view<TransformComponent, DirectionalLight>().each([](auto& transform, auto& light) {
+			//light.Direction = transform.GetRotation();
+		//});
+		//m_Registry.view<TransformComponent, PointLight>().each([](auto& transform, auto& light) {
+		//	light.Position = transform.GetTranslation();
+		//});
+		//m_Registry.view<TransformComponent, SpotLight>().each([](auto& transform, auto& light) {
+		//	light.Position = transform.GetTranslation();
+		//	light.Direction = transform.GetRotation();
+		//});
+
+		// MESHES
+		auto cubeMeshes = m_Registry.view<TransformComponent, CubeMeshComponent>();
+		for (auto e : cubeMeshes) {
+			Entity entity{ e, this };
+			auto [transform, sphere] = cubeMeshes.get<TransformComponent, CubeMeshComponent>(entity);
+			if (entity.HasComponent<MaterialComponent>())
+				Renderer::DrawCube(transform.GetTranslation(), transform.GetScale(), entity.GetComponent<MaterialComponent>().shader);
+			//else
+			//	Renderer::DrawCube(transform.GetTranslation(), transform.GetScale());
+		}
+
+		auto meshes = m_Registry.view<TransformComponent, MeshComponent>();
+		for (auto e : meshes) {
+			Entity entity{ e, this };
+			auto [transform, mesh] = meshes.get<TransformComponent, MeshComponent>(entity);
+			if (mesh.mesh) {
+				if (entity.HasComponent<MaterialComponent>())
+					Renderer::DrawModel(mesh.mesh, transform.GetTranslation(), transform.GetScale(), entity.GetComponent<MaterialComponent>().shader);
+				//else
+				//	Renderer::DrawModel(mesh.mesh, transform.GetTranslation(), transform.GetScale());
+			}
+		}
+		
+		//auto SphereMeshes = m_Registry.group<TransformComponent>(entt::get<SphereMeshComponent>);
+		//for (auto entity : SphereMeshes) {
+		//	//auto [transform, sphere] = group.get<TransformComponent, SphereMeshComponent>(entity);
+		//	//Renderer::DrawSprite(transform.GetTransform(), sphere, (int)entity);
+		//}
+
+		// UPDATE MATERIAL SYSTEM FOR LIGHTS
+		auto materials = m_Registry.view<TransformComponent, MaterialComponent>();
+		for (auto e : materials) {
+			Entity entity{ e, this };
+			auto [transform, material] = materials.get<TransformComponent, MaterialComponent>(entity);
+			if (material.shader) {
+				
+				material.shader->Bind();
+				
+				auto directionalLights = m_Registry.view<TransformComponent, DirectionalLight>();
+				int i = 0;
+				for (auto light : directionalLights) {
+					Entity entity{ light, this };
+					TransformComponent trans = entity.GetComponent<TransformComponent>();
+					Renderer::BindDirectionalLight(material.shader, entity.GetComponent<DirectionalLight>(), i++);
+					if (entity.GetComponent<DirectionalLight>().Source)
+						Renderer::DrawLightCube(trans.GetTranslation(), trans.GetScale(), entity.GetComponent<DirectionalLight>().Color);
+				}
+			
+				auto pointLights = m_Registry.view<TransformComponent, PointLight>();
+				i = 0;
+				for (auto light : pointLights) {
+					Entity entity{ light, this };
+					TransformComponent trans = entity.GetComponent<TransformComponent>();
+					Renderer::BindPointLight(material.shader, entity.GetComponent<PointLight>(), i++);
+					if (entity.GetComponent<PointLight>().Source)
+						Renderer::DrawLightCube(trans.GetTranslation(), trans.GetScale(), entity.GetComponent<PointLight>().Color);
+				}
+				
+				auto spotLights = m_Registry.view<TransformComponent, SpotLight>();
+				i = 0;
+				for (auto light : spotLights) {
+					Entity entity{ light, this };
+					TransformComponent trans = entity.GetComponent<TransformComponent>();
+					Renderer::BindSpotLight(material.shader, entity.GetComponent<SpotLight>(), i++);
+					if (entity.GetComponent<SpotLight>().Source)
+						Renderer::DrawLightCube(trans.GetTranslation(), trans.GetScale(), entity.GetComponent<SpotLight>().Color);
+				}
+			}
+		}
 	}
 
 	void Scene::OnViewportResize(uint32_t width, uint32_t height)
@@ -372,17 +479,32 @@ namespace Cober {
 
 	void Scene::DuplicateEntity(Entity entity)
 	{
-		Entity newEntity = CreateEntity(entity.GetName());
+		Entity newEntity = CreateEmptyEntity(entity.GetName());
 		CopyComponentIfExists<TransformComponent>(newEntity, entity);
 		CopyComponentIfExists<SpriteRendererComponent>(newEntity, entity);
+
 		CopyComponentIfExists<CameraComponent>(newEntity, entity);
-		CopyComponentIfExists<NativeScriptComponent>(newEntity, entity);
+
+		CopyComponentIfExists<CubeMeshComponent>(newEntity, entity);
+		CopyComponentIfExists<MeshComponent>(newEntity, entity);
+		//CopyComponentIfExists<SphereMeshComponent>(newEntity, entity);
+
+		CopyComponentIfExists<LightComponent>(newEntity, entity);
+		CopyComponentIfExists<DirectionalLight>(newEntity, entity);
+		CopyComponentIfExists<PointLight>(newEntity, entity);
+		CopyComponentIfExists<SpotLight>(newEntity, entity);
+
 		CopyComponentIfExists<AudioComponent>(newEntity, entity);
 		CopyComponentIfExists<AudioListenerComponent>(newEntity, entity);
+
 		CopyComponentIfExists<Rigidbody3DComponent>(newEntity, entity);
 		CopyComponentIfExists<BoxCollider3DComponent>(newEntity, entity);
 		CopyComponentIfExists<Rigidbody2DComponent>(newEntity, entity);
 		CopyComponentIfExists<BoxCollider2DComponent>(newEntity, entity);
+
+		CopyComponentIfExists<NativeScriptComponent>(newEntity, entity);
+
+		CopyComponentIfExists<MaterialComponent>(newEntity, entity);
 	}
 	
 	template<typename T>
@@ -418,20 +540,63 @@ namespace Cober {
 	}
 
 	template<>
-	void Scene::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent& component) {
+	void Scene::OnComponentAdded<CubeMeshComponent>(Entity entity, CubeMeshComponent& component) {
+		//component.cube = CreateRef<Cube>();
+	}
+
+	template<>
+	void Scene::OnComponentAdded<MeshComponent>(Entity entity, MeshComponent& component) {
+	}
+
+	template<>
+	void Scene::OnComponentAdded<SphereMeshComponent>(Entity entity, SphereMeshComponent& component) {
+	}
+
+	template<>
+	void Scene::OnComponentAdded<LightComponent>(Entity entity, LightComponent& component) {
+		component.lightType = LightType::Directional;
+	}
+
+	template<>
+	void Scene::OnComponentAdded<DirectionalLight>(Entity entity, DirectionalLight& component) {
+		//Ref<DirectionalLight> dirLight = CreateRef<DirectionalLight>(component.Direction, component.Color, 
+		//															 component.AmbientIntensity, component.DiffuseIntensity);
+		//Renderer::primitive.dirLights.push_back(dirLight);
+		//Renderer::primitive.dirLights = dirLight;
+	}
+
+	template<>
+	void Scene::OnComponentAdded<PointLight>(Entity entity, PointLight& component) {
+		//Ref<PointLight> pointLight = CreateRef<PointLight>(component.Position, component.Color, 
+		//												   component.AmbientIntensity, component.DiffuseIntensity, 
+		//												   component.Attenuation.Linear, component.Attenuation.Exp);
+		//Renderer::primitive.pointLights.push_back(pointLight);
+	}
+
+	template<>
+	void Scene::OnComponentAdded<SpotLight>(Entity entity, SpotLight& component) {
+		//Ref<SpotLight> spotLight = CreateRef<SpotLight>(component.Direction, component.Position, component.Color, 
+		//											    component.CutOff, component.OuterCutOff, 
+		//												component.AmbientIntensity, component.DiffuseIntensity, 
+		//												component.Attenuation.Linear, component.Attenuation.Exp);
+		//Renderer::primitive.spotLights.push_back(spotLight);
 	}
 
 	template<>
 	void Scene::OnComponentAdded<AudioComponent>(Entity entity, AudioComponent& component) {
 
-		component.numObj = AudioManager::GetInstance()->AddEmisor(component.pos, component.vel);
-		AudioManager::GetInstance()->UpdateSound(component.pos, component.vel, component.numObj, component.numObj);
+		//component.numObj = AudioManager::GetInstance()->AddEmisor(component.pos, component.vel);
+		//AudioManager::GetInstance()->UpdateSound(component.pos, component.vel, component.numObj, component.numObj);
 	}
 
 	template<>
 	void Scene::OnComponentAdded<AudioListenerComponent>(Entity entity, AudioListenerComponent& component) {
 
 		AudioManager::GetInstance()->UpdateListener(component.pos, component.vel, component.forward, component.up);
+	}
+
+	template<>
+	void Scene::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent& component) {
 	}
 
 	template<>
@@ -448,5 +613,9 @@ namespace Cober {
 
 	template<>
 	void Scene::OnComponentAdded<BoxCollider2DComponent>(Entity entity, BoxCollider2DComponent& component) {
+	}
+
+	template<>
+	void Scene::OnComponentAdded<MaterialComponent>(Entity entity, MaterialComponent& component) {
 	}
 }

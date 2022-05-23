@@ -92,9 +92,6 @@ namespace Cober {
 		fbSpec.Height = 720;
 		m_Framebuffer = Framebuffer::Create(fbSpec);
 
-		// Renderer
-		//Renderer::Init();
-
 		// Scene
 		m_EditorScene = CreateRef<Scene>();
 		m_ActiveScene = m_EditorScene;
@@ -232,7 +229,8 @@ namespace Cober {
 					break;
 				}
 			}
-		
+			//Renderer::DrawModel(gridModel, glm::vec3(0.0f, -3.0f, 0.0f), glm::vec3(0.5f));
+			//Renderer::DrawCube(cubePositions[0], glm::vec3(1.0f));// cubeColors[color]);
 			// LIGHTS!	// MOVE TO ENTITIES
 			//Renderer::DrawDirectionalLight(dirLight, false);
 			/*

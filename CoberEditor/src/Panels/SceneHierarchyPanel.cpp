@@ -44,17 +44,17 @@ namespace Cober {
 		if (ImGui::BeginPopupContextWindow(0, 1, false)) {
 			if (ImGui::Selectable("Empty Entity"))
 				Entity newEntity = m_Context->CreateEmptyEntity("Empty Entity");
-			if (!m_Context->World3D) {
+			//if (!m_Context->World3D) {
 				if (ImGui::Selectable("Quad")) {
 					Entity newEntity = m_Context->CreateEmptyEntity("Quad");
 					newEntity.AddComponent<SpriteRendererComponent>();
 				}
-				if (ImGui::Selectable("Circle")) {
-					Entity newEntity = m_Context->CreateEmptyEntity("Circle");
-					newEntity.AddComponent<CircleRendererComponent>();
-				}
-			}
-			else if (m_Context->World3D) {
+				//if (ImGui::Selectable("Circle")) {
+				//	Entity newEntity = m_Context->CreateEmptyEntity("Circle");
+				//	newEntity.AddComponent<CircleRendererComponent>();
+				//}
+			//}
+			//else if (m_Context->World3D) {
 				if (ImGui::Selectable("Cube")) {
 					Entity newEntity = m_Context->CreateEmptyEntity("Cube");
 					newEntity.AddComponent<CubeMeshComponent>();
@@ -67,13 +67,9 @@ namespace Cober {
 				//	Entity newEntity = m_Context->CreateEmptyEntity("Sphere");
 				//	newEntity.AddComponent<SphereMeshComponent>();
 				//}
-			}
-			if (ImGui::Selectable("LightCube")) {
-				Entity newEntity = m_Context->CreateEmptyEntity("Light Cube");
-				newEntity.AddComponent<LightComponent>();
-			}
+			//}
 			if (ImGui::Selectable("DirectionalLight")) {
-				Entity newEntity = m_Context->CreateEmptyEntity("Direcitional Light");
+				Entity newEntity = m_Context->CreateEmptyEntity("Directional Light");
 				newEntity.AddComponent<DirectionalLight>();
 			}
 			if (ImGui::Selectable("PointLight")) {
@@ -227,6 +223,19 @@ namespace Cober {
 
 			if (removeComponent) {
 				entity.RemoveComponent<T>();
+
+				//if (T == DirectionalLight) {
+				//	auto dirLight = m_Registry.view<TransformComponent, T>();
+				//	for (auto light : dirLight) {
+				//		Entity entity{ light, this };
+				//		if (entity.HasComponent<MaterialComponent>())
+				//			Renderer::UnbindDirectionalLight(entity.GetComponent<MaterialComponent>().shader, T, 0);
+				//	}
+				//}
+				//if (T == PointLight)
+				//	Renderer::UnbindPointLight();
+				//if (T == SpotLight)
+				//	Renderer::UnbindSpotLight();
 			}
 		}
 	}
@@ -281,7 +290,6 @@ namespace Cober {
 			AddIfHasComponent<MeshComponent>("Mesh Component");
 			//AddIfHasComponent<SphereMeshComponent>("Sphere Mesh Component");
 
-			AddIfHasComponent<LightComponent>("Light Component");
 			AddIfHasComponent<DirectionalLight>("DirectionalLight Component");
 			AddIfHasComponent<PointLight>("PointLight Component");
 			AddIfHasComponent<SpotLight>("SpotLight Component");
@@ -403,29 +411,6 @@ namespace Cober {
 		{
 		});
 
-
-		DrawComponent<LightComponent>("Light Source", entity, [](auto& component)
-		{
-			/*if (ImGui::TreeNode("Light Type")) {
-				ImGui::Selectable("Directional") {
-					component.lightType = LightType::Directional;
-					RemoveLight(entity);
-					entity.AddComponent<DirectionalLight>();
-				}
-				ImGui::Selectable("Point") {
-					component.lightType = LightType::Point;
-					RemoveLight(entity);
-					entity.AddComponent<PointLight>();
-				}
-				ImGui::Selectable("Spot") {
-					component.lightType = LightType::Spot;
-					RemoveLight(entity);
-					entity.AddComponent<SpotLight>();
-				}
-				ImGui::TreePop();
-			}*/
-		});
-
 		DrawComponent<DirectionalLight>("Directional Light", entity, [](auto& component)
 		{
 			ImGui::Checkbox("Draw Source", &component.Source);
@@ -444,8 +429,8 @@ namespace Cober {
 			ImGui::DragFloat("Diffuse", &component.DiffuseIntensity, 1.0f, 0.0f, 1.0f);
 
 			ImGui::DragFloat("Constant Att.", &component.Attenuation.Constant, 1.0f, 0.0f, 1.0f);
-			ImGui::DragFloat("Linear Att.", &component.Attenuation.Linear, 0.0f, 0.0f, 1.0f);
-			ImGui::DragFloat("Exponential Att.", &component.Attenuation.Exp, 0.0f, 0.0f, 1.0f);
+			ImGui::DragFloat("Linear Att.", &component.Attenuation.Linear, 0.0f, 0.0f, 100.0f);
+			ImGui::DragFloat("Exponential Att.", &component.Attenuation.Exp, 0.0f, 0.0f, 100.0f);
 		});
 
 		DrawComponent<SpotLight>("Spot Light", entity, [](auto& component)
@@ -456,12 +441,12 @@ namespace Cober {
 			ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
 			ImGui::DragFloat("Ambient", &component.AmbientIntensity, 1.0f, 0.0f, 1.0f);
 			ImGui::DragFloat("Diffuse", &component.DiffuseIntensity, 1.0f, 0.0f, 1.0f);
-			ImGui::DragFloat("Ambient", &component.CutOff, 1.0f, 0.0f, 1.0f);
-			ImGui::DragFloat("Diffuse", &component.OuterCutOff, 1.0f, 0.0f, 1.0f);
+			ImGui::DragFloat("CutOff", &component.CutOff, 1.0f, 0.0f, 100.0f);
+			ImGui::DragFloat("OuterCutOff", &component.OuterCutOff, 1.0f, 0.0f, 100.0f);
 
 			ImGui::DragFloat("Constant Att.", &component.Attenuation.Constant, 1.0f, 0.0f, 1.0f);
-			ImGui::DragFloat("Linear Att.", &component.Attenuation.Linear, 0.0f, 0.0f, 1.0f);
-			ImGui::DragFloat("Exponential Att.", &component.Attenuation.Exp, 0.0f, 0.0f, 1.0f);
+			ImGui::DragFloat("Linear Att.", &component.Attenuation.Linear, 0.0f, 0.0f, 100.0f);
+			ImGui::DragFloat("Exponential Att.", &component.Attenuation.Exp, 0.0f, 0.0f, 100.0f);
 		});
 
 		DrawComponent<MeshComponent>("Mesh Renderer", entity, [](auto& component)
@@ -473,6 +458,7 @@ namespace Cober {
 					std::filesystem::path meshPath = std::filesystem::path(g_AssetPath) / path;
 					component.mesh = CreateRef<Mesh>();
 					component.mesh->LoadMesh(meshPath.string());
+					component.meshRoute = meshPath.string();
 				}
 				ImGui::EndDragDropTarget();
 			}

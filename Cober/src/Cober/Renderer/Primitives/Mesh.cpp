@@ -145,10 +145,18 @@ namespace Cober {
     {
         // Extract the directory part from the file name
         std::string::size_type SlashIndex;
-
-        SlashIndex = Filename.find_last_of("/");
-
+        std::string path;
         std::string Dir;
+
+        for (auto c : Filename) {
+            if (c == '\\')
+                path += '/';
+            else
+                path += c;
+        }
+
+        SlashIndex = path.find_last_of("/");
+
 
         if (SlashIndex == std::string::npos)
             Dir = ".";

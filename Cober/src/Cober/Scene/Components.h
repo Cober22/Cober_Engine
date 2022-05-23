@@ -116,17 +116,11 @@ namespace Cober {
 	};
 
 	enum class LightType { Directional = 0, Point, Spot };
-	struct LightComponent {
-
-		LightType lightType;
-
-		LightComponent() = default;
-		LightComponent(const LightComponent&) = default;
-	};
 
 	struct MeshComponent {
 
 		Ref<Mesh> mesh;
+		std::string meshRoute;
 
 		MeshComponent() = default;
 		MeshComponent(const MeshComponent&) = default;

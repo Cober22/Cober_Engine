@@ -33,6 +33,7 @@ namespace Cober {
 		struct PrimitiveType {
 			Quad* quad;
 			Ref<Cube> cube;
+			Ref<Mesh> mesh;
 			Ref<LightCube> lightCube;
 			//Ref<Sphere> sphere;
 			std::vector<Ref<MaterialComponent>> materials;
@@ -67,16 +68,20 @@ namespace Cober {
 		
 		static void DrawModel(Ref<Mesh> model, const glm::vec3& position, const glm::vec3& size, Ref<Shader> shader = nullptr);
 	
-		static void DrawLightCube(const glm::vec3& position, const glm::vec3& size, const glm::vec3& color = glm::vec3(1.0f));
+		static void DrawLightCube(const glm::vec3 position, const glm::vec3 size, const glm::vec3 color = glm::vec3(1.0f));
 
 		//static void DrawDirectionalLight(Ref<DirectionalLight> light, bool drawCube, Ref<Shader>& shader);
 		//static void DrawPointLight(Ref<PointLight> light, bool drawCube, Ref<Shader>& shader);
 		//static void DrawSpotLight(Ref<SpotLight> light, bool drawCube, Ref<Shader>& shader);
 
-		// Ligting
+		// Lighting
 		static void BindDirectionalLight(Ref<Shader> shader, DirectionalLight& light, int i);
 		static void BindPointLight(Ref<Shader> shader, PointLight& light, int i);
 		static void BindSpotLight(Ref<Shader> shader, SpotLight& light, int i);
+
+		static void Renderer::UnbindDirectionalLight(Ref<Shader> shader, DirectionalLight& light, int i) { shader->Unbind(); }
+		static void Renderer::UnbindPointLight(Ref<Shader> shader, PointLight& light, int i) { shader->Unbind(); }
+		static void Renderer::UnbindSpotLight(Ref<Shader> shader, SpotLight& light, int i) { shader->Unbind(); }
 
 	};
 }

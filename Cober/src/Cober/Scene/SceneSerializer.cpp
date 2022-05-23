@@ -186,6 +186,76 @@ namespace Cober {
 			out << YAML::EndMap;	// SpriteRendererComponent
 		}
 
+		if (entity.HasComponent<CubeMeshComponent>()) {
+			out << YAML::Key << "CubeMeshComponent";
+			out << YAML::BeginMap;	// CubeMeshComponent;
+
+			auto& cubeMeshComponent = entity.GetComponent<CubeMeshComponent>();
+
+			out << YAML::EndMap;	// CubeMeshComponent
+		}
+
+		if (entity.HasComponent<MeshComponent>()) {
+			out << YAML::Key << "MeshComponent";
+			out << YAML::BeginMap;	// MeshComponent;
+
+			auto& meshComponent = entity.GetComponent<MeshComponent>();
+			out << YAML::Key << "Mesh Path" << YAML::Value << meshComponent.meshRoute;
+
+			out << YAML::EndMap;	// MeshComponent
+		}
+
+		if (entity.HasComponent<DirectionalLight>()) {
+			out << YAML::Key << "DirectionalLightComponent";
+			out << YAML::BeginMap;	// DirectionalLight;
+
+			auto& directionalLightComponent = entity.GetComponent<DirectionalLight>();
+			out << YAML::Key << "Direction" << YAML::Value << directionalLightComponent.Direction;
+			out << YAML::Key << "Color" << YAML::Value << directionalLightComponent.Color;
+			out << YAML::Key << "Ambient Intensity" << YAML::Value << directionalLightComponent.AmbientIntensity;
+			out << YAML::Key << "Diffuse Intensity" << YAML::Value << directionalLightComponent.DiffuseIntensity;
+			out << YAML::Key << "Source" << YAML::Value << directionalLightComponent.Source;
+
+			out << YAML::EndMap;	// DirectionalLight
+		}
+
+		if (entity.HasComponent<PointLight>()) {
+			out << YAML::Key << "PointLightComponent";
+			out << YAML::BeginMap;	// PointLight;
+
+			auto& pointLightComponent = entity.GetComponent<PointLight>();
+			out << YAML::Key << "Position" << YAML::Value << pointLightComponent.Position;
+			out << YAML::Key << "Color" << YAML::Value << pointLightComponent.Color;
+			out << YAML::Key << "Ambient Intensity" << YAML::Value << pointLightComponent.AmbientIntensity;
+			out << YAML::Key << "Diffuse Intensity" << YAML::Value << pointLightComponent.DiffuseIntensity;
+			out << YAML::Key << "Att. Constant" << YAML::Value << pointLightComponent.Attenuation.Constant;
+			out << YAML::Key << "Att. Linear" << YAML::Value << pointLightComponent.Attenuation.Linear;
+			out << YAML::Key << "Att. Exp" << YAML::Value << pointLightComponent.Attenuation.Exp;
+			out << YAML::Key << "Source" << YAML::Value << pointLightComponent.Source;
+
+			out << YAML::EndMap;	// PointLight
+		}
+
+		if (entity.HasComponent<SpotLight>()) {
+			out << YAML::Key << "SpotLightComponent";
+			out << YAML::BeginMap;	// SpotLight;
+
+			auto& spotLightComponent = entity.GetComponent<SpotLight>();
+			out << YAML::Key << "Position" << YAML::Value << spotLightComponent.Position;
+			out << YAML::Key << "Direction" << YAML::Value << spotLightComponent.Direction;
+			out << YAML::Key << "Color" << YAML::Value << spotLightComponent.Color;
+			out << YAML::Key << "CutOff" << YAML::Value << spotLightComponent.CutOff;
+			out << YAML::Key << "OuterCutOff" << YAML::Value << spotLightComponent.OuterCutOff;
+			out << YAML::Key << "Ambient Intensity" << YAML::Value << spotLightComponent.AmbientIntensity;
+			out << YAML::Key << "Diffuse Intensity" << YAML::Value << spotLightComponent.DiffuseIntensity;
+			out << YAML::Key << "Att. Constant" << YAML::Value << spotLightComponent.Attenuation.Constant;
+			out << YAML::Key << "Att. Linear" << YAML::Value << spotLightComponent.Attenuation.Linear;
+			out << YAML::Key << "Att. Exp" << YAML::Value << spotLightComponent.Attenuation.Exp;
+			out << YAML::Key << "Source" << YAML::Value << spotLightComponent.Source;
+
+			out << YAML::EndMap;	// SpotLight
+		}
+
 		if (entity.HasComponent<AudioComponent>()) {
 			out << YAML::Key << "AudioComponent";
 			out << YAML::BeginMap;	// AudioComponent;
@@ -262,6 +332,25 @@ namespace Cober {
 			out << YAML::Key << "RestitutionThreshold" << YAML::Value << bc2dComponent.RestitutionThreshold;
 
 			out << YAML::EndMap;	// BoxCollider2DComponent
+		}
+
+		//if (entity.HasComponent<NativeScriptComponent>()) {
+		//	out << YAML::Key << "NativeScriptComponent";
+		//	out << YAML::BeginMap;	// NativeScriptComponent;
+		//
+		//	auto& nativeScriptComponent = entity.GetComponent<NativeScriptComponent>();
+		//
+		//	out << YAML::EndMap;	// NativeScriptComponent
+		//}
+
+		if (entity.HasComponent<MaterialComponent>()) {
+			out << YAML::Key << "MaterialComponent";
+			out << YAML::BeginMap;	// MaterialComponent;
+
+			auto& materialComponent = entity.GetComponent<MaterialComponent>();
+			out << YAML::Key << "Shader Path" << YAML::Value << materialComponent.shaderRoute;
+
+			out << YAML::EndMap;	// MaterialComponent
 		}
 
 		out << YAML::EndMap;	// Entity
@@ -356,8 +445,63 @@ namespace Cober {
 				auto spriteRendererComponent = entity["SpriteRendererComponent"];
 				if (spriteRendererComponent)
 				{
-					auto& src = deserializedEntity.AddComponent<SpriteRendererComponent>();
-					src.Color = spriteRendererComponent["Color"].as<glm::vec4>();
+					auto& sprite = deserializedEntity.AddComponent<SpriteRendererComponent>();
+					sprite.Color = spriteRendererComponent["Color"].as<glm::vec4>();
+				}
+
+				auto cubeMeshComponent = entity["CubeMeshComponent"];
+				if (cubeMeshComponent)
+					auto& cube = deserializedEntity.AddComponent<CubeMeshComponent>();
+
+				auto meshComponent = entity["MeshComponent"];
+				if (meshComponent)
+				{
+					auto& mesh = deserializedEntity.AddComponent<MeshComponent>();
+					mesh.meshRoute = meshComponent["Mesh Path"].as<std::string>();
+					mesh.mesh = CreateRef<Mesh>();
+					mesh.mesh->LoadMesh(mesh.meshRoute);
+				}
+
+				auto directionalLightComponent = entity["DirectionalLightComponent"];
+				if (directionalLightComponent)
+				{
+					auto& dirLight = deserializedEntity.AddComponent<DirectionalLight>();
+					dirLight.Direction = directionalLightComponent["Direction"].as<glm::vec3>();
+					dirLight.Color = directionalLightComponent["Color"].as<glm::vec3>();
+					dirLight.AmbientIntensity = directionalLightComponent["Ambient Intensity"].as<float>();
+					dirLight.DiffuseIntensity = directionalLightComponent["Diffuse Intensity"].as<float>();
+					dirLight.Source = directionalLightComponent["Source"].as<bool>();
+				}
+
+				auto pointLightComponent = entity["PointLightComponent"];
+				if (pointLightComponent)
+				{
+					auto& pointLight = deserializedEntity.AddComponent<PointLight>();
+					pointLight.Position = pointLightComponent["Position"].as<glm::vec3>();
+					pointLight.Color = pointLightComponent["Color"].as<glm::vec3>();
+					pointLight.AmbientIntensity = pointLightComponent["Ambient Intensity"].as<float>();
+					pointLight.DiffuseIntensity= pointLightComponent["Diffuse Intensity"].as<float>();
+					pointLight.Attenuation.Constant = pointLightComponent["Att. Constant"].as<float>();
+					pointLight.Attenuation.Linear = pointLightComponent["Att. Linear"].as<float>();
+					pointLight.Attenuation.Exp = pointLightComponent["Att. Exp"].as<float>();
+					pointLight.Source = pointLightComponent["Source"].as<bool>();
+				}
+
+				auto spotLightComponent = entity["SpotLightComponent"];
+				if (spotLightComponent)
+				{
+					auto& spotLight = deserializedEntity.AddComponent<SpotLight>();
+					spotLight.Direction = spotLightComponent["Direction"].as<glm::vec3>();
+					spotLight.Position = spotLightComponent["Position"].as<glm::vec3>();
+					spotLight.Color = spotLightComponent["Color"].as<glm::vec3>();
+					spotLight.AmbientIntensity = spotLightComponent["Ambient Intensity"].as<float>();
+					spotLight.DiffuseIntensity = spotLightComponent["Diffuse Intensity"].as<float>();
+					spotLight.CutOff = spotLightComponent["CutOff"].as<float>();
+					spotLight.OuterCutOff = spotLightComponent["OuterCutOff"].as<float>();
+					spotLight.Attenuation.Constant = spotLightComponent["Att. Constant"].as<float>();
+					spotLight.Attenuation.Linear = spotLightComponent["Att. Linear"].as<float>();
+					spotLight.Attenuation.Exp = spotLightComponent["Att. Exp"].as<float>();
+					spotLight.Source = spotLightComponent["Source"].as<bool>();
 				}
 
 				auto audioComponent = entity["AudioComponent"];
@@ -418,6 +562,22 @@ namespace Cober {
 					bc2d.Friction = boxCollider2DComponent["Friction"].as<float>();
 					bc2d.Restitution = boxCollider2DComponent["Restitution"].as<float>();
 					bc2d.RestitutionThreshold = boxCollider2DComponent["RestitutionThreshold"].as<float>();
+				}
+
+				auto nativeScriptComponent = entity["NativeScriptComponent"];
+				if (nativeScriptComponent)
+				{
+					auto& script= deserializedEntity.AddComponent<NativeScriptComponent>();
+					//script.meshRoute = meshComponent["Mesh Path"].as<std::string>();
+				}
+
+				auto materialComponent = entity["MaterialComponent"];
+				if (materialComponent)
+				{
+					auto& material = deserializedEntity.AddComponent<MaterialComponent>();
+					material.shaderRoute = materialComponent["Shader Path"].as<std::string>();
+					material.shader = CreateRef<Shader>(material.shaderRoute);
+					material.shader->Bind();
 				}
 			}
 		}

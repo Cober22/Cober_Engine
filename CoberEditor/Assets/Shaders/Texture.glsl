@@ -94,12 +94,9 @@ in flat int v_EntityID;
 
 uniform sampler2D u_Textures[32];
 
-uniform int NUM_POINT_LIGHTS;
-uniform int NUM_SPOT_LIGHTS;
-
 uniform DirLight dirLight;
-uniform PointLight pointLight[4];
-uniform SpotLight spotLight[2];
+uniform PointLight pointLight[5];
+uniform SpotLight spotLight[5];
 
 vec4 CalculateDirLight(DirLight light,	   vec3 normal, vec4 texture);
 vec4 CalculatePointLight(PointLight light, vec3 normal, vec3 fragPos, vec4 texture);
@@ -149,12 +146,12 @@ void main()
 	
 	result += CalculateDirLight(dirLight, normal, texColor);
 	
-	for(int i = 0; i < 4; i++) {
+	for(int i = 0; i < 5; i++) {
 		if (pointLight[i].ambient != 0 || pointLight[i].diffuse != 0)
 			result += CalculatePointLight(pointLight[i], normal, v_FragPos, texColor);
 	}
 	
-	for(int i = 0; i < 2; i++) {
+	for(int i = 0; i < 5; i++) {
 		if (spotLight[i].ambient != 0 || spotLight[i].diffuse != 0)
 			result += CalculateSpotLight(spotLight[i], normal, v_FragPos, texColor);
 	}

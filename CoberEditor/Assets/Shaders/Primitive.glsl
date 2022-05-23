@@ -76,14 +76,11 @@ in vec3 v_FragPos;
 in vec3 v_Normal;
 in vec2 v_TextCoord;
 
-uniform int NUM_POINT_LIGHTS;
-uniform int NUM_SPOT_LIGHTS;
-
 uniform vec3 u_ViewPos;
 uniform Material material;
 uniform DirLight dirLight;
-uniform PointLight pointLight[4];
-uniform SpotLight spotLight[2];
+uniform PointLight pointLight[5];
+uniform SpotLight spotLight[5];
 
 vec4 CalculateDirLight(DirLight light,	   vec3 normal, vec3 viewDir);
 vec4 CalculatePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
@@ -97,12 +94,12 @@ void main()
 
 	result += CalculateDirLight(dirLight, normal, viewDir);
 	
-	for(int i = 0; i < 4; i++) {
+	for(int i = 0; i < 5; i++) {
 		if (pointLight[i].ambient != 0 || pointLight[i].diffuse != 0)
 			result += CalculatePointLight(pointLight[i], normal, v_FragPos, viewDir);
 	}
 	
-	for(int i = 0; i < 2; i++) {
+	for(int i = 0; i < 5; i++) {
 		if (spotLight[i].ambient != 0 || spotLight[i].diffuse != 0)
 			result += CalculateSpotLight(spotLight[i], normal, v_FragPos, viewDir);
 	}

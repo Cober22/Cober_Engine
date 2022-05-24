@@ -104,7 +104,6 @@ namespace Cober {
         channels[nChannel]->getPaused(&isPaused);
         if (isPaused)
             channels[nChannel]->setPaused(false);
-
         else if (!isPaused)
             channels[nChannel]->setPaused(true);
     }

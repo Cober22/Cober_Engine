@@ -178,17 +178,14 @@ namespace Cober {
 		Flush();
 	}
 
-	void Renderer::DrawCube(const glm::vec3& position, const glm::vec3& size, Ref<Shader> shader)
+	void Renderer::DrawCube(const glm::mat4& transform, Ref<Shader> shader)
 	{
-		if (shader) {
+		if (shader)
 			shader->Bind();
-			primitive.cube->GetTexture()->Bind();
-			primitive.cube->Draw(position, size, shader);
-			//shader->Unbind();
-		}
 		else
-			primitive.cube->Draw(position, size, glm::vec3(1.0f, 1.0f, 1.0f));
-
+			primitive.cube->GetShader()->Bind();
+		primitive.cube->GetTexture()->Bind();
+		primitive.cube->Draw(transform, shader);
 		stats.CubeCount++;
 	}
 
@@ -200,42 +197,35 @@ namespace Cober {
 			primitive.lightCube->GetTexture()->Bind();
 			primitive.lightCube->Draw(position, size, color);
 			stats.CubeCount++;
-			//primitive.lightCube->GetShader()->Unbind();
 		}
 	}
 
 	// [-------------------- MODEL --------------------]
-	void Renderer::DrawModel(Ref<Mesh> model, const glm::vec3& position, const glm::vec3& size, Ref<Shader> shader)
+	void Renderer::DrawModel(Ref<Mesh> model, const glm::mat4& transform, Ref<Shader> shader)
 	{
 		if (shader) {
 			shader->Bind();
-			glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, size.z });
 			shader->SetMat4("u_Model", transform);
 			shader->SetMat3("u_Normal", glm::transpose(glm::inverse(transform)));
 			model->Render();
-			//shader->Unbind();
 		}
 		else {
 			modelShader->Bind();
-			glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, size.z });
 			modelShader->SetMat4("u_Model", transform);
 			modelShader->SetMat3("u_Normal", glm::transpose(glm::inverse(transform)));
 			model->Render();
-			//modelShader->Unbind();
 		}
 	}
 
 	// [-------------------- LIGHTING --------------------]
-	void Renderer::BindDirectionalLight(Ref<Shader> shader, DirectionalLight& light, int i) {
+	void Renderer::BindDirectionalLight(Ref<Shader> shader, DirectionalLight& light) {
 
-		//std::string index = std::to_string(i);
 		shader->Bind();
 		shader->SetVec3("dirLight.direction", light.Direction);
 		shader->SetVec3("dirLight.color", light.Color);
 		shader->SetFloat("dirLight.ambient", light.AmbientIntensity);
 		shader->SetFloat("dirLight.diffuse", light.DiffuseIntensity);
 		shader->SetFloat("dirLight.specular", 0.0f);
-		//shader->Unbind();
 	}
 
 	void Renderer::BindPointLight(Ref<Shader> shader, PointLight& light, int i) {
@@ -250,7 +240,6 @@ namespace Cober {
 		shader->SetFloat("pointLight[" + index + "].constant", 1.0f);
 		shader->SetFloat("pointLight[" + index + "].linear", light.Attenuation.Linear);
 		shader->SetFloat("pointLight[" + index + "].quadratic", light.Attenuation.Exp);
-		//shader->Unbind();
 	}
 
 	void Renderer::BindSpotLight(Ref<Shader> shader, SpotLight& light, int i) {
@@ -268,6 +257,5 @@ namespace Cober {
 		shader->SetFloat("spotLight[" + index + "].constant", 1.0f);
 		shader->SetFloat("spotLight[" + index + "].linear", light.Attenuation.Linear);
 		shader->SetFloat("spotLight[" + index + "].quadratic", light.Attenuation.Exp);
-		//shader->Unbind();
 	}
 }

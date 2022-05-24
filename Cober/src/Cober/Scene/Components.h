@@ -138,6 +138,7 @@ namespace Cober {
 
 		Ref<Shader> shader;
 		std::string shaderRoute;
+		int index = 0;
 
 		MaterialComponent() = default;
 		MaterialComponent(const MaterialComponent&) = default;

@@ -120,7 +120,7 @@ namespace Cober {
 		for (auto e : view) {
 			Entity entity = { e, this };
 			auto& audio = entity.GetComponent<AudioComponent>();
-			AudioManager::GetInstance()->SetVolume(100, 0);
+			AudioManager::GetInstance()->SetVolume(50, 0);
 			AudioManager::GetInstance()->PlayMusic(audio.audioRoute.c_str(), 0, true);
 		}
 
@@ -228,8 +228,8 @@ namespace Cober {
 			delete m_Physics2DWorld;
 			m_Physics2DWorld = nullptr;
 		}
-		//AudioManager::GetInstance()->Clean();
-		//AudioManager::GetInstance()->PauseChannel(0);
+		AudioManager::GetInstance()->PauseChannel(0);
+		//AudioManager::GetInstance()->RemoveEmisor(0);
 		enttOnScene.clear();
 	}
 
@@ -370,7 +370,7 @@ namespace Cober {
 			Entity entity{ e, this };
 			auto [transform, sphere] = cubeMeshes.get<TransformComponent, CubeMeshComponent>(entity);
 			if (entity.HasComponent<MaterialComponent>())
-				Renderer::DrawCube(transform.GetTranslation(), transform.GetScale(), entity.GetComponent<MaterialComponent>().shader);
+				Renderer::DrawCube(transform.GetTransform(), entity.GetComponent<MaterialComponent>().shader);
 		}
 
 		auto meshes = m_Registry.view<TransformComponent, MeshComponent>();
@@ -379,7 +379,7 @@ namespace Cober {
 			auto [transform, mesh] = meshes.get<TransformComponent, MeshComponent>(entity);
 			if (mesh.mesh) {
 				if (entity.HasComponent<MaterialComponent>())
-					Renderer::DrawModel(mesh.mesh, transform.GetTranslation(), transform.GetScale(), entity.GetComponent<MaterialComponent>().shader);
+					Renderer::DrawModel(mesh.mesh, transform.GetTransform(), entity.GetComponent<MaterialComponent>().shader);
 			}
 		}
 		
@@ -416,7 +416,7 @@ namespace Cober {
 					glm::vec3 scale = trans.GetScale();
 					if (entity.GetComponent<DirectionalLight>().Source)
 						Renderer::DrawLightCube(trans.GetTranslation(), glm::vec3(scale.x/5, scale.y/5, scale.z/5), entity.GetComponent<DirectionalLight>().Color);
-					Renderer::BindDirectionalLight(material.shader, entity.GetComponent<DirectionalLight>(), 0);
+					Renderer::BindDirectionalLight(material.shader, entity.GetComponent<DirectionalLight>());
 				}
 				
 				// POINT LIGHTS
@@ -533,7 +533,6 @@ namespace Cober {
 
 	template<>
 	void Scene::OnComponentAdded<CubeMeshComponent>(Entity entity, CubeMeshComponent& component) {
-		//component.cube = CreateRef<Cube>();
 	}
 
 	template<>
@@ -546,23 +545,30 @@ namespace Cober {
 
 	template<>
 	void Scene::OnComponentAdded<DirectionalLight>(Entity entity, DirectionalLight& component) {
+		Renderer::primitive.dirLights = 1;	// True
 	}
 
 	template<>
 	void Scene::OnComponentAdded<PointLight>(Entity entity, PointLight& component) {
+		int indexNewLight = Renderer::primitive.pointLights.size();
+		component.index = indexNewLight;
+		Renderer::primitive.pointLights.push_back(component.index);
 	}
 
 	template<>
 	void Scene::OnComponentAdded<SpotLight>(Entity entity, SpotLight& component) {
+		int indexNewLight = Renderer::primitive.spotLights.size();
+		component.index = indexNewLight;
+		Renderer::primitive.spotLights.push_back(component.index);
 	}
 
 	template<>
 	void Scene::OnComponentAdded<AudioComponent>(Entity entity, AudioComponent& component) {
+		AudioManager::GetInstance()->AddEmisor(component.pos, component.vel);
 	}
 
 	template<>
 	void Scene::OnComponentAdded<AudioListenerComponent>(Entity entity, AudioListenerComponent& component) {
-
 		AudioManager::GetInstance()->UpdateListener(component.pos, component.vel, component.forward, component.up);
 	}
 
@@ -588,5 +594,7 @@ namespace Cober {
 
 	template<>
 	void Scene::OnComponentAdded<MaterialComponent>(Entity entity, MaterialComponent& component) {
+		int indexNewMaterial = Renderer::primitive.materials.size();
+		component.index = indexNewMaterial;
 	}
 }

@@ -1,30 +1,43 @@
 Scene: Untitled
 Entities:
-  - Entity: 15709657898215053160
+  - Entity: 3986923166971724712
     TagComponent:
-      Tag: Cube
+      Tag: Mesh
     TransformComponent:
-      Translation: [0, 0, 0]
-      Rotation: [0, -1.43815136, 0]
+      Translation: [-3.52322054, 0, -0.122503698]
+      Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
-    CubeMeshComponent:
-      {}
+    MeshComponent:
+      Mesh Path: Assets\Models\backpack\backpack.obj
+    MaterialComponent:
+      Shader Path: Assets\Shaders\Primitive.glsl
+  - Entity: 8669425973669182497
+    TagComponent:
+      Tag: Quad
+    TransformComponent:
+      Translation: [3.42726469, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [0.972972989, 0.210372522, 0.210372522, 1]
+    AudioComponent:
+      NumObj: 0
+      Position: [0, 0, 0]
+      Velocity: [0, 0, 0]
+      Route: Assets\Sounds\PreparenseCharangueros.mp3
+    Rigidbody2DComponent:
+      BodyType: Dynamic
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [1, 1]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0
+      RestitutionThreshold: 0.5
     MaterialComponent:
       Shader Path: Assets\Shaders\Texture.glsl
-  - Entity: 13034154123448573609
-    TagComponent:
-      Tag: Directional Light
-    TransformComponent:
-      Translation: [0, 0, 2.74954844]
-      Rotation: [0, -0.834267378, 0]
-      Scale: [1, 1, 1]
-    DirectionalLightComponent:
-      Direction: [0, -0.834267378, 0]
-      Color: [1, 1, 1]
-      Ambient Intensity: 0.400000006
-      Diffuse Intensity: 1
-      Source: false
-  - Entity: 7418394120010185905
+  - Entity: 5071549983652836227
     TagComponent:
       Tag: Camera
     TransformComponent:
@@ -42,35 +55,32 @@ Entities:
         OrthographicFar: 97
       Primary: true
       FixedAspectRatio: false
-  - Entity: 9068535130617483777
+  - Entity: 13499970503612422475
     TagComponent:
-      Tag: Quad
+      Tag: Directional Light
     TransformComponent:
-      Translation: [3.42726469, 0, 0]
-      Rotation: [0, 0, 0]
+      Translation: [0, 0, 2.74954844]
+      Rotation: [0, -0.834267378, 0]
       Scale: [1, 1, 1]
-    SpriteRendererComponent:
-      Color: [0.972972989, 0.210372522, 0.210372522, 1]
-    Rigidbody2DComponent:
-      BodyType: Dynamic
-      FixedRotation: false
-    BoxCollider2DComponent:
-      Offset: [0, 0]
-      Size: [1, 1]
-      Density: 1
-      Friction: 0.5
-      Restitution: 0
-      RestitutionThreshold: 0.5
+    DirectionalLightComponent:
+      Direction: [0, -0.834267378, 0]
+      Color: [1, 1, 1]
+      Ambient Intensity: 0.400000006
+      Diffuse Intensity: 1
+      Source: false
+    AudioListenerComponent:
+      Forward: [0, 0, 0]
+      Up: [0, 0, 0]
+      Position: [0, 0, 0]
+      Velocity: [0, 0, 0]
+  - Entity: 14469691288786491001
+    TagComponent:
+      Tag: Cube
+    TransformComponent:
+      Translation: [0, 0, -0.268873572]
+      Rotation: [0, -1.4381516, 0]
+      Scale: [1, 1, 1]
+    CubeMeshComponent:
+      {}
     MaterialComponent:
       Shader Path: Assets\Shaders\Texture.glsl
-  - Entity: 15345378975746509488
-    TagComponent:
-      Tag: Mesh
-    TransformComponent:
-      Translation: [-3.52322054, 0, -0.122503698]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    MeshComponent:
-      Mesh Path: Assets\Models\backpack\backpack.obj
-    MaterialComponent:
-      Shader Path: Assets\Shaders\Primitive.glsl

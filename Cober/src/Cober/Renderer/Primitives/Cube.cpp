@@ -11,19 +11,15 @@ namespace Cober {
 		shader = CreateRef<Shader>("Assets/Shaders/Primitive.glsl");
 	}
 
-	void Cube::Draw(const glm::vec3& position, const glm::vec3& size, Ref<Shader> customShader) {
+	void Cube::Draw(const glm::mat4& transform, Ref<Shader> customShader) {
 		if (customShader)
 			shader = customShader;
 
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, size.z });
 		shader->SetMat4("u_Model", transform);
 		shader->SetMat3("u_Normal", glm::transpose(glm::inverse(transform)));
 
 		VAO->Bind();
 		RenderCommand::DrawIndexed(VAO);
-	}
-	void Cube::Draw(const glm::vec3& position, const glm::vec3& size, const glm::vec3& color) {
-
 	}
 
 	void Cube::Init() {

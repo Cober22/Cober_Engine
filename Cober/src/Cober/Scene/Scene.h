@@ -2,6 +2,7 @@
 
 #include "Cober/Core/Timestep.h"
 #include "Cober/Core/UUID.h"
+#include "Cober/Core/Math.h"
 #include "Cober/Renderer/Camera/EditorCamera.h"
 #include "Components.h"
 #include "entt.hpp"

@@ -39,9 +39,9 @@ namespace Cober {
 			std::vector<Ref<MaterialComponent>> materials;
 			std::vector<Ref<Shader>> shaders;
 
-			//Ref<DirectionalLight> dirLights;
-			//std::vector<Ref<PointLight>> pointLights;
-			//std::vector<Ref<SpotLight>> spotLights;
+			int dirLights;
+			std::vector<int> pointLights;
+			std::vector<int> spotLights;
 		};
 		inline static PrimitiveType primitive{ PrimitiveType() };
 	
@@ -61,27 +61,16 @@ namespace Cober {
 		
 		// Primitives
 		static void DrawSprite(const glm::mat4& transform, SpriteRendererComponent& src, Ref<Shader> shader, int entityID = -1);
-
-		static void DrawCube(const glm::vec3& position, const glm::vec3& size, Ref<Shader> shader = nullptr);
-		//static void DrawCube(const glm::vec3& position, const glm::vec3& size, const Ref<Texture2D>& diffuseTexture, const Ref<Texture2D>& specTexture, Ref<Shader>& shader);
-		//static void DrawCube(const glm::vec3& position, const glm::vec3& size, const Ref<Texture2D>& diffuseTexture, const Ref<Texture2D>& specTexture, Ref<Shader>& shader);
 		
-		static void DrawModel(Ref<Mesh> model, const glm::vec3& position, const glm::vec3& size, Ref<Shader> shader = nullptr);
-	
+		static void DrawCube(const glm::mat4& transform, Ref<Shader> shader = nullptr);
 		static void DrawLightCube(const glm::vec3 position, const glm::vec3 size, const glm::vec3 color = glm::vec3(1.0f));
-
-		//static void DrawDirectionalLight(Ref<DirectionalLight> light, bool drawCube, Ref<Shader>& shader);
-		//static void DrawPointLight(Ref<PointLight> light, bool drawCube, Ref<Shader>& shader);
-		//static void DrawSpotLight(Ref<SpotLight> light, bool drawCube, Ref<Shader>& shader);
+		
+		static void DrawModel(Ref<Mesh> model, const glm::mat4& transform, Ref<Shader> shader = nullptr);
+	
 
 		// Lighting
-		static void BindDirectionalLight(Ref<Shader> shader, DirectionalLight& light, int i);
+		static void BindDirectionalLight(Ref<Shader> shader, DirectionalLight& light);
 		static void BindPointLight(Ref<Shader> shader, PointLight& light, int i);
 		static void BindSpotLight(Ref<Shader> shader, SpotLight& light, int i);
-
-		static void Renderer::UnbindDirectionalLight(Ref<Shader> shader, DirectionalLight& light, int i) { shader->Unbind(); }
-		static void Renderer::UnbindPointLight(Ref<Shader> shader, PointLight& light, int i) { shader->Unbind(); }
-		static void Renderer::UnbindSpotLight(Ref<Shader> shader, SpotLight& light, int i) { shader->Unbind(); }
-
 	};
 }

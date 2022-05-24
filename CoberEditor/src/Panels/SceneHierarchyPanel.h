@@ -22,6 +22,9 @@ namespace Cober {
 		Entity GetSelectedEntity() const { return m_SelectionContext; }
 		void SetSelectedEntity(Entity entity);
 
+		template<typename T, typename UIFunction>
+		void DrawComponent(const std::string& name, Entity entity, UIFunction uiFunction);
+
 		template<typename T>
 		void AddIfHasComponent(std::string name);
 	private:

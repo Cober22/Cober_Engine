@@ -190,7 +190,7 @@ namespace Cober {
 	}
 
 	template<typename T, typename UIFunction>
-	static void DrawComponent(const std::string& name, Entity entity, UIFunction uiFunction) {
+	void SceneHierarchyPanel::DrawComponent(const std::string& name, Entity entity, UIFunction uiFunction) {
 
 		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
 
@@ -222,20 +222,32 @@ namespace Cober {
 			}
 
 			if (removeComponent) {
-				entity.RemoveComponent<T>();
 
-				//if (T == DirectionalLight) {
-				//	auto dirLight = m_Registry.view<TransformComponent, T>();
-				//	for (auto light : dirLight) {
-				//		Entity entity{ light, this };
-				//		if (entity.HasComponent<MaterialComponent>())
-				//			Renderer::UnbindDirectionalLight(entity.GetComponent<MaterialComponent>().shader, T, 0);
-				//	}
-				//}
-				//if (T == PointLight)
-				//	Renderer::UnbindPointLight();
-				//if (T == SpotLight)
-				//	Renderer::UnbindSpotLight();
+				// For uncharge shaders from the removed lights
+				if (std::is_same<T, DirectionalLight>()) {
+					DirectionalLight emptyLight{ glm::vec3(0.0f), glm::vec3(0.0f), 0.0f, 0.0f };
+					for (auto material : Renderer::primitive.materials)
+						Renderer::BindDirectionalLight(material->shader, emptyLight);
+					Renderer::primitive.dirLights = 0;
+				}
+				else if (std::is_same<T, PointLight>()) {
+					int index = entity.GetComponent<PointLight>().index;
+					PointLight emptyLight{ glm::vec3(0.0f), glm::vec3(0.0f), 0.0f, 0.0f, 0.0f, 0.0f };
+					for (auto material : Renderer::primitive.materials)
+						Renderer::BindPointLight(material->shader, emptyLight, index);
+					Renderer::primitive.pointLights.erase(Renderer::primitive.pointLights.begin() + entity.GetComponent<PointLight>().index);
+				}
+				else if (std::is_same<T, SpotLight>()) {
+					int index = entity.GetComponent<SpotLight>().index;
+					SpotLight emptyLight{ glm::vec3(0.0f), glm::vec3(0.0f), glm::vec3(0.0f), 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+					for (auto material : Renderer::primitive.materials)
+						Renderer::BindSpotLight(material->shader, emptyLight, index);
+					Renderer::primitive.spotLights.erase(Renderer::primitive.spotLights.begin() + entity.GetComponent<SpotLight>().index);
+				}
+				else if (std::is_same<T, MaterialComponent>())
+					Renderer::primitive.materials.erase(Renderer::primitive.materials.begin() + entity.GetComponent<MaterialComponent>().index);
+				
+				entity.RemoveComponent<T>();
 			}
 		}
 	}
@@ -249,16 +261,7 @@ namespace Cober {
 			}
 		}
 	}
-
-	//void RemoveLight(Entity entity) {
-	//	if (entity.HasComponent<DirectionalLight>())
-	//		entity.RemoveComponent<DirectionalLight>();
-	//	if (entity.HasComponent<PointLight>())
-	//		entity.RemoveComponent<DirectionalLight>();
-	//	if (entity.HasComponent<SpotLight>())
-	//		entity.RemoveComponent<DirectionalLight>();
-	//};
-
+	
 	void SceneHierarchyPanel::DrawComponents(Entity entity)
 	{
 		if (entity.HasComponent<TagComponent>()) {

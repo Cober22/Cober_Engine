@@ -26,6 +26,7 @@ namespace Cober {
 		float AmbientIntensity = 1.0f;
 		float DiffuseIntensity = 1.0f;
 		bool Source = false;
+		int index = 0;
 		
 		DirectionalLight() {}
 		DirectionalLight(const glm::vec3& direction, const glm::vec3& color, 
@@ -41,6 +42,7 @@ namespace Cober {
 		float DiffuseIntensity = 1.0f;
 		LightAttenuation Attenuation{1.0f, 10.0f, 20.0f};
 		bool Source = false;
+		int index = 0;
 
 		PointLight() {}
 		PointLight(	const glm::vec3& position, const glm::vec3& color, 
@@ -63,6 +65,7 @@ namespace Cober {
 		float DiffuseIntensity = 1.0f;
 		LightAttenuation Attenuation{ 1.0f, 10.0f, 20.0f };
 		bool Source = false;
+		int index = 0;
 
 		SpotLight() {}
 		SpotLight(	const glm::vec3 & direction, const glm::vec3 & position, const glm::vec3 & color, 

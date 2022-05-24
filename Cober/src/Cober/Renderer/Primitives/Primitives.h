@@ -58,16 +58,18 @@ namespace Cober {
 	class Cube {
 	public:
 		Cube();
-		void Draw(const glm::vec3& position, const glm::vec3& size, Ref<Shader> shader);
+		void Draw(const glm::vec3& position, const glm::vec3& size, Ref<Shader> customShader);
 		void Draw(const glm::vec3& position, const glm::vec3& size, const glm::vec3& color);
 		void Init();
 		Ref<VertexArray> GetVAO() { return VAO; }
 		Ref<Texture> GetTexture() { return WhiteTexture; }
+		Ref<Shader> GetShader() { return shader; }
 
 	private:
 		// Primitive Attributes
 		Ref<VertexArray> VAO;
 		Ref<Texture2D> WhiteTexture;
+		Ref<Shader> shader;
 
 		// Data		
 		float vertices[6 * 4 * (3 + 3 + 2)] = {

@@ -21,6 +21,9 @@ namespace Cober {
         bool LoadMesh(const std::string& Filename);
         void Render();
         const Material& GetMaterial();
+        const uint32_t GetVAO() { return m_VAO; };
+        const Ref<Shader> GetShader() { return shader; }
+        void SetShader(Ref<Shader> customShader) { shader = customShader; }
 
     private:
         void Clear();
@@ -51,6 +54,7 @@ namespace Cober {
         //WorldTrans m_worldTransform;
         uint32_t m_VAO = 0;
         uint32_t m_Buffers[NUM_BUFFERS];
+        Ref<Shader> shader;
 
         struct BasicMeshEntry {
             BasicMeshEntry()

@@ -589,7 +589,6 @@ namespace Cober {
 
 					Ref<MaterialComponent> material = CreateRef<MaterialComponent>();
 					material->shader = component.shader;
-					//material->shader->Bind();
 					Renderer::primitive.materials.push_back(material);
 				}
 				ImGui::EndDragDropTarget();

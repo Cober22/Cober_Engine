@@ -60,6 +60,8 @@ namespace Cober {
 		shader = Shader::Create("Assets/Shaders/Texture.glsl");
 		shader->Bind();
 		shader->SetIntArray("u_Textures", samplers, maxTextureSlots);
+		shader->SetVec3("material.diffuse", { 1.0f, 1.0f, 1.0f });
+		shader->SetFloat("material.shininess", 32.0f);
 
 		textureSlots[0] = WhiteTexture;
 
@@ -70,12 +72,8 @@ namespace Cober {
 	}
 	void Quad::Draw(const glm::mat4& transform, Ref<Shader> customShader, const glm::vec4& color, float tilingFactor, int entityID) {
 		
-		if (customShader) {
-			customShader->Bind();
+		if (customShader)
 			shader = customShader;
-		}
-		else
-			shader->Bind();
 
 		const int textureIndex = 0; // White Texture
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
@@ -88,12 +86,8 @@ namespace Cober {
 	
 	void Quad::Draw(const glm::mat4& transform, const Ref<Texture2D>& texture, Ref<Shader> customShader, const glm::vec4& color, float tilingFactor, int entityID) {
 
-		if (customShader) {
-			customShader->Bind();
+		if (customShader)
 			shader = customShader;
-		}
-		else
-			shader->Bind();
 
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
 
@@ -124,12 +118,8 @@ namespace Cober {
 
 	void Quad::Draw(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture, Ref<Shader> customShader, const glm::vec4& color, float tilingFactor, int entityID) {
 		
-		if (customShader) {
-			customShader->Bind();
+		if (customShader)
 			shader = customShader;
-		}
-		else
-			shader->Bind();
 
 		// For loading Sprite Sheets...
 		// ............................
@@ -163,12 +153,8 @@ namespace Cober {
 
 	void Quad::Draw(const glm::mat4& transform, const glm::vec4& color, Ref<Shader> customShader, int entityID) {
 
-		if (customShader) {
-			customShader->Bind();
+		if (customShader)
 			shader = customShader;
-		}
-		else
-			shader->Bind();
 
 		const int textureIndex = 0; // White Texture
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
@@ -192,6 +178,8 @@ namespace Cober {
 			attributes++;
 		}
 		indexCount += 6;
+
+		shader->Bind();
 
 		shader->SetMat4("u_Model", glm::mat4(1.0f));
 		shader->SetMat3("u_Normal", glm::transpose(glm::inverse(glm::mat4(1.0f))));

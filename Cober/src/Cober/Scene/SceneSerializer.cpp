@@ -2,6 +2,7 @@
 #include "SceneSerializer.h"
 #include "Components.h"
 #include "Entity.h"
+#include "Cober/Renderer/Renderer.h"
 
 #include <yaml-cpp/yaml.h>
 
@@ -395,6 +396,9 @@ namespace Cober {
 		std::string sceneName = data["Scene"].as<std::string>();
 		std::cout << "Deserializing scene " << sceneName << std::endl;
 
+		if (!Renderer::primitive.materials.empty())
+			Renderer::primitive.materials.clear();
+
 		auto entities = data["Entities"];
 		if (entities)
 		{
@@ -576,8 +580,10 @@ namespace Cober {
 				{
 					auto& material = deserializedEntity.AddComponent<MaterialComponent>();
 					material.shaderRoute = materialComponent["Shader Path"].as<std::string>();
-					material.shader = CreateRef<Shader>(material.shaderRoute);
-					material.shader->Bind();
+					if (!material.shaderRoute.empty()) {
+						material.shader = CreateRef<Shader>(material.shaderRoute);
+						Renderer::primitive.materials.push_back(CreateRef<MaterialComponent>(material));
+					}
 				}
 			}
 		}

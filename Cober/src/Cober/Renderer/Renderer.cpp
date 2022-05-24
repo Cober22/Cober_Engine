@@ -26,6 +26,7 @@ namespace Cober {
 		}
 
 		primitive.cube = CreateRef<Cube>();
+		primitive.mesh = CreateRef<Mesh>();
 		primitive.lightCube = CreateRef<LightCube>();
 		primitive.lightCube->GetShader()->Bind();
 		
@@ -44,18 +45,20 @@ namespace Cober {
 	{
 		CB_PROFILE_FUNCTION();
 
-		//SetupBasicPrimitiveShader();
-		primitive.lightCube->GetShader()->Bind();
-		primitive.lightCube->GetShader()->SetMat4("u_Projection", camera.GetProjection());
-		primitive.lightCube->GetShader()->SetMat4("u_View", glm::inverse(transform));
-
 		for (int i = 0; i < primitive.materials.size(); i++) {
 			if (primitive.materials[i]->shader) {
 				primitive.materials[i]->shader->Bind();
 				primitive.materials[i]->shader->SetMat4("u_Projection", camera.GetProjection());
 				primitive.materials[i]->shader->SetMat4("u_View", glm::inverse(transform));
+				// Extract to material shader properties
+				primitive.materials[i]->shader->SetVec3("material.diffuse", { 1.0f, 1.0f, 1.0f });
+				primitive.materials[i]->shader->SetFloat("material.shininess", 32.0f);
 			}
 		}
+		primitive.lightCube->GetShader()->Bind();
+		primitive.lightCube->GetShader()->SetMat4("u_Projection", camera.GetProjection());
+		primitive.lightCube->GetShader()->SetMat4("u_View", glm::inverse(transform));
+
 		// Start Batch
 		primitive.quad->indexCount = 0;
 		primitive.quad->attributes = baseQuadAttributes;
@@ -66,19 +69,23 @@ namespace Cober {
 
 
 		CB_PROFILE_FUNCTION();
-		//SetupBasicPrimitiveShader();
-		primitive.lightCube->GetShader()->Bind();
-		primitive.lightCube->GetShader()->SetMat4("u_Projection", camera.GetProjectionMatrix());
-		primitive.lightCube->GetShader()->SetMat4("u_View", camera.GetViewMatrix());
-		
+
 		for (int i = 0; i < primitive.materials.size(); i++) {
 			if (primitive.materials[i]->shader) {
 				primitive.materials[i]->shader->Bind();
 				primitive.materials[i]->shader->SetMat4("u_Projection", camera.GetProjectionMatrix());
 				primitive.materials[i]->shader->SetMat4("u_View", camera.GetViewMatrix());
+				// Extract to material shader properties
+				primitive.materials[i]->shader->SetVec3("material.diffuse", { 1.0f, 1.0f, 1.0f });
+				primitive.materials[i]->shader->SetFloat("material.shininess", 32.0f);
 			}
 		}
+		primitive.lightCube->GetShader()->Bind();
+		primitive.lightCube->GetShader()->SetMat4("u_Projection", camera.GetProjectionMatrix());
+		primitive.lightCube->GetShader()->SetMat4("u_View", camera.GetViewMatrix());
+		
 		// Start Batch
+		primitive.quad->GetVAO()->Bind();
 		primitive.quad->indexCount = 0;
 		primitive.quad->attributes = baseQuadAttributes;
 		primitive.quad->textureSlotIndex = 1;
@@ -136,7 +143,7 @@ namespace Cober {
 		CB_PROFILE_FUNCTION();
 		uint32_t dataSize = (uint32_t)((uint8_t*)primitive.quad->attributes - (uint8_t*)baseQuadAttributes);
 		primitive.quad->GetVBO()->SetData(baseQuadAttributes, dataSize);
-		Flush();
+		//Flush();
 	}
 
 	void Renderer::Flush() {
@@ -168,16 +175,13 @@ namespace Cober {
 		else
 			primitive.quad->Draw(transform, src.Color, shader, entityID);
 		stats.QuadCount++;
+		Flush();
 	}
 
 	void Renderer::DrawCube(const glm::vec3& position, const glm::vec3& size, Ref<Shader> shader)
 	{
 		if (shader) {
 			shader->Bind();
-			// Extracto to material shader properties
-			shader->SetVec3("material.diffuse", { 1.0f, 1.0f, 1.0f });
-			shader->SetFloat("material.shininess", 32.0f);
-
 			primitive.cube->GetTexture()->Bind();
 			primitive.cube->Draw(position, size, shader);
 			//shader->Unbind();
@@ -206,8 +210,6 @@ namespace Cober {
 		if (shader) {
 			shader->Bind();
 			glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, size.z });
-			shader->SetVec3("material.diffuse", { 1.0f, 1.0f, 1.0f });
-			shader->SetFloat("material.shininess", 32.0f);
 			shader->SetMat4("u_Model", transform);
 			shader->SetMat3("u_Normal", glm::transpose(glm::inverse(transform)));
 			model->Render();

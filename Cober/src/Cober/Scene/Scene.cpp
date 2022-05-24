@@ -336,20 +336,16 @@ namespace Cober {
 		if (mainCamera) 
 		{
 			Renderer::BeginScene(*mainCamera, cameraTransform);
-
 			RenderSceneEntities();
-			// Renderer::EndScene();
+			Renderer::EndScene();
 		}
 	}
 
 	void Scene::OnUpdateEditor(Timestep ts, EditorCamera& camera) {
 		
-		// Iterate through entities with TransformComponent
 		Renderer::BeginScene(camera);
-	
 		RenderSceneEntities();
-
-		//Renderer::EndScene;
+		Renderer::EndScene();
 	}
 
 	void Scene::RenderSceneEntities() {
@@ -361,8 +357,6 @@ namespace Cober {
 			auto [transform, sprite] = sprites.get<TransformComponent, SpriteRendererComponent>(entity);
 			if (entity.HasComponent<MaterialComponent>())
 				Renderer::DrawSprite(transform.GetTransform(), sprite, entity.GetComponent<MaterialComponent>().shader, (int)entity);
-			//else
-			//	Renderer::DrawSprite(transform.GetTransform(), sprite, (int)entity);
 		}
 		
 		// TODO
@@ -405,7 +399,6 @@ namespace Cober {
 		});
 		m_Registry.view<TransformComponent, SpotLight>().each([](auto& transform, auto& light) {
 			light.Position = transform.GetTranslation();
-			light.Direction = transform.GetRotation();
 		});
 
 		// UPDATE MATERIAL SYSTEM FOR LIGHTS
@@ -422,7 +415,7 @@ namespace Cober {
 					TransformComponent trans = entity.GetComponent<TransformComponent>();
 					glm::vec3 scale = trans.GetScale();
 					if (entity.GetComponent<DirectionalLight>().Source)
-						Renderer::DrawLightCube(trans.GetTranslation(), glm::vec3(scale.x/2, scale.y/2, scale.z/2), entity.GetComponent<DirectionalLight>().Color);
+						Renderer::DrawLightCube(trans.GetTranslation(), glm::vec3(scale.x/5, scale.y/5, scale.z/5), entity.GetComponent<DirectionalLight>().Color);
 					Renderer::BindDirectionalLight(material.shader, entity.GetComponent<DirectionalLight>(), 0);
 				}
 				
@@ -434,7 +427,7 @@ namespace Cober {
 					TransformComponent trans = entity.GetComponent<TransformComponent>();
 					glm::vec3 scale = trans.GetScale();
 					if (entity.GetComponent<PointLight>().Source)
-						Renderer::DrawLightCube(trans.GetTranslation(), glm::vec3(scale.x / 2, scale.y / 2, scale.z / 2), entity.GetComponent<PointLight>().Color);
+						Renderer::DrawLightCube(trans.GetTranslation(), glm::vec3(scale.x/5, scale.y/5, scale.z/5), entity.GetComponent<PointLight>().Color);
 					Renderer::BindPointLight(material.shader, entity.GetComponent<PointLight>(), i++);
 				}
 				
@@ -446,7 +439,7 @@ namespace Cober {
 					TransformComponent trans = entity.GetComponent<TransformComponent>();
 					glm::vec3 scale = trans.GetScale();
 					if (entity.GetComponent<SpotLight>().Source)
-						Renderer::DrawLightCube(trans.GetTranslation(), glm::vec3(scale.x / 2, scale.y / 2, scale.z / 2), entity.GetComponent<SpotLight>().Color);
+						Renderer::DrawLightCube(trans.GetTranslation(), glm::vec3(scale.x/5, scale.y/5, scale.z/5), entity.GetComponent<SpotLight>().Color);
 					Renderer::BindSpotLight(material.shader, entity.GetComponent<SpotLight>(), i++);
 				}
 			}

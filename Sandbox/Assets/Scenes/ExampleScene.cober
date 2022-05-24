@@ -1,38 +1,133 @@
 Scene: Untitled
 Entities:
-  - Entity: 123243
+  - Entity: 2365552320142697902
     TagComponent:
-      Tag: Camera
+      Tag: Cube
     TransformComponent:
-      Translation: [-0.185703635, 0, 6.15553379]
+      Translation: [6.05407333, 3.30853295, 0.464028358]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CubeMeshComponent:
+      {}
+    MaterialComponent:
+      Shader Path: Assets\Shaders\Texture.glsl
+  - Entity: 16144719779051831469
+    TagComponent:
+      Tag: Spot Light
+    TransformComponent:
+      Translation: [0.85631597, 2.32756734, 1.46569192]
+      Rotation: [0, 0, -2.21482277]
+      Scale: [0.999999821, 0.999999821, 1]
+    SpotLightComponent:
+      Position: [0.85631597, 2.32756734, 1.46569192]
+      Direction: [0, 0, -2.21482277]
+      Color: [0.032140255, 0.127339736, 0.756756783]
+      CutOff: 10
+      OuterCutOff: 20
+      Ambient Intensity: 100
+      Diffuse Intensity: 1
+      Att. Constant: 1
+      Att. Linear: 10
+      Att. Exp: 20
+      Source: false
+  - Entity: 14759738628890553555
+    TagComponent:
+      Tag: GreenQuad
+    TransformComponent:
+      Translation: [3.16340017, 5.15615749, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [0.907335877, 0.322296888, 0.322334528, 1]
+    MaterialComponent:
+      Shader Path: Assets\Shaders\Texture.glsl
+  - Entity: 12722426474413618571
+    TagComponent:
+      Tag: Camera Perspective Entity
+    TransformComponent:
+      Translation: [2.54460239, 3.02550292, 6.93149328]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     CameraComponent:
       Camera:
         CameraType: 0
-        PerspectiveFOV: 0.785398185
+        PerspectiveFOV: 1.02974427
         PerspectiveNear: 0.00999999978
         PerspectiveFar: 1000
         OrthographicSize: 10
-        OrthographicNear: -1
-        OrthographicFar: 157
+        OrthographicNear: -40
+        OrthographicFar: 79
       Primary: true
       FixedAspectRatio: false
-  - Entity: 123243
+  - Entity: 6215873637634891403
     TagComponent:
-      Tag: Quad 1
+      Tag: Directional Light
     TransformComponent:
-      Translation: [0.789560318, -0.662019372, -3.89415264]
-      Rotation: [-2.35411382, -0.213598132, 0.984805524]
-      Scale: [0.999999464, 2.135149, 0.67852664]
-    SpriteRendererComponent:
-      Color: [1, 0.605148792, 0.061776042, 1]
-  - Entity: 123243
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    DirectionalLightComponent:
+      Direction: [0, 0, 0]
+      Color: [1, 1, 1]
+      Ambient Intensity: 0.100000001
+      Diffuse Intensity: 0.200000003
+      Source: false
+  - Entity: 2866447372862317289
     TagComponent:
-      Tag: Quad 2
+      Tag: BlueQuad
     TransformComponent:
-      Translation: [-1.41876638, 0.351874977, -0.802675366]
+      Translation: [3.09313035, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
-      Color: [1, 0, 0, 1]
+      Color: [0, 0.125001669, 1, 1]
+    MaterialComponent:
+      Shader Path: Assets\Shaders\Texture.glsl
+  - Entity: 9891263574389301703
+    TagComponent:
+      Tag: Point Light
+    TransformComponent:
+      Translation: [2.00753832, 3.76755571, 1.70046568]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    PointLightComponent:
+      Position: [2.00753832, 3.76755571, 1.70046568]
+      Color: [0.957522869, 0, 1]
+      Ambient Intensity: 100
+      Diffuse Intensity: 1
+      Att. Constant: 1
+      Att. Linear: 10
+      Att. Exp: 20
+      Source: true
+  - Entity: 16882948562282825656
+    TagComponent:
+      Tag: Grid
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    MeshComponent:
+      Mesh Path: Assets\Models\thegrid\GRID.obj
+    MaterialComponent:
+      Shader Path: Assets\Shaders\Primitive.glsl
+  - Entity: 18273518605014310388
+    TagComponent:
+      Tag: Bag
+    TransformComponent:
+      Translation: [0.138646245, 3.89220309, 0.41380322]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    MeshComponent:
+      Mesh Path: Assets\Models\backpack\backpack.obj
+    Rigidbody3DComponent:
+      BodyType: Dynamic
+      FixedRotation: false
+    BoxCollider3DComponent:
+      Offset: [0, 0, 0]
+      Size: [1, 1, 1]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0
+      RestitutionThreshold: 0.5
+    MaterialComponent:
+      Shader Path: Assets\Shaders\Primitive.glsl

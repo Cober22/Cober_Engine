@@ -12,9 +12,12 @@ Sandbox2D::Sandbox2D()
 void Sandbox2D::OnAttach()
 {
 	m_ActiveScene = CreateRef<Scene>();
+	AudioManager::SetupInstance();
 
 	SceneSerializer serializer(m_ActiveScene);
-	serializer.Deserialize("Assets/Scenes/ExampleScene.cober");
+	serializer.Deserialize("Assets/Scenes/Example2DScene.cober");
+
+	m_ActiveScene->OnRuntimeStart();
 }
 
 void Sandbox2D::OnDetach()
@@ -37,9 +40,9 @@ void Sandbox2D::OnUpdate( Timestep ts)
 	{
 		CB_PROFILE_SCOPE("Render Prep");
 		// BACKGRUOND COLOR!
-		//RenderCommand::SetClearColor({ 0.02f, 0.008f, 0.05f, 1.0f });	// DARK BLUE
+		 RenderCommand::SetClearColor({ 0.02f, 0.008f, 0.05f, 1.0f });	// DARK BLUE
 		//RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
-		 RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
+		//RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
 		//RenderCommand::SetClearColor({ 0.8f, 0.35f, 0.35f, 1.0f });
 		 RenderCommand::Clear();
 	}

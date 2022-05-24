@@ -57,9 +57,19 @@ namespace Cober {
 				CB_ASSERT(success, "Could not initialize GLFW!");
 			}
 
+			//glfwWindowHint(GLFW_DECORATED, false);
+
 			// Init WINDOW
 			m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
 			++s_GLFWWindowCount;
+			
+			// Maximized window
+			// glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+
+			GLFWimage icons[1];
+			icons[0].pixels = stbi_load("Assets/Icons/orangeMykoeski.png", &icons[0].width, &icons[0].height, 0, 0);
+			glfwSetWindowIcon(m_Window, 1, icons);
+			stbi_image_free(icons[0].pixels);
 
 			// Init Window CONTEXT
 			m_Context = GraphicsContext::Create(m_Window);

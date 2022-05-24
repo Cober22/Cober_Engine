@@ -564,7 +564,7 @@ namespace Cober {
 
 	template<>
 	void Scene::OnComponentAdded<AudioComponent>(Entity entity, AudioComponent& component) {
-		AudioManager::GetInstance()->AddEmisor(component.pos, component.vel);
+		//AudioManager::GetInstance()->AddEmisor(component.pos, component.vel);
 	}
 
 	template<>

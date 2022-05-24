@@ -1,6 +1,6 @@
 Scene: Untitled
 Entities:
-  - Entity: 3986923166971724712
+  - Entity: 16747679125763989042
     TagComponent:
       Tag: Mesh
     TransformComponent:
@@ -11,7 +11,7 @@ Entities:
       Mesh Path: Assets\Models\backpack\backpack.obj
     MaterialComponent:
       Shader Path: Assets\Shaders\Primitive.glsl
-  - Entity: 8669425973669182497
+  - Entity: 2477118557423811113
     TagComponent:
       Tag: Quad
     TransformComponent:
@@ -37,17 +37,17 @@ Entities:
       RestitutionThreshold: 0.5
     MaterialComponent:
       Shader Path: Assets\Shaders\Texture.glsl
-  - Entity: 5071549983652836227
+  - Entity: 2776634390106645814
     TagComponent:
       Tag: Camera
     TransformComponent:
-      Translation: [0, 1.87662041, 5.9248333]
-      Rotation: [-0.302334398, 0, 0]
-      Scale: [0.99999994, 0.999997199, 0.999997199]
+      Translation: [-3.56658888, 1.87662041, 6.79003716]
+      Rotation: [-0.302334249, -0.48686111, -6.74408867e-08]
+      Scale: [0.999999225, 0.999996722, 0.999996781]
     CameraComponent:
       Camera:
-        CameraType: 1
-        PerspectiveFOV: 0.785398185
+        CameraType: 0
+        PerspectiveFOV: 1.13446403
         PerspectiveNear: 0.00999999978
         PerspectiveFar: 1000
         OrthographicSize: 10
@@ -55,7 +55,7 @@ Entities:
         OrthographicFar: 97
       Primary: true
       FixedAspectRatio: false
-  - Entity: 13499970503612422475
+  - Entity: 7437767526342681640
     TagComponent:
       Tag: Directional Light
     TransformComponent:
@@ -73,7 +73,7 @@ Entities:
       Up: [0, 0, 0]
       Position: [0, 0, 0]
       Velocity: [0, 0, 0]
-  - Entity: 14469691288786491001
+  - Entity: 17786029697203145442
     TagComponent:
       Tag: Cube
     TransformComponent:

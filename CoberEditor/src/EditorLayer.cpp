@@ -33,6 +33,7 @@ namespace Cober {
 
 		m_IconPlay = Texture2D::Create("Assets/Icons/IconPlay.png");
 		m_IconStop = Texture2D::Create("Assets/Icons/IconStop.png");
+		m_IconBackgroundSettings = Texture2D::Create("Assets/Icons/orangeMykoeski.png");
 
 		// Audio
 		AudioManager::SetupInstance();
@@ -47,7 +48,7 @@ namespace Cober {
 				auto& translation = GetComponent<TransformComponent>().Translation;
 				translation.x = rand() % 10 - 5.0f;
 
-				redQuad = Find("RedQuad");
+				camera = Find("Camera");
 			}
 			virtual void OnDestroy() override {
 
@@ -62,18 +63,15 @@ namespace Cober {
 					if (Input::IsKeyPressed(KeyCode::D))
 						translation.x += speed * ts;
 					if (Input::IsKeyPressed(KeyCode::W))
-						translation.y += speed * ts;
+						translation.z += speed * ts;
 					if (Input::IsKeyPressed(KeyCode::S))
-						translation.y -= speed * ts;
-					if (Input::IsKeyPressed(KeyCode::Q))
-						if (redQuad)
-							redQuad.GetComponent<TransformComponent>().Rotation.z += 5.0f;
+						translation.z -= speed * ts;
 			}
 		private:
-			Entity redQuad;
+			Entity camera;
 		};
 
-		m_FirstCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+		//m_FirstCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 		//m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 #endif
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
@@ -111,6 +109,7 @@ namespace Cober {
 
 			RenderCommand::SetClearColor({ 0.05f, 0.03f, 0.08f, 1.0f });	// DARK BLUE
 			//RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+			//RenderCommand::SetClearColor({ 0.0f, 1.0f, 0.0f, 1.0f });
 			//RenderCommand::SetClearColor({ 1.0f, 0.6f, 0.3f, 1.0f });	// ORANGE
 			//RenderCommand::SetClearColor({ 0.8f, 0.35f, 0.35f, 1.0f });
 			RenderCommand::Clear();
@@ -256,7 +255,7 @@ namespace Cober {
 		m_ContentBrowserPanel.OnImGuiRender();
 
 		ImGui::Begin("Settings");
-		
+
 		std::string name = "None";
 		if (m_HoveredEntity)
 			name = m_HoveredEntity.GetComponent<TagComponent>().Tag;

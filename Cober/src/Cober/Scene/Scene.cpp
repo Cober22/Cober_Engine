@@ -351,12 +351,13 @@ namespace Cober {
 	void Scene::RenderSceneEntities() {
 
 
-		auto sprites = m_Registry.view<TransformComponent, SpriteRendererComponent>();
-		for (auto e : sprites) {
-			Entity entity{ e, this };
-			auto [transform, sprite] = sprites.get<TransformComponent, SpriteRendererComponent>(entity);
-			if (entity.HasComponent<MaterialComponent>())
-				Renderer::DrawSprite(transform.GetTransform(), sprite, entity.GetComponent<MaterialComponent>().shader, (int)entity);
+		auto group = m_Registry.group<TransformComponent>(entt::get<MaterialComponent, SpriteRendererComponent>);
+		for (auto entity : group) {
+			auto [transform, material, sprite] = group.get<TransformComponent, MaterialComponent, SpriteRendererComponent>(entity);
+			if (material.shader)
+				Renderer::DrawSprite(transform.GetTransform(), sprite, material.shader, (int)entity);
+			else
+				Renderer::DrawSprite(transform.GetTransform(), sprite, nullptr, (int)entity);
 		}
 		
 		// TODO
@@ -402,9 +403,8 @@ namespace Cober {
 		});
 
 		// UPDATE MATERIAL SYSTEM FOR LIGHTS
-		auto materials = m_Registry.view<TransformComponent, MaterialComponent>();
-		for (auto e : materials) {
-			Entity entity{ e, this };
+		auto materials = m_Registry.group<TransformComponent>(entt::get<MaterialComponent>);
+		for (auto entity : materials) {
 			auto [transform, material] = materials.get<TransformComponent, MaterialComponent>(entity);
 			if (material.shader) {
 
@@ -574,6 +574,40 @@ namespace Cober {
 
 	template<>
 	void Scene::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent& component) {
+
+		class CameraController : public ScriptableEntity {
+		public:
+			virtual void OnCreate() override {
+				// Test if OnCreate works well with different cameras 
+				auto& translation = GetComponent<TransformComponent>().Translation;
+				translation.x = rand() % 10 - 5.0f;
+
+				camera = Find("Camera");
+				camera.GetComponent<CameraComponent>();
+			}
+			virtual void OnDestroy() override {
+
+			}
+			virtual void OnUpdate(Timestep ts) override {
+
+				auto& translation = GetComponent<TransformComponent>().Translation;
+				float speed = 10.0f;
+				translation.y = 0.0f;	// Constrein Height
+				if (Input::IsKeyPressed(KeyCode::A))
+					translation.x -= speed * ts;
+				if (Input::IsKeyPressed(KeyCode::D))
+					translation.x += speed * ts;
+				if (Input::IsKeyPressed(KeyCode::W))
+					translation.z -= speed * ts;
+				if (Input::IsKeyPressed(KeyCode::S))
+					translation.z += speed * ts;
+			}
+		private:
+			Entity camera;
+			CameraComponent cameraController;
+		};
+
+		entity.GetComponent<NativeScriptComponent>().Bind<CameraController>();
 	}
 
 	template<>

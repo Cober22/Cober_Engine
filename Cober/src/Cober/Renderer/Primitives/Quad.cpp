@@ -167,6 +167,16 @@ namespace Cober {
 
 	void Quad::SetAttributes(const glm::mat4& transform, const glm::vec4& color, int textureIndex, const glm::vec2* textureCoords, float tilingFactor, int entityID) {
 
+		shader->Bind();
+
+		int32_t samplers[maxTextureSlots];
+		for (uint32_t i = 0; i < maxTextureSlots; i++)
+			samplers[i] = i;
+		shader->SetIntArray("u_Textures", samplers, maxTextureSlots);
+
+		shader->SetMat4("u_Model", glm::mat4(1.0f));
+		shader->SetMat3("u_Normal", glm::transpose(glm::inverse(glm::mat4(1.0f))));
+
 		for (size_t i = 0; i < vertexCount; i++) {
 			attributes->Position = transform * vertexPositions[i];
 			attributes->Color = color;
@@ -179,9 +189,7 @@ namespace Cober {
 		}
 		indexCount += 6;
 
-		shader->Bind();
-
-		shader->SetMat4("u_Model", glm::mat4(1.0f));
-		shader->SetMat3("u_Normal", glm::transpose(glm::inverse(glm::mat4(1.0f))));
+		VAO->Bind();
+		RenderCommand::DrawIndexed(VAO, indexCount);
 	}
 }

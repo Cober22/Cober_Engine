@@ -60,6 +60,9 @@ namespace Cober {
 		primitive.lightCube->GetShader()->SetMat4("u_View", glm::inverse(transform));
 
 		// Start Batch
+		primitive.quad->GetShader()->Bind();
+		primitive.quad->GetShader()->SetMat4("u_Projection", camera.GetProjection());
+		primitive.quad->GetShader()->SetMat4("u_View", glm::inverse(transform));
 		primitive.quad->indexCount = 0;
 		primitive.quad->attributes = baseQuadAttributes;
 		primitive.quad->textureSlotIndex = 1;
@@ -83,55 +86,16 @@ namespace Cober {
 		primitive.lightCube->GetShader()->Bind();
 		primitive.lightCube->GetShader()->SetMat4("u_Projection", camera.GetProjectionMatrix());
 		primitive.lightCube->GetShader()->SetMat4("u_View", camera.GetViewMatrix());
-		
 		// Start Batch
-		primitive.quad->GetVAO()->Bind();
+		//primitive.quad->GetVAO()->Bind();
+		primitive.quad->GetShader()->Bind();
+		primitive.quad->GetShader()->SetMat4("u_Projection", camera.GetProjectionMatrix());
+		primitive.quad->GetShader()->SetMat4("u_View", camera.GetViewMatrix());
 		primitive.quad->indexCount = 0;
 		primitive.quad->attributes = baseQuadAttributes;
 		primitive.quad->textureSlotIndex = 1;
-	}
+	}	
 	
-	/*
-	void Renderer::BeginScene(OrthographicCamera& camera)
-	{
-		CB_PROFILE_FUNCTION();
-
-		cameraPosition = camera.GetPosition();
-		cameraDirection = camera.GetDirection();
-
-		SetupBasicPrimitiveShader();
-		UploadShadersToFrustum(basicShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
-
-		UploadShadersToFrustum(lightCubeShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
-
-		//UploadShadersToFrustum(modelShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
-	
-		UploadShadersToFrustum(primitive.quad->GetShader(), camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
-		primitive.quad->indexCount = 0;
-		primitive.quad->attributes = baseQuadAttributes;
-		primitive.quad->textureSlotIndex = 1;
-	}
-
-	void Renderer::BeginScene(PerspectiveCamera& camera)
-	{
-		CB_PROFILE_FUNCTION();
-		cameraPosition = camera.GetPosition();
-		cameraDirection = camera.GetDirection();
-
-		SetupBasicPrimitiveShader();
-		UploadShadersToFrustum(basicShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
-
-		UploadShadersToFrustum(lightCubeShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
-		// Models
-		//UploadShadersToFrustum(modelShader, camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
-		// Textures
-		UploadShadersToFrustum(primitive.quad->GetShader(), camera.GetProjectionMatrix(), camera.GetViewMatrix(), camera.GetModelMatrix());
-		primitive.quad->indexCount = 0;
-		primitive.quad->attributes = baseQuadAttributes;
-		primitive.quad->textureSlotIndex = 1;
-	}
-	*/
-
 	void Renderer::Shutdown() 
 	{
 		CB_PROFILE_FUNCTION();
@@ -140,7 +104,7 @@ namespace Cober {
 
 	void Renderer::EndScene()
 	{
-		CB_PROFILE_FUNCTION();
+		//CB_PROFILE_FUNCTION();
 		uint32_t dataSize = (uint32_t)((uint8_t*)primitive.quad->attributes - (uint8_t*)baseQuadAttributes);
 		primitive.quad->GetVBO()->SetData(baseQuadAttributes, dataSize);
 		//Flush();
@@ -150,7 +114,7 @@ namespace Cober {
 
 		if (primitive.quad->indexCount == 0)
 			return; // Nothing to draw
-
+		
 		// Bind textures
 		for (uint32_t i = 0; i < primitive.quad->textureSlotIndex; i++)
 			primitive.quad->textureSlots[i]->Bind(i);
@@ -162,10 +126,10 @@ namespace Cober {
 	void Renderer::FlushAndReset() {
 		
 		EndScene();
-
+		
 		primitive.quad->indexCount = 0;
 		primitive.quad->attributes = baseQuadAttributes;
-
+		
 		primitive.quad->textureSlotIndex = 1;
 	}
 

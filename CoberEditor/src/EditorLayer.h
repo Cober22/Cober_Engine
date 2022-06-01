@@ -63,6 +63,7 @@ namespace Cober {
 		GameState m_SceneState = GameState::EDIT;
 		Ref<Texture2D> m_IconPlay;
 		Ref<Texture2D> m_IconStop;
+		Ref<Texture2D> m_IconBackgroundSettings;
 
 		Entity m_HoveredEntity;
 		

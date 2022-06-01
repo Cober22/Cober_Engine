@@ -1,70 +1,72 @@
 Scene: Untitled
 Entities:
-  - Entity: 16747679125763989042
+  - Entity: 9838763865116548908
     TagComponent:
-      Tag: Mesh
+      Tag: Axe
     TransformComponent:
-      Translation: [-3.52322054, 0, -0.122503698]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
+      Translation: [-12.3299999, -5.80000019, 6.65790081]
+      Rotation: [0, 0.35869208, 0]
+      Scale: [3.00000024, 3, 3.00000024]
     MeshComponent:
-      Mesh Path: Assets\Models\backpack\backpack.obj
+      Mesh Path: Assets\Models\VoxelCharacters\chr_sword.obj
     MaterialComponent:
       Shader Path: Assets\Shaders\Primitive.glsl
-  - Entity: 2477118557423811113
+  - Entity: 16409815784569791132
     TagComponent:
-      Tag: Quad
+      Tag: Knight
     TransformComponent:
-      Translation: [3.42726469, 0, 0]
+      Translation: [-6.67999983, -5.80000019, -4.9063673]
+      Rotation: [0, -0.862541676, 0]
+      Scale: [3, 3, 3]
+    MeshComponent:
+      Mesh Path: Assets\Models\VoxelCharacters\chr_knight.obj
+    MaterialComponent:
+      Shader Path: Assets\Shaders\Primitive.glsl
+  - Entity: 17950340218348495429
+    TagComponent:
+      Tag: Spot Light
+    TransformComponent:
+      Translation: [2.4474473, 41.6570969, -13.2982655]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
-    SpriteRendererComponent:
-      Color: [0.972972989, 0.210372522, 0.210372522, 1]
-    AudioComponent:
-      NumObj: 0
-      Position: [0, 0, 0]
-      Velocity: [0, 0, 0]
-      Route: Assets\Sounds\PreparenseCharangueros.mp3
-    Rigidbody2DComponent:
-      BodyType: Dynamic
-      FixedRotation: false
-    BoxCollider2DComponent:
-      Offset: [0, 0]
-      Size: [1, 1]
-      Density: 1
-      Friction: 0.5
-      Restitution: 0
-      RestitutionThreshold: 0.5
-    MaterialComponent:
-      Shader Path: Assets\Shaders\Texture.glsl
-  - Entity: 2776634390106645814
+    SpotLightComponent:
+      Position: [2.4474473, 41.6570969, -13.2982655]
+      Direction: [0, -1, 0]
+      Color: [1, 0, 0]
+      CutOff: 8
+      OuterCutOff: 20
+      Ambient Intensity: 100
+      Diffuse Intensity: 100
+      Att. Constant: 1
+      Att. Linear: 2
+      Att. Exp: 0
+      Source: true
+  - Entity: 3847735132156048897
     TagComponent:
-      Tag: Camera
+      Tag: Point Light
     TransformComponent:
-      Translation: [-3.56658888, 1.87662041, 6.79003716]
-      Rotation: [-0.302334249, -0.48686111, -6.74408867e-08]
-      Scale: [0.999999225, 0.999996722, 0.999996781]
-    CameraComponent:
-      Camera:
-        CameraType: 0
-        PerspectiveFOV: 1.13446403
-        PerspectiveNear: 0.00999999978
-        PerspectiveFar: 1000
-        OrthographicSize: 10
-        OrthographicNear: -1
-        OrthographicFar: 97
-      Primary: true
-      FixedAspectRatio: false
-  - Entity: 7437767526342681640
+      Translation: [-16.5750446, 4.24090052, 3.17126441]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    PointLightComponent:
+      Position: [-16.5750446, 4.24090052, 3.17126441]
+      Color: [0.169883728, 0, 1]
+      Ambient Intensity: 100
+      Diffuse Intensity: 100
+      Att. Constant: 1
+      Att. Linear: 10
+      Att. Exp: 2
+      Source: true
+  - Entity: 5207210508723479929
     TagComponent:
       Tag: Directional Light
     TransformComponent:
       Translation: [0, 0, 2.74954844]
-      Rotation: [0, -0.834267378, 0]
+      Rotation: [-4.20100737, -8.80344105, -2.95658755]
       Scale: [1, 1, 1]
     DirectionalLightComponent:
-      Direction: [0, -0.834267378, 0]
-      Color: [1, 1, 1]
+      Direction: [-4.20100737, -8.80344105, -2.95658755]
+      Color: [0.965250969, 0.87940079, 0.804996967]
       Ambient Intensity: 0.400000006
       Diffuse Intensity: 1
       Source: false
@@ -73,14 +75,32 @@ Entities:
       Up: [0, 0, 0]
       Position: [0, 0, 0]
       Velocity: [0, 0, 0]
-  - Entity: 17786029697203145442
+  - Entity: 295595470695451664
     TagComponent:
-      Tag: Cube
+      Tag: Camera
     TransformComponent:
-      Translation: [0, 0, -0.268873572]
-      Rotation: [0, -1.4381516, 0]
+      Translation: [-5.32840204, 1.52047873, 19.2701321]
+      Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
-    CubeMeshComponent:
-      {}
+    CameraComponent:
+      Camera:
+        CameraType: 0
+        PerspectiveFOV: 1.13446403
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false
+  - Entity: 318227869224819386
+    TagComponent:
+      Tag: Scenario
+    TransformComponent:
+      Translation: [-20.8199997, -22.8199997, 21.4799995]
+      Rotation: [0, 0, 0]
+      Scale: [5, 5, 5]
+    MeshComponent:
+      Mesh Path: Assets\Models\MagicaVoxelTest\testobj.obj
     MaterialComponent:
-      Shader Path: Assets\Shaders\Texture.glsl
+      Shader Path: Assets\Shaders\Primitive.glsl

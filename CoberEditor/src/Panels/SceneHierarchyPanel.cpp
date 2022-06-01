@@ -118,6 +118,29 @@ namespace Cober {
 			ImGui::TreePop();
 
 		if (entityDeleted) {
+			if (entity.HasComponent<DirectionalLight>()) {
+				DirectionalLight emptyLight{ glm::vec3(0.0f), glm::vec3(0.0f), 0.0f, 0.0f };
+				for (auto material : Renderer::primitive.materials)
+					Renderer::BindDirectionalLight(material->shader, emptyLight);
+				Renderer::primitive.dirLights = 0;
+			}
+			if (entity.HasComponent<PointLight>()) {
+				int index = entity.GetComponent<PointLight>().index;
+				PointLight emptyLight{ glm::vec3(0.0f), glm::vec3(0.0f), 0.0f, 0.0f, 0.0f, 0.0f };
+				for (auto material : Renderer::primitive.materials)
+					Renderer::BindPointLight(material->shader, emptyLight, index);
+				Renderer::primitive.pointLights.erase(Renderer::primitive.pointLights.begin() + entity.GetComponent<PointLight>().index);
+			}
+			if (entity.HasComponent<SpotLight>()) {
+				int index = entity.GetComponent<SpotLight>().index;
+				SpotLight emptyLight{ glm::vec3(0.0f), glm::vec3(0.0f), glm::vec3(0.0f), 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+				for (auto material : Renderer::primitive.materials)
+					Renderer::BindSpotLight(material->shader, emptyLight, index);
+				Renderer::primitive.spotLights.erase(Renderer::primitive.spotLights.begin() + entity.GetComponent<SpotLight>().index);
+			}
+			if (entity.HasComponent<MaterialComponent>())
+				if (entity.GetComponent<MaterialComponent>().shader)
+					Renderer::primitive.materials.erase(Renderer::primitive.materials.begin() + entity.GetComponent<MaterialComponent>().index);
 			m_Context->DestroyEntity(entity);
 			if (m_SelectionContext == entity)
 				m_SelectionContext = {};
@@ -245,7 +268,8 @@ namespace Cober {
 					Renderer::primitive.spotLights.erase(Renderer::primitive.spotLights.begin() + entity.GetComponent<SpotLight>().index);
 				}
 				else if (std::is_same<T, MaterialComponent>())
-					Renderer::primitive.materials.erase(Renderer::primitive.materials.begin() + entity.GetComponent<MaterialComponent>().index);
+					if (entity.GetComponent<MaterialComponent>().shader)
+						Renderer::primitive.materials.erase(Renderer::primitive.materials.begin() + entity.GetComponent<MaterialComponent>().index);
 				
 				entity.RemoveComponent<T>();
 			}
@@ -582,6 +606,7 @@ namespace Cober {
 
 		DrawComponent<MaterialComponent>("Material", entity, [](auto& component)
 		{
+			Ref<MaterialComponent> material = CreateRef<MaterialComponent>();
 			ImGui::Button("Shader", ImVec2(100.0f, 0.0f));
 			if (ImGui::BeginDragDropTarget()) {
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM")) {
@@ -590,7 +615,6 @@ namespace Cober {
 					component.shader = CreateRef<Shader>(shaderPath.string());
 					component.shaderRoute = shaderPath.string();
 
-					Ref<MaterialComponent> material = CreateRef<MaterialComponent>();
 					material->shader = component.shader;
 					Renderer::primitive.materials.push_back(material);
 				}

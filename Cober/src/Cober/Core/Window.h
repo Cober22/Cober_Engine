@@ -16,8 +16,7 @@ namespace Cober {
 	struct WindowProps {
 		
 		std::string Title;
-		uint32_t Width;
-		uint32_t Height;
+		uint32_t Width, Height;
 		bool FullScreen;
 
 		WindowProps(const std::string& title = "Cober Engine",

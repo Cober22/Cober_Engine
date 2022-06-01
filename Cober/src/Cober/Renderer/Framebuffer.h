@@ -57,11 +57,9 @@ namespace Cober {
 		static void CreateTextures(bool multisampled, uint32_t* outID, uint32_t count) {
 			glCreateTextures(TextureTarget(multisampled), count, outID);
 		}
-
 		static void BindTexture(bool multisampled, uint32_t id) {
 			glBindTexture(TextureTarget(multisampled), id);
 		}
-
 		static void AttachColorTexture(uint32_t id, int samples, GLenum internalFormat, GLenum format, uint32_t width, uint32_t height, int index) {
 
 			bool multisampled = samples > 1;
@@ -77,7 +75,6 @@ namespace Cober {
 			}
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, TextureTarget(multisampled), id, 0);
 		}
-
 		static void AttachDepthTexture(uint32_t id, int samples, GLenum format, GLenum attachmentType, uint32_t width, uint32_t height) {
 
 			bool multisampled = samples > 1;
@@ -93,7 +90,6 @@ namespace Cober {
 			}
 			glFramebufferTexture2D(GL_FRAMEBUFFER, attachmentType, TextureTarget(multisampled), id, 0);
 		}
-
 		static bool IsDepthFormat(FramebufferTextureFormat format) {
 
 			switch (format) {
@@ -101,7 +97,6 @@ namespace Cober {
 			}
 			return false;
 		}
-
 		static GLenum CoberTextureFormatToGL(FramebufferTextureFormat format) {
 
 			switch (format) {

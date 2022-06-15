@@ -38,7 +38,6 @@ namespace Cober {
 		io.Fonts->AddFontFromFileTTF("Assets/Fonts/Roboto-Medium.ttf", fontPixelSize);
 		io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/Fonts/DroidSans.ttf", fontPixelSize);
 
-		
 		ImGui::StyleColorsDark();
 
 		ImGuiStyle& style = ImGui::GetStyle();

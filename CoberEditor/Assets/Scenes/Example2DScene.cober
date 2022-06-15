@@ -1,6 +1,6 @@
 Scene: Untitled
 Entities:
-  - Entity: 9838763865116548908
+  - Entity: 9853417925825326707
     TagComponent:
       Tag: Axe
     TransformComponent:
@@ -11,7 +11,7 @@ Entities:
       Mesh Path: Assets\Models\VoxelCharacters\chr_sword.obj
     MaterialComponent:
       Shader Path: Assets\Shaders\Primitive.glsl
-  - Entity: 16409815784569791132
+  - Entity: 13043112456209175256
     TagComponent:
       Tag: Knight
     TransformComponent:
@@ -20,9 +20,14 @@ Entities:
       Scale: [3, 3, 3]
     MeshComponent:
       Mesh Path: Assets\Models\VoxelCharacters\chr_knight.obj
+    AudioComponent:
+      NumObj: 0
+      Position: [0, 0, 0]
+      Velocity: [0, 0, 0]
+      Route: Assets\Sounds\RobloxSound.mp3
     MaterialComponent:
       Shader Path: Assets\Shaders\Primitive.glsl
-  - Entity: 17950340218348495429
+  - Entity: 10973654904065174230
     TagComponent:
       Tag: Spot Light
     TransformComponent:
@@ -41,7 +46,7 @@ Entities:
       Att. Linear: 2
       Att. Exp: 0
       Source: true
-  - Entity: 3847735132156048897
+  - Entity: 7666976059296931862
     TagComponent:
       Tag: Point Light
     TransformComponent:
@@ -57,7 +62,7 @@ Entities:
       Att. Linear: 10
       Att. Exp: 2
       Source: true
-  - Entity: 5207210508723479929
+  - Entity: 107489044526739539
     TagComponent:
       Tag: Directional Light
     TransformComponent:
@@ -75,7 +80,7 @@ Entities:
       Up: [0, 0, 0]
       Position: [0, 0, 0]
       Velocity: [0, 0, 0]
-  - Entity: 295595470695451664
+  - Entity: 4554042511251649642
     TagComponent:
       Tag: Camera
     TransformComponent:
@@ -93,7 +98,12 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
-  - Entity: 318227869224819386
+    AudioListenerComponent:
+      Forward: [0, 0, 0]
+      Up: [0, 0, 0]
+      Position: [0, 0, 0]
+      Velocity: [0, 0, 0]
+  - Entity: 4956758759799486723
     TagComponent:
       Tag: Scenario
     TransformComponent:

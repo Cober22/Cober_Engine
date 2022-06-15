@@ -88,9 +88,9 @@ namespace Cober {
 		primitive.lightCube->GetShader()->SetMat4("u_View", camera.GetViewMatrix());
 		// Start Batch
 		//primitive.quad->GetVAO()->Bind();
-		primitive.quad->GetShader()->Bind();
-		primitive.quad->GetShader()->SetMat4("u_Projection", camera.GetProjectionMatrix());
-		primitive.quad->GetShader()->SetMat4("u_View", camera.GetViewMatrix());
+		//primitive.quad->GetShader()->Bind();
+		//primitive.quad->GetShader()->SetMat4("u_Projection", camera.GetProjectionMatrix());
+		//primitive.quad->GetShader()->SetMat4("u_View", camera.GetViewMatrix());
 		primitive.quad->indexCount = 0;
 		primitive.quad->attributes = baseQuadAttributes;
 		primitive.quad->textureSlotIndex = 1;
